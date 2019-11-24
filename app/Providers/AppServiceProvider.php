@@ -98,6 +98,7 @@ class AppServiceProvider extends ServiceProvider
 
         //Link for Go Back
         View::composer('*',function($backLink){
+            // $link = "";
             $routeName = \Request::route()->getName();
 
             if ($routeName)
@@ -124,7 +125,7 @@ class AppServiceProvider extends ServiceProvider
 
             // $backLink->with('goBackLink','admin.index'); 
 
-            $backLink->with('goBackLink',$link); 
+            $backLink->with('goBackLink',@$link); 
         });
     }
 

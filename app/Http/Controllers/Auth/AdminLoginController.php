@@ -10,33 +10,18 @@ use Hash;
 
 class AdminLoginController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest:admin')->except('adminLogout');
     }
-    /**
-     * Show the admin's login form.
-     *
-     * @return \Illuminate\Http\Response
-     */
     
 
     public function showLoginForm()
     {
-        $title = "Sales Inventory";
+        $title = "Electronic Sales Inventory";
         return view('auth.admin-login')->with(compact('title'));
     }
 
-    /**
-     * Functionalities for login
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function login(Request $request)
     {
         $users = Admin::where('email',$request->email)->first();
@@ -63,7 +48,18 @@ class AdminLoginController extends Controller
         if(Auth::guard('admin')->attempt(['email'=> $request->email, 'password'=> $request->password], $request->remember))
         {
             //if successful, then redirect to their intended location
-            return redirect()->intended(route('admin.index'));
+            $showrooms = explode(',', $users->showroomId);
+
+            if (count($showrooms) == 1)
+            {
+                // return redirect()->intended(route('admin.index'));
+                return redirect(route('admin.index'));
+            }
+            else
+            {
+                // return redirect()->intended(route('showroomSetup.add'));
+                return redirect(route('showroomSetup.add'));
+            }
         }
         else
         {
@@ -75,12 +71,6 @@ class AdminLoginController extends Controller
         return redirect()->back()->withInput($request->only('email', 'remember'));
     }
 
-    /**
-     * Log the user out of the application.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function adminLogout(Request $request)
     {
         $this->guard()->logout();

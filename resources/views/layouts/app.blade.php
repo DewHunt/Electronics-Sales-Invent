@@ -31,7 +31,7 @@
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
                         {{-- {{ config('app.name', 'Laravel') }} --}}
-                        <p>Sales Inventory</p>
+                        <p>{{ $title }}</p>
                     </a>
                 </div>
 

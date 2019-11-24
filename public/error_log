@@ -1,0 +1,10 @@
+[10-Aug-2018 19:20:53 UTC] PHP Parse error:  syntax error, unexpected '?' in /home/mugdhlfd/public_html/mugdh/vendor/laravel/framework/src/Illuminate/Foundation/helpers.php on line 233
+[10-Aug-2018 19:31:24 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/mugdhlfd/public_html/mugdh/vendor/symfony/polyfill-mbstring/Mbstring.php:490
+Stack trace:
+#0 /home/mugdhlfd/public_html/mugdh/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/mugdhlfd/public_html/mugdh/vendor/laravel/framework/src/Illuminate/Support/Str.php(103): mb_strpos(NULL, '/json')
+#2 /home/mugdhlfd/public_html/mugdh/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/mugdhlfd/public_html/mugdh/vendor/laravel/framework/src/Illuminate/Http/Request.php(339): Illuminate\Http\Request->isJson()
+#4 /home/mugdhlfd/public_html/mugdh/vendor/laravel/framework/src/Illuminate/Http/Request.php(367): Illuminate\Http\Request->getInputSource()
+#5 /home/mugdhlfd/public_html/mugdh/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Htt in /home/mugdhlfd/public_html/mugdh/vendor/symfony/polyfill-mbstring/Mbstring.php on line 490
+[10-Aug-2018 20:34:21 UTC] PHP Parse error:  syntax error, unexpected '?' in /home/mugdhlfd/public_html/mugdh/vendor/laravel/framework/src/Illuminate/Foundation/helpers.php on line 233

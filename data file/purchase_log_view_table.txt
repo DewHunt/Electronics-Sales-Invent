@@ -1,0 +1,22 @@
+CREATE VIEW purchase_log
+AS
+SELECT supplierName,supplier_id,purchase_date,total_qty,total_amount
+FROM (SELECT 
+       voucher_date as purchase_date,
+       total_qty as total_qty,
+       total_amount as total_amount FROM cash_purchase
+ UNION ALL
+    SELECT 
+            credit_purchases.type as purchase_type,
+            credit_purchases.voucher_date as purchase_date,
+            credit_purchases.total_qty as total_qty,
+            credit_purchases.total_amount as total_amount,
+            purchase_orders.type as purchase_type,
+            purchase_orders.voucher_date as purchase_date,
+            purchase_orders.total_qty as total_qty,
+            purchase_orders.total_amount as total_amount,
+       
+FROM   cash_purchase
+        INNER JOIN vendors
+            ON vendors.id = cash_purchase.supplier_id)
+            

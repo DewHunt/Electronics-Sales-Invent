@@ -2,6 +2,22 @@
 
 @section('content')
     <div style="padding: 10px;"></div>
+
+    @php
+        $message = Session::get('msg');
+    @endphp
+
+    @if (isset($message))
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Success!</strong> {{ $message }}
+        </div>
+    @endif
+
+    @php
+        Session::forget('msg');
+    @endphp
+
     <div class="card">
         <div class="card-header">
             <div class="row">
@@ -63,26 +79,28 @@
         </div>
     </div>
 
-<!-- sample modal content for show category-->
-<div id="showCategory" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLabel1">Show Category</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-            </div>
-            <div class="modal-body">
-                <div class="container" id="showContent">
+    <!-- The Modal -->
+    <div id="showUser" class="modal fade" id="myModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">User Information</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div id="showContent"></div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
-
-
-
 @endsection
 
 @section('custom-js')
@@ -108,9 +126,83 @@
                     cell.innerHTML = i+1;
                 } );
             } ).draw();
-
-            //ajax          
             
+
+            //ajax show code
+            $('#usersTable tbody').on( 'click', 'i.fa-eye', function () { 
+                updateThis = this;
+                userId = $(this).parent().data('id');
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type: "POST",
+                    url: "{{ route('user.profile') }}",
+                    data : {userId:userId},
+
+                    success: function(response) {                        
+                        user = response.user;
+                        name = response.name;
+                        showFunction(user);
+                    },
+                    error: function(response) {
+                        error = "Something wrong.";
+                        swal({
+                            title: "<small class='text-danger'>User Not Found</small>", 
+                            type: "error",
+                            text: error,
+                            timer: 1000,
+                            html: true,
+                        });
+                    }
+                });              
+            });
+
+            //seperate the show function to understand
+            function showFunction(user){
+                if(user.status == 1) 
+                    userStatus = `<span class="badge badge-pill badge-success">Active User</span>`;
+                else
+                    userStatus = `<span class="badge badge-pill badge-danger">In-active User</span>`
+                var content =   `
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th colspan="4"><h4>`+user.name+` `+userStatus +`</h4></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th width="10px">Role</th>
+                                <td width="5px">:</td>
+                                <td>`+user.userRoleName+`</td>
+                                <td rowspan="4" width="100px">
+                                    <img src="{{ url('') }}/`+user.image+`" class="img-thumbnail" alt="User Image" width="100px" height="100px">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th width="10px">User Name</th>
+                                <td width="5px">:</td>
+                                <td>`+user.username+`</td>
+                            </tr>
+                            <tr>
+                                <th width="10px">Showrooms</th>
+                                <td width="5px">:</td>
+                                <td>`+name+`</td>
+                            </tr>
+                            <tr>
+                                <th width="10px">Email</th>
+                                <td width="5px">:</td>
+                                <td>`+user.email+`</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                `;
+
+                $('#showContent').html(content);
+                $("#showUser").modal(); 
+            }         
+
             //ajax delete code
             $('#usersTable tbody').on( 'click', 'i.fa-trash', function () {
                 $.ajaxSetup({
@@ -119,11 +211,11 @@
                   }
                 });
 
-                user_id = $(this).parent().data('id');
-                var user = this;
+                userId = $(this).parent().data('id');
+                var tableRow = this;
                 swal({   
                     title: "Are you sure?",   
-                    text: "You will not be able to recover this imaginary file!",   
+                    text: "You will not be able to recover this information!",   
                     type: "warning",   
                     showCancelButton: true,   
                     confirmButtonColor: "#DD6B55",   
@@ -131,29 +223,24 @@
                     cancelButtonText: "No, cancel plx!",   
                     closeOnConfirm: false,   
                     closeOnCancel: false 
-                }, function(isConfirm){   
-                    if (isConfirm) {     
+                },
+                function(isConfirm){   
+                    if (isConfirm) {
                         $.ajax({
-                            type: "DELETE",
-                            url: "{{ route('user.index') }}" + "/" + user_id,
-                            // data: "user_id=" + user_id,
-                            dataType: "JSON",
-                            data: {
-                                id:user_id
-                            },
-                            cache:false,
-                            contentType: false,
-                            processData: false,
+                            type: "POST",
+                            url : "{{ route('user.delete') }}",
+                            data : {userId:userId},
+                           
                             success: function(response) {
                                 swal({
                                     title: "<small class='text-success'>Success!</small>", 
                                     type: "success",
-                                    text: "user deleted Successfully!",
+                                    text: "User Deleted Successfully!",
                                     timer: 1000,
                                     html: true,
                                 });
                                 table
-                                    .row( $(user).parents('tr'))
+                                    .row( $(tableRow).parents('tr'))
                                     .remove()
                                     .draw();
                             },
@@ -167,12 +254,14 @@
                                     html: true,
                                 });
                             }
-                        });   
-                    } else { 
+                        });    
+                    }
+                    else
+                    { 
                         swal({
                             title: "Cancelled", 
                             type: "error",
-                            text: "Your category is safe :)",
+                            text: "Your User is safe :)",
                             timer: 1000,
                             html: true,
                         });    
@@ -184,33 +273,34 @@
                 
         //ajax status change code
         function statusChange(user_id) {
+                console.log(user_id);
             $.ajax({
-                    type: "GET",
-                    url: "{{ route('user.changePassword', 0) }}",
-                    data: "user_id=" + user_id,
-                    cache:false,
-                    contentType: false,
-                    processData: false,
-                    success: function(response) {
-                        swal({
-                            title: "<small class='text-success'>Success!</small>", 
-                            type: "success",
-                            text: "Status successfully updated!",
-                            timer: 1000,
-                            html: true,
-                        });
-                    },
-                    error: function(response) {
-                        error = "Failed.";
-                        swal({
-                            title: "<small class='text-danger'>Error!</small>", 
-                            type: "error",
-                            text: error,
-                            timer: 2000,
-                            html: true,
-                        });
-                    }
-                });
-            }
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "post",
+                url: "{{ route('user.status') }}",
+                data: {userId:user_id},
+                success: function(response) {
+                    swal({
+                        title: "<small class='text-success'>Success!</small>", 
+                        type: "success",
+                        text: "Status Successfully Updated!",
+                        timer: 1000,
+                        html: true,
+                    });
+                },
+                error: function(response) {
+                    error = "Failed.";
+                    swal({
+                        title: "<small class='text-danger'>Error!</small>", 
+                        type: "error",
+                        text: error,
+                        timer: 2000,
+                        html: true,
+                    });
+                }
+            });
+        }
     </script>
 @endsection

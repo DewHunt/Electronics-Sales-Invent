@@ -484,6 +484,7 @@ class ComposerStaticInit3b0018b065e5af50f673cc2496237f34
         'App\\UserMenu' => __DIR__ . '/../..' . '/app/UserMenu.php',
         'App\\UserMenuActions' => __DIR__ . '/../..' . '/app/UserMenuActions.php',
         'App\\UserRoles' => __DIR__ . '/../..' . '/app/UserRoles.php',
+        'App\\helperClass' => __DIR__ . '/../..' . '/app/HelperClass.php',
         'ArithmeticError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/ArithmeticError.php',
         'AssertionError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/AssertionError.php',
         'Barryvdh\\DomPDF\\Facade' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/Facade.php',

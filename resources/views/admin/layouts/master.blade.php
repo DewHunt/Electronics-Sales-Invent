@@ -16,15 +16,8 @@
     <link rel="icon" type="image/png" sizes="20x20" href="{{asset('/')}}public/uploads/admin_logo/logo_small.png">
 
     <style type="text/css">
-        .modal {
-            position: absolute;
-            top: 10px;
-            right: 100px;
-            bottom: 0;
-            left: 0;
-            z-index: 10040;
-            overflow: auto;
-            overflow-y: auto;
+        .card-pad{
+            padding-bottom: 10px;
         }
     </style>
     @yield('custom_css')

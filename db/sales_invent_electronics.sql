@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 23, 2019 at 02:10 PM
+-- Generation Time: Nov 24, 2019 at 02:14 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -33,7 +33,9 @@ CREATE TABLE `admins` (
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `username` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `role` int(11) DEFAULT NULL,
+  `showroomId` varchar(11) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` int(11) NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -45,9 +47,11 @@ CREATE TABLE `admins` (
 -- Dumping data for table `admins`
 --
 
-INSERT INTO `admins` (`id`, `name`, `email`, `username`, `role`, `password`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'admin@gmail.com', 'admin', 1, '$2y$10$wcjSEsgXU5pSM16fpwouju905lsZrFFxc5J68jQanfo8Jl6EQWXbe', 1, NULL, NULL, NULL),
-(2, 'Dew Hunt', 'dew.fog1553@gmail.com', 'dew', 1, '$2y$10$sxsvUsxpiZF8A7WxpwltN.lTurkT78p9qw.pUzBVYj8ttLnsiWeJS', 0, NULL, '2019-11-21 04:53:14', '2019-11-21 04:53:14');
+INSERT INTO `admins` (`id`, `name`, `email`, `username`, `image`, `role`, `showroomId`, `password`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Admin', 'admin@gmail.com', 'admin', NULL, 1, '0', '$2y$10$wcjSEsgXU5pSM16fpwouju905lsZrFFxc5J68jQanfo8Jl6EQWXbe', 1, NULL, NULL, NULL),
+(3, 'Salman', 'salman@gmail.com', 'salman', 'D:\\xampp\\tmp\\php13B2.tmp', 2, '1', '$2y$10$C2upubhDeyF0wm732wpGdeHB2dn68KOUpAAHCnynvHbyRXOxyoJzO', 0, NULL, '2019-11-24 01:28:37', '2019-11-24 01:28:37'),
+(4, 'Dew Hunt', 'dew@gmail.com', 'DewHunt', 'public/uploads/admin_images/avatar7_20165942041.png', 2, '1', '$2y$10$nP/X0y6wMRBy7RqMk2Yz9.8SMR8FrDS2UWcs2NTAI6oTOQiiWKbIe', 0, NULL, '2019-11-24 02:03:40', '2019-11-24 07:10:28'),
+(5, 'Fattah', 'fattah@gmail.com', 'fattah', 'public/uploads/admin_images/images_21444773304.jpg', 2, '1,3', '$2y$10$wpFxh0bQbgbOU2n9ZSBhPOiOFvloC3WiLvpEj8MccqmLarwjHOcG2', 0, NULL, '2019-11-24 02:09:05', '2019-11-24 03:15:50');
 
 -- --------------------------------------------------------
 
@@ -96,7 +100,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (7, '2019_11_21_102012_create_user_menus_table', 1),
 (8, '2019_03_13_121439_create_menus_table', 2),
 (9, '2019_03_19_065715_create_settings_table', 3),
-(10, '2019_11_23_091359_create_tbl_showroom_table', 4);
+(10, '2019_11_23_091359_create_tbl_showroom_table', 4),
+(11, '2019_11_24_063948_add_columns_to_admins_table', 5);
 
 -- --------------------------------------------------------
 
@@ -234,10 +239,10 @@ INSERT INTO `user_menu_actions` (`id`, `parentmenuId`, `menuType`, `actionName`,
 (14, 4, 4, 'Delete Showroom', 'showroomSetup.delete', 14, 1, '2019-11-23 01:29:30', '2019-11-23 01:29:30'),
 (15, 5, 1, 'Add User', 'user.add', 15, 1, '2019-11-23 05:58:36', '2019-11-23 05:58:36'),
 (16, 5, 2, 'Edit User', 'user.edit', 16, 1, '2019-11-23 05:59:13', '2019-11-23 05:59:13'),
-(17, 5, 3, 'User Status', 'user.status', 17, 1, '2019-11-23 05:59:58', '2019-11-23 05:59:58'),
+(17, 5, 3, 'User Status', 'user.status', 20, 1, '2019-11-23 05:59:58', '2019-11-23 05:59:58'),
 (18, 5, 6, 'Change User Password', 'user.changePassword', 18, 1, '2019-11-23 06:02:44', '2019-11-23 06:02:44'),
 (19, 5, 4, 'Delete user', 'user.delete', 19, 1, '2019-11-23 06:04:45', '2019-11-23 06:04:45'),
-(20, 5, 7, 'View User', 'user.viewProfile', 20, 1, '2019-11-23 06:06:17', '2019-11-23 06:06:17');
+(20, 5, 7, 'View User', 'user.viewProfile', 17, 1, '2019-11-23 06:06:17', '2019-11-23 06:06:17');
 
 -- --------------------------------------------------------
 
@@ -260,7 +265,8 @@ CREATE TABLE `user_roles` (
 --
 
 INSERT INTO `user_roles` (`id`, `name`, `status`, `permission`, `actionPermission`, `created_at`, `updated_at`) VALUES
-(1, 'Super Admin', 1, '1,2,3,4,5', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20', '2019-11-21 04:48:03', '2019-11-23 06:15:17');
+(1, 'Super Admin', 1, '1,2,3,4,5', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20', '2019-11-21 04:48:03', '2019-11-23 06:15:17'),
+(2, 'Admin', 0, NULL, NULL, '2019-11-24 01:10:16', '2019-11-24 01:10:16');
 
 --
 -- Indexes for dumped tables
@@ -329,7 +335,7 @@ ALTER TABLE `user_roles`
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `menus`
@@ -341,7 +347,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -371,7 +377,7 @@ ALTER TABLE `user_menu_actions`
 -- AUTO_INCREMENT for table `user_roles`
 --
 ALTER TABLE `user_roles`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

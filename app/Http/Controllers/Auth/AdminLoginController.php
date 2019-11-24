@@ -47,7 +47,8 @@ class AdminLoginController extends Controller
             'password'=>'required|min:6',
         ]);
 
-        if ($users->status == 0) {
+        if ($users->status == 0)
+        {
              $message = "<span class='help-block' style='color:#a94442;'><strong>You are not active for login.</strong></span>"; 
             return redirect(route('admin.login'))->with('msg',$message)->withInput();
         }
@@ -59,10 +60,13 @@ class AdminLoginController extends Controller
 
 
         //attemt to log the admin in
-        if(Auth::guard('admin')->attempt(['email'=> $request->email, 'password'=> $request->password], $request->remember)){
+        if(Auth::guard('admin')->attempt(['email'=> $request->email, 'password'=> $request->password], $request->remember))
+        {
             //if successful, then redirect to their intended location
             return redirect()->intended(route('admin.index'));
-        }else{
+        }
+        else
+        {
             $message = "<span class='help-block' style='color:#a94442;'><strong>password not matched.</strong></span>"; 
             return redirect(route('admin.login'))->with('passwordMessage',$message)->withInput();
         }

@@ -515,6 +515,13 @@ svg:not(:root) {
 table {
   border-collapse: collapse; }
 
+.table-borderless th,
+.table-borderless td,
+.table-borderless thead th,
+.table-borderless tbody + tbody {
+  border: 0;
+}
+
 caption {
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -2518,7 +2525,8 @@ input[type="button"].btn-block {
   opacity: 0;
   transition: opacity 0.15s linear; }
   .fade.show {
-    opacity: 1; }
+    /*opacity: 1; */
+  }
 
 .collapse {
   display: none; }
@@ -4137,7 +4145,7 @@ button.close {
   border: 0;
   -webkit-appearance: none; }
 
-.modal-open {
+/*.modal-open {
   overflow: hidden; }
 
 .modal {
@@ -4245,7 +4253,7 @@ button.close {
 
 @media (min-width: 992px) {
   .modal-lg {
-    max-width: 800px; } }
+    max-width: 800px; } }*/
 
 .tooltip {
   position: absolute;
@@ -12073,8 +12081,8 @@ html body .navbar-dark .mailbox .message-center {
 .fc-view {
   margin-top: 30px; }
 
-.none-border .modal-footer {
-  border-top: none; }
+/*.none-border .modal-footer {
+  border-top: none; }*/
 
 .fc-toolbar {
   margin-bottom: 5px;
@@ -12930,10 +12938,10 @@ File: scss
  
 }
 
-.modal-body{
+/*.modal-body{
   border: 2px solid #f3bfbf;
   margin-top: 25px;
-}
+}*/
 
 
 /*Grid table style*/
@@ -12990,9 +12998,9 @@ File: scss
     background-color: white;
   }
 
-  .modal-body{
+  /*.modal-body{
     margin-top: 0px;
-  }
+  }*/
 
   label{
     text-transform: uppercase;

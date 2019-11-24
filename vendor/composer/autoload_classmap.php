@@ -47,6 +47,7 @@ return array(
     'App\\UserMenu' => $baseDir . '/app/UserMenu.php',
     'App\\UserMenuActions' => $baseDir . '/app/UserMenuActions.php',
     'App\\UserRoles' => $baseDir . '/app/UserRoles.php',
+    'App\\helperClass' => $baseDir . '/app/HelperClass.php',
     'ArithmeticError' => $vendorDir . '/symfony/polyfill-php70/Resources/stubs/ArithmeticError.php',
     'AssertionError' => $vendorDir . '/symfony/polyfill-php70/Resources/stubs/AssertionError.php',
     'Barryvdh\\DomPDF\\Facade' => $vendorDir . '/barryvdh/laravel-dompdf/src/Facade.php',

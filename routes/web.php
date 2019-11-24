@@ -64,11 +64,11 @@ Route::prefix('admin')->group(function()
 			Route::post('/user-save','Admin\AdminController@saveuser')->name('user.save');
 			Route::get('/user-edit/{id}','Admin\AdminController@edituser')->name('user.edit');
 			Route::post('/user-upate','Admin\AdminController@updateuser')->name('user.update');
-			Route::get('/user/status/{id}','Admin\AdminController@changeuserStatus')->name('user.status');
-			Route::get('/user-password/{id}','Admin\AdminController@password')->name('user.changePassword');
-			Route::get('/user-profile/{id}','Admin\AdminController@userProfile')->name('user.profile');
-			Route::post('/user-changePassword','Admin\AdminController@passwordChange')->name('user.changePassword');
+			Route::get('/user-change-password/{id}','Admin\AdminController@password')->name('user.changePassword');
+			Route::post('/user-save-password','Admin\AdminController@passwordChange')->name('user.savePassword');
+			Route::post('/user-profile','Admin\AdminController@userProfile')->name('user.profile');
 			Route::post('/user-delete','Admin\AdminController@deleteUser')->name('user.delete');
+			Route::post('/user-status','Admin\AdminController@changeUserStatus')->name('user.status');
 
 			//User Roll Manage
 			Route::resource('user-roles','Admin\UserRoleController');

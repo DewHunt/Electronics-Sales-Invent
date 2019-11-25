@@ -48,18 +48,7 @@ class AdminLoginController extends Controller
         if(Auth::guard('admin')->attempt(['email'=> $request->email, 'password'=> $request->password], $request->remember))
         {
             //if successful, then redirect to their intended location
-            $showrooms = explode(',', $users->showroomId);
-
-            if (count($showrooms) == 1)
-            {
-                // return redirect()->intended(route('admin.index'));
-                return redirect(route('admin.index'));
-            }
-            else
-            {
-                // return redirect()->intended(route('showroomSetup.add'));
-                return redirect(route('showroomSetup.add'));
-            }
+            return redirect()->intended(route('admin.index'));
         }
         else
         {

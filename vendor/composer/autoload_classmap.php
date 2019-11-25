@@ -7,9 +7,11 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'App\\Admin' => $baseDir . '/app/Admin.php',
+    'App\\CategorySetup' => $baseDir . '/app/CategorySetup.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Http\\Controllers\\Admin\\AdminController' => $baseDir . '/app/Http/Controllers/Admin/AdminController.php',
+    'App\\Http\\Controllers\\Admin\\CategorySetupController' => $baseDir . '/app/Http/Controllers/Admin/CategorySetupController.php',
     'App\\Http\\Controllers\\Admin\\SettingsController' => $baseDir . '/app/Http/Controllers/Admin/SettingsController.php',
     'App\\Http\\Controllers\\Admin\\ShowroomSetupController' => $baseDir . '/app/Http/Controllers/Admin/ShowroomSetupController.php',
     'App\\Http\\Controllers\\Admin\\UserMenuController' => $baseDir . '/app/Http/Controllers/Admin/UserMenuController.php',

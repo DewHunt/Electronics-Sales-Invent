@@ -89,6 +89,15 @@ Route::prefix('admin')->group(function()
 			Route::post('/showroom-setup-update','Admin\ShowroomSetupController@updateShowroom')->name('showroomSetup.update');
 			Route::post('/showroom-setup-delete','Admin\ShowroomSetupController@deleteShowroom')->name('showroomSetup.delete');
 
+			//Category Setup
+			Route::get('/category-setup','Admin\CategorySetupController@index')->name('categorySetup.index');
+			Route::get('/category-setup-add','Admin\CategorySetupController@addCategory')->name('categorySetup.add');
+			Route::post('/category-setup-save','Admin\CategorySetupController@saveCategory')->name('categorySetup.save');
+			Route::get('/category-setup-edit/{id}','Admin\CategorySetupController@editCategory')->name('categorySetup.edit');
+			Route::post('/category-setup-update','Admin\CategorySetupController@updateCategory')->name('categorySetup.update');
+			Route::post('/category-setup-delete','Admin\CategorySetupController@deleteCategory')->name('categorySetup.delete');
+			Route::post('/category-setup-status','Admin\CategorySetupController@changeCategoryStatus')->name('categorySetup.status');
+
 		// User Management End
 		});
 	});

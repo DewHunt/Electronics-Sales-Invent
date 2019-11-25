@@ -444,9 +444,11 @@ class ComposerStaticInit3b0018b065e5af50f673cc2496237f34
 
     public static $classMap = array (
         'App\\Admin' => __DIR__ . '/../..' . '/app/Admin.php',
+        'App\\CategorySetup' => __DIR__ . '/../..' . '/app/CategorySetup.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Admin\\AdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/AdminController.php',
+        'App\\Http\\Controllers\\Admin\\CategorySetupController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/CategorySetupController.php',
         'App\\Http\\Controllers\\Admin\\SettingsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/SettingsController.php',
         'App\\Http\\Controllers\\Admin\\ShowroomSetupController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ShowroomSetupController.php',
         'App\\Http\\Controllers\\Admin\\UserMenuController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/UserMenuController.php',

@@ -1,82 +1,47 @@
-@extends('admin.layouts.master')
+@extends('admin.layouts.masterIndex')
 
-@section('content')
-	<div class="card-add"></div>
+@section('card_body')
+    <div class="card-body">
+        <div class="table-responsive">
+            @php
+                $sl = 0;
+            @endphp
 
-    @php
-        $message = Session::get('msg');
-    @endphp
-
-    @if (isset($message))
-		<div class="alert alert-success alert-dismissible">
-			<button type="button" class="close" data-dismiss="alert">&times;</button>
-			<strong>Success!</strong> {{ $message }}
-		</div>
-    @endif
-
-    @php
-        Session::forget('msg');
-    @endphp
-
-    <div class="card">            
-        <div class="card-header">
-            <div class="row">
-                <div class="col-md-6"><h4 class="card-title">{{ $title }}</h4></div>
-                <div class="col-md-6">  
-                    <span class="shortlink">
-                        <a style="font-size: 16px;" class="btn btn-outline-info btn-lg" href="{{ route('categorySetup.add')}}">
-                            <i class="fa fa-plus-circle"></i> Add new
-                        </a>
-                    </span>                     
-                </div>
-            </div>
-        </div>
-
-        <div class="card-body">
-            <div class="table-responsive">
-                @php
-                    $sl = 0;
-                @endphp
-
-                <table id="categoriesTable" class="table table-bordered table-striped"  name="categoriesTable">
-                    <thead>
-                        <tr>
-                            <th width="20px">SL</th>
-                            <th>Name</th>
-                            <th>Image</th>
-                            <th>Parent</th>
-                            <th width="20px">Status</th>
-                            <th width="20px">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="">
-                    	
-                    </tbody>
-                </table>
-            </div>
+            <table id="categoriesTable" class="table table-bordered table-striped"  name="categoriesTable">
+                <thead>
+                    <tr>
+                        <th width="20px">SL</th>
+                        <th>Name</th>
+                        <th>Image</th>
+                        <th>Parent</th>
+                        <th width="20px">Status</th>
+                        <th width="20px">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="">
+                	
+                </tbody>
+            </table>
         </div>
     </div>
 
-<!-- sample modal content for show category-->
-<div id="showCategory" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLabel1">Show Category</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-            </div>
-            <div class="modal-body">
-                <div class="container" id="showContent">
+    <!-- sample modal content for show category-->
+    <div id="showCategory" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel1">Show Category</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container" id="showContent">
+                    </div>
                 </div>
             </div>
         </div>
+        <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
-
-
-
+    <!-- /.modal -->
 @endsection
 
 @section('custom-js')

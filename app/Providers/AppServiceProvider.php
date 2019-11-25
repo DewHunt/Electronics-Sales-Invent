@@ -67,8 +67,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         //Link for Add New Button
-        View::composer('*',function($addLink)
-        {
+        View::composer('*',function($addLink){
             $routeName = \Request::route()->getName();
 
             if ($routeName)
@@ -109,8 +108,7 @@ class AppServiceProvider extends ServiceProvider
                     $userMenu = UserMenu::where('id',@$userMenuAction->parentmenuId)->first();
                     if ($userMenu)
                     {
-                        $link = $userMenu->menuLink;  
-                        // $backLink->with('goBackLink',@$userMenu->menuLink);
+                        $link = $userMenu->menuLink;
                     }
                     else
                     {
@@ -122,8 +120,6 @@ class AppServiceProvider extends ServiceProvider
                     $link = 'admin.index';                        
                 }
             }
-
-            // $backLink->with('goBackLink','admin.index'); 
 
             $backLink->with('goBackLink',@$link); 
         });

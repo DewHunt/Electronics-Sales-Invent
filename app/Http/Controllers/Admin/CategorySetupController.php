@@ -13,4 +13,18 @@ class CategorySetupController extends Controller
 
     	return view('admin.categorySetup.index')->with(compact('title'));
     }
+
+    public function addCategory()
+    {
+    	$title = "Add Category";
+    	$formLink = "categorySetup.save";
+    	$buttonName = "Save";
+
+    	return view('admin.categorySetup.add')->with(compact('title','formLink','buttonName'));
+    }
+
+    public function saveCategory(Request $request)
+    {
+    	echo "ALL OK";
+    }
 }

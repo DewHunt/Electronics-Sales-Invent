@@ -20,8 +20,10 @@ class ShowroomSetupController extends Controller
     public function addShowroom()
     {
     	$title = "Add New Showroom";
+        $formLink = "showroomSetup.save";
+        $buttonName = "Save";
 
-    	return view('admin.showroomSetup.add')->with(compact('title'));
+    	return view('admin.showroomSetup.add')->with(compact('title','formLink','buttonName'));
     }
 
     public function saveShowroom(Request $request)
@@ -46,9 +48,11 @@ class ShowroomSetupController extends Controller
     public function editShowroom($id)
     {
     	$title = "Edit Showroom";
+        $formLink = "showroomSetup.update";
+        $buttonName = "Update";
     	$showroom = ShowroomSetup::where('id',$id)->first();
 
-    	return view('admin.showroomSetup.edit')->with(compact('title','showroom'));
+    	return view('admin.showroomSetup.edit')->with(compact('title','formLink','buttonName','showroom'));
     }
 
     public function updateShowroom(Request $request)

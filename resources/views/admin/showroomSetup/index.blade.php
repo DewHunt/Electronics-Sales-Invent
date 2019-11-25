@@ -1,76 +1,44 @@
-@extends('admin.layouts.master')
+@extends('admin.layouts.masterIndex')
 
-@section('content')
-    <div style="padding-bottom: 10px;"></div>
-
-    @php
-        $message = Session::get('msg');
-    @endphp
-
-    @if (isset($message))
-		<div class="alert alert-success alert-dismissible">
-			<button type="button" class="close" data-dismiss="alert">&times;</button>
-			<strong>Success!</strong> {{ $message }}
-		</div>
-    @endif
-
-    @php
-        Session::forget('msg');
-    @endphp
-
-    <div class="card">            
-        <div class="card-header">
-            <div class="row">
-                <div class="col-md-6"><h4 class="card-title">{{ $title }}</h4></div>
-                <div class="col-md-6">  
-                    <span class="shortlink">
-                        <a style="font-size: 16px;" class="btn btn-outline-info btn-lg" href="{{ route('showroomSetup.add')}}">
-                            <i class="fa fa-plus-circle"></i> Add new
-                        </a>
-                    </span>                     
-                </div>
-            </div>
-        </div>
-
-        <div class="card-body">
-            <div class="table-responsive">
-                <table id="showroomTable" class="table table-bordered table-striped"  name="showroomTable">
-                    <thead>
-                        <tr>
-                            <th width="20px">SL</th>
-                            <th>Name</th>
-                            <th>Contact Person</th>
-                            <th>Website</th>
-                            <th width="20px">Phone</th>
-                            <th>Address</th>
-                            <th width="20px">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+@section('card_body')
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="showroomTable" class="table table-bordered table-striped"  name="showroomTable">
+                <thead>
+                    <tr>
+                        <th width="20px">SL</th>
+                        <th>Name</th>
+                        <th>Contact Person</th>
+                        <th>Website</th>
+                        <th width="20px">Phone</th>
+                        <th>Address</th>
+                        <th width="20px">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                	@php
+                		$sl = 0;
+                	@endphp
+                	@foreach ($showrooms as $showroom)
                     	@php
-                    		$sl = 0;
+                    		$sl++;
                     	@endphp
-                    	@foreach ($showrooms as $showroom)
-	                    	@php
-	                    		$sl++;
-	                    	@endphp
-	                    	<tr>
-		                    	<td>{{ $sl }}</td>
-	                    		<td>{{ $showroom->name }}</td>
-	                    		<td>{{ $showroom->contact_person }}</td>
-	                    		<td>{{ $showroom->website }}</td>
-	                    		<td>{{ $showroom->phone }}</td>
-	                    		<td>{{ $showroom->address }}</td>
-	                    		<td>
-	                    			@php
-	                    				echo \App\Link::action($showroom->id);
-	                    			@endphp
-	                    		</td>
-	                    	</tr>
-                    	@endforeach
-                    </tbody>
-                </table>
-            </div>
+                    	<tr>
+	                    	<td>{{ $sl }}</td>
+                    		<td>{{ $showroom->name }}</td>
+                    		<td>{{ $showroom->contact_person }}</td>
+                    		<td>{{ $showroom->website }}</td>
+                    		<td>{{ $showroom->phone }}</td>
+                    		<td>{{ $showroom->address }}</td>
+                    		<td>
+                    			@php
+                    				echo \App\Link::action($showroom->id);
+                    			@endphp
+                    		</td>
+                    	</tr>
+                	@endforeach
+                </tbody>
+            </table>
         </div>
     </div>
 @endsection

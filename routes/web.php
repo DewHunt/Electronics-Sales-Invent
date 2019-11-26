@@ -98,6 +98,29 @@ Route::prefix('admin')->group(function()
 			Route::post('/category-setup-delete','Admin\CategorySetupController@deleteCategory')->name('categorySetup.delete');
 			Route::post('/category-setup-status','Admin\CategorySetupController@changeCategoryStatus')->name('categorySetup.status');
 
+
+			//Start Product Section
+			Route::get('/product-setup', 'Admin\ProductSetupController@index')->name('productSetup.index');
+
+			Route::get('/product-setup-add','Admin\ProductSetupController@addProduct')->name('productSetup.add');
+			Route::post('/product-setup-basic-info-save','Admin\ProductSetupController@saveProductBasicInfo')->name('productSetupBasicInfo.save');
+			Route::post('/product-setup-advance-info-save','Admin\ProductSetupController@saveProductAdvanceInfo')->name('productSetupAdvanceInfo.save');
+			Route::post('/product-setup-image-save','Admin\ProductSetupController@saveProductImage')->name('productSetupImage.save');
+			Route::post('/product-setup-price-info-save','Admin\ProductSetupController@saveProductPrcieInfo')->name('productSetupPriceInfo.save');
+			Route::post('/product-setup-seo-info-save','Admin\ProductSetupController@saveProductSeoInfo')->name('productSetupSeoInfo.save');
+			Route::post('/product-setup-others-info-save','Admin\ProductSetupController@saveProductOthersInfo')->name('productSetupOthersInfo.save');
+
+			Route::get('/product-setup-edit/{id}','Admin\ProductSetupController@editProduct')->name('productSetup.edit');
+			Route::post('/product-setup-basic-info-update','Admin\ProductSetupController@updateProductBasicInfo')->name('productSetupBasicInfo.update');
+			Route::post('/product-setup-advance-info-update','Admin\ProductSetupController@updateProductAdvanceInfo')->name('productSetupAdvanceInfo.update');
+			Route::post('/product-setup-image-update','Admin\ProductSetupController@updateProductImage')->name('productSetupImage.update');
+			Route::post('/product-setup-price-info-update','Admin\ProductSetupController@updateProductPrcieInfo')->name('productSetupPriceInfo.update');
+			Route::post('/product-setup-seo-info-update','Admin\ProductSetupController@updateProductSeoInfo')->name('productSetupSeoInfo.update');
+			Route::post('/product-setup-others-info-update','Admin\ProductSetupController@updateProductOthersInfo')->name('productSetupOthersInfo.update');
+
+			Route::post('/product-setup-delete','Admin\ProductSetupController@deleteProduct')->name('productSetup.delete');
+			Route::post('/products-setup-status','Admin\ProductSetupController@changeProductStatus')->name('productSetup.status');
+
 		// User Management End
 		});
 	});

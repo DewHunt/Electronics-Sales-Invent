@@ -12,11 +12,6 @@ use DB;
 
 class AdminController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $title = "Manage Users";
@@ -134,25 +129,6 @@ class AdminController extends Controller
 
         return redirect(route('user.index'))->with('msg','Password Changed Successfully');     
     }
-
-    // public function userProfile($id){
-    //     $users = Admin::where('id',$id)->first();
-    //     $userRoles = UserRoles::where('id',$users->role)->first();
-    //     return view('admin.users.profile')->with(compact('users','userRoles'));
-    // }
-
-    // public function changeUserStatus(Request $request)
-    // {
-    //     if($request->ajax())
-    //     {
-    //         $data = Admin::find($request->user_id);
-    //         $data->status = $data->status ^ 1;
-    //         $data->update();
-    //         print_r(1);       
-    //         return;
-    //     }
-    //     return redirect(route('users.index')) -> with( 'message', 'Wrong move!');
-    // }
 
     public function changeUserStatus(Request $request)
     {

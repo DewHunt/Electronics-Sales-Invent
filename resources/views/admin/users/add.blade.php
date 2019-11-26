@@ -53,7 +53,7 @@
 
                     <div class="col-md-6"> 
                         <div class="form-group {{ $errors->has('showrooms') ? ' has-danger' : '' }}">
-                            <label for="role">Showrooms</label>
+                            <label for="showroom">Showrooms</label>
                             <select class="form-control chosen-select" id="showrooms" name="showrooms[]" multiple>
                                 @foreach($showrooms as $showroom)
                                     <option value="{{$showroom->id}}">{{$showroom->name}}</option>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 25, 2019 at 08:35 AM
+-- Generation Time: Nov 26, 2019 at 01:34 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -102,7 +102,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (9, '2019_03_19_065715_create_settings_table', 3),
 (10, '2019_11_23_091359_create_tbl_showroom_table', 4),
 (11, '2019_11_24_063948_add_columns_to_admins_table', 5),
-(12, '2019_11_25_065701_create_tbl_categories_table', 6);
+(12, '2019_11_25_065701_create_tbl_categories_table', 6),
+(13, '2019_11_26_041205_create_tbl_categories_table', 7);
 
 -- --------------------------------------------------------
 
@@ -150,18 +151,26 @@ CREATE TABLE `settings` (
 CREATE TABLE `tbl_categories` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cover_image` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` tinyint(4) NOT NULL,
-  `parent` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `show_in_home_page` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `meta_title` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `meta_keyword` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `meta_description` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `order_by` int(11) NOT NULL,
+  `cover_image` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `parent` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `show_in_home_page` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_title` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_keyword` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `order_by` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_categories`
+--
+
+INSERT INTO `tbl_categories` (`id`, `name`, `cover_image`, `image`, `status`, `parent`, `show_in_home_page`, `meta_title`, `meta_keyword`, `meta_description`, `order_by`, `created_at`, `updated_at`) VALUES
+(1, 'Smart Television', 'public/uploads/category_image/download_14321410993.jpg', 'public/uploads/category_image/W49E3000AS-1-220x220h_12931520932.jpg', 1, '2', 'Yes', 'Electronics || Bangladeshi Electronics Products', 'Electronics, Electronocs in Bangladesh', 'Electronics Products.', 2, '2019-11-26 00:07:28', '2019-11-26 01:32:11'),
+(2, 'Television', 'public/uploads/category_image/81OwqiQckgL._SL1500__96781947791.jpg', 'public/uploads/category_image/43UM7400_original_65661783580.jpg', 1, NULL, 'Yes', 'Electronics || Bangladeshi Electronics Products', 'Electronics, Electronocs in Bangladesh', 'Electronics Products.', NULL, '2019-11-26 00:13:09', '2019-11-26 00:13:09');
 
 -- --------------------------------------------------------
 
@@ -223,7 +232,8 @@ INSERT INTO `user_menus` (`id`, `parentMenu`, `menuName`, `menuLink`, `menuIcon`
 (4, '2', 'Showroom Setup', 'showroomSetup.index', 'fa fa-caret', 3, '1', '2019-11-23 01:20:57', '2019-11-23 02:03:09'),
 (5, '2', 'Create User', 'user.index', 'fa fa-caret', 4, '1', '2019-11-23 05:52:47', '2019-11-23 05:52:47'),
 (6, NULL, 'Business Settings', 'admin.index', 'fa fa-bars', 5, '1', '2019-11-24 23:01:00', '2019-11-24 23:01:00'),
-(7, '6', 'Category Setup', 'categorySetup.index', 'fa fa-caret', 1, '1', '2019-11-25 00:19:54', '2019-11-25 00:19:54');
+(7, '6', 'Category Setup', 'categorySetup.index', 'fa fa-caret', 1, '1', '2019-11-25 00:19:54', '2019-11-25 00:19:54'),
+(8, '6', 'Product Setup', 'productSetup.index', 'fa fa-caret', 2, '1', '2019-11-26 03:04:52', '2019-11-26 03:04:52');
 
 -- --------------------------------------------------------
 
@@ -271,7 +281,11 @@ INSERT INTO `user_menu_actions` (`id`, `parentmenuId`, `menuType`, `actionName`,
 (21, 7, 1, 'Add', 'categorySetup.add', 21, 1, '2019-11-25 00:20:28', '2019-11-25 00:20:28'),
 (22, 7, 2, 'Edit', 'categorySetup.edit', 22, 1, '2019-11-25 00:20:54', '2019-11-25 00:20:54'),
 (23, 7, 4, 'Delete', 'categorySetup.delete', 23, 1, '2019-11-25 00:38:43', '2019-11-25 00:38:43'),
-(24, 7, 3, 'Category Status', 'categorySetup.status', 24, 1, '2019-11-25 00:40:19', '2019-11-25 00:40:19');
+(24, 7, 3, 'Status', 'categorySetup.status', 24, 1, '2019-11-25 00:40:19', '2019-11-26 03:10:39'),
+(25, 8, 1, 'Add', 'productSetup.add', 25, 1, '2019-11-26 03:05:58', '2019-11-26 03:05:58'),
+(26, 8, 2, 'Edit', 'productSetup.edit', 26, 1, '2019-11-26 03:06:22', '2019-11-26 03:06:22'),
+(27, 8, 4, 'Delete', 'productSetup.delete', 27, 1, '2019-11-26 03:07:04', '2019-11-26 03:07:04'),
+(28, 8, 3, 'Status', 'productSetup.status', 28, 1, '2019-11-26 03:10:00', '2019-11-26 03:10:00');
 
 -- --------------------------------------------------------
 
@@ -294,7 +308,7 @@ CREATE TABLE `user_roles` (
 --
 
 INSERT INTO `user_roles` (`id`, `name`, `status`, `permission`, `actionPermission`, `created_at`, `updated_at`) VALUES
-(1, 'Super Admin', 1, '1,2,3,4,5,6,7', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,20,18,19,17,21,22,23,24', '2019-11-21 04:48:03', '2019-11-25 00:43:13'),
+(1, 'Super Admin', 1, '1,2,3,4,5,6,7,8', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,20,18,19,17,21,22,23,24,25,26,27,28', '2019-11-21 04:48:03', '2019-11-26 03:11:01'),
 (2, 'Admin', 0, NULL, NULL, '2019-11-24 01:10:16', '2019-11-24 01:10:16');
 
 --
@@ -382,7 +396,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -394,7 +408,7 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT for table `tbl_categories`
 --
 ALTER TABLE `tbl_categories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_showroom`
@@ -406,13 +420,13 @@ ALTER TABLE `tbl_showroom`
 -- AUTO_INCREMENT for table `user_menus`
 --
 ALTER TABLE `user_menus`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `user_menu_actions`
 --
 ALTER TABLE `user_menu_actions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `user_roles`

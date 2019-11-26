@@ -12,34 +12,16 @@
                     <tr>
                         <th width="20px">SL</th>
                         <th>Name</th>
+                        <th>Category</th>
+                        <th>Code</th>
                         <th>Image</th>
-                        <th>Parent</th>
+                        <th>Price</th>
+                        <th>Discount</th>
                         <th width="20px">Status</th>
                         <th width="20px">Action</th>
                     </tr>
                 </thead>
-                <tbody id="">
-                	@php
-                		$sl = 0;
-                	@endphp
-                	@foreach ($categories as $category)
-                		<tr>
-                			<td>{{ $sl++ }}</td>
-                			<td>{{ $category->name }}</td>
-                			<td>
-                				<img src="{{ url($category->image) }}" class="img-thumbnail" alt="Category Image" width="100px" height="100px">
-                			</td>
-                			<td>{{ $category->parentName }}</td>
-                			<td>
-                				<?php echo \App\Link::status($category->id,$category->status)?>
-                			</td>
-                			<td>
-                    			@php
-                    				echo \App\Link::action($category->id);
-                    			@endphp                				
-                			</td>
-                		</tr>
-                	@endforeach
+                <tbody id="tbody">
                 </tbody>
             </table>
         </div>
@@ -78,7 +60,7 @@
                   }
                 });
 
-                categoryId = $(this).parent().data('id');
+                productId = $(this).parent().data('id');
                 var tableRow = this;
                 swal({   
                     title: "Are you sure?",   
@@ -95,8 +77,8 @@
                     if (isConfirm) {
                         $.ajax({
                             type: "POST",
-                            url : "{{ route('categorySetup.delete') }}",
-                            data : {categoryId:categoryId},
+                            url : "{{ route('productSetup.delete') }}",
+                            data : {productId:productId},
                            
                             success: function(response) {
                                 swal({
@@ -138,14 +120,14 @@
         });
                 
         //ajax status change code
-        function statusChange(category_id) {
+        function statusChange(product_id) {
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 type: "post",
-                url: "{{ route('categorySetup.status') }}",
-                data: {categoryId:category_id},
+                url: "{{ route('productSetup.status') }}",
+                data: {productId:product_id},
                 success: function(response) {
                     swal({
                         title: "<small class='text-success'>Success!</small>", 

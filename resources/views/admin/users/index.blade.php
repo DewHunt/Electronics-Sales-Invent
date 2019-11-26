@@ -1,81 +1,49 @@
-@extends('admin.layouts.master')
+@extends('admin.layouts.masterIndex')
 
-@section('content')
-    <div style="padding: 10px;"></div>
+@section('card_body')
+    <div class="card-body">
+        <div class="table-responsive">
+            @php
+                $message = Session::get('msg');
+                if (isset($message))
+                {
+                    echo"<div style='display:inline-block;width: auto;' class='alert alert-success'><strong>" .$message."</strong></div>";
+                }
 
-    @php
-        $message = Session::get('msg');
-    @endphp
-
-    @if (isset($message))
-        <div class="alert alert-success alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>Success!</strong> {{ $message }}
-        </div>
-    @endif
-
-    @php
-        Session::forget('msg');
-    @endphp
-
-    <div class="card">
-        <div class="card-header">
-            <div class="row">
-                <div class="col-md-6"><h4 class="card-title">{{ $title }}</h4></div>
-                <div class="col-md-6">
-                    <span class="shortlink">
-                        <a style="margin-right: 0px; font-size: 16px;" class="btn btn-outline-info btn-lg" href="{{ route('user.add') }}">
-                            <i class="fa fa-plus-circle"></i> Add New
-                        </a>                            
-                    </span>
-                </div>
-            </div>
-        </div>
-
-        <div class="card-body">
-            <div class="table-responsive">
-                @php
-                    $message = Session::get('msg');
-                    if (isset($message))
-                    {
-                        echo"<div style='display:inline-block;width: auto;' class='alert alert-success'><strong>" .$message."</strong></div>";
-                    }
-
-                    Session::forget('msg');
-                @endphp
-                <table id="usersTable" class="table table-bordered table-striped"  name="usersTable">
-                    <thead>
-                        <tr>
-                            <th>Sl</th>
-                            <th>User Name</th>
-                            <th>Email</th>
-                            <th>status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbody">
+                Session::forget('msg');
+            @endphp
+            <table id="usersTable" class="table table-bordered table-striped"  name="usersTable">
+                <thead>
+                    <tr>
+                        <th>Sl</th>
+                        <th>User Name</th>
+                        <th>Email</th>
+                        <th>status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                    @php
+                        $sl = 0;
+                    @endphp
+                	@foreach($users as $user)
                         @php
-                            $sl = 0;
-                        @endphp
-                    	@foreach($users as $user)
-                            @php
-                                $sl++;
-                            @endphp                        	
-                        	<tr>
-                                <td>{{ $sl }}</td>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>
-                                    <?php echo \App\Link::status($user->id,$user->status)?>
-                                </td>
-                                <td class="text-nowrap">
-                                <?php echo \App\Link::action($user->id)?>
-                                </td>
-                            </tr>
-                    	@endforeach
-                    </tbody>
-                </table>
-            </div>
+                            $sl++;
+                        @endphp                        	
+                    	<tr>
+                            <td>{{ $sl }}</td>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>
+                                <?php echo \App\Link::status($user->id,$user->status)?>
+                            </td>
+                            <td class="text-nowrap">
+                            <?php echo \App\Link::action($user->id)?>
+                            </td>
+                        </tr>
+                	@endforeach
+                </tbody>
+            </table>
         </div>
     </div>
 
@@ -273,7 +241,6 @@
                 
         //ajax status change code
         function statusChange(user_id) {
-                console.log(user_id);
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

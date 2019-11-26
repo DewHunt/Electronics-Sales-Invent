@@ -11,11 +11,6 @@ use Session;
 
 class UserMenuController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $title = "User Menu";
@@ -26,17 +21,20 @@ class UserMenuController extends Controller
     public function add()
     {
         $title = "Add User Menu";
+        $formLink = "usermenu.save";
+        $buttonName = "Save";
         $menus = UserMenu::where('menuStatus',1)->get();
-        return view('admin.usermenus.add')->with(compact('title','menus'));
+        return view('admin.usermenus.add')->with(compact('title','formLink','buttonName','menus'));
     }
 
-     public function save(Request $request){
+    public function save(Request $request)
+    {
         $this->validate(request(), [
-             'menuName' => 'required|unique:user_menus',         
-             'menuLink' => 'required',     
-             'orderBy' => 'required',     
-             'menuStatus' => 'required',     
-        ]);
+           'menuName' => 'required|unique:user_menus',         
+           'menuLink' => 'required',     
+           'orderBy' => 'required',     
+           'menuStatus' => 'required',     
+       ]);
         $menu = UserMenu::create( [
             'parentMenu' => $request->parentMenu,            
             'menuName' => $request->menuName,            
@@ -44,18 +42,20 @@ class UserMenuController extends Controller
             'menuIcon' => $request->menuIcon,            
             'orderBy' => $request->orderBy, 
             'menuStatus' => $request->menuStatus, 
-                   
+
         ]);
 
-       return redirect(route('usermenu.add'))->with('msg','User Menu Added Successfully');     
+        return redirect(route('usermenu.add'))->with('msg','User Menu Added Successfully');     
     }
 
-     public function edit($id)
-     {
+    public function edit($id)
+    {
         $title = "Edit User Menu";
+        $formLink = "usermenu.update";
+        $buttonName = "Update";
         $menuItem = UserMenu::where('id',$id)->first();
         $menus = UserMenu::where('menuStatus',1)->get();
-        return view('admin.usermenus.edit')->with(compact('title','menus','menuItem'));
+        return view('admin.usermenus.edit')->with(compact('title','formLink','buttonName','menus','menuItem'));
     }
 
      public function update(Request $request){

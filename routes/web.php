@@ -60,10 +60,10 @@ Route::prefix('admin')->group(function()
 
 			//User Manage
 			Route::get('/user','Admin\AdminController@index')->name('user.index');
-			Route::get('/user-add','Admin\AdminController@adduser')->name('user.add');
-			Route::post('/user-save','Admin\AdminController@saveuser')->name('user.save');
-			Route::get('/user-edit/{id}','Admin\AdminController@edituser')->name('user.edit');
-			Route::post('/user-upate','Admin\AdminController@updateuser')->name('user.update');
+			Route::get('/user-add','Admin\AdminController@addUser')->name('user.add');
+			Route::post('/user-save','Admin\AdminController@saveUser')->name('user.save');
+			Route::get('/user-edit/{id}','Admin\AdminController@editUser')->name('user.edit');
+			Route::post('/user-upate','Admin\AdminController@updateUser')->name('user.update');
 			Route::get('/user-change-password/{id}','Admin\AdminController@password')->name('user.changePassword');
 			Route::post('/user-save-password','Admin\AdminController@passwordChange')->name('user.savePassword');
 			Route::post('/user-profile','Admin\AdminController@userProfile')->name('user.profile');

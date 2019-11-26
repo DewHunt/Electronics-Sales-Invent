@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 26, 2019 at 01:34 PM
--- Server version: 10.4.6-MariaDB
--- PHP Version: 7.3.9
+-- Generation Time: Nov 26, 2019 at 09:31 PM
+-- Server version: 10.1.28-MariaDB
+-- PHP Version: 7.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -32,8 +32,8 @@ CREATE TABLE `admins` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `username` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `username` text COLLATE utf8mb4_unicode_ci,
+  `image` text COLLATE utf8mb4_unicode_ci,
   `role` int(11) DEFAULT NULL,
   `showroomId` varchar(11) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -63,12 +63,12 @@ CREATE TABLE `menus` (
   `id` int(10) UNSIGNED NOT NULL,
   `menuName` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `menuTitle` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `menuContent` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `menuStatus` tinyint(1) NOT NULL DEFAULT 1,
-  `menuType` int(11) NOT NULL DEFAULT 1,
-  `metaTitle` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `metaKeyword` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `metaDescription` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `menuContent` text COLLATE utf8mb4_unicode_ci,
+  `menuStatus` tinyint(1) NOT NULL DEFAULT '1',
+  `menuType` int(11) NOT NULL DEFAULT '1',
+  `metaTitle` text COLLATE utf8mb4_unicode_ci,
+  `metaKeyword` text COLLATE utf8mb4_unicode_ci,
+  `metaDescription` text COLLATE utf8mb4_unicode_ci,
   `orderBy` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -125,18 +125,18 @@ CREATE TABLE `password_resets` (
 
 CREATE TABLE `settings` (
   `id` int(10) UNSIGNED NOT NULL,
-  `siteLogo` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `adminLogo` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mobile1` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mobile2` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `siteEmail1` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `siteEmail2` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `siteAddress1` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `siteAddress2` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `siteLogo` text COLLATE utf8mb4_unicode_ci,
+  `adminLogo` text COLLATE utf8mb4_unicode_ci,
+  `mobile1` text COLLATE utf8mb4_unicode_ci,
+  `mobile2` text COLLATE utf8mb4_unicode_ci,
+  `siteEmail1` text COLLATE utf8mb4_unicode_ci,
+  `siteEmail2` text COLLATE utf8mb4_unicode_ci,
+  `siteAddress1` text COLLATE utf8mb4_unicode_ci,
+  `siteAddress2` text COLLATE utf8mb4_unicode_ci,
   `sitestatus` int(11) DEFAULT NULL,
-  `metaTitle` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `metaKeyword` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `metaDescription` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `metaTitle` text COLLATE utf8mb4_unicode_ci,
+  `metaKeyword` text COLLATE utf8mb4_unicode_ci,
+  `metaDescription` text COLLATE utf8mb4_unicode_ci,
   `orderBy` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -151,14 +151,14 @@ CREATE TABLE `settings` (
 CREATE TABLE `tbl_categories` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cover_image` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
-  `parent` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cover_image` text COLLATE utf8mb4_unicode_ci,
+  `image` text COLLATE utf8mb4_unicode_ci,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `parent` text COLLATE utf8mb4_unicode_ci,
   `show_in_home_page` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_title` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_keyword` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_title` text COLLATE utf8mb4_unicode_ci,
+  `meta_keyword` text COLLATE utf8mb4_unicode_ci,
+  `meta_description` text COLLATE utf8mb4_unicode_ci,
   `order_by` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -232,7 +232,7 @@ INSERT INTO `user_menus` (`id`, `parentMenu`, `menuName`, `menuLink`, `menuIcon`
 (4, '2', 'Showroom Setup', 'showroomSetup.index', 'fa fa-caret', 3, '1', '2019-11-23 01:20:57', '2019-11-23 02:03:09'),
 (5, '2', 'Create User', 'user.index', 'fa fa-caret', 4, '1', '2019-11-23 05:52:47', '2019-11-23 05:52:47'),
 (6, NULL, 'Business Settings', 'admin.index', 'fa fa-bars', 5, '1', '2019-11-24 23:01:00', '2019-11-24 23:01:00'),
-(7, '6', 'Category Setup', 'categorySetup.index', 'fa fa-caret', 1, '1', '2019-11-25 00:19:54', '2019-11-25 00:19:54'),
+(7, '6', 'Category Setup', 'categorySetup.index', 'fa fa-caret', 1, '1', '2019-11-25 00:19:54', '2019-11-26 14:29:29'),
 (8, '6', 'Product Setup', 'productSetup.index', 'fa fa-caret', 2, '1', '2019-11-26 03:04:52', '2019-11-26 03:04:52');
 
 -- --------------------------------------------------------
@@ -295,10 +295,10 @@ INSERT INTO `user_menu_actions` (`id`, `parentmenuId`, `menuType`, `actionName`,
 
 CREATE TABLE `user_roles` (
   `id` int(10) UNSIGNED NOT NULL,
-  `name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` text COLLATE utf8mb4_unicode_ci,
   `status` int(11) DEFAULT NULL,
-  `permission` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `actionPermission` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `permission` text COLLATE utf8mb4_unicode_ci,
+  `actionPermission` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

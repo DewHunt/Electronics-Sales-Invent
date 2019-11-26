@@ -19,15 +19,17 @@ class AdminController extends Controller
         return view('admin.users.index')->with(compact('title','users'));
     }
 
-    public function adduser()
+    public function addUser()
     {
         $title = "Add New User";
+        $formLink = "user.save";
+        $buttonName = "Save";
         $userRoles = UserRoles::orderBy('name','ASC')->get();
         $showrooms = ShowroomSetup::orderBy('name','ASC')->get();
-        return view('admin.users.add')->with(compact('title','userRoles','showrooms'));
+        return view('admin.users.add')->with(compact('title','formLink','buttonName','userRoles','showrooms'));
     }
 
-    public function saveuser(Request $request)
+    public function saveUser(Request $request)
     {
         $this->validation($request);
 
@@ -58,16 +60,18 @@ class AdminController extends Controller
         return redirect(route('user.index'))->with('msg','User Added Successfully');     
     }
 
-    public function edituser($id)
+    public function editUser($id)
     {
         $title = "Edit User";
+        $formLink = "user.update";
+        $buttonName = "Update";
         $userRoles = UserRoles::orderBy('name','ASC')->get();
         $showrooms = ShowroomSetup::orderBy('name','ASC')->get();
         $users = Admin::where('id',$id)->first();
-        return view('admin.users.edit')->with(compact('title','users','userRoles','showrooms'));
+        return view('admin.users.edit')->with(compact('title','formLink','buttonName','users','userRoles','showrooms'));
     }
    
-    public function updateuser(Request $request)
+    public function updateUser(Request $request)
     {
         $this->validate(request(), [
             'role' => 'required',
@@ -106,9 +110,11 @@ class AdminController extends Controller
 
     public function password($id)
     {
-        $title = "Change Paaword";
+        $title = "Change Password";
+        $formLink = "user.savePassword";
+        $buttonName = "Update";
         $users = Admin::where('id',$id)->first();
-        return view('admin.users.changePassword')->with(compact('title','users'));
+        return view('admin.users.changePassword')->with(compact('title','formLink','buttonName','users'));
     }
 
     public function passwordChange(Request $request)

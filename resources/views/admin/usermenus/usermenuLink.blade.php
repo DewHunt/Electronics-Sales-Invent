@@ -1,101 +1,92 @@
 @extends('admin.layouts.master')
 
-@section('title')
-    <title>{{ $title }}</title>
-@endsection
-
-@section('custom-css')
-<meta name="csrf-token" content="{{ csrf_token() }}">
-@endsection
-
 <?php
     use App\UserMenu;
 ?>
 
 @section('content')
+    <div style="padding-bottom: 10px;"></div>
 
-<!-- ============================================================== -->
-<!-- Start Page Content -->
-<!-- ============================================================== -->
+    @php
+        $message = Session::get('msg');
+    @endphp
 
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <div class="row">
-                    <div class="col-md-6"><h4 class="card-title">{{$title}}</h4> </div>
-                    <div class="col-md-6">
-                        <span class="shortlink">
+    @if (isset($message))
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Success!</strong> {{ $message }}
+        </div>
+    @endif
+
+    @php
+        Session::forget('msg');
+    @endphp
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-6"><h4 class="card-title">{{$title}}</h4> </div>
+                        <div class="col-md-6 text-right">
                             <a style="margin-left: 0px; font-size: 16px;" class="btn btn-outline-info btn-lg"  href="{{ route($goBackLink) }}">
                                 <i class="fa fa-arrow-circle-left"></i> Go Back
                             </a>
                             <a style="margin-left: 0px; font-size: 16px;" class="btn btn-outline-info btn-lg" href="{{ route('userMenu.ActionLinkAdd',$menuId) }}">
-                                <i class="fa fa-plus-circle"></i> Add new
+                                <i class="fa fa-plus-circle"></i> Add New
                             </a>
-                        </span>
-                    </div>
-                </div>                   
-            </div>
+                        </div>
+                    </div>                   
+                </div>
 
-            <div class="card-body">
-                @php
-                    $message = Session::get('msg');
-                    if (isset($message))
-                    {
-                        echo"<div style='display:inline-block;width: auto;' class='alert alert-success'><strong>" .$message."</strong></div>";
-                    }
-
-                    Session::forget('msg')                    
-                @endphp                
-                <div class="table-responsive">
-                    <table id="menusTable" class="table table-bordered table-striped"  name="menusTable">
-                        <thead>
-                            <tr>
-                                <th width="50px">Sl</th>
-                                <th>Name</th>
-                                <th>Parent</th>
-                                <th>Link</th>
-                                <th width="60px">Order</th>
-                                <th width="60px">Status</th>
-                                <th width="60px">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbody">
-                            @php
-                                $sl = 0;
-                            @endphp
-                        	@foreach($menus as $menu)
+                <div class="card-body">                
+                    <div class="table-responsive">
+                        <table id="menusTable" class="table table-bordered table-striped"  name="menusTable">
+                            <thead>
+                                <tr>
+                                    <th width="50px">Sl</th>
+                                    <th>Name</th>
+                                    <th>Parent</th>
+                                    <th>Link</th>
+                                    <th width="60px">Order</th>
+                                    <th width="60px">Status</th>
+                                    <th width="60px">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
                                 @php
-                                    $parentMenu = UserMenu::where('id',$menu->parentmenuId)->first();
-                                    $sl++;
-                                @endphp                    	
-                        	<tr>
-                                <td>{{ $sl }}</td>
-                                <td>{{ $menu->actionName }}</td>
-                                <td>{{ $parentMenu->menuName }}</td>
-                                <td>{{ $menu->actionLink }}</td>
-                                <td>{{ $menu->orderBy }}</td>
-                                <td>
-                                    <span class="switchery-demo m-b-30" onclick="statusChange({{ $menu->id }})">
-                                    <input type="checkbox" {{ $menu->actionStatus ? 'checked':'' }} class="js-switch" data-color="#00c292" data-switchery="true" style="display: none;" >
-                                    </span>
-                                </td>
-                                <td class="text-nowrap">
-                                    <a href="{{ route('userMenu.ActionLinkEdit',['parentMenu'=>$menuId,'actionMenuId'=>$menu->id]) }}" data-toggle="tooltip" data-original-title="Edit" data-id="{{ $menu->id }}"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
+                                    $sl = 0;
+                                @endphp
+                            	@foreach($menus as $menu)
+                                    @php
+                                        $parentMenu = UserMenu::where('id',$menu->parentmenuId)->first();
+                                        $sl++;
+                                    @endphp                    	
+                            	<tr>
+                                    <td>{{ $sl }}</td>
+                                    <td>{{ $menu->actionName }}</td>
+                                    <td>{{ $parentMenu->menuName }}</td>
+                                    <td>{{ $menu->actionLink }}</td>
+                                    <td>{{ $menu->orderBy }}</td>
+                                    <td>
+                                        <span class="switchery-demo m-b-30" onclick="statusChange({{ $menu->id }})">
+                                        <input type="checkbox" {{ $menu->actionStatus ? 'checked':'' }} class="js-switch" data-color="#00c292" data-switchery="true" style="display: none;" >
+                                        </span>
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <a href="{{ route('userMenu.ActionLinkEdit',['parentMenu'=>$menuId,'actionMenuId'=>$menu->id]) }}" data-toggle="tooltip" data-original-title="Edit" data-id="{{ $menu->id }}"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
 
-                                    <a href="javascript:void(0)" data-toggle="tooltip" data-original-title="Delete" data-id="{{$menu->id}}"  data-token="{{ csrf_token() }}"> <i class="fa fa-trash text-danger"></i> </a>
-                                </td>
-                            </tr>
-                        	@endforeach
-                        </tbody>
-                    </table>
+                                        <a href="javascript:void(0)" data-toggle="tooltip" data-original-title="Delete" data-id="{{$menu->id}}"  data-token="{{ csrf_token() }}"> <i class="fa fa-trash text-danger"></i> </a>
+                                    </td>
+                                </tr>
+                            	@endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-
 @endsection
 
 @section('custom-js')

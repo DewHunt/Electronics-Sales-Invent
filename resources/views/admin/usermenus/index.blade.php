@@ -1,97 +1,54 @@
-@extends('admin.layouts.master')
-
-@section('title')
-    <title>{{ $title }}</title>
-@endsection
-
-@section('custom-css')
-<meta name="csrf-token" content="{{ csrf_token() }}">
-@endsection
+@extends('admin.layouts.masterIndex')
 
 <?php
     use App\UserMenu;
 ?>
 
-@section('content')
+@section('card_body')
+    <div class="card-body">
+        
+        <div class="table-responsive">
+            <table id="menusTable" class="table table-bordered table-striped"  name="menusTable">
+                <thead>
+                    <tr>
+                        <th>Sl</th>
+                        <th>Name</th>
+                        <th>Parent</th>
+                        <th>Link</th>
+                        <th>Order</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                    @php
+                        $sl = 0;                                
+                    @endphp
 
-<!-- ============================================================== -->
-<!-- Start Page Content -->
-<!-- ============================================================== -->
+                	@foreach($menus as $menu)
+                        @php
+                            $sl++;
+                            $parentMenu = UserMenu::where('id',$menu->parentMenu)->first();
+                        @endphp
 
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <div class="row">
-                    <div class="col-md-6"><h4 class="card-title">{{ $title }}</h4></div>
-                    <div class="col-md-6">
-                        <span class="shortlink">
-                            <a style="margin-right: 0px; font-size: 16px;" class="btn btn-outline-info btn-lg" href="{{ url('/admin/user-menu/add') }}">
-                                <i class="fa fa-plus-circle"></i> Add New
-                            </a>                            
-                        </span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card-body">
-                @php
-                    $message = Session::get('msg');
-                    if (isset($message))
-                    {
-                        echo"<div style='display:inline-block;width: auto;' class='alert alert-success'><strong>" .$message."</strong></div>";
-                    }
-
-                    Session::forget('msg')                    
-                @endphp
-                
-                <div class="table-responsive">
-                    <table id="menusTable" class="table table-bordered table-striped"  name="menusTable">
-                        <thead>
-                            <tr>
-                                <th>Sl</th>
-                                <th>Name</th>
-                                <th>Parent</th>
-                                <th>Link</th>
-                                <th>Order</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbody">
-                            @php
-                                $sl = 0;                                
-                            @endphp
-
-                        	@foreach($menus as $menu)
-                                @php
-                                    $sl++;
-                                    $parentMenu = UserMenu::where('id',$menu->parentMenu)->first();
-                                @endphp
-
-                            	<tr>
-                                    <td>{{ $sl }}</td>
-                                    <td>{{ $menu->menuName }}</td>
-                                    <td>{{ @$parentMenu->menuName }}</td>
-                                    <td>{{ $menu->menuLink }}</td>
-                                    <td>{{ $menu->orderBy }}</td>
-                                    <td>
-                                        <?php echo \App\Link::status($menu->id,$menu->menuStatus)?>
-                                    </td>
-                                    <td class="text-nowrap">
-                                    <?php echo \App\Link::action($menu->id)?>
-                                    </td>
-                                </tr>
-                        	@endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                    	<tr>
+                            <td>{{ $sl }}</td>
+                            <td>{{ $menu->menuName }}</td>
+                            <td>{{ @$parentMenu->menuName }}</td>
+                            <td>{{ $menu->menuLink }}</td>
+                            <td>{{ $menu->orderBy }}</td>
+                            <td>
+                                <?php echo \App\Link::status($menu->id,$menu->menuStatus)?>
+                            </td>
+                            <td class="text-nowrap">
+                            <?php echo \App\Link::action($menu->id)?>
+                            </td>
+                        </tr>
+                	@endforeach
+                </tbody>
+            </table>
         </div>
     </div>
-</div>
-
-
 @endsection
 
 @section('custom-js')

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 27, 2019 at 01:49 PM
--- Server version: 10.4.6-MariaDB
--- PHP Version: 7.3.9
+-- Generation Time: Nov 27, 2019 at 09:13 PM
+-- Server version: 10.1.28-MariaDB
+-- PHP Version: 7.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -32,8 +32,8 @@ CREATE TABLE `admins` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `username` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `username` text COLLATE utf8mb4_unicode_ci,
+  `image` text COLLATE utf8mb4_unicode_ci,
   `role` int(11) DEFAULT NULL,
   `showroomId` varchar(11) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -56,6 +56,29 @@ INSERT INTO `admins` (`id`, `name`, `email`, `username`, `image`, `role`, `showr
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `alphabets`
+--
+
+CREATE TABLE `alphabets` (
+  `id` int(11) NOT NULL,
+  `name` varchar(250) NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `alphabets`
+--
+
+INSERT INTO `alphabets` (`id`, `name`, `status`) VALUES
+(1, 'A', 1),
+(2, 'B', 1),
+(3, 'C', 1),
+(4, 'D', 1),
+(5, 'E', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `menus`
 --
 
@@ -63,12 +86,12 @@ CREATE TABLE `menus` (
   `id` int(10) UNSIGNED NOT NULL,
   `menuName` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `menuTitle` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `menuContent` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `menuStatus` tinyint(1) NOT NULL DEFAULT 1,
-  `menuType` int(11) NOT NULL DEFAULT 1,
-  `metaTitle` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `metaKeyword` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `metaDescription` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `menuContent` text COLLATE utf8mb4_unicode_ci,
+  `menuStatus` tinyint(1) NOT NULL DEFAULT '1',
+  `menuType` int(11) NOT NULL DEFAULT '1',
+  `metaTitle` text COLLATE utf8mb4_unicode_ci,
+  `metaKeyword` text COLLATE utf8mb4_unicode_ci,
+  `metaDescription` text COLLATE utf8mb4_unicode_ci,
   `orderBy` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -103,11 +126,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (10, '2019_11_23_091359_create_tbl_showroom_table', 4),
 (11, '2019_11_24_063948_add_columns_to_admins_table', 5),
 (12, '2019_11_25_065701_create_tbl_categories_table', 6),
-(13, '2019_11_26_041205_create_tbl_categories_table', 7),
-(14, '2019_11_27_074459_create_tbl_products_table', 8),
-(15, '2019_11_27_074832_create_tbl_product_images_table', 8),
-(16, '2019_11_27_074944_create_tbl_product_advance_table', 8),
-(17, '2019_11_27_120510_add_product_section_to_tbl_product_advance_table', 9);
+(13, '2019_11_26_041205_create_tbl_categories_table', 7);
 
 -- --------------------------------------------------------
 
@@ -129,18 +148,18 @@ CREATE TABLE `password_resets` (
 
 CREATE TABLE `settings` (
   `id` int(10) UNSIGNED NOT NULL,
-  `siteLogo` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `adminLogo` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mobile1` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mobile2` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `siteEmail1` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `siteEmail2` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `siteAddress1` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `siteAddress2` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `siteLogo` text COLLATE utf8mb4_unicode_ci,
+  `adminLogo` text COLLATE utf8mb4_unicode_ci,
+  `mobile1` text COLLATE utf8mb4_unicode_ci,
+  `mobile2` text COLLATE utf8mb4_unicode_ci,
+  `siteEmail1` text COLLATE utf8mb4_unicode_ci,
+  `siteEmail2` text COLLATE utf8mb4_unicode_ci,
+  `siteAddress1` text COLLATE utf8mb4_unicode_ci,
+  `siteAddress2` text COLLATE utf8mb4_unicode_ci,
   `sitestatus` int(11) DEFAULT NULL,
-  `metaTitle` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `metaKeyword` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `metaDescription` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `metaTitle` text COLLATE utf8mb4_unicode_ci,
+  `metaKeyword` text COLLATE utf8mb4_unicode_ci,
+  `metaDescription` text COLLATE utf8mb4_unicode_ci,
   `orderBy` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -155,14 +174,14 @@ CREATE TABLE `settings` (
 CREATE TABLE `tbl_categories` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cover_image` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
-  `parent` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cover_image` text COLLATE utf8mb4_unicode_ci,
+  `image` text COLLATE utf8mb4_unicode_ci,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `parent` text COLLATE utf8mb4_unicode_ci,
   `show_in_home_page` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_title` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_keyword` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_title` text COLLATE utf8mb4_unicode_ci,
+  `meta_keyword` text COLLATE utf8mb4_unicode_ci,
+  `meta_description` text COLLATE utf8mb4_unicode_ci,
   `order_by` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -175,89 +194,6 @@ CREATE TABLE `tbl_categories` (
 INSERT INTO `tbl_categories` (`id`, `name`, `cover_image`, `image`, `status`, `parent`, `show_in_home_page`, `meta_title`, `meta_keyword`, `meta_description`, `order_by`, `created_at`, `updated_at`) VALUES
 (1, 'Smart Television', 'public/uploads/category_image/download_14321410993.jpg', 'public/uploads/category_image/W49E3000AS-1-220x220h_12931520932.jpg', 1, '2', 'Yes', 'Electronics || Bangladeshi Electronics Products', 'Electronics, Electronocs in Bangladesh', 'Electronics Products.', 2, '2019-11-26 00:07:28', '2019-11-26 01:32:11'),
 (2, 'Television', 'public/uploads/category_image/81OwqiQckgL._SL1500__96781947791.jpg', 'public/uploads/category_image/43UM7400_original_65661783580.jpg', 1, NULL, 'Yes', 'Electronics || Bangladeshi Electronics Products', 'Electronics, Electronocs in Bangladesh', 'Electronics Products.', NULL, '2019-11-26 00:13:09', '2019-11-26 00:13:09');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_products`
---
-
-CREATE TABLE `tbl_products` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `category_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `code` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `model_no` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `color` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `uom` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `price` int(11) DEFAULT NULL,
-  `mrp_price` int(11) DEFAULT NULL,
-  `haire_price` int(11) DEFAULT NULL,
-  `discount` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `warranty` int(11) DEFAULT NULL,
-  `reorder_level_qty` int(11) DEFAULT NULL,
-  `order_by` int(11) DEFAULT NULL,
-  `transport_point` int(11) DEFAULT NULL,
-  `status` tinyint(4) DEFAULT NULL,
-  `youtube_link` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `tag_line` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `short_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `long_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_title` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_keyword` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `tbl_products`
---
-
-INSERT INTO `tbl_products` (`id`, `category_id`, `name`, `code`, `model_no`, `color`, `uom`, `price`, `mrp_price`, `haire_price`, `discount`, `warranty`, `reorder_level_qty`, `order_by`, `transport_point`, `status`, `youtube_link`, `tag_line`, `short_description`, `long_description`, `meta_title`, `meta_keyword`, `meta_description`, `created_at`, `updated_at`) VALUES
-(6, '1,2', 'Samsung 32\" Smart TV', 'sam123', 'sam890', 'Black', 'Black', 45000, 48600, 54432, '1000', 5, 5, 1, 2, 1, NULL, 'Smart TV', 'rgshthsdfhs', 'jdytjkhjfhggfkgkgfh', NULL, NULL, NULL, '2019-11-27 06:46:52', '2019-11-27 06:46:52');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_product_advance`
---
-
-CREATE TABLE `tbl_product_advance` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `product_id` int(11) DEFAULT NULL,
-  `product_section` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `related_product_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `pre_order_duration` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `shipping` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `hot_discount` int(11) DEFAULT NULL,
-  `hot_discount_date` date DEFAULT NULL,
-  `special_discount` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `special_discount_date` date DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `tbl_product_advance`
---
-
-INSERT INTO `tbl_product_advance` (`id`, `product_id`, `product_section`, `related_product_id`, `pre_order_duration`, `shipping`, `hot_discount`, `hot_discount_date`, `special_discount`, `special_discount_date`, `created_at`, `updated_at`) VALUES
-(5, 6, NULL, '6', '10', NULL, 40000, '0000-00-00', NULL, NULL, '2019-11-27 06:46:52', '2019-11-27 06:47:45');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_product_images`
---
-
-CREATE TABLE `tbl_product_images` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `product_id` int(11) DEFAULT NULL,
-  `image` int(11) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -320,7 +256,8 @@ INSERT INTO `user_menus` (`id`, `parentMenu`, `menuName`, `menuLink`, `menuIcon`
 (5, '2', 'Create User', 'user.index', 'fa fa-caret', 4, '1', '2019-11-23 05:52:47', '2019-11-23 05:52:47'),
 (6, NULL, 'Business Settings', 'admin.index', 'fa fa-bars', 5, '1', '2019-11-24 23:01:00', '2019-11-24 23:01:00'),
 (7, '6', 'Category Setup', 'categorySetup.index', 'fa fa-caret', 1, '1', '2019-11-25 00:19:54', '2019-11-26 14:29:29'),
-(8, '6', 'Product Setup', 'productSetup.index', 'fa fa-caret', 2, '1', '2019-11-26 03:04:52', '2019-11-26 03:04:52');
+(8, '6', 'Product Setup', 'productSetup.index', 'fa fa-caret', 2, '1', '2019-11-26 03:04:52', '2019-11-26 03:04:52'),
+(9, '6', 'Drop Down Prob', 'dropDownProb.index', 'fa fa-caret', 3, '1', '2019-11-27 13:20:07', '2019-11-27 13:20:07');
 
 -- --------------------------------------------------------
 
@@ -382,10 +319,10 @@ INSERT INTO `user_menu_actions` (`id`, `parentmenuId`, `menuType`, `actionName`,
 
 CREATE TABLE `user_roles` (
   `id` int(10) UNSIGNED NOT NULL,
-  `name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` text COLLATE utf8mb4_unicode_ci,
   `status` int(11) DEFAULT NULL,
-  `permission` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `actionPermission` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `permission` text COLLATE utf8mb4_unicode_ci,
+  `actionPermission` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -395,7 +332,7 @@ CREATE TABLE `user_roles` (
 --
 
 INSERT INTO `user_roles` (`id`, `name`, `status`, `permission`, `actionPermission`, `created_at`, `updated_at`) VALUES
-(1, 'Super Admin', 1, '1,2,3,4,5,6,7,8', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,20,18,19,17,21,22,23,24,25,26,27,28', '2019-11-21 04:48:03', '2019-11-26 03:11:01'),
+(1, 'Super Admin', 1, '1,2,3,4,5,6,7,8,9', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,20,18,19,17,21,22,23,24,25,26,27,28', '2019-11-21 04:48:03', '2019-11-27 13:20:23'),
 (2, 'Admin', 0, NULL, NULL, '2019-11-24 01:10:16', '2019-11-24 01:10:16');
 
 --
@@ -408,6 +345,12 @@ INSERT INTO `user_roles` (`id`, `name`, `status`, `permission`, `actionPermissio
 ALTER TABLE `admins`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `admins_email_unique` (`email`);
+
+--
+-- Indexes for table `alphabets`
+--
+ALTER TABLE `alphabets`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `menus`
@@ -437,24 +380,6 @@ ALTER TABLE `settings`
 -- Indexes for table `tbl_categories`
 --
 ALTER TABLE `tbl_categories`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tbl_products`
---
-ALTER TABLE `tbl_products`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tbl_product_advance`
---
-ALTER TABLE `tbl_product_advance`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tbl_product_images`
---
-ALTER TABLE `tbl_product_images`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -492,6 +417,12 @@ ALTER TABLE `admins`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `alphabets`
+--
+ALTER TABLE `alphabets`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `menus`
 --
 ALTER TABLE `menus`
@@ -501,7 +432,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -513,25 +444,7 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT for table `tbl_categories`
 --
 ALTER TABLE `tbl_categories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `tbl_products`
---
-ALTER TABLE `tbl_products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `tbl_product_advance`
---
-ALTER TABLE `tbl_product_advance`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `tbl_product_images`
---
-ALTER TABLE `tbl_product_images`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tbl_showroom`
@@ -543,7 +456,7 @@ ALTER TABLE `tbl_showroom`
 -- AUTO_INCREMENT for table `user_menus`
 --
 ALTER TABLE `user_menus`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `user_menu_actions`

@@ -119,6 +119,9 @@ Route::prefix('admin')->group(function()
 			Route::post('/product-setup-delete','Admin\ProductSetupController@deleteProduct')->name('productSetup.delete');
 			Route::post('/products-setup-status','Admin\ProductSetupController@changeProductStatus')->name('productSetup.status');
 
+
+			Route::get('/drop-down-prob', 'Admin\DropDownProbController@index')->name('dropDownProb.index');
+
 		// User Management End
 		});
 	});

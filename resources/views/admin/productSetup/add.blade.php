@@ -118,4 +118,89 @@
         	$("#hairePrice").val(hairePrice.toFixed(2));
         }
     </script>
+
+    <script type="text/javascript">
+         $(document).ready(function() {              
+                var updateThis ;
+
+                //ajax upload image
+                $( "form[name='image-form']" ).on( "submit", function( event ) {
+                    $('.has-danger').removeClass('has-danger');
+                    var formData = new FormData(this);
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('productSetupImage.save') }}",
+                        data:formData,
+                        cache:false,
+                        contentType: false,
+                        processData: false,
+                        success: function(response) {
+                            var images = response.images;
+                            swal({
+                                title: "<small class='text-success'>Success!</small>", 
+                                type: "success",
+                                text: "Image Successfully Uploded!",
+                                timer: 2000,
+                                html: true,
+                            });
+                            $('#images').html(images);
+                        },
+                        error: function(response) {
+
+                        }
+                    });
+                    $("#image-form")[0].reset();
+                });
+            });
+
+            //ajax remove image
+            function removeImage(imageId)
+            {
+                // e.preventDefault();
+
+                swal({   
+                    title: "Are you sure?",   
+                    text: "You will not be able to recover this imaginary file!",   
+                    type: "warning",   
+                    showCancelButton: true,   
+                    confirmButtonColor: "#DD6B55",   
+                    confirmButtonText: "Yes, delete it!",   
+                    cancelButtonText: "No, cancel plx!",   
+                    closeOnConfirm: false,   
+                    closeOnCancel: false 
+                },
+
+                function(isConfirm){
+                	if (isConfirm) {                    
+                        $.ajax({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            type : 'POST',
+                            url: "{{ route('productSetupImage.delete') }}",
+                            data : {imageId : imageId},
+                            success : function(response){
+                                swal({
+                                    title: "<small class='text-success'>Success!</small>", 
+                                    type: "success",
+                                    text: "Image deleted Successfully!",
+                                    timer: 1000,
+                                    html: true,
+                                });
+                                $('.card_image_'+imageId).remove();
+                            }
+                        })
+
+                    }else { 
+                        swal({
+                            title: "Cancelled", 
+                            type: "error",
+                            text: "Your Image is safe :)",
+                            timer: 1000,
+                            html: true,
+                        });    
+                    }
+                });
+            }
+    </script>
 @endsection

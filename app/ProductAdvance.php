@@ -9,7 +9,7 @@ class ProductAdvance extends Model
     protected $table = "tbl_product_advance";
 
     protected $fillable = [
-    	'product_id','related_product_id','pre_order_duration','shipping','hot_discount','hot_discount_date','special_discount','special_discount_date'
+    	'product_id','product_section','related_product_id','pre_order_duration','shipping','hot_discount','hot_discount_date','special_discount','special_discount_date'
     ];
 
 	protected $hidden = [

@@ -22,6 +22,28 @@
                     </tr>
                 </thead>
                 <tbody id="tbody">
+                	@foreach($products as $product)                        	
+                    	<tr>
+                            @php
+                                $sl++;
+                            @endphp
+                            <td>{{ $sl }}</td>
+                            <td>{{ $product->name }}</td>
+                            <td>{{ $product->catName }}</td>
+                            <td>{{ $product->code }}</td>
+                            <td>
+                                @if ($product->image == "")
+                                    Image Not Found
+                                @else
+                                    <img src="{{ asset('/').$product->image }}" style="width: 75px; height: 75px; margin: 0px;" alt="No Image">
+                                @endif
+                            </td>
+                            <td>{{ $product->price }}</td>
+                            <td>{{ $product->discount }}</td>                                        
+                            <td><?php echo \App\Link::status($product->id,$product->status)?></td>
+                            <td class="text-nowrap"><?php echo \App\Link::action($product->id)?></td>
+                        </tr>
+                	@endforeach
                 </tbody>
             </table>
         </div>

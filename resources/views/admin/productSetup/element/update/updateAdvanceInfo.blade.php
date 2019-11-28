@@ -16,17 +16,31 @@
 
         <div class="card-body">
             <input type="hidden" name="productId" value="{{ $productId }}">
-            <input type="hidden" name="type" value="add">
+            <input type="hidden" name="type" value="update">
 
             <div class="row">
             	<div class="col-md-6">
             		@php
             			$productSections = array('New Arrival'=>'New Arrival','Featured Product'=>'Featured Product','Top Rated'=>'Top Rated','Best Seller'=>'Best Seller');
+                        $relatedProductId = explode(',', $productAdvance->related_product_id);
+                        $sections = explode(',', $productAdvance->product_section);
             		@endphp
             		<label for="product-section">Product Section</label>
             		<select class="form-control chosen-select" name="sections[]" data-placeholder="Select Product Section" multiple>
             			@foreach ($productSections as $key => $value)
-            				<option value="{{ $key }}">{{ $value }}</option>
+                            @php
+                                $select = "";
+                                if (in_array($key,$sections))
+                                {
+                                    $select = 'selected';
+                                }
+                                else
+                                {
+                                    $select = "";
+                                }
+                                
+                            @endphp
+            				<option value="{{ $key }}" {{ $select }}>{{ $value }}</option>
             			@endforeach
             		</select>
             	</div>
@@ -36,7 +50,18 @@
                     <div class="form-group">
                         <select name="relatedProduct[]" data-placeholder="Select Related Products" class="form-control chosen-select" multiple>
                             @foreach($relatedProducts as $products)
-                                <option value="{{ $products->id }}">{{ $products->name }}({{ $products->code }})</option>
+                                @php
+                                    $select = "";
+                                    if (in_array($products->id, $relatedProductId))
+                                    {
+                                        $select = "selected";
+                                    }
+                                    else
+                                    {
+                                        $select = "";
+                                    }
+                                @endphp
+                                <option value="{{ $products->id }}" {{ $select }}>{{ $products->name }} ({{ $products->code }})</option>
                             @endforeach
                         </select>
 
@@ -55,7 +80,7 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-12">
-                                <input type="text" class="form-control form-control-danger" placeholder="Preorder Duration" name="preOrderDuration">
+                                <input type="text" class="form-control form-control-danger" placeholder="Preorder Duration" name="preOrderDuration" value="{{ $productAdvance->pre_order_duration }}">
                             </div>
                         </div>
                     </div>
@@ -66,7 +91,7 @@
                     <div class="form-group" style="height: 40px; line-height: 40px;">
                         <div class="form-check-inline">
                             <label class="form-check-label" for="shiooing">
-                                <input class="form-check-input" type="checkbox" name="shipping" value="free">Free Shipping
+                                <input class="form-check-input" type="checkbox" name="shipping" value="free" {{ $productAdvance->shipping == "free" ? 'checked' : '' }}>Free Shipping
                             </label>
                         </div>
                     </div>
@@ -80,7 +105,7 @@
                 <div class="col-md-6">
                     <div class="form-check-inline">
                         <label class="form-check-label" for="hot-deal">
-                            <input class="form-check-input" type="checkbox" name="hotDeal" value="{{ old('hotDeal') }}" id="hotInput">
+                            <input class="form-check-input" type="checkbox" name="hotDeal" value="" id="hotInput" {{ $productAdvance->hot_discount != "" ? 'checked' : '' }}>
                             <label for="hot-deal">Hot Deal</label>
                         </label>
                     </div>
@@ -88,10 +113,10 @@
                         <span style="display: none;" id="hotDeal" class="hotDeal">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control form-control-danger" placeholder="Discount For Hot Deal" name="hotDiscount" value="{{ old('hotDiscount') }}">
+                                    <input type="text" class="form-control form-control-danger" placeholder="Discount For Hot Deal" name="hotDiscount" value="{{ $productAdvance->hot_discount }}">
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control form-control-danger datepicker" placeholder="Date" name="hotDate" value="{{ old('hotDate') }}">
+                                    <input type="text" class="form-control form-control-danger datepicker" placeholder="Date" name="hotDate" value="{{ $productAdvance->hot_discount_date }}">
                                 </div>
                             </div>                                                
                         </span>
@@ -101,7 +126,7 @@
                 <div class="col-md-6">
                     <div class="form-check-inline">
                         <label class="form-check-label" for="hot-deal">
-                            <input class="form-check-input" type="checkbox" id="specialInput" name="specialDeal" value="{{ old('specialDeal') }}">
+                            <input class="form-check-input" type="checkbox" id="specialInput" name="specialDeal" value="" {{ $productAdvance->special_discount != "" ? 'checked' : '' }}>
                             <label for="special-deal">Special Deal</label>
                         </label>
                     </div>
@@ -109,11 +134,11 @@
                         <span style="display: none;" id="specialDeal" class="specialDeal">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control form-control-danger" placeholder="Discount For Special Deal" name="specialDiscount" value="{{ old('specialDiscount') }}">
+                                    <input type="text" class="form-control form-control-danger" placeholder="Discount For Special Deal" name="specialDiscount" value="{{ $productAdvance->special_discount }}">
                                 </div>
 
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control form-control-danger datepicker" placeholder="Date" name="specialDate" value="{{ old('specialDate') }}">
+                                    <input type="text" class="form-control form-control-danger datepicker" placeholder="Date" name="specialDate" value="{{ $productAdvance->special_discount_date }}">
                                 </div>
                             </div>
                         </span>

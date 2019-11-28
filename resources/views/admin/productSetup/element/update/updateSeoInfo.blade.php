@@ -15,14 +15,14 @@
         </div>
 
         <div class="card-body">
-            <input type="hidden" name="productId" value="{{ @$productId }}">
-            <input type="hidden" name="type" value="add">
+            <input type="hidden" name="productId" value="{{ $productId }}">
+            <input type="hidden" name="type" value="update">
 
             <div class="row">
                 <div class="col-md-6">
                     <label for="meta-title">Meta Title</label>
                     <div class="form-group {{ $errors->has('metaTitle') ? ' has-danger' : '' }}">
-                        <input type="text" class="form-control form-control-danger" name="metaTitle" value="{{ old('metaTitle') }}" required>
+                        <input type="text" class="form-control form-control-danger" name="metaTitle" value="{{ $product->meta_title }}" required>
                         @if ($errors->has('metaTitle'))
                             @foreach($errors->get('metaTitle') as $error)
                                 <div class="form-control-feedback">{{ $error }}</div>
@@ -33,7 +33,7 @@
                 <div class="col-md-6">
                     <label for="meta-keyword">Meta Keyword</label>
                     <div class="form-group {{ $errors->has('metaKeyword') ? ' has-danger' : '' }}">
-                        <input type="text" class="form-control form-control-danger" name="metaKeyword" value="{{ old('metaKeyword') }}" required>
+                        <input type="text" class="form-control form-control-danger" name="metaKeyword" value="{{ $product->meta_keyword }}" required>
                         @if ($errors->has('metaKeyword'))
                             @foreach($errors->get('metaKeyword') as $error)
                                 <div class="form-control-feedback">{{ $error }}</div>
@@ -47,7 +47,7 @@
                 <div class="col-md-12">
                     <label for="meta-description">Meta Description</label>
                     <div class="form-group {{ $errors->has('metaDescription') ? ' has-danger' : '' }}">
-                        <textarea class="form-control" name="metaDescription" rows="5" required>{{ old('metaDescription') }}</textarea>
+                        <textarea class="form-control" name="metaDescription" rows="5" required>{{ $product->meta_description }}</textarea>
                         @if ($errors->has('metaDescription'))
                             @foreach($errors->get('metaDescription') as $error)
                                 <div class="form-control-feedback">{{ $error }}</div>

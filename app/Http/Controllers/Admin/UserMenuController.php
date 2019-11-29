@@ -8,13 +8,25 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use URL;
 use Session;
+use DB;
 
 class UserMenuController extends Controller
 {
     public function index()
     {
         $title = "User Menu";
-        $menus = UserMenu::orderBy('id','ASC')->get();
+
+        // $nullMenus = UserMenu::select('user_menus.*','parentMenu as parentName')
+        //     ->whereNull('parentMenu');
+
+        // $menus = DB::table('user_menus as tab1')
+        //     ->select('tab1.*','tab2.menuName as parentName')
+        //     ->join('user_menus as tab2','tab2.id','=','tab1.parentMenu')
+        //     ->union($nullMenus)
+        //     ->orderBy('parentName','desc')
+        //     ->orderBy('menuName','desc')
+        //     ->get();
+        $menus = UserMenu::orderBy('id','asc')->get();
         return view('admin.usermenus.index')->with(compact('title','menus'));
     }
 

@@ -26,6 +26,7 @@ class CreateTblShowroomTable extends Migration
             $table->string('tin')->nullable();
             $table->string('trade_license')->nullable();
             $table->text('address');
+            $table->tinyInteger('status')->default('1');
             $table->timestamps();
         });
     }

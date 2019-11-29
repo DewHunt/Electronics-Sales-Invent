@@ -2,39 +2,50 @@
 
 @section('card_body')
     <div class="card-body">
-        <div class="table-responsive">            
-            <table id="usersTable" class="table table-bordered table-striped"  name="usersTable">
+        <div class="table-responsive">
+            @php
+                $sl = 0;
+            @endphp
+
+            <table id="storeTable" class="table table-bordered table-striped"  name="storeTable">
                 <thead>
                     <tr>
-                        <th>Sl</th>
-                        <th>User Name</th>
-                        <th>status</th>
-                        <th>Action</th>
+                        <th width="20px">SL</th>
+                        <th>Code/Prefix</th>
+                        <th>Type</th>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Remarks</th>
+                        <th width="20px">Status</th>
+                        <th width="20px">Action</th>
                     </tr>
                 </thead>
-                <tbody id="tbody">
-                    @php
-                        $sl = 0;
-                    @endphp
-                	@foreach($userRoles as $role)
-                        @php
-                            $sl++;
-                        @endphp                          
-                        <tr>
-                            <td>{{ $sl }}</td>
-                            <td>{{ $role->name }}</td>
-                            <td>
-                                <?php echo \App\Link::status($role->id,$role->status)?>
-                            </td>
-                            <td class="text-nowrap">
-                            <?php echo \App\Link::action($role->id)?>
-                            </td>
-                        </tr>
-                    @endforeach
+                <tbody id="">
+                	@php
+                		$sl = 0;
+                	@endphp
+                	@foreach ($stores as $store)
+                		<tr>
+                			<td>{{ $sl++ }}</td>
+                			<td>{{ $store->code }}</td>
+                			<td>{{ $store->type }}</td>
+                			<td>{{ $store->name }}</td>
+                			<td>{{ $store->address }}</td>
+                			<td>{{ $store->remarks }}</td>
+                			<td>
+                				<?php echo \App\Link::status($store->id,$store->status)?>
+                			</td>
+                			<td>
+                    			@php
+                    				echo \App\Link::action($store->id);
+                    			@endphp                				
+                			</td>
+                		</tr>
+                	@endforeach
                 </tbody>
             </table>
         </div>
-    </div>
+    </div>	
 @endsection
 
 @section('custom-js')
@@ -51,31 +62,29 @@
                 new Switchery($(this)[0], $(this).data());
             });
 
-            var table = $('#usersTable').DataTable( {
-                "order": [[ 0, false]]
+            var table = $('#storeTable').DataTable( {
+                "order": [[0, "asc"]]
             } );
 
             table.on('order.dt search.dt', function () {
                 table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
                     cell.innerHTML = i+1;
                 } );
-            } ).draw();
+            } ).draw();         
 
-            //ajax
-            
             //ajax delete code
-            $('#usersTable tbody').on( 'click', 'i.fa-trash', function () {
+            $('#storeTable tbody').on( 'click', 'i.fa-trash', function () {
                 $.ajaxSetup({
                   headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                   }
                 });
 
-                userRole_id = $(this).parent().data('id');
-                var user = this;
+                storeId = $(this).parent().data('id');
+                var tableRow = this;
                 swal({   
                     title: "Are you sure?",   
-                    text: "You will not be able to recover this imaginary file!",   
+                    text: "You will not be able to recover this information!",   
                     type: "warning",   
                     showCancelButton: true,   
                     confirmButtonColor: "#DD6B55",   
@@ -83,22 +92,24 @@
                     cancelButtonText: "No, cancel plx!",   
                     closeOnConfirm: false,   
                     closeOnCancel: false 
-                }, function(isConfirm){   
-                    if (isConfirm) {     
+                },
+                function(isConfirm){   
+                    if (isConfirm) {
                         $.ajax({
                             type: "POST",
-                            url: "{{ route('userRole.delete') }}",
-                            data: {userRoleId:userRole_id},
+                            url : "{{ route('storeSetup.delete') }}",
+                            data : {storeId:storeId},
+                           
                             success: function(response) {
                                 swal({
                                     title: "<small class='text-success'>Success!</small>", 
                                     type: "success",
-                                    text: "user deleted Successfully!",
+                                    text: "User Deleted Successfully!",
                                     timer: 1000,
                                     html: true,
                                 });
                                 table
-                                    .row( $(user).parents('tr'))
+                                    .row( $(tableRow).parents('tr'))
                                     .remove()
                                     .draw();
                             },
@@ -112,35 +123,36 @@
                                     html: true,
                                 });
                             }
-                        });   
-                    } else { 
+                        });    
+                    }
+                    else
+                    { 
                         swal({
                             title: "Cancelled", 
                             type: "error",
-                            text: "Your category is safe :)",
+                            text: "Your User is safe :)",
                             timer: 1000,
                             html: true,
                         });    
                     } 
                 });
-            }); 
-
+            });
         });
                 
         //ajax status change code
-        function statusChange(userRole_id) {
+        function statusChange(store_id) {
             $.ajax({
-                type: "GET",
-                url: "{{ route('userRole.changeuserRoleStatus', 0) }}",
-                data: "userRole_id=" + userRole_id,
-                cache:false,
-                contentType: false,
-                processData: false,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "post",
+                url: "{{ route('storeSetup.status') }}",
+                data: {storeId:store_id},
                 success: function(response) {
                     swal({
                         title: "<small class='text-success'>Success!</small>", 
                         type: "success",
-                        text: "Status successfully updated!",
+                        text: "Status Successfully Updated!",
                         timer: 1000,
                         html: true,
                     });

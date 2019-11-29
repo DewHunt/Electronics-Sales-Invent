@@ -17,12 +17,17 @@
         {{ csrf_field() }}
         @php
             $message = Session::get('msg');
-            if (isset($message))
-            {
-                echo"<div style='display:inline-block;width: auto;' class='alert alert-success'><strong>" .$message."</strong></div>";
-            }
+        @endphp
 
-            Session::forget('msg')                    
+        @if (isset($message))
+            <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Success!</strong> {{ $message }}
+            </div>
+        @endif
+
+        @php
+            Session::forget('msg');
         @endphp
 
         @if( count($errors) > 0 )

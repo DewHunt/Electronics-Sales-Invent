@@ -27,6 +27,8 @@ Route::prefix('admin')->group(function()
 	{
 		Route::group(['middleware'=>'menuPermission'],function()
 		{
+			Route::get('/drop-down-prob', 'Admin\DropDownProbController@index')->name('dropDownProb.index');
+
 			//Dashboard Link url
 			Route::get('/','HomeController@index')->name('admin.index');
 			
@@ -71,12 +73,13 @@ Route::prefix('admin')->group(function()
 			Route::post('/user-status','Admin\AdminController@changeUserStatus')->name('user.status');
 
 			//User Roll Manage
-			Route::resource('user-roles','Admin\UserRoleController');
+			Route::get('/user-roles','Admin\UserRoleController@index')->name('user-roles.index');
 			Route::get('/user-role-add','Admin\UserRoleController@adduserRole')->name('userRoleAdd.page');
 			Route::post('/user-role-save','Admin\UserRoleController@saveuserRole')->name('userRole.save');
-			Route::get('/userRole/status/{id}','Admin\UserRoleController@changeuserRoleStatus')->name('userRole.changeuserRoleStatus');
 			Route::get('/user-role-edit/{id}','Admin\UserRoleController@edituserRole')->name('userRole.edit');
 			Route::post('/user-role-upate','Admin\UserRoleController@updateuserRole')->name('userRole.update');
+			Route::post('/user-role-delete','Admin\UserRoleController@deleteUserRole')->name('userRole.delete');
+			Route::get('/userRole/status/{id}','Admin\UserRoleController@changeuserRoleStatus')->name('userRole.changeuserRoleStatus');
 			Route::get('/user-role-permission/{id}','Admin\UserRoleController@permission')->name('userRole.permission');
 			Route::post('/user-role-permission-update','Admin\UserRoleController@permissionUpdate')->name('userRole.permissionUpdate');
 
@@ -99,15 +102,12 @@ Route::prefix('admin')->group(function()
 			Route::post('/category-setup-status','Admin\CategorySetupController@changeCategoryStatus')->name('categorySetup.status');
 
 
-			//Start Product Section
+			//Product Section
 			Route::get('/product-setup', 'Admin\ProductSetupController@index')->name('productSetup.index');
 
 			Route::get('/product-setup-add','Admin\ProductSetupController@addProduct')->name('productSetup.add');
 			Route::post('/product-setup-basic-info-save','Admin\ProductSetupController@saveProductBasicInfo')->name('productSetupBasicInfo.save');
-			// Route::post('/product-setup-advance-info-save','Admin\ProductSetupController@saveProductAdvanceInfo')->name('productSetupAdvanceInfo.save');
 			Route::post('/product-setup-image-save','Admin\ProductSetupController@saveProductImage')->name('productSetupImage.save');
-			// Route::post('/product-setup-price-info-save','Admin\ProductSetupController@saveProductPrcieInfo')->name('productSetupPriceInfo.save');
-			// Route::post('/product-setup-seo-info-save','Admin\ProductSetupController@saveProductSeoInfo')->name('productSetupSeoInfo.save');
 
 			Route::get('/product-setup-edit/{id}','Admin\ProductSetupController@editProduct')->name('productSetup.edit');
 			Route::post('/product-setup-basic-info-update','Admin\ProductSetupController@updateProductBasicInfo')->name('productSetupBasicInfo.update');
@@ -119,8 +119,14 @@ Route::prefix('admin')->group(function()
 			Route::post('/product-setup-delete','Admin\ProductSetupController@deleteProduct')->name('productSetup.delete');
 			Route::post('/products-setup-status','Admin\ProductSetupController@changeProductStatus')->name('productSetup.status');
 
-
-			Route::get('/drop-down-prob', 'Admin\DropDownProbController@index')->name('dropDownProb.index');
+			// Store Setup
+			Route::get('/store-setup','Admin\StoreSetupController@index')->name('storeSetup.index');
+			Route::get('/store-setup-add','Admin\StoreSetupController@addStore')->name('storeSetup.add');
+			Route::post('/store-setup-save','Admin\StoreSetupController@saveStore')->name('storeSetup.save');
+			Route::get('/store-setup-edit/{id}','Admin\StoreSetupController@editStore')->name('storeSetup.edit');
+			Route::post('/store-setup-update','Admin\StoreSetupController@updateStore')->name('storeSetup.update');
+			Route::post('/store-setup-delete','Admin\StoreSetupController@deleteStore')->name('storeSetup.delete');
+			Route::post('/store-setup-status','Admin\StoreSetupController@changeStoreStatus')->name('storeSetup.status');
 
 		// User Management End
 		});

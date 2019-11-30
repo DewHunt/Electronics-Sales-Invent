@@ -104,7 +104,7 @@
                                 swal({
                                     title: "<small class='text-success'>Success!</small>", 
                                     type: "success",
-                                    text: "User Deleted Successfully!",
+                                    text: "Store Deleted Successfully!",
                                     timer: 1000,
                                     html: true,
                                 });

@@ -97,7 +97,3 @@
     	</div>
     </div>
 @endsection
-
-@section('custom-js')
-    <script src="{{ asset('/public/admin-elite/assets/node_modules/datatables/jquery.dataTables.min.js') }}"></script>
-@endsection

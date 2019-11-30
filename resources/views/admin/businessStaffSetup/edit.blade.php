@@ -8,12 +8,12 @@
     </style>
 
     <div class="card-body">
-    	<input type="hidden" name="areaId" value="{{ $area->id }}">
+    	<input type="hidden" name="businessStaffId" value="{{ $businessStaff->id }}">
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group {{ $errors->has('code') ? ' has-danger' : '' }}">
-                    <label for="prefix">Prefix</label>
-                    <input type="text" class="form-control" name="code" value="{{ $area->code }}" required>
+                    <label for="code-prefix">Code / Prefix</label>
+                    <input type="text" class="form-control" name="code" value="{{ $businessStaff->code }}" required>
                     @if ($errors->has('code'))
                         @foreach($errors->get('code') as $error)
                             <div class="form-control-feedback">{{ $error }}</div>
@@ -21,12 +21,39 @@
                     @endif
                 </div>
             </div>
+
             <div class="col-md-6">
-                <div class="form-group {{ $errors->has('inchargeName') ? ' has-danger' : '' }}">
-                    <label for="incharge-name">Incharge Name</label>
-                    <input type="text" class="form-control" name="inchargeName" value="{{ $area->incharge_name }}" required>
-                    @if ($errors->has('inchargeName'))
-                        @foreach($errors->get('inchargeName') as $error)
+                <div class="form-group {{ $errors->has('staffName') ? ' has-danger' : '' }}">
+                    <label for="staff-name">Staff Name</label>
+                    <input type="text" class="form-control" name="staffName" value="{{ $businessStaff->name }}" required>
+                    @if ($errors->has('staffName'))
+                        @foreach($errors->get('staffName') as $error)
+                            <div class="form-control-feedback">{{ $error }}</div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group {{ $errors->has('nationalId') ? ' has-danger' : '' }}">
+                    <label for="national-id">National Id</label>
+                    <input type="text" class="form-control" name="nationalId" value="{{ $businessStaff->national_id }}" required>
+                    @if ($errors->has('nationalId'))
+                        @foreach($errors->get('nationalId') as $error)
+                            <div class="form-control-feedback">{{ $error }}</div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group {{ $errors->has('joiningDate') ? ' has-danger' : '' }}">
+                    <label for="joining-date">Joining Date</label>
+                    <input  type="text" class="form-control datepicker" id="joiningDate" name="joiningDate" value="{{ $businessStaff->joining_date }}">
+                    @if ($errors->has('joiningDate'))
+                        @foreach($errors->get('joiningDate') as $error)
                             <div class="form-control-feedback">{{ $error }}</div>
                         @endforeach
                     @endif
@@ -38,22 +65,9 @@
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group {{ $errors->has('areaName') ? ' has-danger' : '' }}">
-                            <label for="area-name">Area Name</label>
-                            <input type="text" class="form-control" name="areaName" value="{{ $area->name }}" required>
-                            @if ($errors->has('areaName'))
-                                @foreach($errors->get('areaName') as $error)
-                                    <div class="form-control-feedback">{{ $error }}</div>
-                                @endforeach
-                            @endif
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
                         <div class="form-group {{ $errors->has('contact') ? ' has-danger' : '' }}">
                             <label for="contact-number">Contact Number</label>
-                            <input type="text" class="form-control" name="contact" value="{{ $area->contact }}" required>
+                            <input type="text" class="form-control" name="contact" value="{{ $businessStaff->contact }}" required>
                             @if ($errors->has('contact'))
                                 @foreach($errors->get('contact') as $error)
                                     <div class="form-control-feedback">{{ $error }}</div>
@@ -66,7 +80,7 @@
                     <div class="col-md-12">
                         <div class="form-group {{ $errors->has('email') ? ' has-danger' : '' }}">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" name="email" value="{{ $area->email }}" required>
+                            <input type="text" class="form-control" name="email" value="{{ $businessStaff->email }}" required>
                             @if ($errors->has('email'))
                                 @foreach($errors->get('email') as $error)
                                     <div class="form-control-feedback">{{ $error }}</div>
@@ -80,7 +94,7 @@
             <div class="col-md-6">
                 <div class="form-group {{ $errors->has('address') ? ' has-danger' : '' }}">
                     <label for="address">Address</label>
-                    <textarea class="form-control" name="address" rows="9">{{ $area->address }}</textarea>
+                    <textarea class="form-control" name="address"rows="5">{{ $businessStaff->address }}</textarea>
                     @if ($errors->has('address'))
                         @foreach($errors->get('address') as $error)
                             <div class="form-control-feedback">{{ $error }}</div>

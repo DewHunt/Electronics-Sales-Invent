@@ -7,7 +7,7 @@
                 $sl = 0;
             @endphp
 
-            <table id="categoriesTable" class="table table-bordered table-striped"  name="categoriesTable">
+            <table id="productsTable" class="table table-bordered table-striped"  name="productsTable">
                 <thead>
                     <tr>
                         <th width="20px">SL</th>
@@ -56,7 +56,7 @@
                 new Switchery($(this)[0], $(this).data());
             });
 
-            var table = $('#categoriesTable').DataTable( {
+            var table = $('#productsTable').DataTable( {
                 "order": [[0, "asc"]]
             } );
 
@@ -67,7 +67,7 @@
             } ).draw();         
 
             //ajax delete code
-            $('#categoriesTable tbody').on( 'click', 'i.fa-trash', function () {
+            $('#productsTable tbody').on( 'click', 'i.fa-trash', function () {
                 $.ajaxSetup({
                   headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -98,7 +98,7 @@
                                 swal({
                                     title: "<small class='text-success'>Success!</small>", 
                                     type: "success",
-                                    text: "User Deleted Successfully!",
+                                    text: "Product Deleted Successfully!",
                                     timer: 1000,
                                     html: true,
                                 });

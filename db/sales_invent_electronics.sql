@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2019 at 01:48 PM
--- Server version: 10.4.6-MariaDB
--- PHP Version: 7.3.9
+-- Generation Time: Nov 30, 2019 at 09:28 PM
+-- Server version: 10.1.28-MariaDB
+-- PHP Version: 7.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -32,8 +32,8 @@ CREATE TABLE `admins` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `username` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `username` text COLLATE utf8mb4_unicode_ci,
+  `image` text COLLATE utf8mb4_unicode_ci,
   `role` int(11) DEFAULT NULL,
   `showroomId` int(11) NOT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -62,7 +62,7 @@ INSERT INTO `admins` (`id`, `name`, `email`, `username`, `image`, `role`, `showr
 CREATE TABLE `alphabets` (
   `id` int(11) NOT NULL,
   `name` varchar(250) NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1
+  `status` tinyint(4) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -86,12 +86,12 @@ CREATE TABLE `menus` (
   `id` int(10) UNSIGNED NOT NULL,
   `menuName` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `menuTitle` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `menuContent` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `menuStatus` tinyint(1) NOT NULL DEFAULT 1,
-  `menuType` int(11) NOT NULL DEFAULT 1,
-  `metaTitle` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `metaKeyword` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `metaDescription` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `menuContent` text COLLATE utf8mb4_unicode_ci,
+  `menuStatus` tinyint(1) NOT NULL DEFAULT '1',
+  `menuType` int(11) NOT NULL DEFAULT '1',
+  `metaTitle` text COLLATE utf8mb4_unicode_ci,
+  `metaKeyword` text COLLATE utf8mb4_unicode_ci,
+  `metaDescription` text COLLATE utf8mb4_unicode_ci,
   `orderBy` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -157,18 +157,18 @@ CREATE TABLE `password_resets` (
 
 CREATE TABLE `settings` (
   `id` int(10) UNSIGNED NOT NULL,
-  `siteLogo` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `adminLogo` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mobile1` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mobile2` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `siteEmail1` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `siteEmail2` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `siteAddress1` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `siteAddress2` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `siteLogo` text COLLATE utf8mb4_unicode_ci,
+  `adminLogo` text COLLATE utf8mb4_unicode_ci,
+  `mobile1` text COLLATE utf8mb4_unicode_ci,
+  `mobile2` text COLLATE utf8mb4_unicode_ci,
+  `siteEmail1` text COLLATE utf8mb4_unicode_ci,
+  `siteEmail2` text COLLATE utf8mb4_unicode_ci,
+  `siteAddress1` text COLLATE utf8mb4_unicode_ci,
+  `siteAddress2` text COLLATE utf8mb4_unicode_ci,
   `sitestatus` int(11) DEFAULT NULL,
-  `metaTitle` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `metaKeyword` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `metaDescription` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `metaTitle` text COLLATE utf8mb4_unicode_ci,
+  `metaKeyword` text COLLATE utf8mb4_unicode_ci,
+  `metaDescription` text COLLATE utf8mb4_unicode_ci,
   `orderBy` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -185,10 +185,10 @@ CREATE TABLE `tbl_area` (
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `incharge_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci,
   `contact` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 0,
+  `status` tinyint(4) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -199,7 +199,7 @@ CREATE TABLE `tbl_area` (
 
 INSERT INTO `tbl_area` (`id`, `code`, `name`, `incharge_name`, `address`, `contact`, `email`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'm11', 'Mirpur - 11', 'Dew Hunt', 'Mirpur - 11', '01317243494', 'dew@gmail.com', 1, '2019-11-30 04:33:14', '2019-11-30 06:21:02'),
-(3, 'gu-00', 'Gulshan', 'Salman', 'Gulshan', '01317243494', 'sdsd@sdsd.com', 1, '2019-11-30 06:20:03', '2019-11-30 06:21:00');
+(3, 'gu-00', 'Gulshan', 'Salman', 'Gulshan', '01317243494', 'sdsd@sdsd.com', 1, '2019-11-30 06:20:03', '2019-11-30 14:26:48');
 
 -- --------------------------------------------------------
 
@@ -212,8 +212,8 @@ CREATE TABLE `tbl_bank` (
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `address` text COLLATE utf8mb4_unicode_ci,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -223,7 +223,7 @@ CREATE TABLE `tbl_bank` (
 --
 
 INSERT INTO `tbl_bank` (`id`, `code`, `name`, `phone`, `address`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'bal-00', 'Bank Asia Ltd.', '01317243494', 'Mirpur - 11', 0, '2019-11-30 00:15:25', '2019-11-30 05:53:56');
+(1, 'bal-00', 'Bank Asia Ltd.', '01317243494', 'Mirpur - 11', 0, '2019-11-30 00:15:25', '2019-11-30 14:23:45');
 
 -- --------------------------------------------------------
 
@@ -236,14 +236,21 @@ CREATE TABLE `tbl_business_staffs` (
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `contact` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `national_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `joining_date` date DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 0,
+  `status` tinyint(4) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_business_staffs`
+--
+
+INSERT INTO `tbl_business_staffs` (`id`, `code`, `name`, `contact`, `address`, `email`, `national_id`, `joining_date`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'dh007', 'Dew Hunt', '01317243494', 'Mirpur - 11', 'dew@gmail.com', '5089769966', '2019-02-01', 0, '2019-11-30 14:07:30', '2019-11-30 14:09:16');
 
 -- --------------------------------------------------------
 
@@ -254,14 +261,14 @@ CREATE TABLE `tbl_business_staffs` (
 CREATE TABLE `tbl_categories` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cover_image` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
-  `parent` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cover_image` text COLLATE utf8mb4_unicode_ci,
+  `image` text COLLATE utf8mb4_unicode_ci,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `parent` text COLLATE utf8mb4_unicode_ci,
   `show_in_home_page` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_title` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_keyword` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_title` text COLLATE utf8mb4_unicode_ci,
+  `meta_keyword` text COLLATE utf8mb4_unicode_ci,
+  `meta_description` text COLLATE utf8mb4_unicode_ci,
   `order_by` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -273,7 +280,7 @@ CREATE TABLE `tbl_categories` (
 
 INSERT INTO `tbl_categories` (`id`, `name`, `cover_image`, `image`, `status`, `parent`, `show_in_home_page`, `meta_title`, `meta_keyword`, `meta_description`, `order_by`, `created_at`, `updated_at`) VALUES
 (1, 'Smart Television', 'public/uploads/category_image/download_14321410993.jpg', 'public/uploads/category_image/W49E3000AS-1-220x220h_12931520932.jpg', 1, '2', 'Yes', 'Electronics || Bangladeshi Electronics Products', 'Electronics, Electronocs in Bangladesh', 'Electronics Products.', 2, '2019-11-25 18:07:28', '2019-11-30 05:48:23'),
-(2, 'Television', 'public/uploads/category_image/81OwqiQckgL._SL1500__96781947791.jpg', 'public/uploads/category_image/43UM7400_original_65661783580.jpg', 1, NULL, 'Yes', 'Electronics || Bangladeshi Electronics Products', 'Electronics, Electronocs in Bangladesh', 'Electronics Products.', NULL, '2019-11-25 18:13:09', '2019-11-30 06:01:32');
+(2, 'Television', 'public/uploads/category_image/81OwqiQckgL._SL1500__96781947791.jpg', 'public/uploads/category_image/43UM7400_original_65661783580.jpg', 1, NULL, 'Yes', 'Electronics || Bangladeshi Electronics Products', 'Electronics, Electronocs in Bangladesh', 'Electronics Products.', NULL, '2019-11-25 18:13:09', '2019-11-30 14:15:44');
 
 -- --------------------------------------------------------
 
@@ -286,8 +293,8 @@ CREATE TABLE `tbl_couriers` (
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `address` text COLLATE utf8mb4_unicode_ci,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -297,7 +304,7 @@ CREATE TABLE `tbl_couriers` (
 --
 
 INSERT INTO `tbl_couriers` (`id`, `code`, `name`, `phone`, `address`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'scl-00', 'Sundarban Courier Ltd', '01418253595', 'Mirpur - 11', 0, '2019-11-30 01:04:15', '2019-11-30 05:55:16');
+(1, 'scl-00', 'Sundarban Courier Ltd', '01418253595', 'Mirpur - 11', 0, '2019-11-30 01:04:15', '2019-11-30 14:24:44');
 
 -- --------------------------------------------------------
 
@@ -324,11 +331,11 @@ CREATE TABLE `tbl_products` (
   `status` tinyint(4) DEFAULT NULL,
   `youtube_link` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tag_line` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `short_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `long_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `short_description` text COLLATE utf8mb4_unicode_ci,
+  `long_description` text COLLATE utf8mb4_unicode_ci,
   `meta_title` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `meta_keyword` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_description` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -338,7 +345,7 @@ CREATE TABLE `tbl_products` (
 --
 
 INSERT INTO `tbl_products` (`id`, `category_id`, `name`, `code`, `model_no`, `color`, `uom`, `price`, `mrp_price`, `haire_price`, `discount`, `warranty`, `reorder_level_qty`, `order_by`, `transport_point`, `status`, `youtube_link`, `tag_line`, `short_description`, `long_description`, `meta_title`, `meta_keyword`, `meta_description`, `created_at`, `updated_at`) VALUES
-(3, '1,2', 'Samsung 32\" Smart TV', 'sam123', 'sam890', 'Black', 'Pcs', 45000, 48600, 54432, '1000', 5, 5, 2, 3, 1, NULL, 'Smart TV', 'rogif;f;ehflk;lfjds;fanfkrengahglkan', ';jglangfarngfarnvafngabrflbFBDLB', 'Smart Tv', 'Samsung Smart Tv', 'Coming Soon', '2019-11-27 19:04:54', '2019-11-30 05:51:02');
+(3, '1,2', 'Samsung 32\" Smart TV', 'sam123', 'sam890', 'Black', 'Pcs', 45000, 48600, 54432, '1000', 5, 5, 2, 3, 1, NULL, 'Smart TV', 'rogif;f;ehflk;lfjds;fanfkrengahglkan', ';jglangfarngfarnvafngabrflbFBDLB', 'Smart Tv', 'Samsung Smart Tv', 'Coming Soon', '2019-11-27 19:04:54', '2019-11-30 14:21:11');
 
 -- --------------------------------------------------------
 
@@ -409,7 +416,7 @@ CREATE TABLE `tbl_showroom` (
   `tin` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `trade_license` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `address` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -433,9 +440,9 @@ CREATE TABLE `tbl_stores` (
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `remarks` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `address` text COLLATE utf8mb4_unicode_ci,
+  `remarks` text COLLATE utf8mb4_unicode_ci,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -460,9 +467,9 @@ CREATE TABLE `tbl_territories` (
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `incharge_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci,
   `contact` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 0,
+  `status` tinyint(4) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -472,7 +479,7 @@ CREATE TABLE `tbl_territories` (
 --
 
 INSERT INTO `tbl_territories` (`id`, `area_id`, `code`, `name`, `incharge_name`, `address`, `contact`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 'm00', 'Mirpur Territory', 'Dew Hunt', 'Mirpur', '01317243494', 0, '2019-11-30 05:36:54', '2019-11-30 06:18:59');
+(1, 1, 'm00', 'Mirpur Territory', 'Dew Hunt', 'Mirpur', '01317243494', 0, '2019-11-30 05:36:54', '2019-11-30 14:27:43');
 
 -- --------------------------------------------------------
 
@@ -485,7 +492,7 @@ CREATE TABLE `tbl_vehicles` (
   `registration_no` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `capacity` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 0,
+  `status` tinyint(4) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -495,7 +502,7 @@ CREATE TABLE `tbl_vehicles` (
 --
 
 INSERT INTO `tbl_vehicles` (`id`, `registration_no`, `type`, `capacity`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Kha-12-3045', 'Heavy', '12', 0, '2019-11-30 02:27:04', '2019-11-30 05:57:46'),
+(1, 'Kha-12-3045', 'Heavy', '12', 0, '2019-11-30 02:27:04', '2019-11-30 14:25:56'),
 (2, 'Ga-12-3467', 'Medium', '12', 0, '2019-11-30 02:31:59', '2019-11-30 05:57:59'),
 (3, 'Ga-12-3478', 'Pickup Van', '12', 0, '2019-11-30 02:32:32', '2019-11-30 02:32:32');
 
@@ -627,10 +634,10 @@ INSERT INTO `user_menu_actions` (`id`, `parentmenuId`, `menuType`, `actionName`,
 
 CREATE TABLE `user_roles` (
   `id` int(10) UNSIGNED NOT NULL,
-  `name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` text COLLATE utf8mb4_unicode_ci,
   `status` int(11) DEFAULT NULL,
-  `permission` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `actionPermission` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `permission` text COLLATE utf8mb4_unicode_ci,
+  `actionPermission` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -824,7 +831,7 @@ ALTER TABLE `tbl_bank`
 -- AUTO_INCREMENT for table `tbl_business_staffs`
 --
 ALTER TABLE `tbl_business_staffs`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tbl_categories`

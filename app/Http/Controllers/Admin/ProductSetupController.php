@@ -16,9 +16,8 @@ class ProductSetupController extends Controller
     {
     	$title = "Product Setup";
 
-        $products = Product::select('tbl_products.*','tbl_categories.name as catName','tbl_product_images.image as image')
+        $products = Product::select('tbl_products.*','tbl_categories.name as catName')
             ->join('tbl_categories','tbl_categories.id','=','tbl_products.category_id')
-            ->join('tbl_product_images','tbl_product_images.product_id','=','tbl_products.id')
             ->orderBy('tbl_categories.name','asc')
             ->orderBy('tbl_products.name','asc')
             ->get();
@@ -288,28 +287,28 @@ class ProductSetupController extends Controller
 
     public function deleteProduct(Request $request)
     {    	
-        // CategorySetup::where('id',$request->categoryId)->delete();
+        Product::where('id',$request->productId)->delete();
+        ProductAdvance::where('product_id',$request->productId)->delete();
+        ProductImage::where('product_id',$request->productId)->delete();
     }
 
     public function changeProductStatus(Request $request)
     {
-        // $categoryId = $request->categoryId;
+        $productId = $request->productId;
 
-        // $categoryInfo = CategorySetup::where('id',$categoryId)->first();
+        $product = Product::find($productId);
 
-        // $category = CategorySetup::find($categoryId);
-
-        // if ($categoryInfo->status == 0)
-        // {
-        //     $category->update( [               
-        //         'status' => 1,                
-        //     ]);
-        // }
-        // else
-        // {
-        //     $category->update( [               
-        //         'status' => 0,                
-        //     ]);
-        // }
+        if ($product->status == 0)
+        {
+            $product->update( [               
+                'status' => 1,                
+            ]);
+        }
+        else
+        {
+            $product->update( [               
+                'status' => 0,                
+            ]);
+        }
     }
 }

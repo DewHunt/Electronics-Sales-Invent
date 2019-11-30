@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblStoresTable extends Migration
+class CreateTblBusinessStaffsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,16 @@ class CreateTblStoresTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_stores', function (Blueprint $table) {
+        Schema::create('tbl_business_staffs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('code');
-            $table->string('type');
             $table->string('name');
+            $table->string('contact')->nullable();
             $table->text('address')->nullable();
-            $table->text('remarks')->nullable();
-            $table->tinyInteger('status')->default('1');
+            $table->string('email')->nullable();
+            $table->string('national_id')->nullable();
+            $table->date('joining_date')->nullable();
+            $table->tinyInteger('status')->default('0');
             $table->timestamps();
         });
     }
@@ -32,6 +34,6 @@ class CreateTblStoresTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_stores');
+        Schema::dropIfExists('tbl_business_staffs');
     }
 }

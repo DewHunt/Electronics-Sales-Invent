@@ -31,6 +31,8 @@ Route::prefix('admin')->group(function()
 
 			//Dashboard Link url
 			Route::get('/','HomeController@index')->name('admin.index');
+
+		// User Management Start
 			
 			// Settings
 			Route::get('/website-information', 'Admin\SettingsController@information')->name('site.info');
@@ -46,10 +48,6 @@ Route::prefix('admin')->group(function()
 			Route::post('/user-menu/update','Admin\UserMenuController@update')->name('usermenu.update');
 			Route::get('/user-menu/status','Admin\UserMenuController@status')->name('usermenu.status');
 			Route::post('/usermenu-delete','Admin\UserMenuController@destroy')->name('usermenu-delete');
-
-			//End User Menu
-
-		// User Management Start
 
 			//User Menu link action
 			Route::get('/user-menu-link/{id}','Admin\UserMenuController@usermenuLink')->name('usermenuLink.index');
@@ -83,7 +81,7 @@ Route::prefix('admin')->group(function()
 			Route::get('/user-role-permission/{id}','Admin\UserRoleController@permission')->name('userRole.permission');
 			Route::post('/user-role-permission-update','Admin\UserRoleController@permissionUpdate')->name('userRole.permissionUpdate');
 
-			//Start Showroom Setup Section
+			//Showroom Setup
 			Route::get('/showroom-setup','Admin\ShowroomSetupController@index')->name('showroomSetup.index');
 			Route::get('/showroom-setup-add','Admin\ShowroomSetupController@addShowroom')->name('showroomSetup.add');
 			Route::post('/showroom-setup-save','Admin\ShowroomSetupController@saveShowroom')->name('showroomSetup.save');
@@ -91,6 +89,10 @@ Route::prefix('admin')->group(function()
 			Route::get('/showroom-setup-edit/{id}','Admin\ShowroomSetupController@editShowroom')->name('showroomSetup.edit');
 			Route::post('/showroom-setup-update','Admin\ShowroomSetupController@updateShowroom')->name('showroomSetup.update');
 			Route::post('/showroom-setup-delete','Admin\ShowroomSetupController@deleteShowroom')->name('showroomSetup.delete');
+
+		// User Management End
+
+		// Bussiness Settings
 
 			//Category Setup
 			Route::get('/category-setup','Admin\CategorySetupController@index')->name('categorySetup.index');
@@ -128,7 +130,70 @@ Route::prefix('admin')->group(function()
 			Route::post('/store-setup-delete','Admin\StoreSetupController@deleteStore')->name('storeSetup.delete');
 			Route::post('/store-setup-status','Admin\StoreSetupController@changeStoreStatus')->name('storeSetup.status');
 
-		// User Management End
+			// Bank Setup
+			Route::get('/bank-setup','Admin\BankSetupController@index')->name('bankSetup.index');
+			Route::get('/bank-setup-add','Admin\BankSetupController@addBank')->name('bankSetup.add');
+			Route::post('/bank-setup-save','Admin\BankSetupController@saveBank')->name('bankSetup.save');
+			Route::get('/bank-setup-edit/{id}','Admin\BankSetupController@editBank')->name('bankSetup.edit');
+			Route::post('/bank-setup-update','Admin\BankSetupController@updateBank')->name('bankSetup.update');
+			Route::post('/bank-setup-delete','Admin\BankSetupController@deleteBank')->name('bankSetup.delete');
+			Route::post('/bank-setup-status','Admin\BankSetupController@changeBankStatus')->name('bankSetup.status');
+
+			// Courier Setup
+			Route::get('/courier-setup','Admin\CourierSetupController@index')->name('courierSetup.index');
+			Route::get('/courier-setup-add','Admin\CourierSetupController@addCourier')->name('courierSetup.add');
+			Route::post('/courier-setup-save','Admin\CourierSetupController@saveCourier')->name('courierSetup.save');
+			Route::get('/courier-setup-edit/{id}','Admin\CourierSetupController@editCourier')->name('courierSetup.edit');
+			Route::post('/courier-setup-update','Admin\CourierSetupController@updateCourier')->name('courierSetup.update');
+			Route::post('/courier-setup-delete','Admin\CourierSetupController@deleteCourier')->name('courierSetup.delete');
+			Route::post('/courier-setup-status','Admin\CourierSetupController@changeCourierStatus')->name('courierSetup.status');
+
+			// Vehicle Setup
+			Route::get('/vehicle-setup','Admin\VehicleSetupController@index')->name('vehicleSetup.index');
+			Route::get('/vehicle-setup-add','Admin\VehicleSetupController@addVehicle')->name('vehicleSetup.add');
+			Route::post('/vehicle-setup-save','Admin\VehicleSetupController@saveVehicle')->name('vehicleSetup.save');
+			Route::get('/vehicle-setup-edit/{id}','Admin\VehicleSetupController@editVehicle')->name('vehicleSetup.edit');
+			Route::post('/vehicle-setup-update','Admin\VehicleSetupController@updateVehicle')->name('vehicleSetup.update');
+			Route::post('/vehicle-setup-delete','Admin\VehicleSetupController@deleteVehicle')->name('vehicleSetup.delete');
+			Route::post('/vehicle-setup-status','Admin\VehicleSetupController@changeVehicleStatus')->name('vehicleSetup.status');
+
+			// Area Setup
+			Route::get('/area-setup','Admin\AreaSetupController@index')->name('areaSetup.index');
+			Route::get('/area-setup-add','Admin\AreaSetupController@addArea')->name('areaSetup.add');
+			Route::post('/area-setup-save','Admin\AreaSetupController@saveArea')->name('areaSetup.save');
+			Route::get('/area-setup-edit/{id}','Admin\AreaSetupController@editArea')->name('areaSetup.edit');
+			Route::post('/area-setup-update','Admin\AreaSetupController@updateArea')->name('areaSetup.update');
+			Route::post('/area-setup-delete','Admin\AreaSetupController@deleteArea')->name('areaSetup.delete');
+			Route::post('/area-setup-status','Admin\AreaSetupController@changeAreaStatus')->name('areaSetup.status');
+
+			// Territory Setup
+			Route::get('/territory-setup','Admin\TerritorySetupController@index')->name('territorySetup.index');
+			Route::get('/territory-setup-add','Admin\TerritorySetupController@addTerritory')->name('territorySetup.add');
+			Route::post('/territory-setup-save','Admin\TerritorySetupController@saveTerritory')->name('territorySetup.save');
+			Route::get('/territory-setup-edit/{id}','Admin\TerritorySetupController@editTerritory')->name('territorySetup.edit');
+			Route::post('/territory-setup-update','Admin\TerritorySetupController@updateTerritory')->name('territorySetup.update');
+			Route::post('/territory-setup-delete','Admin\TerritorySetupController@deleteTerritory')->name('territorySetup.delete');
+			Route::post('/territory-setup-status','Admin\TerritorySetupController@changeTerritoryStatus')->name('territorySetup.status');
+
+			// Territory Setup
+			Route::get('/territory-setup','Admin\TerritorySetupController@index')->name('territorySetup.index');
+			Route::get('/territory-setup-add','Admin\TerritorySetupController@addTerritory')->name('territorySetup.add');
+			Route::post('/territory-setup-save','Admin\TerritorySetupController@saveTerritory')->name('territorySetup.save');
+			Route::get('/territory-setup-edit/{id}','Admin\TerritorySetupController@editTerritory')->name('territorySetup.edit');
+			Route::post('/territory-setup-update','Admin\TerritorySetupController@updateTerritory')->name('territorySetup.update');
+			Route::post('/territory-setup-delete','Admin\TerritorySetupController@deleteTerritory')->name('territorySetup.delete');
+			Route::post('/territory-setup-status','Admin\TerritorySetupController@changeTerritoryStatus')->name('territorySetup.status');
+
+			// Territory Setup
+			Route::get('/business-staff-setup','Admin\BusinessStaffSetupController@index')->name('businessStaffSetup.index');
+			Route::get('/business-staff-setup-add','Admin\BusinessStaffSetupController@addBusinessStaff')->name('businessStaffSetup.add');
+			Route::post('/business-staff-setup-save','Admin\BusinessStaffSetupController@saveBusinessStaff')->name('businessStaffSetup.save');
+			Route::get('/business-staff-setup-edit/{id}','Admin\BusinessStaffSetupController@editBusinessStaff')->name('businessStaffSetup.edit');
+			Route::post('/business-staff-setup-update','Admin\BusinessStaffSetupController@updateBusinessStaff')->name('businessStaffSetup.update');
+			Route::post('/business-staff-setup-delete','Admin\BusinessStaffSetupController@deleteBusinessStaff')->name('businessStaffSetup.delete');
+			Route::post('/business-staff-setup-status','Admin\BusinessStaffSetupController@changeBusinessStaffStatus')->name('businessStaffSetup.status');
+
+		// Business Settings End
 		});
 	});
 

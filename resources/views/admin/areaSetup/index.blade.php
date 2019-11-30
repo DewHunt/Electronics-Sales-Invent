@@ -7,34 +7,42 @@
                 $sl = 0;
             @endphp
 
-            <table id="categoriesTable" class="table table-bordered table-striped"  name="categoriesTable">
+            <table id="storeTable" class="table table-bordered table-striped"  name="storeTable">
                 <thead>
                     <tr>
                         <th width="20px">SL</th>
+                        <th>Prefix</th>
                         <th>Name</th>
-                        <th>Category</th>
-                        <th>Code</th>
-                        <th>Price</th>
-                        <th>Discount</th>
+                        <th>Incharge Name</th>
+                        <th>Contact</th>
+                        <th>Email</th>
+                        <th>Address</th>
                         <th width="20px">Status</th>
                         <th width="20px">Action</th>
                     </tr>
                 </thead>
-                <tbody id="tbody">
-                	@foreach($products as $product)                        	
-                    	<tr>
-                            @php
-                                $sl++;
-                            @endphp
-                            <td>{{ $sl }}</td>
-                            <td>{{ $product->name }}</td>
-                            <td>{{ $product->catName }}</td>
-                            <td>{{ $product->code }}</td>
-                            <td>{{ $product->price }}</td>
-                            <td>{{ $product->discount }}</td>                                        
-                            <td><?php echo \App\Link::status($product->id,$product->status)?></td>
-                            <td class="text-nowrap"><?php echo \App\Link::action($product->id)?></td>
-                        </tr>
+                <tbody id="">
+                	@php
+                		$sl = 0;
+                	@endphp
+                	@foreach ($allArea as $area)
+                		<tr>
+                			<td>{{ $sl++ }}</td>
+                			<td>{{ $area->code }}</td>
+                			<td>{{ $area->name }}</td>
+                            <td>{{ $area->incharge_name }}</td>
+                            <td>{{ $area->contact }}</td>
+                			<td>{{ $area->email }}</td>
+                            <td>{{ $area->address }}</td>
+                			<td>
+                				<?php echo \App\Link::status($area->id,$area->status)?>
+                			</td>
+                			<td>
+                    			@php
+                    				echo \App\Link::action($area->id);
+                    			@endphp                				
+                			</td>
+                		</tr>
                 	@endforeach
                 </tbody>
             </table>
@@ -56,7 +64,7 @@
                 new Switchery($(this)[0], $(this).data());
             });
 
-            var table = $('#categoriesTable').DataTable( {
+            var table = $('#storeTable').DataTable( {
                 "order": [[0, "asc"]]
             } );
 
@@ -67,14 +75,14 @@
             } ).draw();         
 
             //ajax delete code
-            $('#categoriesTable tbody').on( 'click', 'i.fa-trash', function () {
+            $('#storeTable tbody').on( 'click', 'i.fa-trash', function () {
                 $.ajaxSetup({
                   headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                   }
                 });
 
-                productId = $(this).parent().data('id');
+                areaId = $(this).parent().data('id');
                 var tableRow = this;
                 swal({   
                     title: "Are you sure?",   
@@ -91,8 +99,8 @@
                     if (isConfirm) {
                         $.ajax({
                             type: "POST",
-                            url : "{{ route('productSetup.delete') }}",
-                            data : {productId:productId},
+                            url : "{{ route('areaSetup.delete') }}",
+                            data : {areaId:areaId},
                            
                             success: function(response) {
                                 swal({
@@ -134,14 +142,14 @@
         });
                 
         //ajax status change code
-        function statusChange(productId) {
+        function statusChange(areaId) {
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 type: "post",
-                url: "{{ route('productSetup.status') }}",
-                data: {productId:productId},
+                url: "{{ route('areaSetup.status') }}",
+                data: {areaId:areaId},
                 success: function(response) {
                     swal({
                         title: "<small class='text-success'>Success!</small>", 

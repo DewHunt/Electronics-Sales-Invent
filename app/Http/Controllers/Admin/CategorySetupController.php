@@ -151,11 +151,9 @@ class CategorySetupController extends Controller
     {
         $categoryId = $request->categoryId;
 
-        $categoryInfo = CategorySetup::where('id',$categoryId)->first();
-
         $category = CategorySetup::find($categoryId);
 
-        if ($categoryInfo->status == 0)
+        if ($category->status == 0)
         {
             $category->update( [               
                 'status' => 1,                

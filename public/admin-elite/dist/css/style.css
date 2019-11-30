@@ -13004,6 +13004,7 @@ File: scss
 
   label{
     text-transform: uppercase;
+    font-size: 12px;
   }
 
     .item_remove, .add_item {

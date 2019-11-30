@@ -240,14 +240,14 @@
         });
                 
         //ajax status change code
-        function statusChange(user_id) {
+        function statusChange(user_id,status) {
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 type: "post",
                 url: "{{ route('user.status') }}",
-                data: {userId:user_id},
+                data: {userId:user_id,status:status},
                 success: function(response) {
                     swal({
                         title: "<small class='text-success'>Success!</small>", 

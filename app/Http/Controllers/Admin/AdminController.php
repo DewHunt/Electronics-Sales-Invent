@@ -139,12 +139,13 @@ class AdminController extends Controller
     public function changeUserStatus(Request $request)
     {
         $userId = $request->userId;
+        $status = $request->status;
 
         $userInfo = Admin::where('id',$userId)->first();
 
         $users = Admin::find($userId);
 
-        if ($userInfo->status == 0)
+        if ($status == 0)
         {
             $users->update( [               
                 'status' => 1,                

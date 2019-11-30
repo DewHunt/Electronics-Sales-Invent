@@ -4,12 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class StoreSetup extends Model
+class TerritorySetup extends Model
 {
-    protected $table = "tbl_stores";
+	protected $table = "tbl_territories";
 
     protected $fillable = [
-    	'code','type','name','address','remarks','status'
+    	'area_id','code','name','incharge_name','address','contact','status'
     ];
 
 	protected $hidden = [

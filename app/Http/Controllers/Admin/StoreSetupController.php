@@ -82,32 +82,29 @@ class StoreSetupController extends Controller
 
     public function changeStoreStatus(Request $request)
     {
-    	echo "highlight_string(str)";
-        // $storeId = $request->storeId;
+        $storeId = $request->storeId;
 
-        // $storeInfo = StoreSetup::where('id',$storeId)->first();
+        $store = StoreSetup::find($storeId);
 
-        // $store = StoreSetup::find($storeId);
-
-        // if ($storeInfo->status == 1)
-        // {
-        //     $store->update( [               
-        //         'status' => 0                
-        //     ]);
-        // }
-        // else
-        // {
-        //     $store->update( [               
-        //         'status' => 1                
-        //     ]);
-        // }
+        if ($store->status == 1)
+        {
+            $store->update( [               
+                'status' => 0                
+            ]);
+        }
+        else
+        {
+            $store->update( [               
+                'status' => 1                
+            ]);
+        }
     }
 
     public function validation(Request $request)
     {
         $this->validate(request(), [
             'code' => 'required',
-            'storeName' => 'required|string',
+            'storeName' => 'required',
             'type' => 'required'          
         ]);
     }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblStoresTable extends Migration
+class CreateTblVehiclesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,12 @@ class CreateTblStoresTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_stores', function (Blueprint $table) {
+        Schema::create('tbl_vehicles', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('code');
+            $table->string('registration_no');
             $table->string('type');
-            $table->string('name');
-            $table->text('address')->nullable();
-            $table->text('remarks')->nullable();
-            $table->tinyInteger('status')->default('1');
+            $table->string('capacity');
+            $table->tinyInteger('status')->default('0');
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ class CreateTblStoresTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_stores');
+        Schema::dropIfExists('tbl_vehicles');
     }
 }

@@ -16,10 +16,11 @@ class LiftingController extends Controller
     {
     	$title = "Product Lifting";
 
-    	// $liftings = Lifting::select('lifting.*','vandors.name as vendorName')
-    	// 	->join('vendors','vendors.name','=','lifting.vendorId');
-    	// 	->orderBy('lifting.purchase_by','asc')->get();
-    	// 	->orderBy('vendors.name','asc')->get();
+    	$liftings = Lifting::select('tbl_liftings.*','tbl_vendors.name as vendorName')
+    		->join('tbl_vendors','tbl_vendors.name','=','tbl_liftings.vendorId')
+    		->orderBy('tbl_liftings.purchase_by','asc')
+    		->orderBy('tbl_vendors.name','asc')
+            ->get();
 
     	return view('admin.lifting.index')->with(compact('title'));
     }
@@ -57,6 +58,7 @@ class LiftingController extends Controller
     {
     	// echo $request->productId; die();
     	$product = Product::where('id',$request->productId)->first();
+        // dd($product); die();
 
         if($request->ajax())
         {

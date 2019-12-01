@@ -51,6 +51,7 @@ return array(
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Http\\Middleware\\menuPermission' => $baseDir . '/app/Http/Middleware/menuPermission.php',
     'App\\Lifting' => $baseDir . '/app/Lifting.php',
+    'App\\LiftingProduct' => $baseDir . '/app/LiftingProduct.php',
     'App\\Link' => $baseDir . '/app/Link.php',
     'App\\Menu' => $baseDir . '/app/Menu.php',
     'App\\Product' => $baseDir . '/app/Product.php',

@@ -8,20 +8,20 @@
     </style>
     @php
     	$serialNo = "";    	
-        // use App\Lifting;
+        use App\Lifting;
 
         $purchaseBy = Auth::user()->name;
 
-        // $maxLifting = Lifting::max('id');
+        $maxLifting = Lifting::max('id');
 
-        // if (@$maxLifting)
-        // {
-        //     $serialNo = 1000000 + $maxLifting + 1;
-        // }
-        // else
-        // {
-        //     $serialNo = 1000000 + 1;
-        // }
+        if (@$maxLifting)
+        {
+            $serialNo = 1000000 + $maxLifting + 1;
+        }
+        else
+        {
+            $serialNo = 1000000 + 1;
+        }
     @endphp
 
     <div class="card-body">
@@ -148,33 +148,14 @@
                             <table class="table table-bordered table-striped gridTable" >
                                 <thead>
                                     <tr>
-                                        <th width="40%">Product Name & Code</th>
-                                        <th width="16%">Color</th>
-                                        <th>Serial No</th>
-                                        <th>Amount</th>
-                                        <th>Action</th>
+                                        <th>Product Name & Code</th>
+                                        <th width="10%">Color</th>
+                                        <th width="150px">Serial No</th>
+                                        <th width="100px">Amount</th>
+                                        <th width="80px">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody">
-{{--                                     <tr>
-                                        <td>
-                                        	<input class="productId_1" type="text" name="productId[]" value="" required>
-                                        	<input class="productName_1" type="text" class="form-control" name="productName[]" value="" required readonly>
-                                        </td>
-                                        <td>
-                                        	<input class="productColor_1" type="text" class="form-control" name="productColor[]" value="" required readonly>
-                                        </td>
-                                        <td>
-                                        	<input class="productSerialNo_1" type="text" class="form-control" name="productSerialNo[]" value="" required>
-                                        </td>
-
-                                        <td>
-                                            <input class="productQty_1" type="hidden" name="productQty[]" value="1" required>
-                                            <input class="productPriceAmount_1" type="text" name="productPriceAmount[]" value="" required>
-                                            <input class="productMrpPriceAmount_1" type="text" name="productMrpPriceAmount[]" value="" required>
-                                            <input class="productHairePriceAmount_1" type="text" name="productHairePriceAmount[]" value="" required>
-                                        </td>
-                                    </tr> --}}
                                 </tbody>
 
                                 {{-- <tfoot>
@@ -238,7 +219,7 @@
                     <div class="col-6">
                         <label for="supplier">Total Quantity</label>
                         <div class="form-group">
-                        	<input style="text-align: right;"  class="form-control totalQty" type="number" name="totalQty" value="0" readonly>
+                        	<input style="text-align: right;" class="form-control totalQty" type="number" name="totalQty" value="0" readonly>
                         </div>
                     </div>
 
@@ -263,13 +244,13 @@
             	'<tr id="itemRow_' + total + '">' +                
 	                '<td>'+
 	                	'<input class="productId_'+total+'" type="hidden" name="productId[]" value="" required>'+
-	                	'<input class="productName_'+total+'" type="text" class="form-control" name="productName[]" value="" required readonly>'+
+	                	'<input class="productName_'+total+'" type="text" name="productName[]" value="" required readonly>'+
 	                '</td>'+
 	                '<td>'+
-	                	'<input class="productColor_'+total+'" type="text" class="form-control" name="productColor[]" value="" required readonly>'+
+	                	'<input class="productColor_'+total+'" type="text" name="productColor[]" value="" required readonly>'+
 	                '</td>'+
 	                '<td>'+
-	                	'<input class="productSerialNo_'+total+'" type="text" class="form-control" name="productSerialNo[]" value="" required>'+
+	                	'<input class="productSerialNo_'+total+'" type="text" name="productSerialNo[]" value="" required>'+
 	                '</td>'+
 
 	                '<td>'+
@@ -279,9 +260,9 @@
                         '<input class="productHairePrice_'+total+'" type="hidden" name="productHairePrice[]" value="" required>'+
 	                '</td>'+
 	                '<td align="center">'+
-	                	'<button class="btn btn-outline-danger btn-sm item_remove" onclick="itemRemove('+total+')" style="width: 100%;">'+
+	                	'<span class="btn btn-outline-danger btn-sm item_remove" onclick="itemRemove('+total+')" style="width: 100%;">'+
 	                		'<i class="fa fa-trash"></i> Remove'+
-	                	'</button>'+
+	                	'</span>'+
 	                '</td>'+
                 '</tr>'+
                 '</tr>'
@@ -289,6 +270,9 @@
             $('.row_count').val(total);
 
             var productId = $("#product :selected").val();
+            var totalQty = $('.totalQty').val();
+            var quantity = $('.productQty_'+total).val();
+            var totalAmount = $('.totalAmount').val();
 
             $.ajax({
                 headers: {
@@ -299,48 +283,50 @@
                 data:{productId:productId},
                 success: function(response) {
                     var product = response.product;
-                    // console.log(product);
                     $('.productId_'+total).val(product.id);
                     $('.productName_'+total).val(product.name+' ( '+product.code+'-'+product.color+'-'+product.model_no+' )');
                     $('.productColor_'+total).val(product.color);
                     $('.productPrice_'+total).val(product.price);
                     $('.productMrpPrice_'+total).val(product.mrp_price);
                     $('.productHairePrice_'+total).val(product.haire_price);
+                    $('.totalQty').val(parseFloat(totalQty) + parseFloat(quantity));
+                    $('.totalAmount').val(parseFloat(totalAmount) + parseFloat(product.price));
                 },
                 error: function(response) {
 
                 }
             });
-            row_sum();
         });
 
         function itemRemove(i) {
-            var total_qty = $('.total_qty').val();
-            var total_amount = $('.total_amount').val();
+            var totalQty = parseFloat($('.totalQty').val());
+            var totalAmount = parseFloat($('.totalAmount').val());
 
-            var quantity = $('.productQty'+i).val();
-            var amount = $('.productPrice_'+i).val();
+            var quantity = parseFloat($('.productQty_'+i).val());
+            var amount = parseFloat($('.productPrice_'+i).val());
 
-            total_qty = total_qty - quantity;
-            total_amount = total_amount - amount;
+            totalQty = totalQty - quantity;
+            totalAmount = totalAmount - amount;
 
-            $('.totalQty').val(total_qty.toFixed(2));
-            $('.totalAmount').val(total_amount.toFixed(2));
-
-            netAmount();
+            $('.totalQty').val(totalQty.toFixed(2));
+            $('.totalAmount').val(totalAmount.toFixed(2));
 
             $("#itemRow_" + i).remove();
         }
 
-        function totalAmount(i){
-           var qty = $(".qty_" + i).val();
-           var rate = $(".rate_" + i).val();
-           var sum_total = parseFloat(qty) *parseFloat(rate);
-           $(".amount_" + i).val(sum_total.toFixed(2));
+        // function row_sum() {
+        //     var totalQty = $('.total_qty').val();
+        //     var totalAmount = $('.total_amount').val();
 
-           row_sum(); 
-           netAmount() 
-       }
+        //     var quantity = $('.productQty'+i).val();
+        //     var amount = $('.productPrice_'+i).val();
+
+        //     totalQty = totalQty + quantity;
+        //     totalAmount = totalAmount + amount;
+
+        //     $('.totalQty').val(totalQty.toFixed(2));
+        //     $('.totalAmount').val(totalAmount.toFixed(2));
+        // }
 
         // function netAmount(){
         //     var net_amount = 0;
@@ -377,27 +363,7 @@
 
         //     net_amount = (total_amount + vat) - discount;
         //     $('.net_amount').val(net_amount.toFixed(2));
-        // }
-
-        function row_sum() {
-            var totalQty = 0;
-            var totalAmount = 0;
-            $(".productQty").each(function () {
-                var qty = parseFloat($(this).val());
-                // console.log(stval);
-                totalQty += isNaN(qty) ? 0 : qty;
-            });
-
-            $(".productPrice").each(function () {
-                var amount = parseFloat($(this).val());
-                // console.log(stval);
-                totalAmount += isNaN(amount) ? 0 : amount;
-            });
-
-            $('.totalQty').val(totalQty.toFixed(2));
-            $('.totalAmount').val(totalAmount.toFixed(2));
-        }
-          
+        // }          
     </script>
 
 @endsection

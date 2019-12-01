@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblLiftingTable extends Migration
+class CreateTblLiftingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateTblLiftingTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_lifting', function (Blueprint $table) {
+        Schema::create('tbl_liftings', function (Blueprint $table) {
             $table->increments('id');
             $table->string('serial_no');
             $table->string('vaouchar_no');
@@ -22,7 +22,9 @@ class CreateTblLiftingTable extends Migration
             $table->date('submission_date')->nullable();
             $table->date('vouchar_date')->nullable();
             $table->string('total_qty')->nullable();
-            $table->string('total_amount')->nullable();
+            $table->string('total_price')->nullable();
+            $table->string('total_mrp_price')->nullable();
+            $table->string('total_haire_price')->nullable();
             $table->string('discount')->nullable();
             $table->string('vat')->nullable();
             $table->string('net_amount')->nullable();
@@ -37,6 +39,6 @@ class CreateTblLiftingTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_lifting');
+        Schema::dropIfExists('tbl_liftings');
     }
 }

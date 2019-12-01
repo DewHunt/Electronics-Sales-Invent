@@ -488,6 +488,7 @@ class ComposerStaticInit3b0018b065e5af50f673cc2496237f34
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Http\\Middleware\\menuPermission' => __DIR__ . '/../..' . '/app/Http/Middleware/menuPermission.php',
         'App\\Lifting' => __DIR__ . '/../..' . '/app/Lifting.php',
+        'App\\LiftingProduct' => __DIR__ . '/../..' . '/app/LiftingProduct.php',
         'App\\Link' => __DIR__ . '/../..' . '/app/Link.php',
         'App\\Menu' => __DIR__ . '/../..' . '/app/Menu.php',
         'App\\Product' => __DIR__ . '/../..' . '/app/Product.php',

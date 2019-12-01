@@ -78,6 +78,24 @@ class helperClass
             return $directory.($name.'.'.$logoExtension);
     }
 
+    // public static function changeStatus($tableName,$id)
+    // {
+    //     $changeStatus = db::table($tableName)->find($id);
+
+    //     if ($changeStatus->status == 1)
+    //     {
+    //         $changeStatus->update( [               
+    //             'status' => 0                
+    //         ]);
+    //     }
+    //     else
+    //     {
+    //         $changeStatus->update( [               
+    //             'status' => 1                
+    //         ]);
+    //     }
+    // }
+
 
     /*This is last modified function for upload any image*/
     public static function UploadImage($file,$table=null,$directory=null)

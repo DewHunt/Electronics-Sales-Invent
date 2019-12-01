@@ -90,7 +90,14 @@ class ProductSetupController extends Controller
 
     public function saveProductBasicInfo(Request $request)
     {
-        $categoryId = implode(',', $request->categories);
+        if ($request->categories)
+        {
+            $categoryId = implode(',', $request->categories);
+        }
+        else
+        {
+            $categoryId = "";
+        }        
 
         $product = Product::create( [
         	'category_id' => $categoryId,
@@ -111,10 +118,7 @@ class ProductSetupController extends Controller
         	'youtube_link' => $request->youtubeLink,
         	'tag_line' => $request->tag,
         	'short_description' => $request->shortDescription,
-        	'long_description' => $request->longDescription,
-        	'meta_title' => $request->metaTitle,
-        	'meta_keyword' => $request->metaKeyword,
-        	'meta_description' => $request->metaDescription          
+        	'long_description' => $request->longDescription,         
         ]);
 
         $productId = $product->id;
@@ -190,7 +194,14 @@ class ProductSetupController extends Controller
     	$productId = $request->productId;
         $product = Product::find($productId);
 
-        $categoryId = implode(',', $request->categories);
+        if ($request->categories)
+        {
+            $categoryId = implode(',', $request->categories);
+        }
+        else
+        {
+            $categoryId = "";
+        }
 
         $product->update( [
         	'category_id' => $categoryId,
@@ -211,10 +222,7 @@ class ProductSetupController extends Controller
         	'youtube_link' => $request->youtubeLink,
         	'tag_line' => $request->tag,
         	'short_description' => $request->shortDescription,
-        	'long_description' => $request->longDescription,
-        	'meta_title' => $request->metaTitle,
-        	'meta_keyword' => $request->metaKeyword,
-        	'meta_description' => $request->metaDescription          
+        	'long_description' => $request->longDescription,         
         ]);
 
         $productId = $product->id;
@@ -230,9 +238,23 @@ class ProductSetupController extends Controller
     	$productId = $request->productId;
         $productAdvance = ProductAdvance::where('product_id',$productId)->first();
 
-        $productSection = implode(',', $request->sections);
+        if ($request->sections)
+        {
+            $productSection = implode(',', $request->sections);
+        }
+        else
+        {
+            $productSection = "";
+        }
 
-        $relatedProductId = implode(',', $request->relatedProduct);
+        if ($request->relatedProduct)
+        {
+            $relatedProductId = implode(',', $request->relatedProduct);
+        }
+        else
+        {
+            $relatedProductId = "";
+        }
 
         $productAdvance->update( [
         	'product_section' => $productSection,

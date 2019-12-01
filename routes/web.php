@@ -184,16 +184,39 @@ Route::prefix('admin')->group(function()
 			Route::post('/territory-setup-delete','Admin\TerritorySetupController@deleteTerritory')->name('territorySetup.delete');
 			Route::post('/territory-setup-status','Admin\TerritorySetupController@changeTerritoryStatus')->name('territorySetup.status');
 
-			// Territory Setup
-			Route::get('/business-staff-setup','Admin\BusinessStaffSetupController@index')->name('businessStaffSetup.index');
-			Route::get('/business-staff-setup-add','Admin\BusinessStaffSetupController@addBusinessStaff')->name('businessStaffSetup.add');
-			Route::post('/business-staff-setup-save','Admin\BusinessStaffSetupController@saveBusinessStaff')->name('businessStaffSetup.save');
-			Route::get('/business-staff-setup-edit/{id}','Admin\BusinessStaffSetupController@editBusinessStaff')->name('businessStaffSetup.edit');
-			Route::post('/business-staff-setup-update','Admin\BusinessStaffSetupController@updateBusinessStaff')->name('businessStaffSetup.update');
-			Route::post('/business-staff-setup-delete','Admin\BusinessStaffSetupController@deleteBusinessStaff')->name('businessStaffSetup.delete');
-			Route::post('/business-staff-setup-status','Admin\BusinessStaffSetupController@changeBusinessStaffStatus')->name('businessStaffSetup.status');
+			// Staff Setup
+			Route::get('/staff-setup','Admin\StaffSetupController@index')->name('staffSetup.index');
+			Route::get('/staff-setup-add','Admin\StaffSetupController@addStaff')->name('staffSetup.add');
+			Route::post('/staff-setup-save','Admin\StaffSetupController@saveStaff')->name('staffSetup.save');
+			Route::get('/staff-setup-edit/{id}','Admin\StaffSetupController@editStaff')->name('staffSetup.edit');
+			Route::post('/staff-setup-update','Admin\StaffSetupController@updateStaff')->name('staffSetup.update');
+			Route::post('/staff-setup-delete','Admin\StaffSetupController@deleteStaff')->name('staffSetup.delete');
+			Route::post('/staff-setup-status','Admin\StaffSetupController@changeStaffStatus')->name('staffSetup.status');
+
+			// Vendor Setup
+			Route::get('/vendor-setup','Admin\VendorSetupController@index')->name('vendorSetup.index');
+			Route::get('/vendor-setup-add','Admin\VendorSetupController@addVendor')->name('vendorSetup.add');
+			Route::post('/vendor-setup-save','Admin\VendorSetupController@saveVendor')->name('vendorSetup.save');
+			Route::get('/vendor-setup-edit/{id}','Admin\VendorSetupController@editVendor')->name('vendorSetup.edit');
+			Route::post('/vendor-setup-update','Admin\VendorSetupController@updateVendor')->name('vendorSetup.update');
+			Route::post('/vendor-setup-delete','Admin\VendorSetupController@deleteVendor')->name('vendorSetup.delete');
+			Route::post('/vendor-setup-status','Admin\VendorSetupController@changeVendorStatus')->name('vendorSetup.status');
 
 		// Business Settings End
+
+		// Product Lifting Start
+
+			// Vendor Setup
+			Route::get('/lifting','Admin\LiftingController@index')->name('lifting.index');
+			Route::get('/lifting-add','Admin\LiftingController@addLifting')->name('lifting.add');
+			Route::post('/lifting-save','Admin\LiftingController@saveLifting')->name('lifting.save');
+			Route::get('/lifting-edit/{id}','Admin\LiftingController@editLifting')->name('lifting.edit');
+			Route::post('/lifting-update','Admin\LiftingController@updateLifting')->name('lifting.update');
+			Route::post('/lifting-delete','Admin\LiftingController@deleteLifting')->name('lifting.delete');
+			Route::post('/lifting-status','Admin\LiftingController@changeLiftingStatus')->name('lifting.status');
+			Route::post('/lifting-product-info','Admin\LiftingController@liftingProductInfo')->name('lifting.productInfo');
+
+		// Product Lifting End
 		});
 	});
 

@@ -7,45 +7,21 @@
                 $sl = 0;
             @endphp
 
-            <table id="businessStaffTable" class="table table-bordered table-striped"  name="businessStaffTable">
+            <table id="liftingTable" class="table table-bordered table-striped"  name="liftingTable">
                 <thead>
                     <tr>
                         <th width="20px">SL</th>
-                        <th>Code</th>
-                        <th>Name</th>
-                        <th>Joining Date</th>
-                        <th>National Id</th>
-                        <th>Contact</th>
-                        <th>Email</th>
-                        <th>Address</th>
+                        <th>Purchase No.</th>
+                        <th>Invoice No.</th>
+                        <th>Supplier</th>
+                        <th>Purchase By</th>
+                        <th>Quanty</th>
+                        <th>Amount</th>
                         <th width="20px">Status</th>
                         <th width="20px">Action</th>
                     </tr>
                 </thead>
                 <tbody id="">
-                	@php
-                		$sl = 0;
-                	@endphp
-                	@foreach ($businessStaffs as $businessStaff)
-                		<tr>
-                			<td>{{ $sl++ }}</td>
-                			<td>{{ $businessStaff->code }}</td>
-                			<td>{{ $businessStaff->name }}</td>
-                            <td>{{ $businessStaff->joining_date }}</td>
-                            <td>{{ $businessStaff->national_id }}</td>
-                			<td>{{ $businessStaff->contact }}</td>
-                            <td>{{ $businessStaff->email }}</td>
-                			<td>{{ $businessStaff->address }}</td>
-                			<td>
-                				<?php echo \App\Link::status($businessStaff->id,$businessStaff->status)?>
-                			</td>
-                			<td>
-                    			@php
-                    				echo \App\Link::action($businessStaff->id);
-                    			@endphp                				
-                			</td>
-                		</tr>
-                	@endforeach
                 </tbody>
             </table>
         </div>
@@ -66,7 +42,7 @@
                 new Switchery($(this)[0], $(this).data());
             });
 
-            var table = $('#businessStaffTable').DataTable( {
+            var table = $('#liftingTable').DataTable( {
                 "order": [[0, "asc"]]
             } );
 
@@ -77,14 +53,14 @@
             } ).draw();         
 
             //ajax delete code
-            $('#businessStaffTable tbody').on( 'click', 'i.fa-trash', function () {
+            $('#liftingTable tbody').on( 'click', 'i.fa-trash', function () {
                 $.ajaxSetup({
                   headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                   }
                 });
 
-                businessStaffId = $(this).parent().data('id');
+                liftingId = $(this).parent().data('id');
                 var tableRow = this;
                 swal({   
                     title: "Are you sure?",   
@@ -101,14 +77,14 @@
                     if (isConfirm) {
                         $.ajax({
                             type: "POST",
-                            url : "{{ route('businessStaffSetup.delete') }}",
-                            data : {businessStaffId:businessStaffId},
+                            url : "{{ route('lifting.delete') }}",
+                            data : {liftingId:liftingId},
                            
                             success: function(response) {
                                 swal({
                                     title: "<small class='text-success'>Success!</small>", 
                                     type: "success",
-                                    text: "Staff Deleted Successfully!",
+                                    text: "Vendor Deleted Successfully!",
                                     timer: 1000,
                                     html: true,
                                 });
@@ -144,14 +120,14 @@
         });
                 
         //ajax status change code
-        function statusChange(businessStaffId) {
+        function statusChange(liftingId) {
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 type: "post",
-                url: "{{ route('businessStaffSetup.status') }}",
-                data: {businessStaffId:businessStaffId},
+                url: "{{ route('lifting.status') }}",
+                data: {liftingId:liftingId},
                 success: function(response) {
                     swal({
                         title: "<small class='text-success'>Success!</small>", 

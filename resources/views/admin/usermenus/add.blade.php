@@ -3,11 +3,11 @@
 @section('card_body')
     @php
         use App\UserMenu;
-        $userMenus = UserMenu::orderBy('id','DESC')->first();
+        $userMenus = UserMenu::max('orderBy');
 
-        if (@$userMenus->orderBy)
+        if (@$userMenus)
         {
-            $orderBy = $userMenus->orderBy+1;
+            $orderBy = $userMenus+1;
         }
         else
         {

@@ -17,6 +17,7 @@ class CreateTblLiftingProductsTable extends Migration
             $table->increments('id');
             $table->integer('lifting_id');
             $table->integer('product_id');
+            $table->string('model_no');
             $table->string('serial_no');
             $table->string('color')->nullable();
             $table->string('qty')->nullable();

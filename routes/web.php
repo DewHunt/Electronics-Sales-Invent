@@ -202,6 +202,11 @@ Route::prefix('admin')->group(function()
 			Route::post('/vendor-setup-delete','Admin\VendorSetupController@deleteVendor')->name('vendorSetup.delete');
 			Route::post('/vendor-setup-status','Admin\VendorSetupController@changeVendorStatus')->name('vendorSetup.status');
 
+			//Product List
+			Route::get('/product-list', 'Admin\ProductListController@index')->name('productList.index');
+			Route::post('/product-list', 'Admin\ProductListController@index')->name('productList.index');
+			Route::post('/product-list/print', 'Admin\ProductListController@print')->name('productList.print');
+
 		// Business Settings End
 
 		// Product Lifting Start
@@ -213,7 +218,6 @@ Route::prefix('admin')->group(function()
 			Route::get('/lifting-edit/{id}','Admin\LiftingController@editLifting')->name('lifting.edit');
 			Route::post('/lifting-update','Admin\LiftingController@updateLifting')->name('lifting.update');
 			Route::post('/lifting-delete','Admin\LiftingController@deleteLifting')->name('lifting.delete');
-			Route::post('/lifting-status','Admin\LiftingController@changeLiftingStatus')->name('lifting.status');
 			Route::post('/lifting-product-info','Admin\LiftingController@liftingProductInfo')->name('lifting.productInfo');
 
 		// Product Lifting End

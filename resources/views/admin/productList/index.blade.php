@@ -57,6 +57,17 @@
 @endsection
 
 @section('print_card_header')
+    @if ($category)
+        @foreach ($category as $categoryInfo)
+            <input type="hidden" name="category[]" value="{{ $categoryInfo }}">
+        @endforeach
+    @endif
+
+    @if ($product)
+        @foreach ($product as $productInfo)
+            <input type="hidden" name="product[]" value="{{ $productInfo }}">
+        @endforeach
+    @endif
 @endsection
 
 @section('print_card_body')
@@ -84,7 +95,7 @@
 				@endforeach
 			</tbody>
 		</table>
-		{{ $productLists->render() }}
+		{{-- {{ $productLists->links() }} --}}
 	</div>
 @endsection
 
@@ -110,104 +121,7 @@
                 table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
                     cell.innerHTML = i+1;
                 } );
-            } ).draw();         
-
-            //ajax delete code
-            $('#bankTable tbody').on( 'click', 'i.fa-trash', function () {
-                $.ajaxSetup({
-                  headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                  }
-                });
-
-                bankId = $(this).parent().data('id');
-                var tableRow = this;
-                swal({   
-                    title: "Are you sure?",   
-                    text: "You will not be able to recover this information!",   
-                    type: "warning",   
-                    showCancelButton: true,   
-                    confirmButtonColor: "#DD6B55",   
-                    confirmButtonText: "Yes, delete it!",   
-                    cancelButtonText: "No, cancel plx!",   
-                    closeOnConfirm: false,   
-                    closeOnCancel: false 
-                },
-                function(isConfirm){   
-                    if (isConfirm) {
-                        $.ajax({
-                            type: "POST",
-                            url : "{{ route('bankSetup.delete') }}",
-                            data : {bankId:bankId},
-                           
-                            success: function(response) {
-                                swal({
-                                    title: "<small class='text-success'>Success!</small>", 
-                                    type: "success",
-                                    text: "Bank Deleted Successfully!",
-                                    timer: 1000,
-                                    html: true,
-                                });
-                                table
-                                    .row( $(tableRow).parents('tr'))
-                                    .remove()
-                                    .draw();
-                            },
-                            error: function(response) {
-                                error = "Failed.";
-                                swal({
-                                    title: "<small class='text-danger'>Error!</small>", 
-                                    type: "error",
-                                    text: error,
-                                    timer: 1000,
-                                    html: true,
-                                });
-                            }
-                        });    
-                    }
-                    else
-                    { 
-                        swal({
-                            title: "Cancelled", 
-                            type: "error",
-                            text: "Your User is safe :)",
-                            timer: 1000,
-                            html: true,
-                        });    
-                    } 
-                });
-            });
+            } ).draw();
         });
-                
-        //ajax status change code
-        function statusChange(bankId) {
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                type: "post",
-                url: "{{ route('bankSetup.status') }}",
-                data: {bankId:bankId},
-                success: function(response) {
-                    swal({
-                        title: "<small class='text-success'>Success!</small>", 
-                        type: "success",
-                        text: "Status Successfully Updated!",
-                        timer: 1000,
-                        html: true,
-                    });
-                },
-                error: function(response) {
-                    error = "Failed.";
-                    swal({
-                        title: "<small class='text-danger'>Error!</small>", 
-                        type: "error",
-                        text: error,
-                        timer: 2000,
-                        html: true,
-                    });
-                }
-            });
-        }
     </script>
 @endsection

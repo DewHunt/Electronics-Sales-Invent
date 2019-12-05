@@ -1,65 +1,63 @@
 @extends('admin.layouts.masterReport')
 
 @section('search_card_body')
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-6">
-                <label for="product-category">Category</label>
-                <div class="form-group">
-                    <select class="form-control chosen-select" id="productCategory" name="productCategory[]" multiple>
-                        @foreach ($categories as $category)
-                            @php
-                                $select = "";
-                                if ($productCategory)
+    <div class="row">
+        <div class="col-md-6">
+            <label for="product-category">Category</label>
+            <div class="form-group">
+                <select class="form-control chosen-select" id="productCategory" name="productCategory[]" multiple>
+                    @foreach ($categories as $category)
+                        @php
+                            $select = "";
+                            if ($productCategory)
+                            {
+                                if (in_array($category->id, $productCategory))
                                 {
-                                    if (in_array($category->id, $productCategory))
-                                    {
-                                        $select = "selected";
-                                    }
-                                    else
-                                    {
-                                        $select = "";
-                                    }
+                                    $select = "selected";
                                 }
-                            @endphp
-                            <option value="{{ $category->id }}" {{ $select }}>{{ $category->name }}</option>
-                        @endforeach
-                    </select>
-                </div>  
-            </div>
+                                else
+                                {
+                                    $select = "";
+                                }
+                            }
+                        @endphp
+                        <option value="{{ $category->id }}" {{ $select }}>{{ $category->name }}</option>
+                    @endforeach
+                </select>
+            </div>  
+        </div>
 
-            <div class="col-md-6">
-                <label for="product">Product</label>
-                <div class="form-group">
-                    <select class="form-control chosen-select" id="product" name="product[]" multiple>
-                        @foreach ($products as $productInfo)
-                            @php
-                                $select = "";
-                                if ($product)
+        <div class="col-md-6">
+            <label for="product">Product</label>
+            <div class="form-group">
+                <select class="form-control chosen-select" id="product" name="product[]" multiple>
+                    @foreach ($products as $productInfo)
+                        @php
+                            $select = "";
+                            if ($product)
+                            {
+                                if (in_array($productInfo->id, $product))
                                 {
-                                    if (in_array($productInfo->id, $product))
-                                    {
-                                        $select = "selected";
-                                    }
-                                    else
-                                    {
-                                        $select = "";
-                                    }
+                                    $select = "selected";
                                 }
-                            @endphp
-                            <option value="{{ $productInfo->id }}" {{ $select }}>{{ $productInfo->name }}</option>
-                        @endforeach
-                    </select>
-                </div>  
-            </div>
+                                else
+                                {
+                                    $select = "";
+                                }
+                            }
+                        @endphp
+                        <option value="{{ $productInfo->id }}" {{ $select }}>{{ $productInfo->name }}</option>
+                    @endforeach
+                </select>
+            </div>  
         </div>
     </div>	
 @endsection
 
 @section('print_card_header')
-    @if ($category)
-        @foreach ($category as $categoryInfo)
-            <input type="hidden" name="category[]" value="{{ $categoryInfo }}">
+    @if ($productCategory)
+        @foreach ($productCategory as $productCategoryInfo)
+            <input type="hidden" name="productCategory[]" value="{{ $productCategoryInfo }}">
         @endforeach
     @endif
 
@@ -71,32 +69,30 @@
 @endsection
 
 @section('print_card_body')
-	<div class="card-body">
-		<table class="table table-bordered table-sm">
-			<thead class="thead-dark">
-				<tr>
-					<th>Category Name</th>
-					<th>Product Name</th>
-					<th>Price</th>
-					<th>MRP Price</th>
-					<th>Haire Price</th>
-				</tr>
-			</thead>
+	<table class="table table-bordered table-sm">
+		<thead class="thead-light">
+			<tr>
+				<th>Category Name</th>
+				<th>Product Name</th>
+				<th>Price</th>
+				<th>MRP Price</th>
+				<th>Haire Price</th>
+			</tr>
+		</thead>
 
-			<tbody>
-				@foreach ($productLists as $productList)
-					<tr>
-						<td>{{ $productList->categoryName }}</td>
-						<td>{{ $productList->productName }}</td>
-						<td>{{ $productList->price }}</td>
-						<td>{{ $productList->mrpPrice }}</td>
-						<td>{{ $productList->hairePrice }}</td>
-					</tr>
-				@endforeach
-			</tbody>
-		</table>
-		{{-- {{ $productLists->links() }} --}}
-	</div>
+		<tbody>
+			@foreach ($productLists as $productList)
+				<tr>
+					<td>{{ $productList->categoryName }}</td>
+					<td>{{ $productList->productName }}</td>
+					<td>{{ $productList->price }}</td>
+					<td>{{ $productList->mrpPrice }}</td>
+					<td>{{ $productList->hairePrice }}</td>
+				</tr>
+			@endforeach
+		</tbody>
+	</table>
+	{{-- {{ $productLists->render() }} --}}
 @endsection
 
 @section('custom-js')

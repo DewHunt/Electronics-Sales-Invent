@@ -255,7 +255,7 @@
 @section('custom-js')
     <script type="text/javascript">
         $(".add_item").click(function () {
-            var productId = $("#product :selected").val();
+            var productId = $("#product option:selected").val();
             var serialNo = $("#product_serial_no").val();
 
         	if (productId == "" || serialNo == "")

@@ -81,6 +81,14 @@ Route::prefix('admin')->group(function()
 			Route::get('/user-role-permission/{id}','Admin\UserRoleController@permission')->name('userRole.permission');
 			Route::post('/user-role-permission-update','Admin\UserRoleController@permissionUpdate')->name('userRole.permissionUpdate');
 
+			// Company Setup
+			Route::get('/company-setup','Admin\CompanySetupController@index')->name('companySetup.index');
+			Route::get('/company-setup-add','Admin\CompanySetupController@addCompany')->name('companySetup.add');
+			Route::post('/company-setup-save','Admin\CompanySetupController@saveCompany')->name('companySetup.save');
+			Route::get('/company-setup-edit/{id}','Admin\CompanySetupController@editCompany')->name('companySetup.edit');
+			Route::post('/company-setup-update','Admin\CompanySetupController@updateCompany')->name('companySetup.update');
+
+
 			//Showroom Setup
 			Route::get('/showroom-setup','Admin\ShowroomSetupController@index')->name('showroomSetup.index');
 			Route::get('/showroom-setup-add','Admin\ShowroomSetupController@addShowroom')->name('showroomSetup.add');
@@ -89,7 +97,6 @@ Route::prefix('admin')->group(function()
 			Route::get('/showroom-setup-edit/{id}','Admin\ShowroomSetupController@editShowroom')->name('showroomSetup.edit');
 			Route::post('/showroom-setup-update','Admin\ShowroomSetupController@updateShowroom')->name('showroomSetup.update');
 			Route::post('/showroom-setup-delete','Admin\ShowroomSetupController@deleteShowroom')->name('showroomSetup.delete');
-
 		// User Management End
 
 		// Bussiness Settings
@@ -203,15 +210,15 @@ Route::prefix('admin')->group(function()
 			Route::post('/vendor-setup-status','Admin\VendorSetupController@changeVendorStatus')->name('vendorSetup.status');
 
 			//Product List
-			Route::get('/product-list', 'Admin\ProductListController@index')->name('productList.index');
-			Route::post('/product-list', 'Admin\ProductListController@index')->name('productList.index');
-			Route::post('/product-list/print', 'Admin\ProductListController@print')->name('productList.print');
+			Route::get('/product-list','Admin\ProductListController@index')->name('productList.index');
+			Route::post('/product-list','Admin\ProductListController@index')->name('productList.index');
+			Route::post('/product-list/print','Admin\ProductListController@print')->name('productList.print');
 
 		// Business Settings End
 
 		// Product Lifting Start
 
-			// Vendor Setup
+			// Lifting Setup
 			Route::get('/lifting','Admin\LiftingController@index')->name('lifting.index');
 			Route::get('/lifting-add','Admin\LiftingController@addLifting')->name('lifting.add');
 			Route::post('/lifting-save','Admin\LiftingController@saveLifting')->name('lifting.save');
@@ -219,6 +226,25 @@ Route::prefix('admin')->group(function()
 			Route::post('/lifting-update','Admin\LiftingController@updateLifting')->name('lifting.update');
 			Route::post('/lifting-delete','Admin\LiftingController@deleteLifting')->name('lifting.delete');
 			Route::post('/lifting-product-info','Admin\LiftingController@liftingProductInfo')->name('lifting.productInfo');
+
+			// Payment to Company
+			Route::get('/payment-to-company','Admin\PaymentToCompanyController@index')->name('paymentToCompany.index');
+			Route::get('/payment-to-company/add','Admin\PaymentToCompanyController@addPaymentToCompany')->name('paymentToCompany.add');
+			Route::post('/payment-to-company/save','Admin\PaymentToCompanyController@savePaymentToCompany')->name('paymentToCompany.save');
+			Route::get('/payment-to-company/edit/{id}','Admin\PaymentToCompanyController@editPaymentToCompany')->name('paymentToCompany.edit');
+			Route::post('/payment-to-company/update','Admin\PaymentToCompanyController@updatePaymentToCompany')->name('paymentToCompany.update');
+			Route::post('/payment-to-company/delete','Admin\PaymentToCompanyController@deletePaymentToCompany')->name('paymentToCompany.delete');
+			Route::post('/get-vendor-info','Admin\PaymentToCompanyController@getVendorInfo')->name('getVendorInfo');
+
+			// Payment Record
+			Route::get('/payment-record','Admin\PaymentRecordController@index')->name('paymentRecord.index');
+			Route::post('/payment-record','Admin\PaymentRecordController@index')->name('paymentRecord.index');
+			Route::post('/payment-record/print','Admin\PaymentRecordController@print')->name('paymentRecord.print');
+
+			//Vendor Statement
+			Route::get('/vendor-statement','Admin\VendorStatementController@index')->name('vendorStatement.index');
+			Route::post('/vendor-statement','Admin\VendorStatementController@index')->name('vendorStatement.index');
+			Route::post('/vendor-statement/print', 'Admin\VendorStatementController@print')->name('vendorStatement.print');
 
 		// Product Lifting End
 		});

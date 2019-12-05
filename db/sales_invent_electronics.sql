@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2019 at 02:03 PM
+-- Generation Time: Dec 05, 2019 at 01:35 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -142,7 +142,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (26, '2019_12_01_081248_create_tbl_lifting_products_table', 12),
 (27, '2019_12_01_175830_create_tbl_liftings_table', 13),
 (28, '2019_12_01_182810_create_tbl_lifting_products_table', 13),
-(29, '2019_12_02_064734_create_tbl_lifting_products_table', 14);
+(29, '2019_12_02_064734_create_tbl_lifting_products_table', 14),
+(30, '2019_12_03_071520_create_tbl_company_table', 15),
+(31, '2019_12_05_052019_create_tbl_payment_to_company_table', 16),
+(32, '2019_12_05_055508_create_tbl_payment_to_company_table', 17);
 
 -- --------------------------------------------------------
 
@@ -296,6 +299,36 @@ INSERT INTO `tbl_categories` (`id`, `name`, `cover_image`, `image`, `status`, `p
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_company`
+--
+
+CREATE TABLE `tbl_company` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `prefix` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fax` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `website` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `vat` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tin` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `trade_license` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_company`
+--
+
+INSERT INTO `tbl_company` (`id`, `prefix`, `name`, `email`, `phone`, `fax`, `website`, `vat`, `tin`, `trade_license`, `address`, `created_at`, `updated_at`) VALUES
+(1, 'dew-hunt', 'Dew Soft Ltd.', 'dew@gmail.com', '01317243494', '02243493', 'www.dewsoft.com', 'vat46546gffg', 'tin567e5', 'tl32435dy5', 'Gulshan', '2019-12-03 02:51:19', '2019-12-03 07:00:46'),
+(2, 'gsdfhgdh', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_couriers`
 --
 
@@ -381,6 +414,36 @@ INSERT INTO `tbl_lifting_products` (`id`, `lifting_id`, `product_id`, `model_no`
 (13, 2, 3, 'wal890', 'poiuytrty', 'Black', '1', '45000', '48600', '54432', NULL, NULL),
 (14, 2, 6, 'wal8126', 'fsdafa', 'White', '1', '25000', '27000', '30240', NULL, NULL),
 (15, 2, 7, 'Wal119', 'sdgfasdgasd', 'Red', '1', '65000', '70200', '78624', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_payment_to_company`
+--
+
+CREATE TABLE `tbl_payment_to_company` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `vendor_id` int(11) NOT NULL,
+  `payment_no` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payment_date` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `current_due` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `payment_now` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT '0',
+  `balance` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `money_receipt` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `payment_type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remarks` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_payment_to_company`
+--
+
+INSERT INTO `tbl_payment_to_company` (`id`, `vendor_id`, `payment_no`, `payment_date`, `current_due`, `payment_now`, `balance`, `money_receipt`, `payment_type`, `remarks`, `created_at`, `updated_at`) VALUES
+(1, 1, '1000001', '2019-12-04', '135000', '5000', '130000.00', 'd12e34w', 'Cash', 'Five Thousand Taka Cash.', '2019-12-05 03:31:53', '2019-12-05 05:58:10'),
+(2, 1, '1000002', '2019-12-03', '130000', '2000', '128000.00', 'e348je0k', 'Cash', 'Two Thousand Taka Cash.', '2019-12-05 03:57:43', '2019-12-05 04:07:49'),
+(3, 1, '1000003', '2019-12-02', '127000', '4000', '123000.00', 'lk43n93jc', 'Cash', 'Four Thousand Taka Cash.', '2019-12-05 03:58:54', '2019-12-05 03:58:54');
 
 -- --------------------------------------------------------
 
@@ -691,7 +754,11 @@ INSERT INTO `user_menus` (`id`, `parentMenu`, `menuName`, `menuLink`, `menuIcon`
 (18, '6', 'Vendor Setup', 'vendorSetup.index', 'fa fa-caret', 10, '1', '2019-11-30 23:41:41', '2019-11-30 23:41:41'),
 (19, NULL, 'Product Lifting', 'admin.index', 'fa fa-bars', 12, '1', '2019-12-01 01:30:30', '2019-12-01 01:30:30'),
 (20, '19', 'Lifting', 'lifting.index', 'fa fa-caret', 13, '1', '2019-12-01 01:34:52', '2019-12-01 01:34:52'),
-(21, '6', 'Product List', 'productList.index', 'fa fa-caret', 14, '1', '2019-12-02 04:19:05', '2019-12-02 04:19:05');
+(21, '6', 'Product List', 'productList.index', 'fa fa-caret', 14, '1', '2019-12-02 04:19:05', '2019-12-02 04:19:05'),
+(22, '2', 'Company Setup', 'companySetup.index', 'fa fa-caret', 15, '1', '2019-12-03 01:41:12', '2019-12-03 01:41:12'),
+(23, '19', 'Payment To Company', 'paymentToCompany.index', 'fa fa-caret', 16, '1', '2019-12-04 23:23:10', '2019-12-04 23:23:10'),
+(24, '19', 'Payment Record', 'paymentRecord.index', NULL, 17, '1', '2019-12-05 05:26:06', '2019-12-05 05:28:09'),
+(25, '19', 'Vendor Statement', 'vendorStatement.index', 'fa fa-caret', 18, '1', '2019-12-05 06:30:54', '2019-12-05 06:30:54');
 
 -- --------------------------------------------------------
 
@@ -779,7 +846,14 @@ INSERT INTO `user_menu_actions` (`id`, `parentmenuId`, `menuType`, `actionName`,
 (65, 20, 1, 'Add', 'lifting.add', 65, 1, '2019-12-01 01:36:51', '2019-12-01 01:36:51'),
 (66, 20, 2, 'Edit', 'lifting.edit', 66, 1, '2019-12-01 01:37:41', '2019-12-01 01:37:41'),
 (67, 20, 4, 'Delete', 'lifting.delete', 67, 1, '2019-12-01 01:37:55', '2019-12-01 01:37:55'),
-(69, 21, 11, 'Print Product List', 'productList.print', 68, 1, '2019-12-02 04:21:36', '2019-12-02 04:21:36');
+(69, 21, 11, 'Print Product List', 'productList.print', 68, 1, '2019-12-02 04:21:36', '2019-12-02 04:21:36'),
+(70, 22, 1, 'Add', 'companySetup.add', 69, 1, '2019-12-03 01:42:18', '2019-12-03 01:42:18'),
+(71, 22, 2, 'Edit', 'companySetup.edit', 70, 1, '2019-12-03 01:42:40', '2019-12-03 01:42:40'),
+(72, 23, 1, 'Add', 'paymentToCompany.add', 71, 1, '2019-12-04 23:29:44', '2019-12-04 23:29:44'),
+(73, 23, 2, 'Edit', 'paymentToCompany.edit', 72, 1, '2019-12-04 23:29:59', '2019-12-04 23:29:59'),
+(74, 23, 4, 'Delete', 'paymentToCompany.delete', 73, 1, '2019-12-04 23:30:16', '2019-12-04 23:30:16'),
+(75, 24, 11, 'Print Product Record', 'paymentRecord.print', 74, 1, '2019-12-05 05:27:38', '2019-12-05 05:27:38'),
+(76, 25, 11, 'Print Vendor Statement', 'vendorStatement.print', 75, 1, '2019-12-05 06:31:33', '2019-12-05 06:31:33');
 
 -- --------------------------------------------------------
 
@@ -802,7 +876,7 @@ CREATE TABLE `user_roles` (
 --
 
 INSERT INTO `user_roles` (`id`, `name`, `status`, `permission`, `actionPermission`, `created_at`, `updated_at`) VALUES
-(1, 'Super Admin', 1, '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,17,18,19,20,21', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,20,18,19,17,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,57,58,59,60,61,62,63,64,65,66,67,69', '2019-11-20 22:48:03', '2019-12-02 04:22:01'),
+(1, 'Super Admin', 1, '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,17,18,19,20,21,22,23,24,25', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,20,18,19,17,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,57,58,59,60,61,62,63,64,65,66,67,69,70,71,72,73,74,75,76', '2019-11-20 22:48:03', '2019-12-05 06:31:51'),
 (5, 'Admin', 0, NULL, NULL, '2019-11-29 03:26:52', '2019-11-29 03:26:52');
 
 --
@@ -871,6 +945,12 @@ ALTER TABLE `tbl_categories`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tbl_company`
+--
+ALTER TABLE `tbl_company`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tbl_couriers`
 --
 ALTER TABLE `tbl_couriers`
@@ -886,6 +966,12 @@ ALTER TABLE `tbl_liftings`
 -- Indexes for table `tbl_lifting_products`
 --
 ALTER TABLE `tbl_lifting_products`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_payment_to_company`
+--
+ALTER TABLE `tbl_payment_to_company`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -986,7 +1072,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -1019,6 +1105,12 @@ ALTER TABLE `tbl_categories`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT for table `tbl_company`
+--
+ALTER TABLE `tbl_company`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `tbl_couriers`
 --
 ALTER TABLE `tbl_couriers`
@@ -1035,6 +1127,12 @@ ALTER TABLE `tbl_liftings`
 --
 ALTER TABLE `tbl_lifting_products`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT for table `tbl_payment_to_company`
+--
+ALTER TABLE `tbl_payment_to_company`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_products`
@@ -1094,13 +1192,13 @@ ALTER TABLE `tbl_vendors`
 -- AUTO_INCREMENT for table `user_menus`
 --
 ALTER TABLE `user_menus`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `user_menu_actions`
 --
 ALTER TABLE `user_menu_actions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT for table `user_roles`

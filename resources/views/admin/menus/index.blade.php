@@ -86,9 +86,6 @@ menu
 @endsection
 
 @section('custom-js')
-
-    <!-- This is data table -->
-    <script src="{{ asset('/public/admin-elite/assets/node_modules/datatables/jquery.dataTables.min.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('.summernote').summernote({

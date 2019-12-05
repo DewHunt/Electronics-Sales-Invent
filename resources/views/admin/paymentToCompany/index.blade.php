@@ -7,17 +7,17 @@
                 $sl = 0;
             @endphp
 
-            <table id="territoryTable" class="table table-bordered table-striped"  name="territoryTable">
+            <table id="paymentToCompanyTable" class="table table-bordered table-striped"  name="paymentToCompanyTable">
                 <thead>
                     <tr>
                         <th width="20px">SL</th>
-                        <th>Prefix</th>
-                        <th>Area Name</th>
-                        <th>Territory Name</th>
-                        <th>Incharge Name</th>
-                        <th>Contact</th>
-                        <th>Address</th>
-                        <th width="20px">Status</th>
+                        <th>Vendor</th>
+                        <th>Payment No.</th>
+                        <th>Payment Date</th>
+                        <th>Payment Type</th>
+                        <th>Money Receipt</th>
+                        <th>Payment</th>
+                        <th>Balance</th>
                         <th width="20px">Action</th>
                     </tr>
                 </thead>
@@ -25,21 +25,19 @@
                 	@php
                 		$sl = 0;
                 	@endphp
-                	@foreach ($territories as $territory)
+                	@foreach ($paymentToCompany as $payment)
                 		<tr>
                 			<td>{{ $sl++ }}</td>
-                			<td>{{ $territory->code }}</td>
-                			<td>{{ $territory->areaName }}</td>
-                            <td>{{ $territory->name }}</td>
-                            <td>{{ $territory->incharge_name }}</td>
-                            <td>{{ $territory->contact }}</td>
-                            <td>{{ $territory->address }}</td>
-                			<td>
-                				<?php echo \App\Link::status($territory->id,$territory->status)?>
-                			</td>
+                			<td>{{ $payment->vendorName }}</td>
+                			<td>{{ $payment->payment_no }}</td>
+                			<td>{{ $payment->payment_date }}</td>
+                			<td>{{ $payment->payment_type }}</td>
+                			<td>{{ $payment->money_receipt }}</td>
+                			<td>{{ $payment->payment_now }}</td>
+                			<td>{{ $payment->balance }}</td>
                 			<td>
                     			@php
-                    				echo \App\Link::action($territory->id);
+                    				echo \App\Link::action($payment->id);
                     			@endphp                				
                 			</td>
                 		</tr>
@@ -61,7 +59,7 @@
                 new Switchery($(this)[0], $(this).data());
             });
 
-            var table = $('#territoryTable').DataTable( {
+            var table = $('#paymentToCompanyTable').DataTable( {
                 "order": [[0, "asc"]]
             } );
 
@@ -72,14 +70,14 @@
             } ).draw();         
 
             //ajax delete code
-            $('#territoryTable tbody').on( 'click', 'i.fa-trash', function () {
+            $('#paymentToCompanyTable tbody').on( 'click', 'i.fa-trash', function () {
                 $.ajaxSetup({
                   headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                   }
                 });
 
-                territoryId = $(this).parent().data('id');
+                paymentToCompanyId = $(this).parent().data('id');
                 var tableRow = this;
                 swal({   
                     title: "Are you sure?",   
@@ -96,14 +94,14 @@
                     if (isConfirm) {
                         $.ajax({
                             type: "POST",
-                            url : "{{ route('territorySetup.delete') }}",
-                            data : {territoryId:territoryId},
+                            url : "{{ route('paymentToCompany.delete') }}",
+                            data : {paymentToCompanyId:paymentToCompanyId},
                            
                             success: function(response) {
                                 swal({
                                     title: "<small class='text-success'>Success!</small>", 
                                     type: "success",
-                                    text: "Territory Deleted Successfully!",
+                                    text: "Bank Deleted Successfully!",
                                     timer: 1000,
                                     html: true,
                                 });
@@ -137,36 +135,5 @@
                 });
             });
         });
-                
-        //ajax status change code
-        function statusChange(territoryId) {
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                type: "post",
-                url: "{{ route('territorySetup.status') }}",
-                data: {territoryId:territoryId},
-                success: function(response) {
-                    swal({
-                        title: "<small class='text-success'>Success!</small>", 
-                        type: "success",
-                        text: "Status Successfully Updated!",
-                        timer: 1000,
-                        html: true,
-                    });
-                },
-                error: function(response) {
-                    error = "Failed.";
-                    swal({
-                        title: "<small class='text-danger'>Error!</small>", 
-                        type: "error",
-                        text: error,
-                        timer: 2000,
-                        html: true,
-                    });
-                }
-            });
-        }
     </script>
 @endsection

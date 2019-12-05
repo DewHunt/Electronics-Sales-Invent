@@ -45,8 +45,9 @@
                 <div class="container-fluid">
                     <!-- Bread crumb and right sidebar toggle -->
                     @yield('bread-crumb')
-
                     <!-- End Bread crumb and right sidebar toggle -->
+
+                    <div style="padding-bottom: 10px;"></div>
 
                     <!-- Page Content -->
                     @yield('content')

@@ -64,9 +64,11 @@
     				            </div>
     				        </div>
 
-    		                <!-- Search Card Body Content -->
-    		                @yield('search_card_body')
-    		                <!-- End Search Card Body Content -->
+    				        <div class="card-body">
+	    		                <!-- Search Card Body Content -->
+	    		                @yield('search_card_body')
+	    		                <!-- End Search Card Body Content -->    				        	
+    				        </div>
 
     				        <div class="card-footer">
     				            <div class="row">
@@ -83,7 +85,7 @@
 		                    <div class="row">
 		                        <div class="col-md-6"><h4 class="card-title">Searched Report</h4></div>
 		                        <div class="col-md-6 text-right">
-		                            <form class="form-horizontal" action="{{ $printFormLink }}" target="_blank" method="post" enctype="multipart/form-data">
+		                            <form class="form-horizontal" action="{{ route($printFormLink) }}" target="_blank" method="post" enctype="multipart/form-data">
 		                                {{ csrf_field() }}
 
 		                                @yield('print_card_header')
@@ -94,9 +96,11 @@
 		                    </div>
 		                </div>
 
-		                <!-- Print Card Body Content -->
-		                @yield('print_card_body')
-		                <!-- End Print Card Body Content -->
+		                <div class="card-body">
+			                <!-- Print Card Body Content -->
+			                @yield('print_card_body')
+			                <!-- End Print Card Body Content -->		                	
+		                </div>
 
 				        <div class="card-footer">
 				            <div class="row">

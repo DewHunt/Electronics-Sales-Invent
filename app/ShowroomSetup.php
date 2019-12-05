@@ -9,7 +9,7 @@ class ShowroomSetup extends Model
 	protected $table = "tbl_showroom";
 
 	protected $fillable = [
-		'prefix','name','contact_person','email','phone','fax','website','vat','tin','trade_license','address'
+		'prefix','name','contact_person','email','phone','fax','website','vat','tin','trade_license','address','status'
 	];
 
 	protected $hidden = [

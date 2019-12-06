@@ -22,6 +22,7 @@ class ProductListController extends Controller
 
         $productCategory = $request->productCategory;
         $product = $request->product;
+        $print = $request->print;
 
         $categories = CategorySetup::orderBy('name','asc')->get();
         $products = Product::orderBy('name','asc')->get();
@@ -53,12 +54,12 @@ class ProductListController extends Controller
 	            ->get();
         }
 
-		return view('admin.productList.index')->with(compact('title','searchFormLink','printFormLink','productCategory','product','categories','products','productLists'));
+		return view('admin.productList.index')->with(compact('title','searchFormLink','printFormLink','productCategory','product','print','categories','products','productLists'));
 	}
 
 	public function print(Request $request)
 	{
-		$title = "Product List Preport";
+		$title = "Print Product List Report";
 		$searchFormLink = "productList.index";
 		$printFormLink = "productList.print";
 

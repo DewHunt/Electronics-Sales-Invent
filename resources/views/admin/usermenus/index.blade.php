@@ -8,7 +8,7 @@
     <div class="card-body">
         
         <div class="table-responsive">
-            <table id="menusTable" class="table table-bordered table-striped"  name="menusTable">
+            <table id="dataTable" class="table table-bordered table-striped"  name="menusTable">
                 <thead>
                     <tr>
                         <th>Sl</th>
@@ -55,22 +55,6 @@
     <script>
         $(document).ready(function() {
             var updateThis ;
-
-            // Switchery
-            var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
-            $('.js-switch').each(function() {
-                new Switchery($(this)[0], $(this).data());
-            });
-
-            var table = $('#menusTable').DataTable( {
-                "order": [[ 3, "asc" ]]
-            } );
-
-            table.on('order.dt search.dt', function () {
-                table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-                    cell.innerHTML = i+1;
-                } );
-            } ).draw();
 
             //ajax            
 

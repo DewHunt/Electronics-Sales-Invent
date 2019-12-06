@@ -1,6 +1,7 @@
 @extends('admin.layouts.masterReport')
 
 @section('search_card_body')
+    <input type="hidden" name="print" value="print">
     <div class="row">
         <div class="col-md-6">
             <label for="product-category">Category</label>
@@ -66,11 +67,13 @@
             <input type="hidden" name="product[]" value="{{ $productInfo }}">
         @endforeach
     @endif
+    
+    <input type="hidden" id="print_value" name="print" value="{{ $print }}">
 @endsection
 
 @section('print_card_body')
-	<table class="table table-bordered table-sm">
-		<thead class="thead-light">
+	<table id="dataTable" name="productList" class="table table-bordered table-sm">
+		<thead>
 			<tr>
 				<th>Category Name</th>
 				<th>Product Name</th>
@@ -92,32 +95,4 @@
 			@endforeach
 		</tbody>
 	</table>
-	{{-- {{ $productLists->render() }} --}}
-@endsection
-
-@section('custom-js')
-
-    <!-- This is data table -->
-    <script src="{{ asset('/public/admin-elite/assets/node_modules/datatables/jquery.dataTables.min.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            var updateThis ;
-
-            // Switchery
-            var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
-            $('.js-switch').each(function() {
-                new Switchery($(this)[0], $(this).data());
-            });
-
-            var table = $('#bankTable').DataTable( {
-                "order": [[0, "asc"]]
-            } );
-
-            table.on('order.dt search.dt', function () {
-                table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-                    cell.innerHTML = i+1;
-                } );
-            } ).draw();
-        });
-    </script>
 @endsection

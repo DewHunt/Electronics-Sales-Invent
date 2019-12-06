@@ -7,7 +7,7 @@
                 $sl = 0;
             @endphp
 
-            <table id="staffTable" class="table table-bordered table-striped"  name="staffTable">
+            <table id="dataTable" class="table table-bordered table-striped"  name="staffTable">
                 <thead>
                     <tr>
                         <th width="20px">SL</th>
@@ -55,23 +55,7 @@
 @section('custom-js')
     <script>
         $(document).ready(function() {
-            var updateThis ;
-
-            // Switchery
-            var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
-            $('.js-switch').each(function() {
-                new Switchery($(this)[0], $(this).data());
-            });
-
-            var table = $('#staffTable').DataTable( {
-                "order": [[0, "asc"]]
-            } );
-
-            table.on('order.dt search.dt', function () {
-                table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-                    cell.innerHTML = i+1;
-                } );
-            } ).draw();         
+            var updateThis ;         
 
             //ajax delete code
             $('#staffTable tbody').on( 'click', 'i.fa-trash', function () {

@@ -21,8 +21,9 @@ class PaymentRecordController extends Controller
     	$printFormLink = "paymentRecord.print";
 
     	$vendor = $request->vendor;
-    	$formDate = date('Y-m-d',strtotime($request->formDate));
+    	$fromDate = date('Y-m-d',strtotime($request->fromDate));
     	$toDate = date('Y-m-d',strtotime($request->toDate));
+        $print = $request->print;
 
     	$vendors = VendorSetup::where('status','1')
     		->orderBy('name','asc')
@@ -30,10 +31,10 @@ class PaymentRecordController extends Controller
 
     	$productRecords = PaymentToCompany::select('tbl_payment_to_company.payment_date as paymentDate','tbl_payment_to_company.payment_now as price','tbl_vendors.name as vendorName')
     		->join('tbl_vendors','tbl_vendors.id','=','tbl_payment_to_company.vendor_id')
-    		->orWhere(function($query) use($formDate,$toDate,$vendor){
-    			if (!empty($formDate))
+    		->orWhere(function($query) use($fromDate,$toDate,$vendor){
+    			if (!empty($fromDate))
     			{
-    				$query->whereBetween('tbl_payment_to_company.payment_date',array($formDate,$toDate));
+    				$query->whereBetween('tbl_payment_to_company.payment_date',array($fromDate,$toDate));
     			}
 
     			if($vendor)
@@ -45,7 +46,7 @@ class PaymentRecordController extends Controller
     		->orderBy('tbl_vendors.name','asc')
     		->get();
 
-    	return view('admin.paymentRecord.index')->with(compact('title','searchFormLink','printFormLink','vendors','vendor','formDate','toDate','productRecords'));
+    	return view('admin.paymentRecord.index')->with(compact('title','searchFormLink','printFormLink','vendors','vendor','fromDate','toDate','print','productRecords'));
     }
 
     public function print(Request $request)
@@ -53,15 +54,15 @@ class PaymentRecordController extends Controller
     	$title = "Payment Record";
 
     	$vendor = $request->vendor;
-    	$formDate = date('Y-m-d',strtotime($request->formDate));
+    	$fromDate = date('Y-m-d',strtotime($request->fromDate));
     	$toDate = date('Y-m-d',strtotime($request->toDate));
 
     	$productRecords = PaymentToCompany::select('tbl_payment_to_company.payment_date as paymentDate','tbl_payment_to_company.payment_now as price','tbl_vendors.name as vendorName')
     		->join('tbl_vendors','tbl_vendors.id','=','tbl_payment_to_company.vendor_id')
-    		->orWhere(function($query) use($formDate,$toDate,$vendor){
-    			if (!empty($formDate))
+    		->orWhere(function($query) use($fromDate,$toDate,$vendor){
+    			if (!empty($fromDate))
     			{
-    				$query->whereBetween('tbl_payment_to_company.payment_date',array($formDate,$toDate));
+    				$query->whereBetween('tbl_payment_to_company.payment_date',array($fromDate,$toDate));
     			}
 
     			if($vendor)

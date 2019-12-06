@@ -91,3 +91,23 @@
 		});
 	} );
 </script>
+
+<script>
+    $(document).ready(function() {
+        // Switchery
+        var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+        $('.js-switch').each(function() {
+            new Switchery($(this)[0], $(this).data());
+        });
+
+        var table = $('#dataTable').DataTable( {
+            "order": [[0, "asc"]]
+        } );
+
+        table.on('order.dt search.dt', function () {
+            table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                cell.innerHTML = i+1;
+            } );
+        } ).draw();
+    });
+</script>

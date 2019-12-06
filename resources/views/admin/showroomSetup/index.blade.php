@@ -3,7 +3,7 @@
 @section('card_body')
     <div class="card-body">
         <div class="table-responsive">
-            <table id="showroomTable" class="table table-bordered table-striped"  name="showroomTable">
+            <table id="dataTable" class="table table-bordered table-striped"  name="showroomTable">
                 <thead>
                     <tr>
                         <th width="20px">SL</th>
@@ -46,23 +46,7 @@
 @section('custom-js')
     <script>
         $(document).ready(function() {
-            var updateThis ;
-
-            // Switchery
-            var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
-            $('.js-switch').each(function() {
-                new Switchery($(this)[0], $(this).data());
-            });
-
-            var table = $('#showroomTable').DataTable( {
-                "order": [[0, "asc"]]
-            } );
-
-            table.on('order.dt search.dt', function () {
-                table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-                    cell.innerHTML = i+1;
-                } );
-            } ).draw();         
+            var updateThis ;         
 
             //ajax delete code
             $('#showroomTable tbody').on( 'click', 'i.fa-trash', function () {

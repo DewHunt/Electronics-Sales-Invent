@@ -51,7 +51,7 @@
 
 				    <div style="padding-bottom: 10px;"></div>
 
-    			    <form class="form-horizontal" action="{{ route($searchFormLink) }}" method="POST" enctype="multipart/form-data">
+    			    <form class="form-horizontal" id="search" action="{{ route($searchFormLink) }}" method="POST" enctype="multipart/form-data">
     			    	{{ csrf_field() }}
 
     				    <div class="card">
@@ -85,7 +85,7 @@
 		                    <div class="row">
 		                        <div class="col-md-6"><h4 class="card-title">Searched Report</h4></div>
 		                        <div class="col-md-6 text-right">
-		                            <form class="form-horizontal" action="{{ route($printFormLink) }}" target="_blank" method="post" enctype="multipart/form-data">
+		                            <form class="form-horizontal" id="print" action="{{ route($printFormLink) }}" target="_blank" method="post" enctype="multipart/form-data">
 		                                {{ csrf_field() }}
 
 		                                @yield('print_card_header')
@@ -131,6 +131,16 @@
 
 
 	    @include('admin.partials.footer-assets')
+
+	    <script>
+	        $('#print').submit(function(){
+	            if ($('#print_value').val() == "")
+	            {
+	                swal("Please! Search Data", "", "warning");
+	                return false;
+	            }
+	        });
+	    </script>
 
 	    <!-- This page plugins -->
 	    @yield('custom-js')

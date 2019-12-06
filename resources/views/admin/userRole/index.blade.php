@@ -3,7 +3,7 @@
 @section('card_body')
     <div class="card-body">
         <div class="table-responsive">            
-            <table id="usersTable" class="table table-bordered table-striped"  name="usersTable">
+            <table id="dataTable" class="table table-bordered table-striped"  name="usersTable">
                 <thead>
                     <tr>
                         <th>Sl</th>
@@ -41,22 +41,6 @@
     <script>
         $(document).ready(function() {
             var updateThis ;
-
-            // Switchery
-            var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
-            $('.js-switch').each(function() {
-                new Switchery($(this)[0], $(this).data());
-            });
-
-            var table = $('#usersTable').DataTable( {
-                "order": [[ 0, false]]
-            } );
-
-            table.on('order.dt search.dt', function () {
-                table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-                    cell.innerHTML = i+1;
-                } );
-            } ).draw();
 
             //ajax
             

@@ -51,6 +51,8 @@
                 font-size: 20px;
             }
         </style>
+
+        @yield('custome-css')
     </head>
 
     <body align="center">

@@ -10,6 +10,10 @@ use App\Product;
 use App\Lifting;
 use App\LiftingProduct;
 
+use DB;
+use PDF;
+use MPDF;
+
 class LiftingController extends Controller
 {
     public function index()
@@ -156,6 +160,24 @@ class LiftingController extends Controller
                 'product'=>$product
             ]);
         }
+    }
+
+    public function print($liftingId)
+    {
+        $title = "Product Lifting Chalan";
+
+        $lifting = Lifting::select('tbl_liftings.*','tbl_vendors.name as vendorName')
+            ->join('tbl_vendors','tbl_vendors.id','=','tbl_liftings.vendor_id')
+            ->where('tbl_liftings.id',$liftingId)
+            ->first();
+        $liftingProducts = LiftingProduct::select('tbl_lifting_products.*','tbl_products.name as productName','tbl_products.code as productCode')
+            ->join('tbl_products','tbl_products.id','=','tbl_lifting_products.product_id')
+            ->where('.tbl_lifting_products.lifting_id',$liftingId)
+            ->get();
+
+        $pdf = PDF::loadView('admin.lifting.print',['title'=>$title,'lifting'=>$lifting,'liftingProducts'=>$liftingProducts]);
+
+        return $pdf->stream('product_lifting_chalan.pdf');
     }
 
     public function deleteLifting(Request $request)

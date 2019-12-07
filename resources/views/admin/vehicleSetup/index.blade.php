@@ -23,7 +23,7 @@
                 		$sl = 0;
                 	@endphp
                 	@foreach ($vehicles as $vehicle)
-                		<tr>
+                		<tr class="row_{{ $vehicle->id }}">
                 			<td>{{ $sl++ }}</td>
                 			<td>{{ $vehicle->type }}</td>
                 			<td>{{ $vehicle->registration_no }}</td>
@@ -50,7 +50,7 @@
             var updateThis ;         
 
             //ajax delete code
-            $('#vehicleTable tbody').on( 'click', 'i.fa-trash', function () {
+            $('#dataTable tbody').on( 'click', 'i.fa-trash', function () {
                 $.ajaxSetup({
                   headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -85,10 +85,7 @@
                                     timer: 1000,
                                     html: true,
                                 });
-                                table
-                                    .row( $(tableRow).parents('tr'))
-                                    .remove()
-                                    .draw();
+                                $('.row_'+vehicleId).remove();
                             },
                             error: function(response) {
                                 error = "Failed.";

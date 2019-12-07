@@ -26,7 +26,7 @@
                 		$sl = 0;
                 	@endphp
                 	@foreach ($allArea as $area)
-                		<tr>
+                		<tr class="row_{{ $area->id }}">
                 			<td>{{ $sl++ }}</td>
                 			<td>{{ $area->code }}</td>
                 			<td>{{ $area->name }}</td>
@@ -56,7 +56,7 @@
             var updateThis ;       
 
             //ajax delete code
-            $('#areaTable tbody').on( 'click', 'i.fa-trash', function () {
+            $('#dataTable tbody').on( 'click', 'i.fa-trash', function () {
                 $.ajaxSetup({
                   headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -91,10 +91,7 @@
                                     timer: 1000,
                                     html: true,
                                 });
-                                table
-                                    .row( $(tableRow).parents('tr'))
-                                    .remove()
-                                    .draw();
+                                $('.row_'+areaId).remove();
                             },
                             error: function(response) {
                                 error = "Failed.";

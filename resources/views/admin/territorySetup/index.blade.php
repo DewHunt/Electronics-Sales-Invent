@@ -26,7 +26,7 @@
                 		$sl = 0;
                 	@endphp
                 	@foreach ($territories as $territory)
-                		<tr>
+                		<tr class="row_{{ $territory->id }}">
                 			<td>{{ $sl++ }}</td>
                 			<td>{{ $territory->code }}</td>
                 			<td>{{ $territory->areaName }}</td>
@@ -56,7 +56,7 @@
             var updateThis ;        
 
             //ajax delete code
-            $('#territoryTable tbody').on( 'click', 'i.fa-trash', function () {
+            $('#dataTable tbody').on( 'click', 'i.fa-trash', function () {
                 $.ajaxSetup({
                   headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -91,10 +91,7 @@
                                     timer: 1000,
                                     html: true,
                                 });
-                                table
-                                    .row( $(tableRow).parents('tr'))
-                                    .remove()
-                                    .draw();
+                                $('.row_'+territoryId).remove();
                             },
                             error: function(response) {
                                 error = "Failed.";

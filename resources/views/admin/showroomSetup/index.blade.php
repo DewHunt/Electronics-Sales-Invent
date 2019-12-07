@@ -23,7 +23,7 @@
                     	@php
                     		$sl++;
                     	@endphp
-                    	<tr>
+                    	<tr class="row_{{ $showroom->id }}">
 	                    	<td>{{ $sl }}</td>
                     		<td>{{ $showroom->name }}</td>
                     		<td>{{ $showroom->contact_person }}</td>
@@ -49,7 +49,7 @@
             var updateThis ;         
 
             //ajax delete code
-            $('#showroomTable tbody').on( 'click', 'i.fa-trash', function () {
+            $('#dataTable tbody').on( 'click', 'i.fa-trash', function () {
                 $.ajaxSetup({
                   headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -84,10 +84,7 @@
                                     timer: 1000,
                                     html: true,
                                 });
-                                table
-                                    .row( $(tableRow).parents('tr'))
-                                    .remove()
-                                    .draw();
+                                $('.row_'+showroomId).remove();
                             },
                             error: function(response) {
                                 error = "Failed.";

@@ -25,7 +25,7 @@
                 		$sl = 0;
                 	@endphp
                 	@foreach ($liftings as $lifting)
-                		<tr>
+                		<tr class="row_{{ $lifting->id }}">
 	                		<td>{{ $sl++ }}</td>
 	                		<td>{{ $lifting->vaouchar_no }}</td>
 	                		<td>{{ $lifting->vouchar_date }}</td>
@@ -52,7 +52,7 @@
             var updateThis ;        
 
             //ajax delete code
-            $('#liftingTable tbody').on( 'click', 'i.fa-trash', function () {
+            $('#dataTable tbody').on( 'click', 'i.fa-trash', function () {
                 $.ajaxSetup({
                   headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -88,10 +88,7 @@
                                     timer: 1000,
                                     html: true,
                                 });
-                                table
-                                    .row( $(tableRow).parents('tr'))
-                                    .remove()
-                                    .draw();
+                                $('.row_'+liftingId).remove();
                             },
                             error: function(response) {
                                 error = "Failed.";

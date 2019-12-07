@@ -30,7 +30,7 @@
                         @php
                             $sl++;
                         @endphp                        	
-                    	<tr>
+                    	<tr class="row_{{ $user->id }}">
                             <td>{{ $sl }}</td>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
@@ -78,7 +78,7 @@
             
 
             //ajax show code
-            $('#usersTable tbody').on( 'click', 'i.fa-eye', function () { 
+            $('#dataTable tbody').on( 'click', 'i.fa-eye', function () { 
                 updateThis = this;
                 userId = $(this).parent().data('id');
                 $.ajax({
@@ -188,10 +188,7 @@
                                     timer: 1000,
                                     html: true,
                                 });
-                                table
-                                    .row( $(tableRow).parents('tr'))
-                                    .remove()
-                                    .draw();
+                                $('.row_'+userId).remove();
                             },
                             error: function(response) {
                                 error = "Failed.";

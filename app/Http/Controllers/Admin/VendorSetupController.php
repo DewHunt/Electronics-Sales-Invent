@@ -13,9 +13,9 @@ class VendorSetupController extends Controller
     {
     	$title = "Vendor Setup";
 
-    	$staffs = VendorSetup::orderBy('name','asc')->get();
+    	$vendors = VendorSetup::orderBy('name','asc')->get();
 
-    	return view('admin.vendorSetup.index')->with(compact('title','staffs'));
+    	return view('admin.vendorSetup.index')->with(compact('title','vendors'));
     }
 
     public function addVendor()

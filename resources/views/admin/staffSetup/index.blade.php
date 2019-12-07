@@ -26,22 +26,22 @@
                 	@php
                 		$sl = 0;
                 	@endphp
-                	@foreach ($staffs as $staffs)
-                		<tr>
+                	@foreach ($staffs as $staff)
+                		<tr class="row_{{ $staff->id }}">
                 			<td>{{ $sl++ }}</td>
-                			<td>{{ $staffs->code }}</td>
-                			<td>{{ $staffs->name }}</td>
-                            <td>{{ $staffs->joining_date }}</td>
-                            <td>{{ $staffs->national_id }}</td>
-                			<td>{{ $staffs->contact }}</td>
-                            <td>{{ $staffs->email }}</td>
-                			<td>{{ $staffs->address }}</td>
+                			<td>{{ $staff->code }}</td>
+                			<td>{{ $staff->name }}</td>
+                            <td>{{ $staff->joining_date }}</td>
+                            <td>{{ $staff->national_id }}</td>
+                			<td>{{ $staff->contact }}</td>
+                            <td>{{ $staff->email }}</td>
+                			<td>{{ $staff->address }}</td>
                 			<td>
-                				<?php echo \App\Link::status($staffs->id,$staffs->status)?>
+                				<?php echo \App\Link::status($staff->id,$staff->status)?>
                 			</td>
                 			<td>
                     			@php
-                    				echo \App\Link::action($staffs->id);
+                    				echo \App\Link::action($staff->id);
                     			@endphp                				
                 			</td>
                 		</tr>
@@ -58,7 +58,7 @@
             var updateThis ;         
 
             //ajax delete code
-            $('#staffTable tbody').on( 'click', 'i.fa-trash', function () {
+            $('#dataTable tbody').on( 'click', 'i.fa-trash', function () {
                 $.ajaxSetup({
                   headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -93,10 +93,7 @@
                                     timer: 1000,
                                     html: true,
                                 });
-                                table
-                                    .row( $(tableRow).parents('tr'))
-                                    .remove()
-                                    .draw();
+                                $('.row_'+staffId).remove();
                             },
                             error: function(response) {
                                 error = "Failed.";

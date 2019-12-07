@@ -26,7 +26,7 @@
                 		$sl = 0;
                 	@endphp
                 	@foreach ($paymentToCompany as $payment)
-                		<tr>
+                		<tr class="row_{{ $payment->id }}">
                 			<td>{{ $sl++ }}</td>
                 			<td>{{ $payment->vendorName }}</td>
                 			<td>{{ $payment->payment_no }}</td>
@@ -54,7 +54,7 @@
             var updateThis ;        
 
             //ajax delete code
-            $('#paymentToCompanyTable tbody').on( 'click', 'i.fa-trash', function () {
+            $('#dataTable tbody').on( 'click', 'i.fa-trash', function () {
                 $.ajaxSetup({
                   headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -89,10 +89,7 @@
                                     timer: 1000,
                                     html: true,
                                 });
-                                table
-                                    .row( $(tableRow).parents('tr'))
-                                    .remove()
-                                    .draw();
+                                $('.row_'+paymentToCompanyId).remove();
                             },
                             error: function(response) {
                                 error = "Failed.";

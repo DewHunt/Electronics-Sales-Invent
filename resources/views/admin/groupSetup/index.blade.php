@@ -1,5 +1,9 @@
 @extends('admin.layouts.masterIndex')
 
+@php
+    use App\StaffSetup;
+@endphp
+
 @section('card_body')
     <div class="card-body">
         <div class="table-responsive">
@@ -7,14 +11,13 @@
                 $sl = 0;
             @endphp
 
-            <table id="dataTable" class="table table-bordered table-striped"  name="bankTable">
+            <table id="dataTable" class="table table-bordered table-striped"  name="vehicleTable">
                 <thead>
                     <tr>
                         <th width="20px">SL</th>
-                        <th>Code/Prefix</th>
                         <th>Name</th>
-                        <th>Phone</th>
-                        <th>Address</th>
+                        <th>Team Lead Name</th>
+                        <th>Team Members Name</th>
                         <th width="20px">Status</th>
                         <th width="20px">Action</th>
                     </tr>
@@ -23,19 +26,35 @@
                 	@php
                 		$sl = 0;
                 	@endphp
-                	@foreach ($allBank as $bank)
-                		<tr class="row_{{ $bank->id }}">
+                	@foreach ($groups as $group)
+                		<tr class="row_{{ $group->id }}">
                 			<td>{{ $sl++ }}</td>
-                			<td>{{ $bank->code }}</td>
-                			<td>{{ $bank->name }}</td>
-                			<td>{{ $bank->phone }}</td>
-                			<td>{{ $bank->address }}</td>
+                			<td>{{ $group->name }}</td>
+                			<td>{{ $group->teamLeaderName }}</td>
+                            @php
+                                $memberName = "";
+                                $teamMembers = DB::select(DB::raw('SELECT name FROM tbl_staffs WHERE id IN ('.$group->team_member.')'));
+                                $loop = count($teamMembers);
+                                foreach ($teamMembers as $teamMember)
+                                {
+                                    if ($loop == 1)
+                                    {
+                                        $memberName .= $teamMember->name;
+                                    }
+                                    else
+                                    {
+                                        $memberName .= $teamMember->name.", ";
+                                        $loop--;
+                                    }                                    
+                                }
+                            @endphp
+                			<td>{{ $memberName }}</td>
                 			<td>
-                				<?php echo \App\Link::status($bank->id,$bank->status)?>
+                				<?php echo \App\Link::status($group->id,$group->status)?>
                 			</td>
                 			<td>
                     			@php
-                    				echo \App\Link::action($bank->id);
+                    				echo \App\Link::action($group->id);
                     			@endphp                				
                 			</td>
                 		</tr>
@@ -59,7 +78,7 @@
                   }
                 });
 
-                bankId = $(this).parent().data('id');
+                groupId = $(this).parent().data('id');
                 var tableRow = this;
                 swal({   
                     title: "Are you sure?",   
@@ -76,18 +95,18 @@
                     if (isConfirm) {
                         $.ajax({
                             type: "POST",
-                            url : "{{ route('bankSetup.delete') }}",
-                            data : {bankId:bankId},
+                            url : "{{ route('groupSetup.delete') }}",
+                            data : {groupId:groupId},
                            
                             success: function(response) {
                                 swal({
                                     title: "<small class='text-success'>Success!</small>", 
                                     type: "success",
-                                    text: "Bank Deleted Successfully!",
+                                    text: "Vehicle Deleted Successfully!",
                                     timer: 1000,
                                     html: true,
                                 });
-                                $('.row_'+bankId).remove();
+                                $('.row_'+groupId).remove();
                             },
                             error: function(response) {
                                 error = "Failed.";
@@ -116,14 +135,14 @@
         });
                 
         //ajax status change code
-        function statusChange(bankId) {
+        function statusChange(groupId) {
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 type: "post",
-                url: "{{ route('bankSetup.status') }}",
-                data: {bankId:bankId},
+                url: "{{ route('groupSetup.status') }}",
+                data: {groupId:groupId},
                 success: function(response) {
                     swal({
                         title: "<small class='text-success'>Success!</small>", 

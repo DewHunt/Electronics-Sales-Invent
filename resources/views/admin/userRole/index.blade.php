@@ -20,7 +20,7 @@
                         @php
                             $sl++;
                         @endphp                          
-                        <tr>
+                        <tr class="row_{{ $role->id }}">
                             <td>{{ $sl }}</td>
                             <td>{{ $role->name }}</td>
                             <td>
@@ -45,7 +45,7 @@
             //ajax
             
             //ajax delete code
-            $('#usersTable tbody').on( 'click', 'i.fa-trash', function () {
+            $('#dataTable tbody').on( 'click', 'i.fa-trash', function () {
                 $.ajaxSetup({
                   headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -78,10 +78,7 @@
                                     timer: 1000,
                                     html: true,
                                 });
-                                table
-                                    .row( $(user).parents('tr'))
-                                    .remove()
-                                    .draw();
+                                $('.row_'+userRoleId).remove();
                             },
                             error: function(response) {
                                 error = "Failed.";

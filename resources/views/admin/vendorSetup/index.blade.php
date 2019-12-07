@@ -25,21 +25,21 @@
                 	@php
                 		$sl = 0;
                 	@endphp
-                	@foreach ($staffs as $staffs)
-                		<tr>
+                	@foreach ($vendors as $vendor)
+                		<tr class="row_{{ $vendor->id }}">
                 			<td>{{ $sl++ }}</td>
-                			<td>{{ $staffs->code }}</td>
-                			<td>{{ $staffs->name }}</td>
-                            <td>{{ $staffs->contact_person }}</td>
-                			<td>{{ $staffs->contact }}</td>
-                            <td>{{ $staffs->email }}</td>
-                			<td>{{ $staffs->address }}</td>
+                			<td>{{ $vendor->code }}</td>
+                			<td>{{ $vendor->name }}</td>
+                            <td>{{ $vendor->contact_person }}</td>
+                			<td>{{ $vendor->contact }}</td>
+                            <td>{{ $vendor->email }}</td>
+                			<td>{{ $vendor->address }}</td>
                 			<td>
-                				<?php echo \App\Link::status($staffs->id,$staffs->status)?>
+                				<?php echo \App\Link::status($vendor->id,$vendor->status)?>
                 			</td>
                 			<td>
                     			@php
-                    				echo \App\Link::action($staffs->id);
+                    				echo \App\Link::action($vendor->id);
                     			@endphp                				
                 			</td>
                 		</tr>
@@ -56,7 +56,7 @@
             var updateThis ;         
 
             //ajax delete code
-            $('#vendorTable tbody').on( 'click', 'i.fa-trash', function () {
+            $('#dataTable tbody').on( 'click', 'i.fa-trash', function () {
                 $.ajaxSetup({
                   headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -91,10 +91,7 @@
                                     timer: 1000,
                                     html: true,
                                 });
-                                table
-                                    .row( $(tableRow).parents('tr'))
-                                    .remove()
-                                    .draw();
+                                $('.row_'+vendorId).remove();
                             },
                             error: function(response) {
                                 error = "Failed.";

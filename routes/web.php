@@ -209,6 +209,16 @@ Route::prefix('admin')->group(function()
 			Route::post('/vendor-setup-delete','Admin\VendorSetupController@deleteVendor')->name('vendorSetup.delete');
 			Route::post('/vendor-setup-status','Admin\VendorSetupController@changeVendorStatus')->name('vendorSetup.status');
 
+			//Group Setup
+			Route::get('/group-setup','Admin\GroupSetupController@index')->name('groupSetup.index');
+			Route::get('/group-setup-add','Admin\GroupSetupController@add')->name('groupSetup.add');
+			Route::post('/group-setup-save','Admin\GroupSetupController@save')->name('groupSetup.save');
+			Route::get('/group-setup-edit/{id}','Admin\GroupSetupController@edit')->name('groupSetup.edit');
+			Route::post('/group-setup-update','Admin\GroupSetupController@update')->name('groupSetup.update');
+			Route::post('/group-setup-delete','Admin\GroupSetupController@delete')->name('groupSetup.delete');
+			Route::post('/group-setup-status','Admin\GroupSetupController@changeStatus')->name('groupSetup.status');
+			Route::post('/group-setup-status/staff-list','Admin\GroupSetupController@getAllStaff')->name('groupSetup.getAllStaff');
+
 			//Product List
 			Route::get('/product-list','Admin\ProductListController@index')->name('productList.index');
 			Route::post('/product-list','Admin\ProductListController@index')->name('productList.index');
@@ -226,6 +236,7 @@ Route::prefix('admin')->group(function()
 			Route::post('/lifting-update','Admin\LiftingController@updateLifting')->name('lifting.update');
 			Route::post('/lifting-delete','Admin\LiftingController@deleteLifting')->name('lifting.delete');
 			Route::post('/lifting-product-info','Admin\LiftingController@liftingProductInfo')->name('lifting.productInfo');
+			Route::get('/lifting-print/{id}','Admin\LiftingController@print')->name('lifting.print');
 
 			// Payment to Company
 			Route::get('/payment-to-company','Admin\PaymentToCompanyController@index')->name('paymentToCompany.index');

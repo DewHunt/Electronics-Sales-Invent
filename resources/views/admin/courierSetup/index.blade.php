@@ -24,7 +24,7 @@
                 		$sl = 0;
                 	@endphp
                 	@foreach ($couriers as $courier)
-                		<tr>
+                		<tr class="row_{{ $courier->id }}">
                 			<td>{{ $sl++ }}</td>
                 			<td>{{ $courier->code }}</td>
                 			<td>{{ $courier->name }}</td>
@@ -52,7 +52,7 @@
             var updateThis ;       
 
             //ajax delete code
-            $('#courierTable tbody').on( 'click', 'i.fa-trash', function () {
+            $('#dataTable tbody').on( 'click', 'i.fa-trash', function () {
                 $.ajaxSetup({
                   headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -87,10 +87,7 @@
                                     timer: 1000,
                                     html: true,
                                 });
-                                table
-                                    .row( $(tableRow).parents('tr'))
-                                    .remove()
-                                    .draw();
+                                $('.row_'+courierId).remove();
                             },
                             error: function(response) {
                                 error = "Failed.";

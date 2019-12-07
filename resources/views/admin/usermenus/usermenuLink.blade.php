@@ -62,7 +62,7 @@
                                         $parentMenu = UserMenu::where('id',$menu->parentmenuId)->first();
                                         $sl++;
                                     @endphp                    	
-                            	<tr>
+                            	<tr class="row_{{ $menu->id }}">
                                     <td>{{ $sl }}</td>
                                     <td>{{ $menu->actionName }}</td>
                                     <td>{{ $parentMenu->menuName }}</td>
@@ -95,7 +95,7 @@
             var updateThis ;          
 
             //ajax delete code
-            $('#menusTable tbody').on( 'click', 'i.fa-trash', function () {
+            $('#dataTable tbody').on( 'click', 'i.fa-trash', function () {
                 $.ajaxSetup({
                   headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -129,10 +129,7 @@
                                     timer: 1000,
                                     html: true,
                                 });
-                                table
-                                    .row( $(menu).parents('tr'))
-                                    .remove()
-                                    .draw();
+                                $('.row_'+usermenuId).remove();
                             },
                             error: function(response) {
                                 error = "Failed.";

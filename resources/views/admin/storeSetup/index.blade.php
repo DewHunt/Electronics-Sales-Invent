@@ -25,7 +25,7 @@
                 		$sl = 0;
                 	@endphp
                 	@foreach ($stores as $store)
-                		<tr>
+                		<tr class="row_{{ $store->id }}">
                 			<td>{{ $sl++ }}</td>
                 			<td>{{ $store->code }}</td>
                 			<td>{{ $store->type }}</td>
@@ -54,7 +54,7 @@
             var updateThis ;       
 
             //ajax delete code
-            $('#storeTable tbody').on( 'click', 'i.fa-trash', function () {
+            $('#dataTable tbody').on( 'click', 'i.fa-trash', function () {
                 $.ajaxSetup({
                   headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -89,10 +89,7 @@
                                     timer: 1000,
                                     html: true,
                                 });
-                                table
-                                    .row( $(tableRow).parents('tr'))
-                                    .remove()
-                                    .draw();
+                                $('.row_'+storeId).remove();
                             },
                             error: function(response) {
                                 error = "Failed.";

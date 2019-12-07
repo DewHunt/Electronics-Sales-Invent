@@ -12,6 +12,7 @@
                         <th>Website</th>
                         <th width="20px">Phone</th>
                         <th>Address</th>
+                        <th width="20px">Status</th>
                         <th width="20px">Action</th>
                     </tr>
                 </thead>
@@ -30,6 +31,9 @@
                     		<td>{{ $showroom->website }}</td>
                     		<td>{{ $showroom->phone }}</td>
                     		<td>{{ $showroom->address }}</td>
+                            <td>
+                                <?php echo \App\Link::status($showroom->id,$showroom->status)?>
+                            </td>
                     		<td>
                     			@php
                     				echo \App\Link::action($showroom->id);
@@ -114,34 +118,34 @@
         });
                 
         //ajax status change code
-        function statusChange(category_id) {
+        function statusChange(showroomId) {
             $.ajax({
-                    type: "GET",
-                    url: "{{ route('showroomSetup.status', 0) }}",
-                    data: "category_id=" + category_id,
-                    cache:false,
-                    contentType: false,
-                    processData: false,
-                    success: function(response) {
-                        swal({
-                            title: "<small class='text-success'>Success!</small>", 
-                            type: "success",
-                            text: "Status successfully updated!",
-                            timer: 1000,
-                            html: true,
-                        });
-                    },
-                    error: function(response) {
-                        error = "Failed.";
-                        swal({
-                            title: "<small class='text-danger'>Error!</small>", 
-                            type: "error",
-                            text: error,
-                            timer: 2000,
-                            html: true,
-                        });
-                    }
-                });
-            }
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "post",
+                url: "{{ route('showroomSetup.status') }}",
+                data: {showroomId:showroomId},
+                success: function(response) {
+                    swal({
+                        title: "<small class='text-success'>Success!</small>", 
+                        type: "success",
+                        text: "Status Successfully Updated!",
+                        timer: 1000,
+                        html: true,
+                    });
+                },
+                error: function(response) {
+                    error = "Failed.";
+                    swal({
+                        title: "<small class='text-danger'>Error!</small>", 
+                        type: "error",
+                        text: error,
+                        timer: 2000,
+                        html: true,
+                    });
+                }
+            });
+        }
     </script>
 @endsection

@@ -18,7 +18,7 @@ class StoreSetupController extends Controller
     	return view('admin.storeSetup.index')->with(compact('title','stores'));
     }
 
-    public function addStore(Request $request)
+    public function add(Request $request)
     {
     	$title = "Add Store";
     	$formLink = "storeSetup.save";
@@ -27,7 +27,7 @@ class StoreSetupController extends Controller
     	return view('admin.storeSetup.add')->with(compact('title','formLink','buttonName'));
     }
 
-    public function saveStore(Request $request)
+    public function save(Request $request)
     {
         $this->validation($request);
 
@@ -44,7 +44,7 @@ class StoreSetupController extends Controller
         return redirect(route('storeSetup.index'))->with('msg','Store Added Successfully');
     }
 
-    public function editStore($storeId)
+    public function edit($storeId)
     {
     	$title = "Edit Store";
     	$formLink = "storeSetup.update";
@@ -55,7 +55,7 @@ class StoreSetupController extends Controller
     	return view('admin.storeSetup.edit')->with(compact('title','formLink','buttonName','store'));
     }
 
-    public function updateStore(Request $request)
+    public function update(Request $request)
     {
         $this->validation($request);
 
@@ -75,12 +75,12 @@ class StoreSetupController extends Controller
         return redirect(route('storeSetup.index'))->with('msg','Store Updated Successfully');
     }
 
-    public function deleteStore(Request $request)
+    public function delete(Request $request)
     {    	
         StoreSetup::where('id',$request->storeId)->delete();
     }
 
-    public function changeStoreStatus(Request $request)
+    public function changeStatus(Request $request)
     {
         $storeId = $request->storeId;
 

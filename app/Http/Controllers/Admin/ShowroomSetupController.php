@@ -17,7 +17,7 @@ class ShowroomSetupController extends Controller
     	return view('admin.showroomSetup.index')->with(compact('title','showrooms'));
     }
 
-    public function addShowroom()
+    public function add()
     {
     	$title = "Add New Showroom";
         $formLink = "showroomSetup.save";
@@ -26,7 +26,7 @@ class ShowroomSetupController extends Controller
     	return view('admin.showroomSetup.add')->with(compact('title','formLink','buttonName'));
     }
 
-    public function saveShowroom(Request $request)
+    public function save(Request $request)
     {
         $showRoom = ShowroomSetup::create( [
             'prefix' => $request->prefix,            
@@ -45,7 +45,7 @@ class ShowroomSetupController extends Controller
         return redirect(route('showroomSetup.index'))->with('msg','Showroom Successfuly Saved');
     }
 
-    public function editShowroom($id)
+    public function edit($id)
     {
     	$title = "Edit Showroom";
         $formLink = "showroomSetup.update";
@@ -55,7 +55,7 @@ class ShowroomSetupController extends Controller
     	return view('admin.showroomSetup.edit')->with(compact('title','formLink','buttonName','showroom'));
     }
 
-    public function updateShowroom(Request $request)
+    public function update(Request $request)
     {
     	$showroomId = $request->showroomId;
     	$showroom = ShowroomSetup::find($showroomId);
@@ -77,8 +77,28 @@ class ShowroomSetupController extends Controller
         return redirect(route('showroomSetup.index'))->with('msg','Showroom Successfuly Updated');
     }
 
-    public function deleteShowroom(Request $request)
+    public function delete(Request $request)
     {
     	ShowroomSetup::where('id',$request->showroomId)->delete();
+    }
+
+    public function changeStatus(Request $request)
+    {
+        $showroomId = $request->showroomId;
+
+        $showroom = ShowroomSetup::find($showroomId);
+
+        if ($showroom->status == 1)
+        {
+            $showroom->update( [               
+                'status' => 0                
+            ]);
+        }
+        else
+        {
+            $showroom->update( [               
+                'status' => 1                
+            ]);
+        }
     }
 }

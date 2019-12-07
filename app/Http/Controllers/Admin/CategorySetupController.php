@@ -28,7 +28,7 @@ class CategorySetupController extends Controller
     	return view('admin.categorySetup.index')->with(compact('title','categories'));
     }
 
-    public function addCategory()
+    public function add()
     {
     	$title = "Add Category";
     	$formLink = "categorySetup.save";
@@ -39,7 +39,7 @@ class CategorySetupController extends Controller
     	return view('admin.categorySetup.add')->with(compact('title','formLink','buttonName','categories'));
     }
 
-    public function saveCategory(Request $request)
+    public function save(Request $request)
     {
     	// dd($request->all());
 
@@ -84,7 +84,7 @@ class CategorySetupController extends Controller
         return redirect(route('categorySetup.index'))->with('msg','Category Added Successfully');
     }
 
-    public function editCategory($id)
+    public function edit($id)
     {
     	$title = "Edit Category";
     	$formLink = "categorySetup.update";
@@ -96,7 +96,7 @@ class CategorySetupController extends Controller
     	return view('admin.categorySetup.edit')->with(compact('title','formLink','buttonName','categories','category'));
     }
 
-    public function updateCategory(Request $request)
+    public function update(Request $request)
     {
     	// echo $request->categoryId; exit();
         $this->validation($request);
@@ -142,12 +142,12 @@ class CategorySetupController extends Controller
         return redirect(route('categorySetup.index'))->with('msg','Category Updated Successfully');
     }
 
-    public function deleteCategory(Request $request)
+    public function delete(Request $request)
     {    	
         CategorySetup::where('id',$request->categoryId)->delete();
     }
 
-    public function changeCategoryStatus(Request $request)
+    public function changeStatus(Request $request)
     {
         $categoryId = $request->categoryId;
 

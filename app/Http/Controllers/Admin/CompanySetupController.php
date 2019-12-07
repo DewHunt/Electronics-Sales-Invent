@@ -19,7 +19,7 @@ class CompanySetupController extends Controller
     	return view('admin.companySetup.index')->with(compact('title','company','companyCount'));
     }
 
-    public function addCompany()
+    public function add()
     {
     	$title = "Add New Company";
         $formLink = "companySetup.save";
@@ -28,7 +28,7 @@ class CompanySetupController extends Controller
     	return view('admin.companySetup.add')->with(compact('title','formLink','buttonName'));
     }
 
-    public function saveCompany(Request $request)
+    public function save(Request $request)
     {
         CompanySetup::create( [
             'prefix' => $request->prefix,            
@@ -46,7 +46,7 @@ class CompanySetupController extends Controller
         return redirect(route('companySetup.index'))->with('msg','Company Successfuly Saved');
     }
 
-    public function editCompany($id)
+    public function edit($id)
     {
     	$title = "Edit Company";
         $formLink = "companySetup.update";
@@ -56,7 +56,7 @@ class CompanySetupController extends Controller
     	return view('admin.companySetup.edit')->with(compact('title','formLink','buttonName','company'));
     }
 
-    public function updateCompany(Request $request)
+    public function update(Request $request)
     {
     	$companyId = $request->companyId;
     	$company = CompanySetup::find($companyId);

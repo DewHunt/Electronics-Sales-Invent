@@ -18,7 +18,7 @@ class AreaSetupController extends Controller
     	return view('admin.areaSetup.index')->with(compact('title','allArea'));
     }
 
-    public function addArea()
+    public function add()
     {
     	$title = "Add Area";
     	$formLink = "areaSetup.save";
@@ -27,7 +27,7 @@ class AreaSetupController extends Controller
     	return view('admin.areaSetup.add')->with(compact('title','formLink','buttonName'));
     }
 
-    public function saveArea(Request $request)
+    public function save(Request $request)
     {
         $this->validation($request);
 
@@ -43,7 +43,7 @@ class AreaSetupController extends Controller
         return redirect(route('areaSetup.index'))->with('msg','Area Added Successfully');
     }
 
-    public function editArea($areaId)
+    public function edit($areaId)
     {
     	$title = "Edit Bank";
     	$formLink = "areaSetup.update";
@@ -54,7 +54,7 @@ class AreaSetupController extends Controller
     	return view('admin.areaSetup.edit')->with(compact('title','formLink','buttonName','area'));
     }
 
-    public function updateArea(Request $request)
+    public function update(Request $request)
     {
         $this->validation($request);
 
@@ -74,12 +74,12 @@ class AreaSetupController extends Controller
         return redirect(route('areaSetup.index'))->with('msg','Area Updated Successfully');
     }
 
-    public function deleteArea(Request $request)
+    public function delete(Request $request)
     {    	
         AreaSetup::where('id',$request->areaId)->delete();
     }
 
-    public function changeAreaStatus(Request $request)
+    public function changeStatus(Request $request)
     {
         $areaId = $request->areaId;
 

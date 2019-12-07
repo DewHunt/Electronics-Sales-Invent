@@ -83,32 +83,32 @@ Route::prefix('admin')->group(function()
 
 			// Company Setup
 			Route::get('/company-setup','Admin\CompanySetupController@index')->name('companySetup.index');
-			Route::get('/company-setup-add','Admin\CompanySetupController@addCompany')->name('companySetup.add');
-			Route::post('/company-setup-save','Admin\CompanySetupController@saveCompany')->name('companySetup.save');
-			Route::get('/company-setup-edit/{id}','Admin\CompanySetupController@editCompany')->name('companySetup.edit');
-			Route::post('/company-setup-update','Admin\CompanySetupController@updateCompany')->name('companySetup.update');
+			Route::get('/company-setup-add','Admin\CompanySetupController@add')->name('companySetup.add');
+			Route::post('/company-setup-save','Admin\CompanySetupController@save')->name('companySetup.save');
+			Route::get('/company-setup-edit/{id}','Admin\CompanySetupController@edit')->name('companySetup.edit');
+			Route::post('/company-setup-update','Admin\CompanySetupController@update')->name('companySetup.update');
 
 
 			//Showroom Setup
 			Route::get('/showroom-setup','Admin\ShowroomSetupController@index')->name('showroomSetup.index');
-			Route::get('/showroom-setup-add','Admin\ShowroomSetupController@addShowroom')->name('showroomSetup.add');
-			Route::post('/showroom-setup-save','Admin\ShowroomSetupController@saveShowroom')->name('showroomSetup.save');
-			Route::get('/showroom-setup/status/{id}','Admin\ShowroomSetupController@changeShowroomStatus')->name('showroomSetup.status');
-			Route::get('/showroom-setup-edit/{id}','Admin\ShowroomSetupController@editShowroom')->name('showroomSetup.edit');
-			Route::post('/showroom-setup-update','Admin\ShowroomSetupController@updateShowroom')->name('showroomSetup.update');
-			Route::post('/showroom-setup-delete','Admin\ShowroomSetupController@deleteShowroom')->name('showroomSetup.delete');
+			Route::get('/showroom-setup-add','Admin\ShowroomSetupController@add')->name('showroomSetup.add');
+			Route::post('/showroom-setup-save','Admin\ShowroomSetupController@save')->name('showroomSetup.save');
+			Route::get('/showroom-setup-edit/{id}','Admin\ShowroomSetupController@edit')->name('showroomSetup.edit');
+			Route::post('/showroom-setup-update','Admin\ShowroomSetupController@update')->name('showroomSetup.update');
+			Route::post('/showroom-setup-delete','Admin\ShowroomSetupController@delete')->name('showroomSetup.delete');
+			Route::post('/showroom-setup','Admin\ShowroomSetupController@changeStatus')->name('showroomSetup.status');
 		// User Management End
 
 		// Bussiness Settings
 
 			//Category Setup
 			Route::get('/category-setup','Admin\CategorySetupController@index')->name('categorySetup.index');
-			Route::get('/category-setup-add','Admin\CategorySetupController@addCategory')->name('categorySetup.add');
-			Route::post('/category-setup-save','Admin\CategorySetupController@saveCategory')->name('categorySetup.save');
-			Route::get('/category-setup-edit/{id}','Admin\CategorySetupController@editCategory')->name('categorySetup.edit');
-			Route::post('/category-setup-update','Admin\CategorySetupController@updateCategory')->name('categorySetup.update');
-			Route::post('/category-setup-delete','Admin\CategorySetupController@deleteCategory')->name('categorySetup.delete');
-			Route::post('/category-setup-status','Admin\CategorySetupController@changeCategoryStatus')->name('categorySetup.status');
+			Route::get('/category-setup-add','Admin\CategorySetupController@add')->name('categorySetup.add');
+			Route::post('/category-setup-save','Admin\CategorySetupController@save')->name('categorySetup.save');
+			Route::get('/category-setup-edit/{id}','Admin\CategorySetupController@edit')->name('categorySetup.edit');
+			Route::post('/category-setup-update','Admin\CategorySetupController@update')->name('categorySetup.update');
+			Route::post('/category-setup-delete','Admin\CategorySetupController@delete')->name('categorySetup.delete');
+			Route::post('/category-setup-status','Admin\CategorySetupController@changeStatus')->name('categorySetup.status');
 
 
 			//Product Section
@@ -130,84 +130,75 @@ Route::prefix('admin')->group(function()
 
 			// Store Setup
 			Route::get('/store-setup','Admin\StoreSetupController@index')->name('storeSetup.index');
-			Route::get('/store-setup-add','Admin\StoreSetupController@addStore')->name('storeSetup.add');
-			Route::post('/store-setup-save','Admin\StoreSetupController@saveStore')->name('storeSetup.save');
-			Route::get('/store-setup-edit/{id}','Admin\StoreSetupController@editStore')->name('storeSetup.edit');
-			Route::post('/store-setup-update','Admin\StoreSetupController@updateStore')->name('storeSetup.update');
-			Route::post('/store-setup-delete','Admin\StoreSetupController@deleteStore')->name('storeSetup.delete');
-			Route::post('/store-setup-status','Admin\StoreSetupController@changeStoreStatus')->name('storeSetup.status');
+			Route::get('/store-setup-add','Admin\StoreSetupController@add')->name('storeSetup.add');
+			Route::post('/store-setup-save','Admin\StoreSetupController@save')->name('storeSetup.save');
+			Route::get('/store-setup-edit/{id}','Admin\StoreSetupController@edit')->name('storeSetup.edit');
+			Route::post('/store-setup-update','Admin\StoreSetupController@update')->name('storeSetup.update');
+			Route::post('/store-setup-delete','Admin\StoreSetupController@delete')->name('storeSetup.delete');
+			Route::post('/store-setup-status','Admin\StoreSetupController@changeStatus')->name('storeSetup.status');
 
 			// Bank Setup
 			Route::get('/bank-setup','Admin\BankSetupController@index')->name('bankSetup.index');
-			Route::get('/bank-setup-add','Admin\BankSetupController@addBank')->name('bankSetup.add');
-			Route::post('/bank-setup-save','Admin\BankSetupController@saveBank')->name('bankSetup.save');
-			Route::get('/bank-setup-edit/{id}','Admin\BankSetupController@editBank')->name('bankSetup.edit');
-			Route::post('/bank-setup-update','Admin\BankSetupController@updateBank')->name('bankSetup.update');
-			Route::post('/bank-setup-delete','Admin\BankSetupController@deleteBank')->name('bankSetup.delete');
-			Route::post('/bank-setup-status','Admin\BankSetupController@changeBankStatus')->name('bankSetup.status');
+			Route::get('/bank-setup-add','Admin\BankSetupController@add')->name('bankSetup.add');
+			Route::post('/bank-setup-save','Admin\BankSetupController@save')->name('bankSetup.save');
+			Route::get('/bank-setup-edit/{id}','Admin\BankSetupController@edit')->name('bankSetup.edit');
+			Route::post('/bank-setup-update','Admin\BankSetupController@update')->name('bankSetup.update');
+			Route::post('/bank-setup-delete','Admin\BankSetupController@delete')->name('bankSetup.delete');
+			Route::post('/bank-setup-status','Admin\BankSetupController@changeStatus')->name('bankSetup.status');
 
 			// Courier Setup
 			Route::get('/courier-setup','Admin\CourierSetupController@index')->name('courierSetup.index');
-			Route::get('/courier-setup-add','Admin\CourierSetupController@addCourier')->name('courierSetup.add');
-			Route::post('/courier-setup-save','Admin\CourierSetupController@saveCourier')->name('courierSetup.save');
-			Route::get('/courier-setup-edit/{id}','Admin\CourierSetupController@editCourier')->name('courierSetup.edit');
-			Route::post('/courier-setup-update','Admin\CourierSetupController@updateCourier')->name('courierSetup.update');
-			Route::post('/courier-setup-delete','Admin\CourierSetupController@deleteCourier')->name('courierSetup.delete');
-			Route::post('/courier-setup-status','Admin\CourierSetupController@changeCourierStatus')->name('courierSetup.status');
+			Route::get('/courier-setup-add','Admin\CourierSetupController@add')->name('courierSetup.add');
+			Route::post('/courier-setup-save','Admin\CourierSetupController@save')->name('courierSetup.save');
+			Route::get('/courier-setup-edit/{id}','Admin\CourierSetupController@edit')->name('courierSetup.edit');
+			Route::post('/courier-setup-update','Admin\CourierSetupController@update')->name('courierSetup.update');
+			Route::post('/courier-setup-delete','Admin\CourierSetupController@delete')->name('courierSetup.delete');
+			Route::post('/courier-setup-status','Admin\CourierSetupController@changeStatus')->name('courierSetup.status');
 
 			// Vehicle Setup
 			Route::get('/vehicle-setup','Admin\VehicleSetupController@index')->name('vehicleSetup.index');
-			Route::get('/vehicle-setup-add','Admin\VehicleSetupController@addVehicle')->name('vehicleSetup.add');
-			Route::post('/vehicle-setup-save','Admin\VehicleSetupController@saveVehicle')->name('vehicleSetup.save');
-			Route::get('/vehicle-setup-edit/{id}','Admin\VehicleSetupController@editVehicle')->name('vehicleSetup.edit');
-			Route::post('/vehicle-setup-update','Admin\VehicleSetupController@updateVehicle')->name('vehicleSetup.update');
-			Route::post('/vehicle-setup-delete','Admin\VehicleSetupController@deleteVehicle')->name('vehicleSetup.delete');
-			Route::post('/vehicle-setup-status','Admin\VehicleSetupController@changeVehicleStatus')->name('vehicleSetup.status');
+			Route::get('/vehicle-setup-add','Admin\VehicleSetupController@add')->name('vehicleSetup.add');
+			Route::post('/vehicle-setup-save','Admin\VehicleSetupController@save')->name('vehicleSetup.save');
+			Route::get('/vehicle-setup-edit/{id}','Admin\VehicleSetupController@edit')->name('vehicleSetup.edit');
+			Route::post('/vehicle-setup-update','Admin\VehicleSetupController@update')->name('vehicleSetup.update');
+			Route::post('/vehicle-setup-delete','Admin\VehicleSetupController@delete')->name('vehicleSetup.delete');
+			Route::post('/vehicle-setup-status','Admin\VehicleSetupController@changeStatus')->name('vehicleSetup.status');
 
 			// Area Setup
 			Route::get('/area-setup','Admin\AreaSetupController@index')->name('areaSetup.index');
-			Route::get('/area-setup-add','Admin\AreaSetupController@addArea')->name('areaSetup.add');
-			Route::post('/area-setup-save','Admin\AreaSetupController@saveArea')->name('areaSetup.save');
-			Route::get('/area-setup-edit/{id}','Admin\AreaSetupController@editArea')->name('areaSetup.edit');
-			Route::post('/area-setup-update','Admin\AreaSetupController@updateArea')->name('areaSetup.update');
-			Route::post('/area-setup-delete','Admin\AreaSetupController@deleteArea')->name('areaSetup.delete');
-			Route::post('/area-setup-status','Admin\AreaSetupController@changeAreaStatus')->name('areaSetup.status');
+			Route::get('/area-setup-add','Admin\AreaSetupController@add')->name('areaSetup.add');
+			Route::post('/area-setup-save','Admin\AreaSetupController@save')->name('areaSetup.save');
+			Route::get('/area-setup-edit/{id}','Admin\AreaSetupController@edit')->name('areaSetup.edit');
+			Route::post('/area-setup-update','Admin\AreaSetupController@update')->name('areaSetup.update');
+			Route::post('/area-setup-delete','Admin\AreaSetupController@delete')->name('areaSetup.delete');
+			Route::post('/area-setup-status','Admin\AreaSetupController@changeStatus')->name('areaSetup.status');
 
 			// Territory Setup
 			Route::get('/territory-setup','Admin\TerritorySetupController@index')->name('territorySetup.index');
-			Route::get('/territory-setup-add','Admin\TerritorySetupController@addTerritory')->name('territorySetup.add');
-			Route::post('/territory-setup-save','Admin\TerritorySetupController@saveTerritory')->name('territorySetup.save');
-			Route::get('/territory-setup-edit/{id}','Admin\TerritorySetupController@editTerritory')->name('territorySetup.edit');
-			Route::post('/territory-setup-update','Admin\TerritorySetupController@updateTerritory')->name('territorySetup.update');
-			Route::post('/territory-setup-delete','Admin\TerritorySetupController@deleteTerritory')->name('territorySetup.delete');
-			Route::post('/territory-setup-status','Admin\TerritorySetupController@changeTerritoryStatus')->name('territorySetup.status');
-
-			// Territory Setup
-			Route::get('/territory-setup','Admin\TerritorySetupController@index')->name('territorySetup.index');
-			Route::get('/territory-setup-add','Admin\TerritorySetupController@addTerritory')->name('territorySetup.add');
-			Route::post('/territory-setup-save','Admin\TerritorySetupController@saveTerritory')->name('territorySetup.save');
-			Route::get('/territory-setup-edit/{id}','Admin\TerritorySetupController@editTerritory')->name('territorySetup.edit');
-			Route::post('/territory-setup-update','Admin\TerritorySetupController@updateTerritory')->name('territorySetup.update');
-			Route::post('/territory-setup-delete','Admin\TerritorySetupController@deleteTerritory')->name('territorySetup.delete');
-			Route::post('/territory-setup-status','Admin\TerritorySetupController@changeTerritoryStatus')->name('territorySetup.status');
+			Route::get('/territory-setup-add','Admin\TerritorySetupController@add')->name('territorySetup.add');
+			Route::post('/territory-setup-save','Admin\TerritorySetupController@save')->name('territorySetup.save');
+			Route::get('/territory-setup-edit/{id}','Admin\TerritorySetupController@edit')->name('territorySetup.edit');
+			Route::post('/territory-setup-update','Admin\TerritorySetupController@update')->name('territorySetup.update');
+			Route::post('/territory-setup-delete','Admin\TerritorySetupController@delete')->name('territorySetup.delete');
+			Route::post('/territory-setup-status','Admin\TerritorySetupController@changeStatus')->name('territorySetup.status');
 
 			// Staff Setup
 			Route::get('/staff-setup','Admin\StaffSetupController@index')->name('staffSetup.index');
-			Route::get('/staff-setup-add','Admin\StaffSetupController@addStaff')->name('staffSetup.add');
-			Route::post('/staff-setup-save','Admin\StaffSetupController@saveStaff')->name('staffSetup.save');
-			Route::get('/staff-setup-edit/{id}','Admin\StaffSetupController@editStaff')->name('staffSetup.edit');
-			Route::post('/staff-setup-update','Admin\StaffSetupController@updateStaff')->name('staffSetup.update');
-			Route::post('/staff-setup-delete','Admin\StaffSetupController@deleteStaff')->name('staffSetup.delete');
-			Route::post('/staff-setup-status','Admin\StaffSetupController@changeStaffStatus')->name('staffSetup.status');
+			Route::get('/staff-setup-add','Admin\StaffSetupController@add')->name('staffSetup.add');
+			Route::post('/staff-setup-save','Admin\StaffSetupController@save')->name('staffSetup.save');
+			Route::get('/staff-setup-edit/{id}','Admin\StaffSetupController@edit')->name('staffSetup.edit');
+			Route::post('/staff-setup-update','Admin\StaffSetupController@update')->name('staffSetup.update');
+			Route::post('/staff-setup-delete','Admin\StaffSetupController@delete')->name('staffSetup.delete');
+			Route::post('/staff-setup-status','Admin\StaffSetupController@changeStatus')->name('staffSetup.status');
 
 			// Vendor Setup
 			Route::get('/vendor-setup','Admin\VendorSetupController@index')->name('vendorSetup.index');
-			Route::get('/vendor-setup-add','Admin\VendorSetupController@addVendor')->name('vendorSetup.add');
-			Route::post('/vendor-setup-save','Admin\VendorSetupController@saveVendor')->name('vendorSetup.save');
-			Route::get('/vendor-setup-edit/{id}','Admin\VendorSetupController@editVendor')->name('vendorSetup.edit');
-			Route::post('/vendor-setup-update','Admin\VendorSetupController@updateVendor')->name('vendorSetup.update');
-			Route::post('/vendor-setup-delete','Admin\VendorSetupController@deleteVendor')->name('vendorSetup.delete');
-			Route::post('/vendor-setup-status','Admin\VendorSetupController@changeVendorStatus')->name('vendorSetup.status');
+			Route::get('/vendor-setup-add','Admin\VendorSetupController@add')->name('vendorSetup.add');
+			Route::post('/vendor-setup-save','Admin\VendorSetupController@save')->name('vendorSetup.save');
+			Route::get('/vendor-setup-edit/{id}','Admin\VendorSetupController@edit')->name('vendorSetup.edit');
+			Route::post('/vendor-setup-update','Admin\VendorSetupController@update')->name('vendorSetup.update');
+			Route::post('/vendor-setup-delete','Admin\VendorSetupController@delete')->name('vendorSetup.delete');
+			Route::post('/vendor-setup-status','Admin\VendorSetupController@changeStatus')->name('vendorSetup.status');
 
 			//Group Setup
 			Route::get('/group-setup','Admin\GroupSetupController@index')->name('groupSetup.index');
@@ -230,21 +221,21 @@ Route::prefix('admin')->group(function()
 
 			// Lifting Setup
 			Route::get('/lifting','Admin\LiftingController@index')->name('lifting.index');
-			Route::get('/lifting-add','Admin\LiftingController@addLifting')->name('lifting.add');
-			Route::post('/lifting-save','Admin\LiftingController@saveLifting')->name('lifting.save');
-			Route::get('/lifting-edit/{id}','Admin\LiftingController@editLifting')->name('lifting.edit');
-			Route::post('/lifting-update','Admin\LiftingController@updateLifting')->name('lifting.update');
-			Route::post('/lifting-delete','Admin\LiftingController@deleteLifting')->name('lifting.delete');
+			Route::get('/lifting-add','Admin\LiftingController@add')->name('lifting.add');
+			Route::post('/lifting-save','Admin\LiftingController@save')->name('lifting.save');
+			Route::get('/lifting-edit/{id}','Admin\LiftingController@edit')->name('lifting.edit');
+			Route::post('/lifting-update','Admin\LiftingController@update')->name('lifting.update');
+			Route::post('/lifting-delete','Admin\LiftingController@delete')->name('lifting.delete');
 			Route::post('/lifting-product-info','Admin\LiftingController@liftingProductInfo')->name('lifting.productInfo');
 			Route::get('/lifting-print/{id}','Admin\LiftingController@print')->name('lifting.print');
 
 			// Payment to Company
 			Route::get('/payment-to-company','Admin\PaymentToCompanyController@index')->name('paymentToCompany.index');
-			Route::get('/payment-to-company/add','Admin\PaymentToCompanyController@addPaymentToCompany')->name('paymentToCompany.add');
-			Route::post('/payment-to-company/save','Admin\PaymentToCompanyController@savePaymentToCompany')->name('paymentToCompany.save');
-			Route::get('/payment-to-company/edit/{id}','Admin\PaymentToCompanyController@editPaymentToCompany')->name('paymentToCompany.edit');
-			Route::post('/payment-to-company/update','Admin\PaymentToCompanyController@updatePaymentToCompany')->name('paymentToCompany.update');
-			Route::post('/payment-to-company/delete','Admin\PaymentToCompanyController@deletePaymentToCompany')->name('paymentToCompany.delete');
+			Route::get('/payment-to-company/add','Admin\PaymentToCompanyController@add')->name('paymentToCompany.add');
+			Route::post('/payment-to-company/save','Admin\PaymentToCompanyController@save')->name('paymentToCompany.save');
+			Route::get('/payment-to-company/edit/{id}','Admin\PaymentToCompanyController@edit')->name('paymentToCompany.edit');
+			Route::post('/payment-to-company/update','Admin\PaymentToCompanyController@update')->name('paymentToCompany.update');
+			Route::post('/payment-to-company/delete','Admin\PaymentToCompanyController@delete')->name('paymentToCompany.delete');
 			Route::post('/get-vendor-info','Admin\PaymentToCompanyController@getVendorInfo')->name('getVendorInfo');
 
 			// Payment Record

@@ -18,7 +18,7 @@ class StaffSetupController extends Controller
     	return view('admin.staffSetup.index')->with(compact('title','staffs'));
     }
 
-    public function addStaff()
+    public function add()
     {
     	$title = "Add Staff";
     	$formLink = "staffSetup.save";
@@ -27,7 +27,7 @@ class StaffSetupController extends Controller
     	return view('admin.staffSetup.add')->with(compact('title','formLink','buttonName'));
     }
 
-    public function saveStaff(Request $request)
+    public function save(Request $request)
     {
         $this->validation($request);
 
@@ -46,7 +46,7 @@ class StaffSetupController extends Controller
         return redirect(route('staffSetup.index'))->with('msg','Staff Added Successfully');
     }
 
-    public function editStaff($staffId)
+    public function edit($staffId)
     {
     	$title = "Edit Staff";
     	$formLink = "staffSetup.update";
@@ -57,7 +57,7 @@ class StaffSetupController extends Controller
     	return view('admin.staffSetup.edit')->with(compact('title','formLink','buttonName','staff'));
     }
 
-    public function updateStaff(Request $request)
+    public function update(Request $request)
     {
         $this->validation($request);
 
@@ -79,12 +79,12 @@ class StaffSetupController extends Controller
         return redirect(route('staffSetup.index'))->with('msg','Staff Updated Successfully');
     }
 
-    public function deleteStaff(Request $request)
+    public function delete(Request $request)
     {    	
         StaffSetup::where('id',$request->staffId)->delete();
     }
 
-    public function changeStaffStatus(Request $request)
+    public function changeStatus(Request $request)
     {
         $staffId = $request->staffId;
 

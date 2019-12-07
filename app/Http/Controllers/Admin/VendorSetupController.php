@@ -18,7 +18,7 @@ class VendorSetupController extends Controller
     	return view('admin.vendorSetup.index')->with(compact('title','vendors'));
     }
 
-    public function addVendor()
+    public function add()
     {
     	$title = "Add Vendor";
     	$formLink = "vendorSetup.save";
@@ -27,7 +27,7 @@ class VendorSetupController extends Controller
     	return view('admin.vendorSetup.add')->with(compact('title','formLink','buttonName'));
     }
 
-    public function saveVendor(Request $request)
+    public function save(Request $request)
     {
         $this->validation($request);
 
@@ -43,7 +43,7 @@ class VendorSetupController extends Controller
         return redirect(route('vendorSetup.index'))->with('msg','Vendor Added Successfully');
     }
 
-    public function editVendor($vendorId)
+    public function edit($vendorId)
     {
     	$title = "Edit Vendor";
     	$formLink = "vendorSetup.update";
@@ -54,7 +54,7 @@ class VendorSetupController extends Controller
     	return view('admin.vendorSetup.edit')->with(compact('title','formLink','buttonName','vendor'));
     }
 
-    public function updateVendor(Request $request)
+    public function update(Request $request)
     {
         $this->validation($request);
 
@@ -74,12 +74,12 @@ class VendorSetupController extends Controller
         return redirect(route('vendorSetup.index'))->with('msg','Vendor Updated Successfully');
     }
 
-    public function deleteVendor(Request $request)
+    public function delete(Request $request)
     {    	
         VendorSetup::where('id',$request->vendorId)->delete();
     }
 
-    public function changeVendorStatus(Request $request)
+    public function changeStatus(Request $request)
     {
         $vendorId = $request->vendorId;
 

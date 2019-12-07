@@ -18,7 +18,7 @@ class CourierSetupController extends Controller
     	return view('admin.courierSetup.index')->with(compact('title','couriers'));
     }
 
-    public function addCourier()
+    public function add()
     {
     	$title = "Add Courier";
     	$formLink = "courierSetup.save";
@@ -27,7 +27,7 @@ class CourierSetupController extends Controller
     	return view('admin.courierSetup.add')->with(compact('title','formLink','buttonName'));
     }
 
-    public function saveCourier(Request $request)
+    public function save(Request $request)
     {
         $this->validation($request);
 
@@ -41,7 +41,7 @@ class CourierSetupController extends Controller
         return redirect(route('courierSetup.index'))->with('msg','Courier Added Successfully');
     }
 
-    public function editCourier($courierId)
+    public function edit($courierId)
     {
     	$title = "Edit Courier";
     	$formLink = "courierSetup.update";
@@ -52,7 +52,7 @@ class CourierSetupController extends Controller
     	return view('admin.courierSetup.edit')->with(compact('title','formLink','buttonName','courier'));
     }
 
-    public function updateCourier(Request $request)
+    public function update(Request $request)
     {
         $this->validation($request);
 
@@ -70,12 +70,12 @@ class CourierSetupController extends Controller
         return redirect(route('courierSetup.index'))->with('msg','Courier Updated Successfully');
     }
 
-    public function deleteCourier(Request $request)
+    public function delete(Request $request)
     {    	
         CourierSetup::where('id',$request->courierId)->delete();
     }
 
-    public function changeCourierStatus(Request $request)
+    public function changeStatus(Request $request)
     {
         $courierId = $request->courierId;
         

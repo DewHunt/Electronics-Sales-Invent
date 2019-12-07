@@ -29,7 +29,7 @@ class LiftingController extends Controller
     	return view('admin.lifting.index')->with(compact('title','liftings'));
     }
 
-    public function addLifting()
+    public function add()
     {
     	$title = "Add Product Lifting";
     	$formLink = "lifting.save";
@@ -41,7 +41,7 @@ class LiftingController extends Controller
     	return view('admin.lifting.add')->with(compact('title','formLink','buttonName','vendors','products'));
     }
 
-    public function saveLifting(Request $request)
+    public function save(Request $request)
     {
         // $this->validation($request);
 
@@ -83,7 +83,7 @@ class LiftingController extends Controller
         return redirect(route('lifting.index'))->with('msg','Product Lifting Added Successfully');
     }
 
-    public function editLifting($liftingId)
+    public function edit($liftingId)
     {
     	$title = "Add Product Lifting";
     	$formLink = "lifting.update";
@@ -100,7 +100,7 @@ class LiftingController extends Controller
     	return view('admin.lifting.edit')->with(compact('title','formLink','buttonName','vendors','products','lifting','liftingProducts'));
     }
 
-    public function updateLifting(Request $request)
+    public function update(Request $request)
     {
     	// dd($request->all()); die();
         // $this->validation($request);
@@ -180,7 +180,7 @@ class LiftingController extends Controller
         return $pdf->stream('product_lifting_chalan.pdf');
     }
 
-    public function deleteLifting(Request $request)
+    public function delete(Request $request)
     {
     	// echo $lifting = $request->liftingId; die();
     	$liftingId = $request->liftingId;

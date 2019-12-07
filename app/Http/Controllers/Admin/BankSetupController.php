@@ -18,7 +18,7 @@ class BankSetupController extends Controller
     	return view('admin.bankSetup.index')->with(compact('title','allBank'));
     }
 
-    public function addBank()
+    public function add()
     {
     	$title = "Add Bank";
     	$formLink = "bankSetup.save";
@@ -27,7 +27,7 @@ class BankSetupController extends Controller
     	return view('admin.bankSetup.add')->with(compact('title','formLink','buttonName'));
     }
 
-    public function saveBank(Request $request)
+    public function save(Request $request)
     {
         $this->validation($request);
 
@@ -41,7 +41,7 @@ class BankSetupController extends Controller
         return redirect(route('bankSetup.index'))->with('msg','Bank Added Successfully');
     }
 
-    public function editBank($bankId)
+    public function edit($bankId)
     {
     	$title = "Edit Bank";
     	$formLink = "bankSetup.update";
@@ -52,7 +52,7 @@ class BankSetupController extends Controller
     	return view('admin.bankSetup.edit')->with(compact('title','formLink','buttonName','bank'));
     }
 
-    public function updateBank(Request $request)
+    public function update(Request $request)
     {
         $this->validation($request);
 
@@ -70,12 +70,12 @@ class BankSetupController extends Controller
         return redirect(route('bankSetup.index'))->with('msg','Bank Updated Successfully');
     }
 
-    public function deleteBank(Request $request)
+    public function delete(Request $request)
     {    	
         BankSetup::where('id',$request->bankId)->delete();
     }
 
-    public function changeBankStatus(Request $request)
+    public function changeStatus(Request $request)
     {
         $bankId = $request->bankId;
 

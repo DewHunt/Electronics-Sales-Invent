@@ -23,7 +23,7 @@ class TerritorySetupController extends Controller
     	return view('admin.territorySetup.index')->with(compact('title','territories'));
     }
 
-    public function addTerritory()
+    public function add()
     {
     	$title = "Add Territory";
     	$formLink = "territorySetup.save";
@@ -36,7 +36,7 @@ class TerritorySetupController extends Controller
     	return view('admin.territorySetup.add')->with(compact('title','formLink','buttonName','allArea'));
     }
 
-    public function saveTerritory(Request $request)
+    public function save(Request $request)
     {
         $this->validation($request);
 
@@ -52,7 +52,7 @@ class TerritorySetupController extends Controller
         return redirect(route('territorySetup.index'))->with('msg','Territory Added Successfully');
     }
 
-    public function editTerritory($territoryId)
+    public function edit($territoryId)
     {
     	$title = "Edit Territory";
     	$formLink = "territorySetup.update";
@@ -66,7 +66,7 @@ class TerritorySetupController extends Controller
     	return view('admin.territorySetup.edit')->with(compact('title','formLink','buttonName','territory','allArea'));
     }
 
-    public function updateTerritory(Request $request)
+    public function update(Request $request)
     {
         $this->validation($request);
 
@@ -86,12 +86,12 @@ class TerritorySetupController extends Controller
         return redirect(route('territorySetup.index'))->with('msg','Territory Updated Successfully');
     }
 
-    public function deleteTerritory(Request $request)
+    public function delete(Request $request)
     {    	
         TerritorySetup::where('id',$request->territoryId)->delete();
     }
 
-    public function changeTerritoryStatus(Request $request)
+    public function changeStatus(Request $request)
     {
         $territoryId = $request->territoryId;
 

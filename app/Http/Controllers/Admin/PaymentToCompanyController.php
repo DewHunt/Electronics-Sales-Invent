@@ -24,7 +24,7 @@ class PaymentToCompanyController extends Controller
     	return view('admin.paymentToCompany.index')->with(compact('title','paymentToCompany'));
     }
 
-    public function addPaymentToCompany()
+    public function add()
     {
     	$title = "Add Payment To Company";
     	$formLink = "paymentToCompany.save";
@@ -37,7 +37,7 @@ class PaymentToCompanyController extends Controller
     	return view('admin.paymentToCompany.add')->with(compact('title','formLink','buttonName','vendors'));
     }
 
-    public function savePaymentToCompany(Request $request)
+    public function save(Request $request)
     {
     	// dd($request->all());
 
@@ -63,7 +63,7 @@ class PaymentToCompanyController extends Controller
        return redirect(route('paymentToCompany.index'))->with('msg','Payment To Company Complete Successfully');
     }
 
-    public function editPaymentToCompany($paymentToCompanyId)
+    public function edit($paymentToCompanyId)
     {
     	$title = "Edit Payment To Company";
     	$formLink = "paymentToCompany.update";
@@ -77,7 +77,7 @@ class PaymentToCompanyController extends Controller
     	return view('admin.paymentToCompany.edit')->with(compact('title','formLink','buttonName','vendor','paymentToCompany'));
     }
 
-    public function updatePaymentToCompany(Request $request)
+    public function update(Request $request)
     {
     	// dd($request->all());
 
@@ -115,5 +115,10 @@ class PaymentToCompanyController extends Controller
     	$data = ['lifting' => $lifting,'liftingReturn'=>$liftingReturn,'currentDue'=>$currentDue];
 
     	return $data;    	
+    }
+
+    public function delete(Request $request)
+    {
+        PaymentToCompany::where('id',$request->paymentToCompanyId)->delete();
     }
 }

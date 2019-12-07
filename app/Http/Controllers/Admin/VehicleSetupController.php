@@ -18,7 +18,7 @@ class VehicleSetupController extends Controller
     	return view('admin.vehicleSetup.index')->with(compact('title','vehicles'));
     }
 
-    public function addVehicle()
+    public function add()
     {
     	$title = "Add Vehicle";
     	$formLink = "vehicleSetup.save";
@@ -27,7 +27,7 @@ class VehicleSetupController extends Controller
     	return view('admin.vehicleSetup.add')->with(compact('title','formLink','buttonName'));
     }
 
-    public function saveVehicle(Request $request)
+    public function save(Request $request)
     {
         $this->validation($request);
 
@@ -40,7 +40,7 @@ class VehicleSetupController extends Controller
         return redirect(route('vehicleSetup.index'))->with('msg','Vehicle Added Successfully');
     }
 
-    public function editVehicle($vehicleId)
+    public function edit($vehicleId)
     {
     	$title = "Edit Vehicle";
     	$formLink = "vehicleSetup.update";
@@ -51,7 +51,7 @@ class VehicleSetupController extends Controller
     	return view('admin.vehicleSetup.edit')->with(compact('title','formLink','buttonName','vehicle'));
     }
 
-    public function updateVehicle(Request $request)
+    public function update(Request $request)
     {
         $this->validation($request);
 
@@ -68,12 +68,12 @@ class VehicleSetupController extends Controller
         return redirect(route('vehicleSetup.index'))->with('msg','Vehicle Updated Successfully');
     }
 
-    public function deleteVehicle(Request $request)
+    public function delete(Request $request)
     {    	
         VehicleSetup::where('id',$request->vehicleId)->delete();
     }
 
-    public function changeVehicleStatus(Request $request)
+    public function changeStatus(Request $request)
     {
         $vehicleId = $request->vehicleId;
         

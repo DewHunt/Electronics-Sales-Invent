@@ -106,28 +106,67 @@
 
 @section('print_card_body')
 	<table id="dataTable" name="liftingPaymentSummary" class="table table-bordered table-sm">
-		<thead>
-            <thead>
-                <tr>
-                    <th width="20px" rowspan="2">Sl</th>
-                    <th rowspan="2">Client Name</th>
-                    <th rowspan="2" width="120px">Previous Years</th>
-                    <th colspan="3">For The Years {{ $year }}</th>
-                    <th colspan="3">For The Month {{ date('F', mktime(0, 0, 0,$month, 10)) }}</th>
-                    <th rowspan="2" width="120px">Current Balance</th>
-                </tr>
-                <tr>
-                    <th width="90px">Purchase</th>
-                    <th width="90px">Payments</th>
-                    <th width="90px">Balance</th>
-                    <th width="90px">Purchase</th>
-                    <th width="90px">Payments</th>
-                    <th width="90px">Balance</th>
-                </tr>
-            </thead>
-		</thead>
+        <thead>
+            <tr>
+                <th width="20px" rowspan="2">Sl</th>
+                <th rowspan="2">Venodr Name</th>
+                <th rowspan="2" width="120px">Previous Years</th>
+                <th colspan="3">For The Years {{ $year }}</th>
+                <th colspan="3">For The Month {{ date('F', mktime(0, 0, 0,$month, 10)) }}</th>
+                <th rowspan="2" width="120px">Current Balance</th>
+            </tr>
+            <tr>
+                <th width="90px">Lifting</th>
+                <th width="90px">Payments</th>
+                <th width="90px">Balance</th>
+                <th width="90px">Lifting</th>
+                <th width="90px">Payments</th>
+                <th width="90px">Balance</th>
+            </tr>
+        </thead>
 
 		<tbody>
+            @php
+                $sl = 0;
+                $balance = 0;
+                $currentId = 0;
+            @endphp
+
+            @foreach ($liftingPaymentSummaries as $liftingPaymentSummary)
+                @php
+                    $sl++;
+                    $yearlyLifting = 0;
+                    $yearlyPayment = 0;
+                    $monthlyLifting = 0;
+                    $monthlyPayment = 0;                                    
+                @endphp
+                @if ($liftingPaymentSummary->vendorId != $currentId)
+                    @foreach ($liftingPaymentSummaries as $value)
+                        @php
+                            if ($liftingPaymentSummary->vendorId == $value->vendorId)
+                            {
+                                $yearlyLifting = $yearlyLifting + $value->yearlyLifting;
+                                $yearlyPayment = $yearlyPayment + $value->yearlyPayment;
+                                $monthlyLifting = $monthlyLifting + $value->monthlyLifting;
+                                $monthlyPayment = $monthlyPayment + $value->monthlyPayment;
+                            }
+                            $currentId = $liftingPaymentSummary->vendorId;
+                        @endphp
+                    @endforeach
+                    <tr>
+                        <td>{{ $sl }}</td>
+                        <td>{{ $liftingPaymentSummary->vendorName }}</td>
+                        <td style="text-align: right;">{{ $liftingPaymentSummary->previousPayment - $liftingPaymentSummary->previousLifting }}</td>
+                        <td style="text-align: right;">{{ $yearlyLifting }}</td>
+                        <td style="text-align: right;">{{ $yearlyPayment }}</td>
+                        <td style="text-align: right;">{{ $yearlyPayment - $yearlyLifting }}</td>
+                        <td style="text-align: right;">{{ $monthlyLifting }}</td>
+                        <td style="text-align: right;">{{ $monthlyPayment }}</td>
+                        <td style="text-align: right;">{{ $monthlyPayment - $monthlyLifting }}</td>
+                        <td style="text-align: right;">{{ $liftingPaymentSummary->previousPayment - $liftingPaymentSummary->previousLifting + $yearlyPayment - $yearlyLifting }}</td>
+                    </tr>
+                @endif                                    
+            @endforeach
 		</tbody>
 	</table>
 @endsection

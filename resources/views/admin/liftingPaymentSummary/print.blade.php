@@ -2,41 +2,67 @@
 
 @section('content')
     <table  id="report-table">
-        <caption>Lifting Record On {{ $fromDate }} To {{ $toDate }}</caption>
-        <thead class="thead-light">
+        <caption>Lifting Payment Summary For The {{ $month }} Of {{ $year }}</caption>
+        <thead>
             <tr>
-                <th width="20px">Sl</th>
-                <th>Date</th>
-                <th>Lifting No</th>
-                <th>Vendor</th>
-                <th>Category</th>
-                <th>Product</th>
-                <th>Serial</th>
-                <th>Model</th>
-                <th>Color</th>
-                <th>Qty</th>
-                <th>Price</th>
+                <th width="20px" rowspan="2">Sl</th>
+                <th rowspan="2">Venodr Name</th>
+                <th rowspan="2" width="70px">Previous Years</th>
+                <th colspan="3" style="text-align: center;">For The Years {{ $year }}</th>
+                <th colspan="3" style="text-align: center;">For The Month {{ date('F', mktime(0, 0, 0,$month, 10)) }}</th>
+                <th rowspan="2" width="70px">Current Balance</th>
+            </tr>
+            <tr>
+                <th width="60px">Lifting</th>
+                <th width="80px">Payments</th>
+                <th width="70px">Balance</th>
+                <th width="60px">Lifting</th>
+                <th width="80px">Payments</th>
+                <th width="70px">Balance</th>
             </tr>
         </thead>
 
         <tbody>
             @php
                 $sl = 0;
+                $balance = 0;
+                $currentId = 0;
             @endphp
-            @foreach ($liftingRecords as $liftingRecord)
-                <tr>
-                    <td>{{ $sl++ }}</td>
-                    <td>{{ $liftingRecord->liftingDate }}</td>
-                    <td>{{ $liftingRecord->liftingNo }}</td>
-                    <td>{{ $liftingRecord->vendorName }}</td>
-                    <td>{{ $liftingRecord->categoryName }}</td>
-                    <td>{{ $liftingRecord->productName }}</td>
-                    <td>{{ $liftingRecord->productSerialNo }}</td>
-                    <td>{{ $liftingRecord->productModelNo }}</td>
-                    <td>{{ $liftingRecord->productColor }}</td>
-                    <td>{{ $liftingRecord->productQty }}</td>
-                    <td>{{ $liftingRecord->price }}</td>
-                </tr>
+
+            @foreach ($liftingPaymentSummaries as $liftingPaymentSummary)
+                @php
+                    $sl++;
+                    $yearlyLifting = 0;
+                    $yearlyPayment = 0;
+                    $monthlyLifting = 0;
+                    $monthlyPayment = 0;                                    
+                @endphp
+                @if ($liftingPaymentSummary->vendorId != $currentId)
+                    @foreach ($liftingPaymentSummaries as $value)
+                        @php
+                            if ($liftingPaymentSummary->vendorId == $value->vendorId)
+                            {
+                                $yearlyLifting = $yearlyLifting + $value->yearlyLifting;
+                                $yearlyPayment = $yearlyPayment + $value->yearlyPayment;
+                                $monthlyLifting = $monthlyLifting + $value->monthlyLifting;
+                                $monthlyPayment = $monthlyPayment + $value->monthlyPayment;
+                            }
+                            $currentId = $liftingPaymentSummary->vendorId;
+                        @endphp
+                    @endforeach
+                    <tr>
+                        <td>{{ $sl }}</td>
+                        <td>{{ $liftingPaymentSummary->vendorName }}</td>
+                        <td style="text-align: right;">{{ $liftingPaymentSummary->previousPayment - $liftingPaymentSummary->previousLifting }}</td>
+                        <td style="text-align: right;">{{ $yearlyLifting }}</td>
+                        <td style="text-align: right;">{{ $yearlyPayment }}</td>
+                        <td style="text-align: right;">{{ $yearlyPayment - $yearlyLifting }}</td>
+                        <td style="text-align: right;">{{ $monthlyLifting }}</td>
+                        <td style="text-align: right;">{{ $monthlyPayment }}</td>
+                        <td style="text-align: right;">{{ $monthlyPayment - $monthlyLifting }}</td>
+                        <td style="text-align: right;">{{ $liftingPaymentSummary->previousPayment - $liftingPaymentSummary->previousLifting + $yearlyPayment - $yearlyLifting }}</td>
+                    </tr>
+                @endif                                    
             @endforeach
         </tbody>
     </table>

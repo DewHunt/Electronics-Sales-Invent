@@ -29,6 +29,10 @@
 
             #report-table tr:hover {background-color: #ddd;}
 
+            caption{
+                font-weight: bold; text-decoration: underline; padding-bottom: 5px;
+            }
+
             #header-table {
                 font-family: Times, "Times New Roman", serif;
                 border-collapse: collapse;

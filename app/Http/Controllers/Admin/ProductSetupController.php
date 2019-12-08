@@ -90,17 +90,8 @@ class ProductSetupController extends Controller
 
     public function saveProductBasicInfo(Request $request)
     {
-        if ($request->categories)
-        {
-            $categoryId = implode(',', $request->categories);
-        }
-        else
-        {
-            $categoryId = "";
-        }        
-
         $product = Product::create( [
-        	'category_id' => $categoryId,
+        	'category_id' => $request->category,
         	'name' => $request->productName,
         	'code' => $request->productCode,
         	'model_no' => $request->productModelNo,
@@ -194,17 +185,8 @@ class ProductSetupController extends Controller
     	$productId = $request->productId;
         $product = Product::find($productId);
 
-        if ($request->categories)
-        {
-            $categoryId = implode(',', $request->categories);
-        }
-        else
-        {
-            $categoryId = "";
-        }
-
         $product->update( [
-        	'category_id' => $categoryId,
+            'category_id' => $request->category,
         	'name' => $request->productName,
         	'code' => $request->productCode,
         	'model_no' => $request->productModelNo,

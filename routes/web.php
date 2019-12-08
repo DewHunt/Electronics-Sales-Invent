@@ -243,6 +243,16 @@ Route::prefix('admin')->group(function()
 			Route::post('/payment-record','Admin\PaymentRecordController@index')->name('paymentRecord.index');
 			Route::post('/payment-record/print','Admin\PaymentRecordController@print')->name('paymentRecord.print');
 
+			// Lifting Record
+			Route::get('/lifting-record','Admin\LiftingRecordController@index')->name('liftingRecord.index');
+			Route::post('/lifting-record','Admin\LiftingRecordController@index')->name('liftingRecord.index');
+			Route::post('/lifting-record/print','Admin\LiftingRecordController@print')->name('liftingRecord.print');
+
+			//Lifting & payment Summery
+			Route::get('/lifting-payment-summary','Admin\LiftingPaymentSummaryController@index')->name('liftingPaymentSummary.index');
+			Route::post('/lifting-payment-summary','Admin\LiftingPaymentSummaryController@index')->name('liftingPaymentSummary.index');
+			Route::post('/lifting-payment-summary/print','Admin\LiftingPaymentSummaryController@print')->name('liftingPaymentSummary.print');
+
 			//Vendor Statement
 			Route::get('/vendor-statement','Admin\VendorStatementController@index')->name('vendorStatement.index');
 			Route::post('/vendor-statement','Admin\VendorStatementController@index')->name('vendorStatement.index');

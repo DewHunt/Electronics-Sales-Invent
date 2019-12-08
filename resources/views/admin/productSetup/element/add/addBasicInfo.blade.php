@@ -18,15 +18,16 @@
 	    	<input type="hidden" name="type" value="add">
 	    	<div class="row">
 	    		<div class="col-md-6"> 
-	                <div class="form-group {{ $errors->has('categories') ? ' has-danger' : '' }}">
+	                <div class="form-group {{ $errors->has('category') ? ' has-danger' : '' }}">
 	                    <label for="category">Category</label>
-	                    <select class="form-control chosen-select" id="categories" name="categories[]" multiple>
-	                        @foreach($categories as $category)
-	                            <option value="{{$category->id}}">{{$category->name}}</option>
+	                    <select class="form-control chosen-select" id="category" name="category">
+	                    	<option value="">Select Category</option>
+	                        @foreach($categories as $categoryInfo)
+	                            <option value="{{$categoryInfo->id}}">{{$categoryInfo->name}}</option>
 	                        @endforeach
 	                    </select>
-	                    @if ($errors->has('categories'))
-	                        @foreach($errors->get('categories') as $error)
+	                    @if ($errors->has('category'))
+	                        @foreach($errors->get('category') as $error)
 	                            <div class="form-control-feedback">{{ $error }}</div>
 	                        @endforeach
 	                    @endif

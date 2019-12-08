@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 07, 2019 at 02:45 PM
+-- Generation Time: Dec 08, 2019 at 01:53 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -510,10 +510,10 @@ CREATE TABLE `tbl_products` (
 --
 
 INSERT INTO `tbl_products` (`id`, `category_id`, `name`, `code`, `model_no`, `color`, `uom`, `price`, `mrp_price`, `haire_price`, `discount`, `warranty`, `reorder_level_qty`, `order_by`, `transport_point`, `status`, `youtube_link`, `tag_line`, `short_description`, `long_description`, `meta_title`, `meta_keyword`, `meta_description`, `created_at`, `updated_at`) VALUES
-(3, '1,2', 'Walton ANDROID  ATV', 'wal123', 'wal890', 'Black', 'Pcs', 45000, 48600, 54432, '1000', 5, 5, 2, 3, 1, NULL, 'Smart TV', 'rogif;f;ehflk;lfjds;fanfkrengahglkan', ';jglangfarngfarnvafngabrflbFBDLB', 'Smart Tv', 'Smart Tv', 'Smart Tv', '2019-11-27 19:04:54', '2019-12-01 04:30:27'),
-(5, '3,2', 'Walton LED TV', 'wal009', 'wal1234', 'Silver', 'Pcs', 35000, 37800, 42336, '1000', 5, 5, 2, 5, 1, NULL, 'LED TV', 'LED Tv', 'LED TV', 'LED Tv', 'LED Tv', 'LED Tv', '2019-12-01 04:31:48', '2019-12-01 04:33:04'),
-(6, '5,4', 'Walton Freezer', 'wal567', 'wal8126', 'White', 'Pcs', 25000, 27000, 30240, '2500', 10, 5, 9, 5, 1, NULL, 'freezer', 'Walton Freezer', 'Walton Freezer', 'Walton Freezer', 'Walton Freezer', 'Walton Freezer', '2019-12-01 04:37:18', '2019-12-01 04:45:31'),
-(7, '6,4', 'Walton Side by Side Intelligent Inverter Refrigerator', 'wal009', 'Wal119', 'Red', 'Pcs', 65000, 70200, 78624, '4998', 10, 5, 7, 8, 1, NULL, 'Walton Non Frost Freez', 'Walton Non Frost Freez', 'Walton Non Frost Freez', 'Walton Freezer', 'Walton Freezer', 'Walton Freezer', '2019-12-01 04:48:04', '2019-12-01 04:50:28');
+(3, '1', 'Walton ANDROID  ATV', 'wal123', 'wal890', 'Black', 'Pcs', 45000, 48600, 54432, '1000', 5, 5, 2, 3, 1, NULL, 'Smart TV', 'rogif;f;ehflk;lfjds;fanfkrengahglkan', ';jglangfarngfarnvafngabrflbFBDLB', 'Smart Tv', 'Smart Tv', 'Smart Tv', '2019-11-27 19:04:54', '2019-12-08 03:17:55'),
+(5, '3', 'Walton LED TV', 'wal009', 'wal1234', 'Silver', 'Pcs', 35000, 37800, 42336, '1000', 5, 5, 2, 5, 1, NULL, 'LED TV', 'LED Tv', 'LED TV', 'LED Tv', 'LED Tv', 'LED Tv', '2019-12-01 04:31:48', '2019-12-01 04:33:04'),
+(6, '5', 'Walton Freezer', 'wal567', 'wal8126', 'White', 'Pcs', 25000, 27000, 30240, '2500', 10, 5, 9, 5, 1, NULL, 'freezer', 'Walton Freezer', 'Walton Freezer', 'Walton Freezer', 'Walton Freezer', 'Walton Freezer', '2019-12-01 04:37:18', '2019-12-01 04:45:31'),
+(7, '6', 'Walton Side by Side Intelligent Inverter Refrigerator', 'wal009', 'Wal119', 'Red', 'Pcs', 65000, 70200, 78624, '4998', 10, 5, 7, 8, 1, NULL, 'Walton Non Frost Freez', 'Walton Non Frost Freez', 'Walton Non Frost Freez', 'Walton Freezer', 'Walton Freezer', 'Walton Freezer', '2019-12-01 04:48:04', '2019-12-01 04:50:28');
 
 -- --------------------------------------------------------
 
@@ -788,7 +788,9 @@ INSERT INTO `user_menus` (`id`, `parentMenu`, `menuName`, `menuLink`, `menuIcon`
 (23, '19', 'Payment To Company', 'paymentToCompany.index', 'fa fa-caret', 16, '1', '2019-12-04 23:23:10', '2019-12-04 23:23:10'),
 (24, '19', 'Payment Record', 'paymentRecord.index', NULL, 17, '1', '2019-12-05 05:26:06', '2019-12-05 05:28:09'),
 (25, '19', 'Vendor Statement', 'vendorStatement.index', 'fa fa-caret', 18, '1', '2019-12-05 06:30:54', '2019-12-05 06:30:54'),
-(26, '6', 'Group Status', 'groupSetup.index', 'fa fa-caret', 19, '1', '2019-12-07 00:56:48', '2019-12-07 00:56:48');
+(26, '6', 'Group Setup', 'groupSetup.index', 'fa fa-caret', 19, '1', '2019-12-07 00:56:48', '2019-12-07 23:18:33'),
+(27, '19', 'Lifting Record', 'liftingRecord.index', 'fa fa-caret', 20, '1', '2019-12-07 23:18:06', '2019-12-07 23:18:06'),
+(28, '19', 'Lifting Payment Summery', 'liftingPaymentSummary.index', 'fa fa-caret', 21, '1', '2019-12-08 05:24:21', '2019-12-08 05:24:21');
 
 -- --------------------------------------------------------
 
@@ -888,7 +890,9 @@ INSERT INTO `user_menu_actions` (`id`, `parentmenuId`, `menuType`, `actionName`,
 (78, 26, 2, 'Edit', 'groupSetup.edit', 77, 1, '2019-12-07 00:57:50', '2019-12-07 00:57:50'),
 (79, 26, 4, 'Delete', 'groupSetup.delete', 78, 1, '2019-12-07 00:58:24', '2019-12-07 00:58:24'),
 (80, 26, 3, 'Status', 'groupSetup.status', 79, 1, '2019-12-07 00:58:47', '2019-12-07 00:58:47'),
-(81, 20, 11, 'Print Product Lifting Chalan', 'lifting.print', 67, 1, '2019-12-07 06:20:33', '2019-12-07 06:22:00');
+(81, 20, 11, 'Print Product Lifting Chalan', 'lifting.print', 67, 1, '2019-12-07 06:20:33', '2019-12-07 06:22:00'),
+(82, 27, 11, 'Print Lifting Record', 'liftingRecord.print', 81, 1, '2019-12-07 23:19:05', '2019-12-07 23:19:05'),
+(83, 28, 11, 'Print Lifting Payment Summery', 'liftingPaymentSummary.print', 82, 1, '2019-12-08 05:24:58', '2019-12-08 05:24:58');
 
 -- --------------------------------------------------------
 
@@ -911,8 +915,45 @@ CREATE TABLE `user_roles` (
 --
 
 INSERT INTO `user_roles` (`id`, `name`, `status`, `permission`, `actionPermission`, `created_at`, `updated_at`) VALUES
-(1, 'Super Admin', 1, '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,17,18,19,20,21,22,23,24,25,26', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,20,18,19,17,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,57,58,59,60,61,62,63,64,65,66,67,81,69,70,71,72,73,74,75,76,77,78,79,80', '2019-11-20 22:48:03', '2019-12-07 06:20:54'),
+(1, 'Super Admin', 1, '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,17,18,19,20,21,22,23,24,25,26,27,28', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,20,18,19,17,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,57,58,59,60,61,62,63,64,65,66,81,67,69,70,71,72,73,74,75,76,77,78,79,80,82,83', '2019-11-20 22:48:03', '2019-12-08 05:25:14'),
 (5, 'Admin', 0, NULL, NULL, '2019-11-29 03:26:52', '2019-11-29 03:26:52');
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_lifting_payment_summary`
+-- (See below for the actual view)
+--
+CREATE TABLE `view_lifting_payment_summary` (
+`vendorId` int(11)
+,`vendorName` varchar(191)
+,`date` varchar(191)
+,`lifting` varchar(191)
+,`payment` varchar(191)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_lifting_record`
+-- (See below for the actual view)
+--
+CREATE TABLE `view_lifting_record` (
+`liftingDate` date
+,`liftingNo` varchar(191)
+,`vendorId` int(11)
+,`vendorName` varchar(191)
+,`categoryId` varchar(191)
+,`parentId` text
+,`categoryName` varchar(191)
+,`productId` int(11)
+,`productName` varchar(191)
+,`productModelNo` varchar(191)
+,`productColor` varchar(191)
+,`productSerialNo` varchar(191)
+,`productQty` varchar(191)
+,`price` varchar(191)
+);
 
 -- --------------------------------------------------------
 
@@ -927,6 +968,24 @@ CREATE TABLE `view_vendor_statement_report` (
 ,`payment` double
 ,`others` int(1)
 );
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_lifting_payment_summary`
+--
+DROP TABLE IF EXISTS `view_lifting_payment_summary`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_lifting_payment_summary`  AS  select `tbl_liftings`.`vendor_id` AS `vendorId`,`tbl_vendors`.`name` AS `vendorName`,`tbl_liftings`.`vouchar_date` AS `date`,`tbl_liftings`.`total_price` AS `lifting`,0 AS `payment` from (`tbl_liftings` join `tbl_vendors` on(`tbl_vendors`.`id` = `tbl_liftings`.`vendor_id`)) union all select `tbl_payment_to_company`.`vendor_id` AS `vendorId`,`tbl_vendors`.`name` AS `vendorName`,`tbl_payment_to_company`.`payment_date` AS `date`,0 AS `lifting`,`tbl_payment_to_company`.`payment_now` AS `payment` from (`tbl_payment_to_company` join `tbl_vendors` on(`tbl_vendors`.`id` = `tbl_payment_to_company`.`vendor_id`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_lifting_record`
+--
+DROP TABLE IF EXISTS `view_lifting_record`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_lifting_record`  AS  select `tbl_liftings`.`vouchar_date` AS `liftingDate`,`tbl_liftings`.`vaouchar_no` AS `liftingNo`,`tbl_liftings`.`vendor_id` AS `vendorId`,`tbl_vendors`.`name` AS `vendorName`,`tbl_products`.`category_id` AS `categoryId`,`tbl_categories`.`parent` AS `parentId`,`tbl_categories`.`name` AS `categoryName`,`tbl_lifting_products`.`product_id` AS `productId`,`tbl_products`.`name` AS `productName`,`tbl_products`.`model_no` AS `productModelNo`,`tbl_products`.`color` AS `productColor`,`tbl_lifting_products`.`serial_no` AS `productSerialNo`,`tbl_lifting_products`.`qty` AS `productQty`,`tbl_lifting_products`.`price` AS `price` from ((((`tbl_liftings` join `tbl_vendors` on(`tbl_vendors`.`id` = `tbl_liftings`.`vendor_id`)) join `tbl_lifting_products` on(`tbl_lifting_products`.`lifting_id` = `tbl_liftings`.`id`)) join `tbl_products` on(`tbl_products`.`id` = `tbl_lifting_products`.`product_id`)) join `tbl_categories` on(`tbl_categories`.`id` = `tbl_products`.`category_id`)) order by `tbl_lifting_products`.`product_id` ;
 
 -- --------------------------------------------------------
 
@@ -1262,13 +1321,13 @@ ALTER TABLE `tbl_vendors`
 -- AUTO_INCREMENT for table `user_menus`
 --
 ALTER TABLE `user_menus`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `user_menu_actions`
 --
 ALTER TABLE `user_menu_actions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- AUTO_INCREMENT for table `user_roles`

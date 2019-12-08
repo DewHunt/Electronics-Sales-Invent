@@ -19,16 +19,12 @@
 	    	<input type="hidden" name="type" value="update">
 	    	<div class="row">
 	    		<div class="col-md-6">
-	    			@php
-	    			 	$productCategory = explode(',', $product->category_id);
-	    			 @endphp 
-	                <div class="form-group {{ $errors->has('categories') ? ' has-danger' : '' }}">
+	                <div class="form-group {{ $errors->has('category') ? ' has-danger' : '' }}">
 	                    <label for="category">Category</label>
-	                    <select class="form-control chosen-select" id="categories" name="categories[]" multiple>
-	                        @foreach($categories as $category)
+	                    <select class="form-control chosen-select" id="category" name="category">
+	                        @foreach($categories as $categoryInfo)
                                 @php
-                                    $select = "";
-                                    if (in_array($category->id, $productCategory))
+                                    if ($categoryInfo->id == $product->category_id)
                                     {
                                         $select = "selected";
                                     }
@@ -37,11 +33,11 @@
                                         $select = "";
                                     }
                                 @endphp
-	                            <option value="{{$category->id}}" {{ $select }}>{{$category->name}}</option>
+	                            <option value="{{$categoryInfo->id}}" {{ $select }}>{{$categoryInfo->name}}</option>
 	                        @endforeach
 	                    </select>
-	                    @if ($errors->has('categories'))
-	                        @foreach($errors->get('categories') as $error)
+	                    @if ($errors->has('category'))
+	                        @foreach($errors->get('category') as $error)
 	                            <div class="form-control-feedback">{{ $error }}</div>
 	                        @endforeach
 	                    @endif

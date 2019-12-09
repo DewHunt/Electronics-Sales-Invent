@@ -2,7 +2,7 @@
 
 @section('content')
     <table  id="report-table">
-        <caption style="font-weight: bold; text-decoration: underline; padding-bottom: 5px;">Vendor Statement On {{ $fromDate }} To {{ $toDate }}</caption>
+        <caption>Vendor Statement On {{ $fromDate }} To {{ $toDate }}</caption>
         <thead class="thead-light">
             <tr>
                 @php

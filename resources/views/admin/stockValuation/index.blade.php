@@ -75,29 +75,42 @@
 	<table id="dataTable" name="productList" class="table table-bordered table-sm">
 		<thead>
 			<tr>
-                <th>Sl</th>
-				<th>Category Name</th>
-				<th>Product Name</th>
-				<th>Price</th>
-				<th>MRP Price</th>
-				<th>Haire Price</th>
+                <th width="20px">Sl</th>
+				<th>Product</th>
+                <th width="100px">Model No</th>
+				<th width="70px">Color</th>
+				<th width="90px">Sales Price</th>
+				<th width="120px">Avg Lifting Price</th>
+                <th width="70px">Qty</th>
+                <th width="80px">Sales</th>
+                <th width="80px">Lifting</th>
 			</tr>
 		</thead>
 
 		<tbody>
             @php
                 $sl = 0;
+                $sales = 0;
+                $lifting = 0;
             @endphp
-			@foreach ($productLists as $productList)
-				<tr>
+
+            @foreach ($stockValuationReports as $stockValuationReport)
+                @php
+                    $sales = $stockValuationReport->salesPrice * $stockValuationReport->stockQty;
+                    $lifting = $stockValuationReport->price * $stockValuationReport->stockQty;
+                @endphp
+                <tr>
                     <td>{{ $sl++ }}</td>
-					<td>{{ $productList->categoryName }}</td>
-					<td>{{ $productList->productName }}</td>
-					<td>{{ $productList->price }}</td>
-					<td>{{ $productList->mrpPrice }}</td>
-					<td>{{ $productList->hairePrice }}</td>
-				</tr>
-			@endforeach
+                    <td>{{ $stockValuationReport->productName }}</td>
+                    <td>{{ $stockValuationReport->modelNo }}</td>
+                    <td>{{ $stockValuationReport->color }}</td>
+                    <td style="text-align: right;">{{ $stockValuationReport->salesPrice }}</td>
+                    <td style="text-align: right;">{{ number_format($stockValuationReport->price,'2','.','') }}</td>
+                    <td style="text-align: right;">{{ $stockValuationReport->stockQty }}</td>
+                    <td style="text-align: right;">{{ number_format($sales,'2','.','') }}</td>
+                    <td style="text-align: right;">{{ number_format($lifting,'2','.','') }}</td>
+                </tr>                                  
+            @endforeach
 		</tbody>
 	</table>
 @endsection

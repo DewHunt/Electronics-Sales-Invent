@@ -70,12 +70,10 @@
     			        <div class="card-header">
     			            <div class="row">
     			                <div class="col-md-6"><h4 class="card-title">{{ $title }}</h4></div>
-    			                <div class="col-md-6">  
-    			                    <span class="shortlink">
-    			                        <a style="font-size: 16px;" class="btn btn-outline-info btn-lg" href="{{ route($addNewLink)}}">
-    			                            <i class="fa fa-plus-circle"></i> Add New
-    			                        </a>
-    			                    </span>                     
+    			                <div class="col-md-6 text-right">
+			                        <a style="font-size: 16px;" class="btn btn-outline-info btn-lg" href="{{ route($addNewLink) }}">
+			                            <i class="fa fa-plus-circle"></i> Add New
+			                        </a>                  
     			                </div>
     			            </div>
     			        </div>

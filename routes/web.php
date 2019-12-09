@@ -190,6 +190,7 @@ Route::prefix('admin')->group(function()
 			Route::post('/staff-setup-update','Admin\StaffSetupController@update')->name('staffSetup.update');
 			Route::post('/staff-setup-delete','Admin\StaffSetupController@delete')->name('staffSetup.delete');
 			Route::post('/staff-setup-status','Admin\StaffSetupController@changeStatus')->name('staffSetup.status');
+			Route::post('/staff-setup/print','Admin\StaffSetupController@print')->name('staffSetup.print');
 
 			// Vendor Setup
 			Route::get('/vendor-setup','Admin\VendorSetupController@index')->name('vendorSetup.index');
@@ -259,6 +260,25 @@ Route::prefix('admin')->group(function()
 			Route::post('/vendor-statement/print', 'Admin\VendorStatementController@print')->name('vendorStatement.print');
 
 		// Product Lifting End
+
+		// Start Inventory Management
+
+			//Out Of Stock Report
+			Route::get('/out-of-stock','Admin\OutOfStockController@index')->name('outOfStock.index');
+			Route::post('/out-of-stock','Admin\OutOfStockController@index')->name('outOfStock.index');
+			Route::post('/out-of-stock/print','Admin\OutOfStockController@print')->name('outOfStock.print');
+
+			//Stock Valuation Report
+			Route::get('/stock-valuation','Admin\StockValuationController@index')->name('stockValuation.index');
+			Route::post('/stock-valuation','Admin\StockValuationController@index')->name('stockValuation.index');
+			Route::post('/stock-valuation/print','Admin\StockValuationController@print')->name('stockValuation.print');
+
+			//Stock Status Report
+			Route::get('/stock-status','Admin\StockStatusController@index')->name('stockStatus.index');
+			Route::post('/stock-status','Admin\StockStatusController@index')->name('stockStatus.index');
+			Route::post('/stock-status/print','Admin\StockStatusController@print')->name('stockStatus.print');
+
+		// End Inventory Management
 		});
 	});
 

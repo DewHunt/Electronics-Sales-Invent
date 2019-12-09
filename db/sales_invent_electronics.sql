@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 08, 2019 at 01:53 PM
+-- Generation Time: Dec 09, 2019 at 02:34 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -185,6 +185,34 @@ CREATE TABLE `settings` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `stock_valuation`
+-- (See below for the actual view)
+--
+CREATE TABLE `stock_valuation` (
+`date` date
+,`vendorId` int(11)
+,`vendorName` varchar(191)
+,`categoryId` varchar(191)
+,`categoryParent` text
+,`categoryName` varchar(191)
+,`productId` int(11)
+,`productName` varchar(191)
+,`serialNo` varchar(191)
+,`modelNo` varchar(191)
+,`color` varchar(191)
+,`liftingQty` varchar(191)
+,`liftingAmount` varchar(191)
+,`liftingReturnQty` int(1)
+,`liftingReturnAmount` int(1)
+,`salesQty` int(1)
+,`salesAmount` int(1)
+,`salesReturnQty` int(1)
+,`salesReturnAmount` int(1)
+);
 
 -- --------------------------------------------------------
 
@@ -790,7 +818,11 @@ INSERT INTO `user_menus` (`id`, `parentMenu`, `menuName`, `menuLink`, `menuIcon`
 (25, '19', 'Vendor Statement', 'vendorStatement.index', 'fa fa-caret', 18, '1', '2019-12-05 06:30:54', '2019-12-05 06:30:54'),
 (26, '6', 'Group Setup', 'groupSetup.index', 'fa fa-caret', 19, '1', '2019-12-07 00:56:48', '2019-12-07 23:18:33'),
 (27, '19', 'Lifting Record', 'liftingRecord.index', 'fa fa-caret', 20, '1', '2019-12-07 23:18:06', '2019-12-07 23:18:06'),
-(28, '19', 'Lifting Payment Summery', 'liftingPaymentSummary.index', 'fa fa-caret', 21, '1', '2019-12-08 05:24:21', '2019-12-08 05:24:21');
+(28, '19', 'Lifting Payment Summery', 'liftingPaymentSummary.index', 'fa fa-caret', 21, '1', '2019-12-08 05:24:21', '2019-12-08 05:24:21'),
+(29, NULL, 'Inventory Management', 'admin.index', 'fa fa-bars', 22, '1', '2019-12-08 22:20:50', '2019-12-08 22:20:50'),
+(30, '29', 'Out Of Stock', 'outOfStock.index', 'fa fa-caret', 23, '1', '2019-12-08 22:21:38', '2019-12-08 22:21:38'),
+(31, '29', 'Stock Valuation', 'stockValuation.index', 'fa fa-caret', 24, '1', '2019-12-08 23:18:53', '2019-12-08 23:18:53'),
+(32, '29', 'Stock Status', 'stockStatus.index', 'fa fa-caret', 25, '1', '2019-12-09 03:10:22', '2019-12-09 03:11:49');
 
 -- --------------------------------------------------------
 
@@ -892,7 +924,11 @@ INSERT INTO `user_menu_actions` (`id`, `parentmenuId`, `menuType`, `actionName`,
 (80, 26, 3, 'Status', 'groupSetup.status', 79, 1, '2019-12-07 00:58:47', '2019-12-07 00:58:47'),
 (81, 20, 11, 'Print Product Lifting Chalan', 'lifting.print', 67, 1, '2019-12-07 06:20:33', '2019-12-07 06:22:00'),
 (82, 27, 11, 'Print Lifting Record', 'liftingRecord.print', 81, 1, '2019-12-07 23:19:05', '2019-12-07 23:19:05'),
-(83, 28, 11, 'Print Lifting Payment Summery', 'liftingPaymentSummary.print', 82, 1, '2019-12-08 05:24:58', '2019-12-08 05:24:58');
+(83, 28, 11, 'Print Lifting Payment Summery', 'liftingPaymentSummary.print', 82, 1, '2019-12-08 05:24:58', '2019-12-08 05:24:58'),
+(84, 30, 11, 'Print Out Of Stock', 'outOfStock.print', 83, 1, '2019-12-08 22:22:16', '2019-12-08 22:22:16'),
+(85, 31, 11, 'Print Stock Valuation', 'stockValuation.print', 84, 1, '2019-12-08 23:19:38', '2019-12-08 23:19:38'),
+(86, 32, 11, 'Print Stock Status', 'stockStatus.print', 85, 1, '2019-12-09 03:11:07', '2019-12-09 03:11:07'),
+(87, 17, 11, 'Print Staff', 'staffSetup.print', 86, 1, '2019-12-09 06:47:20', '2019-12-09 06:47:20');
 
 -- --------------------------------------------------------
 
@@ -915,7 +951,7 @@ CREATE TABLE `user_roles` (
 --
 
 INSERT INTO `user_roles` (`id`, `name`, `status`, `permission`, `actionPermission`, `created_at`, `updated_at`) VALUES
-(1, 'Super Admin', 1, '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,17,18,19,20,21,22,23,24,25,26,27,28', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,20,18,19,17,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,57,58,59,60,61,62,63,64,65,66,81,67,69,70,71,72,73,74,75,76,77,78,79,80,82,83', '2019-11-20 22:48:03', '2019-12-08 05:25:14'),
+(1, 'Super Admin', 1, '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,20,18,19,17,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,57,58,59,60,61,62,63,64,65,66,81,67,69,70,71,72,73,74,75,76,77,78,79,80,82,83,84,85,86', '2019-11-20 22:48:03', '2019-12-09 03:12:10'),
 (5, 'Admin', 0, NULL, NULL, '2019-11-29 03:26:52', '2019-11-29 03:26:52');
 
 -- --------------------------------------------------------
@@ -968,6 +1004,15 @@ CREATE TABLE `view_vendor_statement_report` (
 ,`payment` double
 ,`others` int(1)
 );
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `stock_valuation`
+--
+DROP TABLE IF EXISTS `stock_valuation`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `stock_valuation`  AS  select `tbl_liftings`.`vouchar_date` AS `date`,`tbl_liftings`.`vendor_id` AS `vendorId`,`tbl_vendors`.`name` AS `vendorName`,`tbl_products`.`category_id` AS `categoryId`,`tbl_categories`.`parent` AS `categoryParent`,`tbl_categories`.`name` AS `categoryName`,`tbl_lifting_products`.`product_id` AS `productId`,`tbl_products`.`name` AS `productName`,`tbl_lifting_products`.`serial_no` AS `serialNo`,`tbl_products`.`model_no` AS `modelNo`,`tbl_products`.`color` AS `color`,`tbl_lifting_products`.`qty` AS `liftingQty`,`tbl_lifting_products`.`price` AS `liftingAmount`,0 AS `liftingReturnQty`,0 AS `liftingReturnAmount`,0 AS `salesQty`,0 AS `salesAmount`,0 AS `salesReturnQty`,0 AS `salesReturnAmount` from ((((`tbl_liftings` join `tbl_vendors` on(`tbl_vendors`.`id` = `tbl_liftings`.`vendor_id`)) join `tbl_lifting_products` on(`tbl_lifting_products`.`lifting_id` = `tbl_liftings`.`id`)) join `tbl_products` on(`tbl_products`.`id` = `tbl_lifting_products`.`product_id`)) join `tbl_categories` on(`tbl_categories`.`id` = `tbl_products`.`category_id`)) ;
 
 -- --------------------------------------------------------
 
@@ -1321,13 +1366,13 @@ ALTER TABLE `tbl_vendors`
 -- AUTO_INCREMENT for table `user_menus`
 --
 ALTER TABLE `user_menus`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `user_menu_actions`
 --
 ALTER TABLE `user_menu_actions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- AUTO_INCREMENT for table `user_roles`

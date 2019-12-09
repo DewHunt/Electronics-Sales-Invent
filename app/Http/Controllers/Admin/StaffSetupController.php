@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 
 use App\StaffSetup;
 
+use PDF;
+use MPDF;
+
 class StaffSetupController extends Controller
 {
     public function index()
@@ -110,5 +113,16 @@ class StaffSetupController extends Controller
             'code' => 'required',
             'staffName' => 'required',
         ]);
+    }
+
+    public function print(Request $request)
+    {
+        $title = "Staff Setup";
+
+        $staffs = StaffSetup::orderBy('name','asc')->get();
+
+        $pdf = PDF::loadView('admin.staffSetup.print',['title'=>$title,'staffs'=>$staffs]);
+
+        return $pdf->stream('staffs_report.pdf');
     }
 }

@@ -19,7 +19,7 @@
             }
 
             #report-table th {
-                text-align: left;
+                text-align: center;
                 background-color: #4CAF50;
                 color: white;
                 font-size: 13px;

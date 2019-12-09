@@ -75,29 +75,17 @@
 	<table id="dataTable" name="productList" class="table table-bordered table-sm">
 		<thead>
 			<tr>
-                <th>Sl</th>
-				<th>Category Name</th>
-				<th>Product Name</th>
-				<th>Price</th>
-				<th>MRP Price</th>
-				<th>Haire Price</th>
+                <th width="20px">Sl</th>
+				<th width="200px">Category</th>
+				<th>Product</th>
+                <th width="100px">Serial No</th>
+				<th width="100px">Model</th>
+				<th width="100px">Color</th>
+				<th width="110px">Available Qty</th>
 			</tr>
 		</thead>
 
 		<tbody>
-            @php
-                $sl = 0;
-            @endphp
-			@foreach ($productLists as $productList)
-				<tr>
-                    <td>{{ $sl++ }}</td>
-					<td>{{ $productList->categoryName }}</td>
-					<td>{{ $productList->productName }}</td>
-					<td>{{ $productList->price }}</td>
-					<td>{{ $productList->mrpPrice }}</td>
-					<td>{{ $productList->hairePrice }}</td>
-				</tr>
-			@endforeach
 		</tbody>
 	</table>
 @endsection

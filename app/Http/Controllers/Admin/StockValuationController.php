@@ -29,25 +29,25 @@ class StockValuationController extends Controller
 
         $stockValuationReports = array();
 
-        $stockValuationReports = DB::table('stock_valuation')
-            ->select('stock_valuation.categoryId as categoryId','stock_valuation.categoryName as categoryName','stock_valuation.productId as productId','stock_valuation.productName as productName', 'stock_valuation.modelNo as modelNo', 'stock_valuation.color as color', DB::raw('SUM(stock_valuation.salesAmount) as salesPrice'), DB::raw('SUM(stock_valuation.liftingAmount) as price'), DB::raw('(SUM(stock_valuation.liftingQty) - SUM(stock_valuation.salesQty)) as stockQty'))
+        $stockValuationReports = DB::table('view_stock_valuation')
+            ->select('view_stock_valuation.categoryId as categoryId','view_stock_valuation.categoryName as categoryName','view_stock_valuation.productId as productId','view_stock_valuation.productName as productName', 'view_stock_valuation.modelNo as modelNo', 'view_stock_valuation.color as color', DB::raw('SUM(view_stock_valuation.salesAmount) as salesPrice'), DB::raw('SUM(view_stock_valuation.liftingAmount) as price'), DB::raw('(SUM(view_stock_valuation.liftingQty) - SUM(view_stock_valuation.salesQty)) as stockQty'))
             ->orWhere(function($query) use($productCategory,$product){
                 if (@$productCategory)
                 {
-                    $query->whereIn('stock_valuation.categoryId',$productCategory);
+                    $query->whereIn('view_stock_valuation.categoryId',$productCategory);
                 }
 
                 if (@$productCategory)
                 {
-                    $query->orWhereIn('stock_valuation.categoryParent',$productCategory);
+                    $query->orWhereIn('view_stock_valuation.categoryParent',$productCategory);
                 }
 
                 if (@$product)
                 {
-                    $query->whereIn('stock_valuation.productId',$product);
+                    $query->whereIn('view_stock_valuation.productId',$product);
                 }
             })
-            ->groupBy('stock_valuation.categoryId','stock_valuation.categoryName','stock_valuation.productId','stock_valuation.productName')
+            ->groupBy('view_stock_valuation.categoryId','view_stock_valuation.categoryName','view_stock_valuation.productId','view_stock_valuation.productName')
             ->orderBy('productName','asc')
             ->get();
 
@@ -63,30 +63,30 @@ class StockValuationController extends Controller
 
         $stockValuationReports = array();
 
-        $stockValuationReports = DB::table('stock_valuation')
-            ->select('stock_valuation.categoryId as categoryId','stock_valuation.categoryName as categoryName','stock_valuation.productId as productId','stock_valuation.productName as productName', 'stock_valuation.modelNo as modelNo', 'stock_valuation.color as color', DB::raw('SUM(stock_valuation.salesAmount) as salesPrice'), DB::raw('SUM(stock_valuation.liftingAmount) as price'), DB::raw('(SUM(stock_valuation.liftingQty) - SUM(stock_valuation.salesQty)) as stockQty'))
+        $stockValuationReports = DB::table('view_stock_valuation')
+            ->select('view_stock_valuation.categoryId as categoryId','view_stock_valuation.categoryName as categoryName','view_stock_valuation.productId as productId','view_stock_valuation.productName as productName', 'view_stock_valuation.modelNo as modelNo', 'view_stock_valuation.color as color', DB::raw('SUM(view_stock_valuation.salesAmount) as salesPrice'), DB::raw('SUM(view_stock_valuation.liftingAmount) as price'), DB::raw('(SUM(view_stock_valuation.liftingQty) - SUM(view_stock_valuation.salesQty)) as stockQty'))
             ->orWhere(function($query) use($productCategory,$product){
                 if (@$productCategory)
                 {
-                    $query->whereIn('stock_valuation.categoryId',$productCategory);
+                    $query->whereIn('view_stock_valuation.categoryId',$productCategory);
                 }
 
                 if (@$productCategory)
                 {
-                    $query->orWhereIn('stock_valuation.categoryParent',$productCategory);
+                    $query->orWhereIn('view_stock_valuation.categoryParent',$productCategory);
                 }
 
                 if (@$product)
                 {
-                    $query->whereIn('stock_valuation.productId',$product);
+                    $query->whereIn('view_stock_valuation.productId',$product);
                 }
             })
-            ->groupBy('stock_valuation.categoryId','stock_valuation.categoryName','stock_valuation.productId','stock_valuation.productName')
+            ->groupBy('view_stock_valuation.categoryId','view_stock_valuation.categoryName','view_stock_valuation.productId','view_stock_valuation.productName')
             ->orderBy('productName','asc')
             ->get();
 
         $pdf = PDF::loadView('admin.stockValuation.print',['title'=>$title,'stockValuationReports'=>$stockValuationReports]);
 
-        return $pdf->stream('stock_valuation.pdf');
+        return $pdf->stream('view_stock_valuation.pdf');
 	}
 }

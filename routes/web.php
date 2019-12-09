@@ -190,7 +190,7 @@ Route::prefix('admin')->group(function()
 			Route::post('/staff-setup-update','Admin\StaffSetupController@update')->name('staffSetup.update');
 			Route::post('/staff-setup-delete','Admin\StaffSetupController@delete')->name('staffSetup.delete');
 			Route::post('/staff-setup-status','Admin\StaffSetupController@changeStatus')->name('staffSetup.status');
-			Route::post('/staff-setup/print','Admin\StaffSetupController@print')->name('staffSetup.print');
+			Route::get('/staff-setup/print','Admin\StaffSetupController@print')->name('staffSetup.print');
 
 			// Vendor Setup
 			Route::get('/vendor-setup','Admin\VendorSetupController@index')->name('vendorSetup.index');

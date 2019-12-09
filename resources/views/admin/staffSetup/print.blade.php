@@ -13,8 +13,6 @@
                     <th>Contact</th>
                     <th>Email</th>
                     <th>Address</th>
-                    <th width="20px">Status</th>
-                    <th width="20px">Action</th>
                 </tr>
             </thead>
             <tbody id="">
@@ -31,14 +29,6 @@
                         <td>{{ $staff->contact }}</td>
                         <td>{{ $staff->email }}</td>
                         <td>{{ $staff->address }}</td>
-                        <td>
-                            <?php echo \App\Link::status($staff->id,$staff->status)?>
-                        </td>
-                        <td>
-                            @php
-                                echo \App\Link::action($staff->id);
-                            @endphp                             
-                        </td>
                     </tr>
                 @endforeach
             </tbody>

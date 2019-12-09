@@ -42,65 +42,65 @@ class StockStatusController extends Controller
     		->orderBy('name','asc')
     		->get();
 
-        $openingBalance = DB::table('stock_valuation')
-            ->select('stock_valuation.categoryId as categoryId', 'stock_valuation.categoryName as categoryName', 'stock_valuation.productId as productId', 'stock_valuation.productName as productName','stock_valuation.modelNo as modelNo','stock_valuation.color as color', DB::raw('(SUM(stock_valuation.liftingQty) - SUM(stock_valuation.liftingReturnQty)) - (SUM(stock_valuation.salesQty) - SUM(stock_valuation.salesReturnQty)) as opening'), DB::raw('0 as liftingQty'), DB::raw('0 as salesQty'), DB::raw('0 as price'))
+        $openingBalance = DB::table('view_stock_valuation')
+            ->select('view_stock_valuation.categoryId as categoryId', 'view_stock_valuation.categoryName as categoryName', 'view_stock_valuation.productId as productId', 'view_stock_valuation.productName as productName','view_stock_valuation.modelNo as modelNo','view_stock_valuation.color as color', DB::raw('(SUM(view_stock_valuation.liftingQty) - SUM(view_stock_valuation.liftingReturnQty)) - (SUM(view_stock_valuation.salesQty) - SUM(view_stock_valuation.salesReturnQty)) as opening'), DB::raw('0 as liftingQty'), DB::raw('0 as salesQty'), DB::raw('0 as price'))
             ->orWhere(function($query) use($lastDate,$category,$product,$vendor){
                 if (!empty($lastDate))
                 {
-                    $query->where('stock_valuation.date','<=', $lastDate);
+                    $query->where('view_stock_valuation.date','<=', $lastDate);
                 }
 
                 if (@$category)
                 {
-                    $query->whereIn('stock_valuation.categoryId',$category);
+                    $query->whereIn('view_stock_valuation.categoryId',$category);
                 }
 
                 if (@$category)
                 {
-                    $query->orWhereIn('stock_valuation.categoryParent',$category);
+                    $query->orWhereIn('view_stock_valuation.categoryParent',$category);
                 }
 
                 if (@$product)
                 {
-                    $query->whereIn('stock_valuation.productId',$product);
+                    $query->whereIn('view_stock_valuation.productId',$product);
                 }
 
                 if (@$vendor)
                 {
-                    $query->whereIn('stock_valuation.vendorId',$vendor);
+                    $query->whereIn('view_stock_valuation.vendorId',$vendor);
                 }
             })
-            ->groupBy('stock_valuation.categoryId','stock_valuation.categoryName','stock_valuation.productId','stock_valuation.productName');
+            ->groupBy('view_stock_valuation.categoryId','view_stock_valuation.categoryName','view_stock_valuation.productId','view_stock_valuation.productName');
 
-        $stockStatusReports = DB::table('stock_valuation')
-            ->select('stock_valuation.categoryId as categoryId','stock_valuation.categoryName as categoryName','stock_valuation.productId as productId','stock_valuation.productName as productName','stock_valuation.modelNo as modelNo','stock_valuation.color as color', DB::raw('0 as opening'), DB::raw('SUM(stock_valuation.liftingQty) as liftingQty'), DB::raw('SUM(stock_valuation.salesQty) as salesQty'), DB::raw('sum(stock_valuation.liftingAmount) as price'))
+        $stockStatusReports = DB::table('view_stock_valuation')
+            ->select('view_stock_valuation.categoryId as categoryId','view_stock_valuation.categoryName as categoryName','view_stock_valuation.productId as productId','view_stock_valuation.productName as productName','view_stock_valuation.modelNo as modelNo','view_stock_valuation.color as color', DB::raw('0 as opening'), DB::raw('SUM(view_stock_valuation.liftingQty) as liftingQty'), DB::raw('SUM(view_stock_valuation.salesQty) as salesQty'), DB::raw('sum(view_stock_valuation.liftingAmount) as price'))
             ->orWhere(function($query) use($fromDate,$toDate,$category,$product,$vendor){
                 if (!empty($fromDate))
                 {
-                    $query->whereBetween('stock_valuation.date', array($fromDate,$toDate));
+                    $query->whereBetween('view_stock_valuation.date', array($fromDate,$toDate));
                 }
 
                 if (@$category)
                 {
-                    $query->whereIn('stock_valuation.categoryId',$category);
+                    $query->whereIn('view_stock_valuation.categoryId',$category);
                 }
 
                 if (@$category)
                 {
-                    $query->orWhereIn('stock_valuation.categoryParent',$category);
+                    $query->orWhereIn('view_stock_valuation.categoryParent',$category);
                 }
 
                 if (@$product)
                 {
-                    $query->whereIn('stock_valuation.productId',$product);
+                    $query->whereIn('view_stock_valuation.productId',$product);
                 }
 
                 if (@$vendor)
                 {
-                    $query->whereIn('stock_valuation.vendorId',$vendor);
+                    $query->whereIn('view_stock_valuation.vendorId',$vendor);
                 }
             })
-            ->groupBy('stock_valuation.categoryId','stock_valuation.categoryName','stock_valuation.productId','stock_valuation.productName')
+            ->groupBy('view_stock_valuation.categoryId','view_stock_valuation.categoryName','view_stock_valuation.productId','view_stock_valuation.productName')
             ->unionAll($openingBalance)
             ->orderBy('categoryId','asc')
             ->orderBy('productId','asc')
@@ -121,65 +121,65 @@ class StockStatusController extends Controller
 
         $lastDate = Date('Y-m-d',strtotime("-1 day", strtotime($fromDate)));
 
-        $openingBalance = DB::table('stock_valuation')
-            ->select('stock_valuation.categoryId as categoryId', 'stock_valuation.categoryName as categoryName', 'stock_valuation.productId as productId', 'stock_valuation.productName as productName','stock_valuation.modelNo as modelNo','stock_valuation.color as color', DB::raw('(SUM(stock_valuation.liftingQty) - SUM(stock_valuation.liftingReturnQty)) - (SUM(stock_valuation.salesQty) - SUM(stock_valuation.salesReturnQty)) as opening'), DB::raw('0 as liftingQty'), DB::raw('0 as salesQty'), DB::raw('0 as price'))
+        $openingBalance = DB::table('view_stock_valuation')
+            ->select('view_stock_valuation.categoryId as categoryId', 'view_stock_valuation.categoryName as categoryName', 'view_stock_valuation.productId as productId', 'view_stock_valuation.productName as productName','view_stock_valuation.modelNo as modelNo','view_stock_valuation.color as color', DB::raw('(SUM(view_stock_valuation.liftingQty) - SUM(view_stock_valuation.liftingReturnQty)) - (SUM(view_stock_valuation.salesQty) - SUM(view_stock_valuation.salesReturnQty)) as opening'), DB::raw('0 as liftingQty'), DB::raw('0 as salesQty'), DB::raw('0 as price'))
             ->orWhere(function($query) use($lastDate,$category,$product,$vendor){
                 if (!empty($lastDate))
                 {
-                    $query->where('stock_valuation.date','<=', $lastDate);
+                    $query->where('view_stock_valuation.date','<=', $lastDate);
                 }
 
                 if (@$category)
                 {
-                    $query->whereIn('stock_valuation.categoryId',$category);
+                    $query->whereIn('view_stock_valuation.categoryId',$category);
                 }
 
                 if (@$category)
                 {
-                    $query->orWhereIn('stock_valuation.categoryParent',$category);
+                    $query->orWhereIn('view_stock_valuation.categoryParent',$category);
                 }
 
                 if (@$product)
                 {
-                    $query->whereIn('stock_valuation.productId',$product);
+                    $query->whereIn('view_stock_valuation.productId',$product);
                 }
 
                 if (@$vendor)
                 {
-                    $query->whereIn('stock_valuation.vendorId',$vendor);
+                    $query->whereIn('view_stock_valuation.vendorId',$vendor);
                 }
             })
-            ->groupBy('stock_valuation.categoryId','stock_valuation.categoryName','stock_valuation.productId','stock_valuation.productName');
+            ->groupBy('view_stock_valuation.categoryId','view_stock_valuation.categoryName','view_stock_valuation.productId','view_stock_valuation.productName');
 
-        $stockStatusReports = DB::table('stock_valuation')
-            ->select('stock_valuation.categoryId as categoryId','stock_valuation.categoryName as categoryName','stock_valuation.productId as productId','stock_valuation.productName as productName','stock_valuation.modelNo as modelNo','stock_valuation.color as color', DB::raw('0 as opening'), DB::raw('SUM(stock_valuation.liftingQty) as liftingQty'), DB::raw('SUM(stock_valuation.salesQty) as salesQty'), DB::raw('sum(stock_valuation.liftingAmount) as price'))
+        $stockStatusReports = DB::table('view_stock_valuation')
+            ->select('view_stock_valuation.categoryId as categoryId','view_stock_valuation.categoryName as categoryName','view_stock_valuation.productId as productId','view_stock_valuation.productName as productName','view_stock_valuation.modelNo as modelNo','view_stock_valuation.color as color', DB::raw('0 as opening'), DB::raw('SUM(view_stock_valuation.liftingQty) as liftingQty'), DB::raw('SUM(view_stock_valuation.salesQty) as salesQty'), DB::raw('sum(view_stock_valuation.liftingAmount) as price'))
             ->orWhere(function($query) use($fromDate,$toDate,$category,$product,$vendor){
                 if (!empty($fromDate))
                 {
-                    $query->whereBetween('stock_valuation.date', array($fromDate,$toDate));
+                    $query->whereBetween('view_stock_valuation.date', array($fromDate,$toDate));
                 }
 
                 if (@$category)
                 {
-                    $query->whereIn('stock_valuation.categoryId',$category);
+                    $query->whereIn('view_stock_valuation.categoryId',$category);
                 }
 
                 if (@$category)
                 {
-                    $query->orWhereIn('stock_valuation.categoryParent',$category);
+                    $query->orWhereIn('view_stock_valuation.categoryParent',$category);
                 }
 
                 if (@$product)
                 {
-                    $query->whereIn('stock_valuation.productId',$product);
+                    $query->whereIn('view_stock_valuation.productId',$product);
                 }
 
                 if (@$vendor)
                 {
-                    $query->whereIn('stock_valuation.vendorId',$vendor);
+                    $query->whereIn('view_stock_valuation.vendorId',$vendor);
                 }
             })
-            ->groupBy('stock_valuation.categoryId','stock_valuation.categoryName','stock_valuation.productId','stock_valuation.productName')
+            ->groupBy('view_stock_valuation.categoryId','view_stock_valuation.categoryName','view_stock_valuation.productId','view_stock_valuation.productName')
             ->unionAll($openingBalance)
             ->orderBy('categoryId','asc')
             ->orderBy('productId','asc')

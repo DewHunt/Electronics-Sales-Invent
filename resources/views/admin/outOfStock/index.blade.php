@@ -78,7 +78,6 @@
                 <th width="20px">Sl</th>
 				<th width="200px">Category</th>
 				<th>Product</th>
-                <th width="100px">Serial No</th>
 				<th width="100px">Model</th>
 				<th width="100px">Color</th>
 				<th width="110px">Available Qty</th>
@@ -86,6 +85,25 @@
 		</thead>
 
 		<tbody>
+            @php
+                $sl = 0;
+            @endphp
+
+            @foreach ($stockOutReports as $stockOutReport)
+                @php
+                    $sl++;
+                @endphp
+                @if ($stockOutReport->remainingQty <= $stockOutReport->reorderQty)
+                    <tr>
+                        <td>{{ $sl++ }}</td>
+                        <td>{{ $stockOutReport->categoryName }}</td>
+                        <td>{{ $stockOutReport->productName }}</td>
+                        <td>{{ $stockOutReport->modelNo }}</td>
+                        <td>{{ $stockOutReport->color }}</td>
+                        <td style="text-align: right;">{{ $stockOutReport->remainingQty }}</td>
+                    </tr>
+                @endif                                  
+            @endforeach
 		</tbody>
 	</table>
 @endsection

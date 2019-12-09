@@ -115,8 +115,8 @@ class StaffSetupController extends Controller
         ]);
     }
 
-    public function print(Request $request)
-    {
+    public function print()
+    {  
         $title = "Staff Setup";
 
         $staffs = StaffSetup::orderBy('name','asc')->get();

@@ -279,6 +279,18 @@ Route::prefix('admin')->group(function()
 			Route::post('/stock-status/print','Admin\StockStatusController@print')->name('stockStatus.print');
 
 		// End Inventory Management
+
+		// Start Sales Management
+
+			//Group Sales Target Setup
+			Route::get('/group-sales-target-setup','Admin\GroupSalesTargetSetupController@index')->name('groupSalesTargetSetup.index');
+			Route::get('/group-sales-target-setup-add','Admin\GroupSalesTargetSetupController@add')->name('groupSalesTargetSetup.add');
+			Route::post('/group-sales-target-setup-save','Admin\GroupSalesTargetSetupController@save')->name('groupSalesTargetSetup.save');
+			Route::get('/group-sales-target-setup-edit/{id}','Admin\GroupSalesTargetSetupController@edit')->name('groupSalesTargetSetup.edit');
+			Route::post('/group-sales-target-setup-update','Admin\GroupSalesTargetSetupController@update')->name('groupSalesTargetSetup.update');
+			Route::post('/group-sales-target-setup-delete','Admin\GroupSalesTargetSetupController@delete')->name('groupSalesTargetSetup.delete');
+
+		// End Sales Management
 		});
 	});
 

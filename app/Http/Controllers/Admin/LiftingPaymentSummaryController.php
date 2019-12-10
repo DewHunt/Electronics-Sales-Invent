@@ -15,7 +15,7 @@ class LiftingPaymentSummaryController extends Controller
 {
     public function index(Request $request)
     {
-    	$title = "Lifting Record";
+    	$title = "Lifting Payment Summary";
     	$searchFormLink = "liftingPaymentSummary.index";
     	$printFormLink = "liftingPaymentSummary.print";
 
@@ -94,7 +94,7 @@ class LiftingPaymentSummaryController extends Controller
 
     public function print(Request $request)
     {
-        $title = "Lifting Record";
+        $title = "Print Lifting Payment Summary";
 
         $vendor = $request->vendor;
         $year = $request->year;

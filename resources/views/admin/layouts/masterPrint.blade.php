@@ -11,11 +11,11 @@
 
             #report-table td, #report-table th {
                 border: 1px solid #ddd;
-                padding: 5px;
             }
 
             #report-table td {
                 font-size: 11px;
+                padding: 5px;
             }
 
             #report-table th {
@@ -23,6 +23,7 @@
                 background-color: #4CAF50;
                 color: white;
                 font-size: 13px;
+                vertical-align: middle;
             }
 
             #report-table tr:nth-child(even){background-color: #f2f2f2;}

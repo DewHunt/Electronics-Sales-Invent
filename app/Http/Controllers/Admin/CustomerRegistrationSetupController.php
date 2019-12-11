@@ -17,7 +17,9 @@ class CustomerRegistrationSetupController extends Controller
 {
     public function index(){
     	$title = "Customer Registration";
-    	$customers = CustomerRegistrationSetup::orderBy('id','asc')->get();
+    	$customers = CustomerRegistrationSetup::where('status','1')
+            ->orderBy('id','asc')
+            ->get();
     	return view('admin.customerRegistraionSetup.index')->with(compact('title','customers'));
     }
 
@@ -389,5 +391,18 @@ class CustomerRegistrationSetupController extends Controller
                     'gurantor'=>$gurantor
                 ]);
             }
+    }
+
+    public function customerListPrint()
+    {  
+        $title = "Customer List";
+
+        $customerLists = CustomerRegistrationSetup::where('status','1')
+            ->orderBy('name','asc')
+            ->get();
+
+        $pdf = PDF::loadView('admin.customerRegistraionSetup.customerListPrint',['title'=>$title,'customerLists'=>$customerLists]);
+
+        return $pdf->stream('customer_lists.pdf');
     }
 }

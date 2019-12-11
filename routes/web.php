@@ -307,6 +307,8 @@ Route::prefix('admin')->group(function()
 
 			Route::get('/customer-registration-setup/print/{customerId}','Admin\CustomerRegistrationSetupController@print')->name('customerRegistraionSetup.print');
 
+			Route::get('/customer-registration-setup/print','Admin\CustomerRegistrationSetupController@customerListPrint')->name('customerRegistraionSetup.customerListPrint');
+
 			//Invoice setup developed by Jisan
 			Route::get('/invoice-setup','Admin\InvoiceSetupController@index')->name('invoiceSetup.index');
 			Route::get('/invoice-setup-add','Admin\InvoiceSetupController@add')->name('invoiceSetup.add');

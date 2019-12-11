@@ -101,13 +101,13 @@
                      <div class="form-group {{ $errors->has('purchaseType') ? ' has-danger' : '' }}">
                          <div class="form-check-inline">
                             <label class="form-check-label">
-                                <input type="radio" value="Cash" name="purchaseType" class="purchaseType" required> Cash
+                                <input type="radio" value="Cash" name="purchaseType" class="product purchaseType" required> Cash
                             </label>
                         </div>
 
                         <div class="form-check-inline">
                             <label class="form-check-label">
-                                <input type="radio" value="Installment" name="purchaseType" class="purchaseType"> Installment
+                                <input type="radio" value="Installment" name="purchaseType" class="product purchaseType"> Installment
                             </label>
                         </div>
                         @if ($errors->has('purchaseType'))
@@ -127,7 +127,7 @@
                 <div class="col-md-6">
                     <div class="form-group {{ $errors->has('deposite') ? ' has-danger' : '' }}">
                         <label for="deposite">Deposite</label>
-                        <input type="number" class="form-control" name="deposite" value="{{ old('deposite') }}">
+                        <input type="number" class="form-control deposite" name="deposite" value="{{ old('deposite') }}">
                         @if ($errors->has('deposite'))
                             @foreach($errors->get('deposite') as $error)
                                 <div class="form-control-feedback">{{ $error }}</div>
@@ -139,7 +139,7 @@
                 <div class="col-md-6">
                     <div class="form-group {{ $errors->has('installmentPrice') ? ' has-danger' : '' }}">
                         <label for="installment-price">Installment Price</label>
-                        <input type="number" class="form-control" name="installmentPrice" value="{{ old('installmentPrice') }}">
+                        <input type="number" class="form-control installmentPrice" name="installmentPrice" value="{{ old('installmentPrice') }}">
                         @if ($errors->has('installmentPrice'))
                             @foreach($errors->get('installmentPrice') as $error)
                                 <div class="form-control-feedback">{{ $error }}</div>
@@ -155,7 +155,7 @@
                <div class="col-md-6">
                     <div class="form-group {{ $errors->has('totalInstallment') ? ' has-danger' : '' }}">
                         <label for="total-installment">Total Installment</label>
-                        <input type="number" class="form-control" name="totalInstallment" value="{{ old('totalInstallment') }}">
+                        <input type="number" class="form-control totalInstallment" name="totalInstallment" value="{{ old('totalInstallment') }}" oninput="monthlyInstallment()">
                         @if ($errors->has('totalInstallment'))
                             @foreach($errors->get('totalInstallment') as $error)
                                 <div class="form-control-feedback">{{ $error }}</div>
@@ -167,7 +167,7 @@
                 <div class="col-md-6">
                     <div class="form-group {{ $errors->has('monthlyInstallmentAmount') ? ' has-danger' : '' }}">
                         <label for="monthly-installment-amount">Monthly Installment Amount</label>
-                        <input type="number" class="form-control" name="monthlyInstallmentAmount" value="{{ old('monthlyInstallmentAmount') }}">
+                        <input type="number" class="form-control monthlyInstallmentAmount" name="monthlyInstallmentAmount" value="{{ old('monthlyInstallmentAmount') }}">
                         @if ($errors->has('monthlyInstallmentAmount'))
                             @foreach($errors->get('monthlyInstallmentAmount') as $error)
                                 <div class="form-control-feedback">{{ $error }}</div>

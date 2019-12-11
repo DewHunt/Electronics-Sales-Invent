@@ -107,24 +107,60 @@
             });
             
             var productId = $('.product option:selected').val();
-            if(productId != ''){
+            if(productId != '')
+            {
                 $.ajax({
                     type:'post',
                     url:'{{ route('customerRegistration.getProductInfo') }}',
                     data:{productId:productId},
                     success:function(data){
                         var product = data.product;
+                        var purchaseType =  $("input[name='purchaseType']:checked").val();
                         $('.productModel').val(product.model_no);
                         $('.cashPrice').val(product.price);
                         $('.warranty').val(product.warranty);
+                        if (purchaseType == 'Installment')
+                        {
+                            $('.installmentPrice').val(product.haire_price);
+                        }
+                        else
+                        {
+                            $('.installmentPrice').val('');                             
+                        }
                     }
                 });
-            }else{
+            }
+            else
+            {
                $('.productModel').val('');
                $('.cashPrice').val(''); 
                $('.warranty').val(''); 
+               $('.installmentPrice').val(''); 
             }
         });
+
+        function monthlyInstallment()
+        {
+            var deposite = parseFloat($('.deposite').val());
+            var installmentPrice = parseFloat($('.installmentPrice').val());
+            var totalInstallment = parseFloat($('.totalInstallment').val());
+
+            if (totalInstallment == 0 || totalInstallment == "")
+            {
+                var monthlyInstallmentPrice = (installmentPrice - deposite);
+            }
+            else
+            {
+                var monthlyInstallmentPrice = (installmentPrice - deposite)/totalInstallment;                
+            }
+
+            console.log(deposite);
+            console.log(installmentPrice);
+            console.log(totalInstallment);
+            console.log(monthlyInstallmentPrice);
+
+            $('.monthlyInstallmentAmount').val(monthlyInstallmentPrice);
+        }
 
     /*end code for product info*/
 

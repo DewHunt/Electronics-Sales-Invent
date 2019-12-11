@@ -111,3 +111,10 @@
         } ).draw();
     });
 </script>
+
+{{-- Script For GoBack Link --}}
+<script type="text/javascript">
+    function GoBack() {
+        window.history.go(-1);
+    }
+</script>

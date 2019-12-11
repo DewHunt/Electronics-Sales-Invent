@@ -50,6 +50,8 @@
     INNER JOIN `tbl_categories` ON `tbl_categories`.`id` = `tbl_products`.`category_id`
     "
 
+    SELECT `tbl_customer_products`.`purchase_date`,`tbl_customers`.`name` AS `customerName`,`tbl_customers`.`phone_no` AS `customerPhoneNo`,`tbl_customer_products`.`product_id`,`tbl_invoice`.`invoice_no`,`tbl_products`.`name`,`tbl_customer_products`.
+
     
 
     

@@ -282,6 +282,41 @@ Route::prefix('admin')->group(function()
 
 		// Start Sales Management
 
+			//Customer registration setup developed by Jisan
+			Route::get('/customer-registration-setup','Admin\CustomerRegistrationSetupController@index')->name('customerRegistraionSetup.index');
+
+			Route::get('/customer-registration-setup-add','Admin\CustomerRegistrationSetupController@add')->name('customerRegistraionSetup.add');
+			Route::post('/customer-registration-setup-save','Admin\CustomerRegistrationSetupController@save')->name('customerRegistraionSetup.save');
+
+			Route::get('/customer-registration-setup-view/{id}','Admin\CustomerRegistrationSetupController@viewCustomerDetails')->name('customerRegistraionSetup.view');
+			Route::post('/customer-registration-setup-new-product-save','Admin\CustomerRegistrationSetupController@newProductSave')->name('customerRegistraionSetup.NewProductSave');
+			
+			Route::post('/customer-registration-setup-delete','Admin\CustomerRegistrationSetupController@delete')->name('customerRegistraionSetup.delete');
+			Route::post('/customer-registration/get-product-info','Admin\CustomerRegistrationSetupController@getProductInfo')->name('customerRegistration.getProductInfo');
+
+			Route::post('/customer-registration/get-guarantor-info','Admin\CustomerRegistrationSetupController@getGuarantorInfo')->name('customerRegistration.getGuarantorInfo');
+
+			Route::get('/customer-registration-setup-edit/{id}','Admin\CustomerRegistrationSetupController@edit')->name('customerRegistraionSetup.editCustomer');
+			Route::post('/customer-registration-setup-update','Admin\CustomerRegistrationSetupController@update')->name('customerRegistraionSetup.update');
+
+			Route::get('/customer-registration-setup/{customerId}/product-edit/{productId}/','Admin\CustomerRegistrationSetupController@editCustomerProduct')->name('customerRegistraionSetup.editCustomerProduct');
+			Route::post('/customer-registration-setup/update-customer-product','Admin\CustomerRegistrationSetupController@editCustomerProduct')->name('customerRegistraionSetup.updateCustomerProduct');
+
+			Route::get('/customer-registration-setup/{customerId}/guarantor-edit/{guarantorId}/','Admin\CustomerRegistrationSetupController@editGuarantor')->name('customerRegistraionSetup.editGuarantor');
+			Route::post('/customer-registration-setup/update-customer-guarantor','Admin\CustomerRegistrationSetupController@editGuarantor')->name('customerRegistraionSetup.updateCustomerGuarantor');
+
+			Route::get('/customer-registration-setup/print/{customerId}','Admin\CustomerRegistrationSetupController@print')->name('customerRegistraionSetup.print');
+
+			//Invoice setup developed by Jisan
+			Route::get('/invoice-setup','Admin\InvoiceSetupController@index')->name('invoiceSetup.index');
+			Route::get('/invoice-setup-add','Admin\InvoiceSetupController@add')->name('invoiceSetup.add');
+			Route::post('/invoice-setup-add','Admin\InvoiceSetupController@add')->name('invoiceSetup.add');
+			Route::get('/invoice-setup-view/{id}','Admin\InvoiceSetupController@view')->name('invoiceSetup.view');
+			Route::get('/invoice-setup-print-invoice/{invoiceId}','Admin\InvoiceSetupController@printInvoice')->name('invoiceSetup.printInvoice');
+			Route::get('/invoice-setup-print-chalan/{invoiceId}','Admin\InvoiceSetupController@printChalan')->name('invoiceSetup.printChalan');
+			Route::post('/invoice-setup-delete','Admin\InvoiceSetupController@delete')->name('invoiceSetup.delete');
+			//End Invoice setup
+
 			//Group Sales Target Setup
 			Route::get('/group-sales-target-setup','Admin\GroupSalesTargetSetupController@index')->name('groupSalesTargetSetup.index');
 			Route::get('/group-sales-target-setup-add','Admin\GroupSalesTargetSetupController@add')->name('groupSalesTargetSetup.add');
@@ -289,6 +324,12 @@ Route::prefix('admin')->group(function()
 			Route::get('/group-sales-target-setup-edit/{id}','Admin\GroupSalesTargetSetupController@edit')->name('groupSalesTargetSetup.edit');
 			Route::post('/group-sales-target-setup-update','Admin\GroupSalesTargetSetupController@update')->name('groupSalesTargetSetup.update');
 			Route::post('/group-sales-target-setup-delete','Admin\GroupSalesTargetSetupController@delete')->name('groupSalesTargetSetup.delete');
+
+			// Start Customer Outstanding Report
+			Route::get('/customer-outstanding','Admin\CustomerOutstandingController@index')->name('customerOutstanding.index');
+			Route::post('/customer-outstanding','Admin\CustomerOutstandingController@index')->name('customerOutstanding.index');
+			Route::post('/customer-outstanding/print','Admin\CustomerOutstandingController@print')->name('customerOutstanding.print');
+			// End Customer Outstanding Report
 
 		// End Sales Management
 		});

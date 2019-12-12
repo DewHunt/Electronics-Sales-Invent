@@ -20,14 +20,62 @@ class CustomerOutstandingController extends Controller
     	$printFormLink = "customerOutstanding.print";
 
     	$customer = $request->customer;
-    	$fromDate = date('Y-m-d',strtotime($request->fromDate));
-    	$toDate = date('Y-m-d',strtotime($request->toDate));
-        $print = $request->print;
 
     	$customers = CustomerRegistrationSetup::where('status','1')
     		->orderBy('name','asc')
     		->get();
 
-    	return view('admin.customerOutstanding.index')->with(compact('title','searchFormLink','printFormLink','customers','customer','fromDate','toDate','print'));
+    	if ($customer)
+    	{
+	    	$customerOutstandings = DB::table('view_customer_outstanding')
+	    		->select('view_customer_outstanding.*')
+	    		->whereIn('customerId',$customer)
+	    		->where('balance','>','0')
+	    		->whereNull('balance')
+	    		->orderBy('customerName')
+	    		->get();
+    	}
+    	else
+    	{
+	    	$customerOutstandings = DB::table('view_customer_outstanding')
+	    		->select('view_customer_outstanding.*')
+	    		->where('balance','>','0')
+	    		->orWhereNull('balance')
+	    		->orderBy('customerName')
+	    		->get();
+    	}
+
+    	return view('admin.customerOutstanding.index')->with(compact('title','searchFormLink','printFormLink','customers','customer','customerOutstandings'));
+    }
+
+    public function print(Request $request)
+    {
+    	$title = "Print Customer Outstanding";
+
+    	$customer = $request->customer;
+
+    	if ($customer)
+    	{
+	    	$customerOutstandings = DB::table('view_customer_outstanding')
+	    		->select('view_customer_outstanding.*')
+	    		->whereIn('customerId',$customer)
+	    		->where('balance','>','0')
+	    		->whereNull('balance')
+	    		->orderBy('customerName')
+	    		->get();
+    	}
+    	else
+    	{
+	    	$customerOutstandings = DB::table('view_customer_outstanding')
+	    		->select('view_customer_outstanding.*')
+	    		->where('balance','>','0')
+	    		->orWhereNull('balance')
+	    		->orderBy('customerName')
+	    		->get();
+    	}
+
+        $pdf = PDF::loadView('admin.customerOutstanding.print',['title'=>$title,'customerOutstandings'=>$customerOutstandings]);
+
+        return $pdf->stream('customer_outstandings.pdf');
     }
 }

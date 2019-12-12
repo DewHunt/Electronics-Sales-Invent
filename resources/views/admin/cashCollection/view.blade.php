@@ -34,79 +34,14 @@
             <strong>Oops!</strong> {{ $errors->first() }}
         </div>
     @endif
-
-    <form class="form-horizontal" action="{{ route($formLink) }}" method="POST" enctype="multipart/form-data">
-        {{ csrf_field() }}
-
         <div class="card">
             <div class="card-header">
                 <div class="row">
-                    <div class="col-md-6"><h4 class="card-title">{{ $title }}</h4></div>
+                    <div class="col-md-6"><h4 class="card-title">{{@$title}}</h4></div>
                     <div class="col-md-6 text-right">
                         <a class="btn btn-outline-info btn-lg" href="{{ route($goBackLink) }}">
                             <i class="fa fa-arrow-circle-left"></i> Go Back
                         </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card-body">
-                <input type="hidden" value="print" name="print">
-                <div class="row">
-                    <div class="col-md-7">
-                        <label for="customer-product-name">Product Name</label>
-                        <div class="form-group {{ $errors->has('customerProductId') ? ' has-danger' : '' }}">
-                            <select class="form-control chosen-select" name="customerProductId" data-placeholder="Select Product" required="">
-                                <option value="">Select Product</option>
-                                @foreach ($customerProducts as $customerProduct)
-{{--                                     @php
-                                        $product = Product::where('id',$customerProduct->product_id)->first();
-                                    @endphp --}}
-                                    <option value="{{$customerProduct->id}}">{{$customerProduct->productName}} ({{$customerProduct->productCode}})</option>
-                                @endforeach
-                            </select>
-                            @if ($errors->has('customerProductId'))
-                                @foreach($errors->get('customerProductId') as $error)
-                                    <div class="form-control-feedback">{{ $error }}</div>
-                                @endforeach
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <label>Collection Type</label>
-                        <div class="form-group {{ $errors->has('collectionType') ? ' has-danger' : '' }}" style="height: 40px; line-height: 40px;">
-                            <div class="form-check-inline">
-                                <label class="form-check-label">
-                                    <input type="radio" value="Full Payment" class="collectionType" name="collectionType"> Full Payment
-                                </label>
-                            </div>
-
-                            <div class="form-check-inline">
-                                <label class="form-check-label">
-                                    <input type="radio" value="Partial Payment" class="collectionType" name="collectionType"> Partial Payment
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-2">
-                        <label for=""></label>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-outline-info btn-md waves-effect"><i class="fa fa-save"></i> {{ $buttonName }}</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-
-    @if(@$print == 'print')
-        <div class="card">
-            <div class="card-header">
-                <div class="row">
-                    <div class="col-md-6"><h4 class="card-title">Customer Invoice</h4></div>
-                    <div class="col-md-6 text-right">
                         <a target="_blank" class="btn btn-outline-info btn-lg" href="{{ route('invoiceSetup.printInvoice',$invoice->id) }}">
                             <i class="fa fa-print"></i> Print Invoice
                         </a>
@@ -117,12 +52,11 @@
                     </div>
                 </div>
             </div>
-
             
             <div class="card-body" style="padding-bottom: 50px;">
                 @php
-                    $customer = CustomerRegistrationSetup::where('id',$invoice->customer_id)->first();
-                    $showRoom = ShowroomSetup::where('id',$getCustomerProduct->showroom_id)->first();
+                    /*$customer = CustomerRegistrationSetup::where('id',$invoice->customer_id)->first();
+                    $showRoom = ShowroomSetup::where('id',$getCustomerProduct->showroom_id)->first();*/
                     $invoiceDate = date('d-m-Y',strtotime($invoice->created_at));
                 @endphp
                 <div class="row">
@@ -171,20 +105,5 @@
                 </div>
             </div>
         </div>
-    @endif
  
-@endsection
-
-@section('custom-js')
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("form").submit(function(e){
-/*                    var collectionType = $(".collectionType").val(); */
-                    if ( ! $("input[name='collectionType']").is(':checked') ){
-                         e.preventDefault();
-                        swal("Please! Select Collection Type", "", "warning");   
-                    }
-            });
-        });
-    </script>
 @endsection

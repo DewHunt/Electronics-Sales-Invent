@@ -118,6 +118,7 @@
                         var purchaseType =  $("input[name='purchaseType']:checked").val();
                         $('.productModel').val(product.model_no);
                         $('.cashPrice').val(product.price);
+                        $('.mrpPrice').val(product.mrp_price);
                         $('.warranty').val(product.warranty);
                         if (purchaseType == 'Installment')
                         {
@@ -127,6 +128,7 @@
                         {
                             $('.installmentPrice').val('');                             
                         }
+                        monthlyInstallment();
                     }
                 });
             }
@@ -134,6 +136,7 @@
             {
                $('.productModel').val('');
                $('.cashPrice').val(''); 
+               $('.mrpPrice').val(''); 
                $('.warranty').val(''); 
                $('.installmentPrice').val(''); 
             }
@@ -145,7 +148,7 @@
             var installmentPrice = parseFloat($('.installmentPrice').val());
             var totalInstallment = parseFloat($('.totalInstallment').val());
 
-            if (totalInstallment == 0 || totalInstallment == "")
+            if (totalInstallment == 0 || $('.totalInstallment').val() == "")
             {
                 var monthlyInstallmentPrice = (installmentPrice - deposite);
             }
@@ -154,12 +157,7 @@
                 var monthlyInstallmentPrice = (installmentPrice - deposite)/totalInstallment;                
             }
 
-            console.log(deposite);
-            console.log(installmentPrice);
-            console.log(totalInstallment);
-            console.log(monthlyInstallmentPrice);
-
-            $('.monthlyInstallmentAmount').val(monthlyInstallmentPrice);
+            $('.monthlyInstallmentAmount').val(Math.round(monthlyInstallmentPrice));
         }
 
     /*end code for product info*/

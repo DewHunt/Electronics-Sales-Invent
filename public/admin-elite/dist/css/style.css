@@ -11265,6 +11265,7 @@ Table-Data Table
 
 .form-check-label {
   text-transform: capitalize;
+  line-height: 38px;
 }
 
 table.dataTable thead .sorting,

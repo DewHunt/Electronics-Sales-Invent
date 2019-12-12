@@ -15,9 +15,9 @@ use App\Product;
 class InvoiceSetupController extends Controller
 {
     public function index(){
-    	$title = "Invoice Setup";
-    	$invoices = InvoiceSetup::orderBy('id','asc')->get();
-    	return view('admin.invoiceSetup.index')->with(compact('title','invoices'));
+        $title = "Invoice Setup";
+        $invoices = InvoiceSetup::orderBy('id','asc')->get();
+        return view('admin.invoiceSetup.index')->with(compact('title','invoices'));
     }
 
     public function add(Request $request)
@@ -27,6 +27,13 @@ class InvoiceSetupController extends Controller
             $customerProductId = $request->customerProductId;
             $print = $request->print;
             $getCustomerProduct = CustomerProduct::where('id',$customerProductId)->first();
+
+            if($request->collectionType == "Full Payment"){
+                $customerProductPrice = $getCustomerProduct->cash_price;
+            }else{
+                $customerProductPrice = $getCustomerProduct->mrp_price;
+            }
+
             $productInfo = Product::where('id',$getCustomerProduct->product_id)->first();
 
             $existInvoice = InvoiceSetup::where('customer_product_id',$customerProductId)->first();
@@ -39,7 +46,7 @@ class InvoiceSetupController extends Controller
                 $lastInvoice = InvoiceSetup::max('id');
                 if(@$lastInvoice)
                 {
-                    $lastInvoiceId = $lastInvoice;
+                    $lastInvoiceId = $lastInvoice + 1;
                 }
                 else
                 {
@@ -48,12 +55,13 @@ class InvoiceSetupController extends Controller
                 $randomNumber = 10000+$lastInvoiceId;
                 $invoiceNo = "inv-".$lastInvoiceId."-".date('y')."-".$randomNumber;
                 $invoice = InvoiceSetup::create( [
-                    'invoice_no' => $invoiceNo,       
+                    'invoice_no' => $invoiceNo,
+                    'collection_type' => $request->collectionType,       
                     'customer_id' => $getCustomerProduct->customer_id,       
                     'customer_product_id' => $customerProductId,       
                     'product_id' => $getCustomerProduct->product_id,
                     'qty' => $getCustomerProduct->qty,       
-                    'customer_product_price' => $getCustomerProduct->cash_price,       
+                    'customer_product_price' => $customerProductPrice,       
                     'customer_product_model' => $getCustomerProduct->product_model, 
                     'customer_product_usage_address' => $getCustomerProduct->product_usage_address,       
                     'customer_product_purchase_date' => $getCustomerProduct->purchase_date,
@@ -81,8 +89,10 @@ class InvoiceSetupController extends Controller
         $buttonName = "Create Invoice";
         $customer = CustomerRegistrationSetup::where('id',1)->first();
 
-        $customerProducts = CustomerProduct::where('purchase_type','Cash')
-            ->where('status','1')
+        $customerProducts = CustomerProduct::select('tbl_customer_products.*','tbl_products.name as productName','tbl_products.code as productCode')
+            ->join('tbl_products','tbl_products.id','=','tbl_customer_products.product_id')
+            ->where('tbl_customer_products.purchase_type','Cash')
+            ->where('tbl_customer_products.status','1')
             ->get();
 
         return view('admin.invoiceSetup.add')->with(compact('title','formLink','buttonName','customerProducts','customer','invoice','getCustomerProduct','productInfo','print'));
@@ -90,26 +100,25 @@ class InvoiceSetupController extends Controller
 
     public function printInvoice($invoiceId){
 
-    	$title = "Print Invoice";
+        $title = "Print Invoice";
         $invoice = InvoiceSetup::orWhere('id',$invoiceId)->first();
         $customer = CustomerRegistrationSetup::where('id',$invoice->customer_id)->first();
         $getCustomerProduct = CustomerProduct::where('id',$invoice->customer_product_id)->first();
-	    $productInfo = Product::where('id',$getCustomerProduct->product_id)->first();
+        $productInfo = Product::where('id',$getCustomerProduct->product_id)->first();
         $showRoom = ShowroomSetup::where('id',$getCustomerProduct->showroom_id)->first();
        
-        $pdf = PDF::loadView('admin.invoiceSetup.printInvoice
-',['title'=>$title,'invoice'=>$invoice,'customer'=>$customer,'getCustomerProduct'=>$getCustomerProduct,'productInfo'=>$productInfo,'showRoom'=>$showRoom]);
+        $pdf = PDF::loadView('admin.invoiceSetup.printInvoice',['title'=>$title,'invoice'=>$invoice,'customer'=>$customer,'getCustomerProduct'=>$getCustomerProduct,'productInfo'=>$productInfo,'showRoom'=>$showRoom]);
 
         return $pdf->stream('invoice.pdf');
     }
 
     public function printChalan($invoiceId){
 
-    	$title = "Print Chalan";
+        $title = "Print Chalan";
         $invoice = InvoiceSetup::orWhere('id',$invoiceId)->first();
         $customer = CustomerRegistrationSetup::where('id',$invoice->customer_id)->first();
         $getCustomerProduct = CustomerProduct::where('id',$invoice->customer_product_id)->first();
-	    $productInfo = Product::where('id',$getCustomerProduct->product_id)->first();
+        $productInfo = Product::where('id',$getCustomerProduct->product_id)->first();
         $showRoom = ShowroomSetup::where('id',$getCustomerProduct->showroom_id)->first();
        
         $pdf = PDF::loadView('admin.invoiceSetup.printChalan',['title'=>$title,'invoice'=>$invoice,'customer'=>$customer,'getCustomerProduct'=>$getCustomerProduct,'productInfo'=>$productInfo,'showRoom'=>$showRoom]);
@@ -118,13 +127,13 @@ class InvoiceSetupController extends Controller
     }
 
    public function view($id){
-   	$title = "View Customer Invoice";
-   	$invoice = InvoiceSetup::orWhere('id',$id)->first();
+    $title = "View Customer Invoice";
+    $invoice = InvoiceSetup::orWhere('id',$id)->first();
     $customer = CustomerRegistrationSetup::where('id',$invoice->customer_id)->first();
     $getCustomerProduct = CustomerProduct::where('id',$invoice->customer_product_id)->first();
     $productInfo = Product::where('id',$getCustomerProduct->product_id)->first();
     $showRoom = ShowroomSetup::where('id',$getCustomerProduct->showroom_id)->first();
-   	return view('admin.invoiceSetup.view')->with(compact('title','customerProducts','customer','invoice','getCustomerProduct','productInfo','showRoom'));
+    return view('admin.invoiceSetup.view')->with(compact('title','customer','invoice','getCustomerProduct','productInfo','showRoom'));
    }
 
    public function delete(Request $request)

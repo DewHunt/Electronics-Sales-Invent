@@ -50,7 +50,38 @@
     INNER JOIN `tbl_categories` ON `tbl_categories`.`id` = `tbl_products`.`category_id`
     "
 
-    SELECT `tbl_customer_products`.`purchase_date`,`tbl_customers`.`name` AS `customerName`,`tbl_customers`.`phone_no` AS `customerPhoneNo`,`tbl_customer_products`.`product_id`,`tbl_invoice`.`invoice_no`,`tbl_products`.`name`,`tbl_customer_products`.
+    $customerOutstanding = 
+    "
+    CREATE OR REPLACE VIEW view_customer_outstanding AS 
+    SELECT `tbl_customer_products`.`customer_id` AS `customerId`,`tbl_customers`.`name` AS `customerName`,`tbl_customers`.`phone_no` AS `customerPhoneNo`,`tbl_customer_products`.`product_id` AS `productId`,`tbl_invoice`.`invoice_no` AS `invoiceNo`,`tbl_products`.`name` AS `productName`,`tbl_invoice`.`customer_product_price` AS `salesAmount`,SUM(`tbl_cash_collection`.`collection_amount`) AS `collection`,(`tbl_invoice`.`customer_product_price` - SUM(`tbl_cash_collection`.`collection_amount`)) AS `balance`
+    FROM `tbl_customer_products`
+    LEFT JOIN `tbl_invoice` ON `tbl_invoice`.`customer_product_id` = `tbl_customer_products`.`id`
+    LEFT JOIN `tbl_products` ON `tbl_products`.`id` = `tbl_customer_products`.`product_id`
+    LEFT JOIN `tbl_customers` ON `tbl_customers`.`id` = `tbl_customer_products`.`customer_id`
+    LEFT JOIN `tbl_cash_collection` ON `tbl_cash_collection`.`invoice_id` = `tbl_invoice`.`id`
+    WHERE `tbl_customer_products`.`purchase_type` = 'Cash'
+    Group By `tbl_invoice`.`invoice_no`,`tbl_cash_collection`.`invoice_id`
+    ";
+
+    $customerStatement = 
+    "
+    CREATE OR REPLACE VIEW view_customer_statement AS
+    SELECT `tbl_customer_products`.`purchase_date` AS `date`,`tbl_customer_products`.`customer_id` AS `customerId`,`tbl_customers`.`name` AS `customerName`,`tbl_customer_products`.`product_id` AS `productId`,`tbl_invoice`.`invoice_no` AS `invoiceNo`,`tbl_products`.`name` AS `productName`,`tbl_invoice`.`customer_product_price` AS `salesAmount`,0 AS `collection`
+    FROM `tbl_customer_products`
+    LEFT JOIN `tbl_invoice` ON `tbl_invoice`.`customer_product_id` = `tbl_customer_products`.`id`
+    LEFT JOIN `tbl_products` ON `tbl_products`.`id` = `tbl_customer_products`.`product_id`
+    LEFT JOIN `tbl_customers` ON `tbl_customers`.`id` = `tbl_customer_products`.`customer_id`
+    WHERE `tbl_customer_products`.`purchase_type` = 'Cash'
+
+    UNION ALL
+
+    SELECT `tbl_cash_collection`.`collection_date` AS `date`,`tbl_customer_products`.`customer_id` AS `customerId`,`tbl_customers`.`name` AS `customerName`,`tbl_customer_products`.`product_id` AS `productId`,`tbl_invoice`.`invoice_no` AS `invoiceNo`,`tbl_products`.`name` AS `productName`,0 AS `salesAmount`,`tbl_cash_collection`.`collection_amount` AS `collection`
+    FROM `tbl_cash_collection`
+    LEFT JOIN `tbl_invoice` ON `tbl_invoice`.`id` = `tbl_cash_collection`.`invoice_id`
+    LEFT JOIN `tbl_customer_products` ON `tbl_customer_products`.`id` = `tbl_invoice`.`customer_product_id`
+    LEFT JOIN `tbl_customers` ON `tbl_customers`.`id` = `tbl_invoice`.`customer_id`
+    LEFT JOIN `tbl_products` ON `tbl_products`.`id` = `tbl_invoice`.`product_id`
+    ";
 
     
 

@@ -27,6 +27,7 @@ return array(
     'App\\Http\\Controllers\\Admin\\CategorySetupController' => $baseDir . '/app/Http/Controllers/Admin/CategorySetupController.php',
     'App\\Http\\Controllers\\Admin\\CompanySetupController' => $baseDir . '/app/Http/Controllers/Admin/CompanySetupController.php',
     'App\\Http\\Controllers\\Admin\\CourierSetupController' => $baseDir . '/app/Http/Controllers/Admin/CourierSetupController.php',
+    'App\\Http\\Controllers\\Admin\\CustomerOutstandingController' => $baseDir . '/app/Http/Controllers/Admin/CustomerOutstandingController.php',
     'App\\Http\\Controllers\\Admin\\CustomerRegistrationSetupController' => $baseDir . '/app/Http/Controllers/Admin/CustomerRegistrationSetupController.php',
     'App\\Http\\Controllers\\Admin\\DropDownProbController' => $baseDir . '/app/Http/Controllers/Admin/DropDownProbController.php',
     'App\\Http\\Controllers\\Admin\\GroupSalesTargetSetupController' => $baseDir . '/app/Http/Controllers/Admin/GroupSalesTargetSetupController.php',

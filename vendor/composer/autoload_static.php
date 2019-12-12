@@ -464,6 +464,7 @@ class ComposerStaticInit3b0018b065e5af50f673cc2496237f34
         'App\\Http\\Controllers\\Admin\\CategorySetupController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/CategorySetupController.php',
         'App\\Http\\Controllers\\Admin\\CompanySetupController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/CompanySetupController.php',
         'App\\Http\\Controllers\\Admin\\CourierSetupController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/CourierSetupController.php',
+        'App\\Http\\Controllers\\Admin\\CustomerOutstandingController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/CustomerOutstandingController.php',
         'App\\Http\\Controllers\\Admin\\CustomerRegistrationSetupController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/CustomerRegistrationSetupController.php',
         'App\\Http\\Controllers\\Admin\\DropDownProbController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/DropDownProbController.php',
         'App\\Http\\Controllers\\Admin\\GroupSalesTargetSetupController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/GroupSalesTargetSetupController.php',

@@ -1,9 +1,8 @@
 @extends('admin.layouts.masterReport')
 
 @section('search_card_body')
-    <input type="hidden" name="print" value="print">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <label for="customer">Customer</label>
             <div class="form-group">
                 <select class="form-control chosen-select" id="customer" name="customer[]" multiple>
@@ -27,19 +26,6 @@
                 </select>
             </div>  
         </div>
-
-        <div class="col-md-6">
-            <div class="row">
-                <div class="col-md-6 form-group">
-                    <label for="from-date">From Date</label>
-                    <input  type="text" class="form-control datepicker" id="from_date" name="fromDate" placeholder="Select Date From">
-                </div>
-                <div class="col-md-6 form-group">
-                    <label for="to-date">To Date</label>
-                    <input  type="text" class="form-control datepicker" id="to_date" name="toDate" placeholder="Select Date To">
-                </div>
-            </div>                                  
-        </div>
     </div>
 @endsection
 
@@ -49,10 +35,7 @@
             <input type="hidden" name="customer[]" value="{{ $customerInfo }}">
         @endforeach
     @endif
-
-    <input type="hidden" name="fromDate" value="{{ $fromDate }}">
-    <input type="hidden" name="toDate" value="{{ $toDate }}">
-    <input type="hidden" id="print_value" name="print" value="{{ $print }}">
+    <input type="hidden" id="print_value" name="print" value="Print">
 @endsection
 
 @section('print_card_body')
@@ -62,6 +45,8 @@
                 <th width="20px">Sl</th>
 				<th>Cutomer Name</th>
 				<th width="100px">Mobile No</th>
+                <th width="100px">Invoice No</th>
+                <th width="200px">Product Name</th>
 				<th width="110px">Sales Amount</th>
                 <th width="100px">Collection</th>
                 <th width="100px">Outstanding</th>
@@ -69,6 +54,39 @@
 		</thead>
 
 		<tbody>
+            @php
+                $sl = 0;
+            @endphp
+            @foreach ($customerOutstandings as $customerOutstanding)
+                <tr>
+                    <td>{{ $sl++ }}</td>
+                    <td>{{ $customerOutstanding->customerName }}</td>
+                    <td>{{ $customerOutstanding->customerPhoneNo }}</td>
+                    <td>{{ $customerOutstanding->invoiceNo }}</td>
+                    <td>{{ $customerOutstanding->productName }}</td>
+                    <td>{{ $customerOutstanding->salesAmount }}</td>
+                    <td>
+                        @php
+                            $collection = 0;
+                            if ($customerOutstanding->collection)
+                            {
+                                $collection = $customerOutstanding->collection;
+                            }                           
+                        @endphp
+                        {{ $collection }}
+                    </td>
+                    <td>
+                        @php
+                            $balance = $customerOutstanding->salesAmount;
+                            if ($customerOutstanding->collection)
+                            {
+                                $balance = $customerOutstanding->balance;
+                            }                           
+                        @endphp
+                        {{ $balance }}
+                    </td>
+                </tr>
+            @endforeach
 		</tbody>
 	</table>
 @endsection

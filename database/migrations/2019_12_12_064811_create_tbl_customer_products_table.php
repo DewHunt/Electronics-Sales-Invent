@@ -24,6 +24,7 @@ class CreateTblCustomerProductsTable extends Migration
             $table->string('purchase_type',50)->nullable();
             $table->string('product_model',255)->nullable();
             $table->string('cash_price',255)->nullable();
+            $table->string('mrp_price',255)->nullable();
             $table->string('deposite',255)->nullable();
             $table->string('installment_price',255)->nullable();
             $table->string('total_installment',50)->nullable();

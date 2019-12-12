@@ -4,10 +4,8 @@
     <div style="padding-bottom: 10px;"></div>
 
     @php
-        use App\ShowroomSetup;
-        use App\CustomerProduct;
-        use App\Product;
-        use App\CustomerRegistrationSetup;
+        use App\InvoiceSetup;
+        use App\CashCollection;
     @endphp
 
     @php
@@ -53,41 +51,45 @@
                     <thead>
                         <tr>
                             <th width="20px">SL</th>
-                            <th>Customer Name</th>
+                            <th>Collection Date</th>
+                            <th>Collection No</th>
                             <th>Invoice No</th>
-                            <th>Invoice Date</th>
-                            <th>Showroom</th>
-                            <th>Product Code</th>
-                            <th>Collection Type</th>
-                            <th>Price</th>
-                            <th width="95px">Action</th>
+                            <th>Invoice Amount</th>
+                            <th>Collection Amount</th>
+                            <th>Due</th>
+                            <th width="70px">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @php
                             $i = 0;
                         @endphp
-                        @foreach ($invoices as $invoice)
+                        @foreach ($cashCollections as $collection)
                         @php
                             $i++;
-                            $invoiceDate = date('d-m-Y',strtotime($invoice->created_at));
-                            $customer = CustomerRegistrationSetup::where('id',$invoice->customer_id)->first();
-                            $getCustomerProduct = CustomerProduct::where('id',$invoice->customer_product_id)->first();
-                            $productInfo = Product::where('id',$getCustomerProduct->product_id)->first();
-                            $showRoom = ShowroomSetup::where('id',$getCustomerProduct->showroom_id)->first()
+                            $collectionDate = date('d-m-Y',strtotime($collection->collection_date));
+                            $invoice = InvoiceSetup::where('id',$collection->invoice_id)->first();
+
+                            $previousCashCollectionAmount = CashCollection::where('id', '<', $collection->id)->where('invoice_id',$collection->invoice_id)->sum('collection_amount');
+
+                            if($collection->previous_collection > 0 ){
+                                $currentDue =$collection->invoice_amount - ($previousCashCollectionAmount + $collection->collection_amount);
+                            }else{
+                                $currentDue = $collection->invoice_amount - $collection->collection_amount;
+                            }
+                            
                         @endphp
-                            <tr class="row_{{$invoice->id}}">
+                            <tr class="row_{{$collection->id}}">
                                 <td>{{$i}}</td>
-                                <td>{{$customer->name}}</td>
-                                <td>{{$invoice->invoice_no}}</td>
-                                <td>{{$invoiceDate}}</td>
-                                <td>{{$showRoom->name}}</td>
-                                <td>{{$productInfo->code}}</td>
-                                <td>{{$invoice->collection_type}}</td>
-                                <td>{{$invoice->customer_product_price}}</td>
+                                <td>{{$collectionDate}}</td>
+                                <td>{{$collection->collection_no}}</td>
+                                <td>{{@$invoice->invoice_no}}</td>
+                                <td>{{$collection->invoice_amount}}</td>
+                                <td>{{$collection->collection_amount}}</td>
+                                <td>{{$currentDue}}</td>
                                 <td>
                                     @php
-                                        echo \App\Link::action($invoice->id);
+                                        echo \App\Link::action($collection->id);
                                     @endphp                             
                                 </td>
                             </tr>
@@ -112,7 +114,7 @@
                   }
                 });
 
-                invoiceId = $(this).parent().data('id');
+                collectionId = $(this).parent().data('id');
                 var tableRow = this;
                 swal({   
                     title: "Are you sure?",   
@@ -129,18 +131,18 @@
                     if (isConfirm) {
                         $.ajax({
                             type: "POST",
-                            url : "{{ route('invoiceSetup.delete') }}",
-                            data : {invoiceId:invoiceId},
+                            url : "{{ route('cashCollection.delete') }}",
+                            data : {collectionId:collectionId},
                            
                             success: function(response) {
                                 swal({
                                     title: "<small class='text-success'>Success!</small>", 
                                     type: "success",
-                                    text: "Invoice Deleted Successfully!",
+                                    text: "Collection Deleted Successfully!",
                                     timer: 1000,
                                     html: true,
                                 });
-                                $('.row_'+invoiceId).remove();
+                                $('.row_'+collectionId).remove();
                             },
                             error: function(response) {
                                 error = "Failed.";

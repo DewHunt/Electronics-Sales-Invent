@@ -317,7 +317,20 @@ Route::prefix('admin')->group(function()
 			Route::get('/invoice-setup-print-invoice/{invoiceId}','Admin\InvoiceSetupController@printInvoice')->name('invoiceSetup.printInvoice');
 			Route::get('/invoice-setup-print-chalan/{invoiceId}','Admin\InvoiceSetupController@printChalan')->name('invoiceSetup.printChalan');
 			Route::post('/invoice-setup-delete','Admin\InvoiceSetupController@delete')->name('invoiceSetup.delete');
-			//End Invoice setup
+
+			//Cash Collection developed by Jisan
+			Route::get('/cash-collection','Admin\CashCollectionController@index')->name('cashCollection.index');
+
+			Route::get('/cash-collection-add','Admin\CashCollectionController@add')->name('cashCollection.add');
+			Route::post('/cash-collection-save','Admin\CashCollectionController@save')->name('cashCollection.save');
+			Route::post('/cash-collection-get-invoice-information','Admin\CashCollectionController@getInvoiceInformation')->name('cashCollection.getInvoiceInformation');
+
+			Route::get('/cash-collection-edit/{id}','Admin\CashCollectionController@edit')->name('cashCollection.edit');
+			Route::post('/cash-collection-update','Admin\CashCollectionController@update')->name('cashCollection.update');
+
+			Route::get('/cash-collection-print/{collectionId}','Admin\CashCollectionController@print')->name('cashCollection.print');
+
+			Route::post('/cash-collection-delete','Admin\CashCollectionController@delete')->name('cashCollection.delete');
 
 			//Group Sales Target Setup
 			Route::get('/group-sales-target-setup','Admin\GroupSalesTargetSetupController@index')->name('groupSalesTargetSetup.index');
@@ -331,7 +344,11 @@ Route::prefix('admin')->group(function()
 			Route::get('/customer-outstanding','Admin\CustomerOutstandingController@index')->name('customerOutstanding.index');
 			Route::post('/customer-outstanding','Admin\CustomerOutstandingController@index')->name('customerOutstanding.index');
 			Route::post('/customer-outstanding/print','Admin\CustomerOutstandingController@print')->name('customerOutstanding.print');
-			// End Customer Outstanding Report
+
+			// Start Customer Statement Report
+			Route::get('/customer-statement','Admin\CustomerStatementController@index')->name('customerStatement.index');
+			Route::post('/customer-statement','Admin\CustomerStatementController@index')->name('customerStatement.index');
+			Route::post('/customer-statement/print','Admin\CustomerStatementController@print')->name('customerStatement.print');
 
 		// End Sales Management
 		});

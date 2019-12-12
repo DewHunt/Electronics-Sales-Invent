@@ -2,57 +2,52 @@
 
 @section('content')
     <table  id="report-table">
-        <caption>Vendor Statement On {{ $fromDate }} To {{ $toDate }}</caption>
-        <thead class="thead-light">
-            <tr>
-                @php
-                    if ($previousBalances)
-                    {
-                        $previousBalance = $previousBalances->lifting - ($previousBalances->payment + $previousBalances->others);
-                    }
-                    else
-                    {
-                        $previousBalance = 0;
-                    }                                        
-                @endphp
-                <th colspan="6" style="text-align: right; font-weight: bold;">Previous Balance</th>
-                <th style="text-align: right;">{{ $previousBalance }}</th>
-            </tr>
+        <caption>Customer Outstandings</caption>
+        <thead>
             <tr>
                 <th width="20px">Sl</th>
-                <th width="100px">Date</th>
-                <th>Vendor Name</th>
-                <th width="100px">Lifting</th>
-                <th width="100px">Payment</th>
-                <th width="100px">Others</th>
-                <th width="100px">Balance</th>
+                <th>Cutomer Name</th>
+                <th width="80px">Mobile No</th>
+                <th width="90px">Invoice No</th>
+                <th width="120px">Product Name</th>
+                <th width="60px">Sales Amount</th>
+                <th width="65px">Collection</th>
+                <th width="90px">Outstanding</th>
             </tr>
         </thead>
 
         <tbody>
             @php
-                $sl = 0;
+                $sl = 1;
             @endphp
-            @foreach ($vendorStatements as $vendorStatement)
-                @php
-                    $sl++;
-                    if ($sl == 1)
-                    {
-                        $balance = ($previousBalance + $vendorStatement->lifting) - ($vendorStatement->payment + $vendorStatement->others);
-                    }
-                    else
-                    {
-                        $balance = $balance - ($vendorStatement->lifting - $vendorStatement->payment - $vendorStatement->others); 
-                    }                                        
-                @endphp
+            @foreach ($customerOutstandings as $customerOutstanding)
                 <tr>
                     <td>{{ $sl++ }}</td>
-                    <td>{{ Date('d-m-Y',strtotime($vendorStatement->date)) }}</td>
-                    <td>{{ $vendorStatement->vendorName }}</td>
-                    <td style="text-align: right;">{{ $vendorStatement->lifting }}</td>
-                    <td style="text-align: right;">{{ $vendorStatement->payment }}</td>
-                    <td style="text-align: right;">{{ $vendorStatement->others }}</td>
-                    <td style="text-align: right;">{{ $balance }}</td>
+                    <td>{{ $customerOutstanding->customerName }}</td>
+                    <td>{{ $customerOutstanding->customerPhoneNo }}</td>
+                    <td>{{ $customerOutstanding->invoiceNo }}</td>
+                    <td>{{ $customerOutstanding->productName }}</td>
+                    <td align="right">{{ $customerOutstanding->salesAmount }}</td>
+                    <td align="right">
+                        @php
+                            $collection = 0;
+                            if ($customerOutstanding->collection)
+                            {
+                                $collection = $customerOutstanding->collection;
+                            }                           
+                        @endphp
+                        {{ $collection }}
+                    </td>
+                    <td align="right">
+                        @php
+                            $balance = $customerOutstanding->salesAmount;
+                            if ($customerOutstanding->collection)
+                            {
+                                $balance = $customerOutstanding->balance;
+                            }                           
+                        @endphp
+                        {{ $balance }}
+                    </td>
                 </tr>
             @endforeach
         </tbody>

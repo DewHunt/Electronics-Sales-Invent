@@ -16,6 +16,7 @@ class CreateTblInvoiceTable extends Migration
         Schema::create('tbl_invoice', function (Blueprint $table) {
             $table->increments('id');
             $table->string('invoice_no',100)->nullable();
+            $table->string('collection_type',100)->nullable();
             $table->integer('customer_id')->nullable();
             $table->integer('customer_product_id')->nullable();
             $table->integer('product_id')->nullable();

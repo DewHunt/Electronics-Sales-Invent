@@ -24,48 +24,6 @@
         </div>
 
         <div class="col-md-6">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group {{ $errors->has('productModel') ? ' has-danger' : '' }}">
-                        <label for="nick-name">Product Model</label>
-                        <input type="text" class="form-control productModel" name="productModel" value="{{ old('productModel') }}" required readonly="">
-                        @if ($errors->has('productModel'))
-                            @foreach($errors->get('productModel') as $error)
-                                <div class="form-control-feedback">{{ $error }}</div>
-                            @endforeach
-                        @endif
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="form-group {{ $errors->has('warranty') ? ' has-danger' : '' }}">
-                        <label for="warranty">Warranty</label>
-                        <input type="number" name="warranty" class="form-control warranty" readonly>
-                        @if ($errors->has('warranty'))
-                            @foreach($errors->get('warranty') as $error)
-                                <div class="form-control-feedback">{{ $error }}</div>
-                            @endforeach
-                        @endif
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="form-group {{ $errors->has('cashPrice') ? ' has-danger' : '' }}">
-                        <label for="cash-price">Cash Price</label>
-                        <input type="number" name="cashPrice" class="form-control cashPrice" readonly>
-                        @if ($errors->has('cashPrice'))
-                            @foreach($errors->get('cashPrice') as $error)
-                                <div class="form-control-feedback">{{ $error }}</div>
-                            @endforeach
-                        @endif
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-6">
             <div class="form-group {{ $errors->has('showroomId') ? ' has-danger' : '' }}">
                 <label for="showroom-id">Showroom</label>
                 <select class="form-control chosen-select" name="showroomId">
@@ -81,42 +39,95 @@
                 @endif
             </div>
         </div>
+    </div>
 
+    <div class="row">
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-6">
-                     <div class="form-group {{ $errors->has('purchaseDate') ? ' has-danger' : '' }}">
-                        <label for="purchase-date">Purchase Date</label>
-                        <input type="text" name="purchaseDate" class="form-control add_datepicker" readonly="">
-                        @if ($errors->has('purchaseDate'))
-                            @foreach($errors->get('purchaseDate') as $error)
+                    <div class="form-group {{ $errors->has('productModel') ? ' has-danger' : '' }}">
+                        <label for="nick-name">Product Model</label>
+                        <input type="text" class="form-control productModel" name="productModel" value="{{ old('productModel') }}" required readonly="">
+                        @if ($errors->has('productModel'))
+                            @foreach($errors->get('productModel') as $error)
                                 <div class="form-control-feedback">{{ $error }}</div>
                             @endforeach
                         @endif
                     </div>
                 </div>
-
                 <div class="col-md-6">
-                    <label for="purchase-type">Purchase Type</label>
-                     <div class="form-group {{ $errors->has('purchaseType') ? ' has-danger' : '' }}">
-                         <div class="form-check-inline">
-                            <label class="form-check-label">
-                                <input type="radio" value="Cash" name="purchaseType" class="product purchaseType" required> Cash
-                            </label>
-                        </div>
-
-                        <div class="form-check-inline">
-                            <label class="form-check-label">
-                                <input type="radio" value="Installment" name="purchaseType" class="product purchaseType"> Installment
-                            </label>
-                        </div>
-                        @if ($errors->has('purchaseType'))
-                            @foreach($errors->get('purchaseType') as $error)
+                    <div class="form-group {{ $errors->has('warranty') ? ' has-danger' : '' }}">
+                        <label for="warranty">Warranty</label>
+                        <input type="number" name="warranty" class="form-control warranty" readonly>
+                        @if ($errors->has('warranty'))
+                            @foreach($errors->get('warranty') as $error)
                                 <div class="form-control-feedback">{{ $error }}</div>
                             @endforeach
                         @endif
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group {{ $errors->has('purchaseDate') ? ' has-danger' : '' }}">
+                <label for="purchase-date">Purchase Date</label>
+                <input type="text" name="purchaseDate" class="form-control add_datepicker" readonly="">
+                @if ($errors->has('purchaseDate'))
+                    @foreach($errors->get('purchaseDate') as $error)
+                        <div class="form-control-feedback">{{ $error }}</div>
+                    @endforeach
+                @endif
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group {{ $errors->has('cashPrice') ? ' has-danger' : '' }}">
+                        <label for="regular-price">Regular Price</label>
+                        <input type="number" name="cashPrice" class="form-control cashPrice" readonly>
+                        @if ($errors->has('cashPrice'))
+                            @foreach($errors->get('cashPrice') as $error)
+                                <div class="form-control-feedback">{{ $error }}</div>
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group {{ $errors->has('mrpPrice') ? ' has-danger' : '' }}">
+                        <label for="mrp-price">MRP Price</label>
+                        <input type="number" name="mrpPrice" class="form-control mrpPrice" readonly>
+                        @if ($errors->has('mrpPrice'))
+                            @foreach($errors->get('mrpPrice') as $error)
+                                <div class="form-control-feedback">{{ $error }}</div>
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label for="purchase-type">Purchase Type</label>
+             <div class="form-group {{ $errors->has('purchaseType') ? ' has-danger' : '' }}">
+                 <div class="form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" value="Cash" name="purchaseType" class="product purchaseType" required> Cash
+                    </label>
+                </div>
+
+                <div class="form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" value="Installment" name="purchaseType" class="product purchaseType"> Installment
+                    </label>
+                </div>
+                @if ($errors->has('purchaseType'))
+                    @foreach($errors->get('purchaseType') as $error)
+                        <div class="form-control-feedback">{{ $error }}</div>
+                    @endforeach
+                @endif
             </div>
         </div>
     </div>
@@ -138,7 +149,7 @@
 
                 <div class="col-md-6">
                     <div class="form-group {{ $errors->has('installmentPrice') ? ' has-danger' : '' }}">
-                        <label for="installment-price">Installment Price</label>
+                        <label for="haire-price">Haire Price</label>
                         <input type="number" class="form-control installmentPrice" name="installmentPrice" value="{{ old('installmentPrice') }}">
                         @if ($errors->has('installmentPrice'))
                             @foreach($errors->get('installmentPrice') as $error)
@@ -155,7 +166,7 @@
                <div class="col-md-6">
                     <div class="form-group {{ $errors->has('totalInstallment') ? ' has-danger' : '' }}">
                         <label for="total-installment">Total Installment</label>
-                        <input type="number" class="form-control totalInstallment" name="totalInstallment" value="{{ old('totalInstallment') }}" oninput="monthlyInstallment()">
+                        <input type="text" class="form-control totalInstallment" name="totalInstallment" value="{{ old('totalInstallment') }}" oninput="monthlyInstallment()">
                         @if ($errors->has('totalInstallment'))
                             @foreach($errors->get('totalInstallment') as $error)
                                 <div class="form-control-feedback">{{ $error }}</div>

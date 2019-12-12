@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 11, 2019 at 01:44 PM
+-- Generation Time: Dec 12, 2019 at 04:44 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -157,7 +157,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (41, '2019_12_11_063735_create_tbl_customers_table', 23),
 (42, '2019_12_10_102159_create_tbl_invoice_table', 24),
 (43, '2019_12_11_101249_create_tbl_customer_products_table', 25),
-(44, '2019_12_11_101423_create_tbl_invoice_table', 25);
+(44, '2019_12_11_101423_create_tbl_invoice_table', 25),
+(45, '2019_12_12_064811_create_tbl_customer_products_table', 26),
+(46, '2019_12_12_080031_create_tbl_invoice_table', 27),
+(47, '2019_12_11_121426_create_tbl_cash_collection_table', 28);
 
 -- --------------------------------------------------------
 
@@ -273,6 +276,36 @@ CREATE TABLE `tbl_business_staffs` (
 
 INSERT INTO `tbl_business_staffs` (`id`, `code`, `name`, `contact`, `address`, `email`, `national_id`, `joining_date`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'dh007', 'Dew Hunt', '01317243494', 'Mirpur - 11', 'dew@gmail.com', '5089769966', '2019-02-01', 0, '2019-11-30 14:07:30', '2019-11-30 14:09:16');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_cash_collection`
+--
+
+CREATE TABLE `tbl_cash_collection` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `invoice_id` int(11) NOT NULL,
+  `collection_no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `invoice_amount` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `previous_collection` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `collection_date` date DEFAULT NULL,
+  `collection_amount` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `current_due` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remarks` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_cash_collection`
+--
+
+INSERT INTO `tbl_cash_collection` (`id`, `invoice_id`, `collection_no`, `invoice_amount`, `previous_collection`, `collection_date`, `collection_amount`, `current_due`, `remarks`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 'col-1-19-10001', '35000.00', '0.00', '2019-12-12', '35000.00', '0', 'Thirty-Five Thousand Taka Only', 1, '2019-12-12 04:46:49', '2019-12-12 04:46:49'),
+(2, 2, 'col-2-19-10002', '27000.00', '0.00', '2019-12-12', '9000', '18000.00', 'Nine Thousand Taka Only.', 1, '2019-12-12 04:52:52', '2019-12-12 04:52:52'),
+(3, 2, 'col-3-19-10003', '27000.00', '9000.00', '2019-12-12', '9000', '9000.00', 'NIne Thousand Taka Only.', 1, '2019-12-12 04:55:59', '2019-12-12 04:55:59');
 
 -- --------------------------------------------------------
 
@@ -460,6 +493,7 @@ CREATE TABLE `tbl_customer_products` (
   `purchase_type` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `product_model` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `cash_price` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mrp_price` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `deposite` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `installment_price` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `total_installment` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -474,13 +508,14 @@ CREATE TABLE `tbl_customer_products` (
 -- Dumping data for table `tbl_customer_products`
 --
 
-INSERT INTO `tbl_customer_products` (`id`, `customer_id`, `product_id`, `showroom_id`, `qty`, `warranty`, `purchase_date`, `purchase_type`, `product_model`, `cash_price`, `deposite`, `installment_price`, `total_installment`, `monthly_installment_amount`, `product_usage_address`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 3, 1, 1, 5, '2019-12-11', 'Installment', 'wal890', '45000', '15000', '50000', '12', '2917', 'MMirpur', 1, '2019-12-10 19:04:07', '2019-12-10 19:04:07'),
-(2, 2, 3, 1, 1, 5, '2019-12-11', 'Installment', 'wal890', '45000', '15000', '50000', '12', '2917', 'MMirpur', 1, '2019-12-10 19:08:56', '2019-12-10 19:08:56'),
-(3, 2, 7, 3, 1, 10, '2019-12-11', 'Installment', 'Wal119', '65000', '25000', '70000', '15', '3000', 'Mirpur - 1', 1, '2019-12-10 19:19:38', '2019-12-10 20:08:49'),
-(5, 4, 5, 3, 1, 5, '2019-12-11', 'Cash', 'wal1234', '35000', '', '', '', '', 'Dhanmondi', 0, '2019-12-10 20:27:57', '2019-12-11 05:27:56'),
-(6, 5, 6, 1, 1, 10, '2019-12-11', 'Cash', 'wal8126', '25000', '', '', '', '', 'Uttara', 1, '2019-12-10 20:35:50', '2019-12-10 20:35:50'),
-(7, 2, 5, 1, 1, 5, '2019-12-11', 'Cash', 'wal1234', '35000', '', '', '', '', 'Mirpur', 1, '2019-12-10 20:45:40', '2019-12-10 20:45:40');
+INSERT INTO `tbl_customer_products` (`id`, `customer_id`, `product_id`, `showroom_id`, `qty`, `warranty`, `purchase_date`, `purchase_type`, `product_model`, `cash_price`, `mrp_price`, `deposite`, `installment_price`, `total_installment`, `monthly_installment_amount`, `product_usage_address`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 3, 1, 1, 5, '2019-12-11', 'Installment', 'wal890', '45000', '48600', '15000', '54432', '12', '3286', 'MMirpur', 1, '2019-12-10 13:04:07', '2019-12-12 01:33:10'),
+(2, 2, 3, 1, 1, 5, '2019-12-11', 'Installment', 'wal890', '45000', '48600', '15000', '54432', '12', '3286', 'MMirpur', 1, '2019-12-10 13:08:56', '2019-12-12 01:33:55'),
+(3, 2, 7, 3, 1, 10, '2019-12-11', 'Installment', 'Wal119', '65000', '70200', '25000', '78624', '15', '3575', 'Mirpur - 1', 1, '2019-12-10 13:19:38', '2019-12-12 01:34:13'),
+(5, 4, 5, 3, 1, 5, '2019-12-11', 'Cash', 'wal1234', '35000', '37800', NULL, NULL, NULL, NULL, 'Dhanmondi', 0, '2019-12-10 14:27:57', '2019-12-12 04:08:17'),
+(6, 5, 6, 1, 1, 10, '2019-12-11', 'Cash', 'wal8126', '25000', '27000', NULL, NULL, NULL, NULL, 'Uttara', 0, '2019-12-10 14:35:50', '2019-12-12 04:08:23'),
+(7, 2, 5, 1, 1, 5, '2019-12-11', 'Cash', 'wal1234', '35000', '37800', NULL, NULL, NULL, NULL, 'Mirpur', 0, '2019-12-10 14:45:40', '2019-12-12 04:08:32'),
+(8, 5, 6, 1, 1, 10, '2019-12-12', 'Cash', 'wal8126', '25000', '27000', '', '', '', '', 'Mirpur', 0, '2019-12-12 03:07:41', '2019-12-12 04:08:36');
 
 -- --------------------------------------------------------
 
@@ -564,6 +599,7 @@ INSERT INTO `tbl_groups_sales_target_category` (`id`, `group_sales_target_id`, `
 CREATE TABLE `tbl_invoice` (
   `id` int(10) UNSIGNED NOT NULL,
   `invoice_no` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `collection_type` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `customer_id` int(11) DEFAULT NULL,
   `customer_product_id` int(11) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,
@@ -583,8 +619,11 @@ CREATE TABLE `tbl_invoice` (
 -- Dumping data for table `tbl_invoice`
 --
 
-INSERT INTO `tbl_invoice` (`id`, `invoice_no`, `customer_id`, `customer_product_id`, `product_id`, `qty`, `customer_product_price`, `customer_product_model`, `customer_product_color`, `customer_product_waranty`, `customer_product_usage_address`, `customer_product_purchase_date`, `status`, `created_at`, `updated_at`) VALUES
-(10, 'inv-1-19-10001', 4, 5, 5, '1', '35000', 'wal1234', 'Silver', '5', 'Dhanmondi', '2019-12-11', 1, '2019-12-11 05:27:56', '2019-12-11 05:27:56');
+INSERT INTO `tbl_invoice` (`id`, `invoice_no`, `collection_type`, `customer_id`, `customer_product_id`, `product_id`, `qty`, `customer_product_price`, `customer_product_model`, `customer_product_color`, `customer_product_waranty`, `customer_product_usage_address`, `customer_product_purchase_date`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'inv-1-19-10001', 'Full Payment', 4, 5, 5, '1', '35000', 'wal1234', 'Silver', '5', 'Dhanmondi', '2019-12-11', 1, '2019-12-12 04:08:17', '2019-12-12 04:08:17'),
+(2, 'inv-2-19-10002', 'Partial Payment', 5, 6, 6, '1', '27000', 'wal8126', 'White', '10', 'Uttara', '2019-12-11', 1, '2019-12-12 04:08:23', '2019-12-12 04:08:23'),
+(3, 'inv-3-19-10003', 'Partial Payment', 2, 7, 5, '1', '37800', 'wal1234', 'Silver', '5', 'Mirpur', '2019-12-11', 1, '2019-12-12 04:08:32', '2019-12-12 04:08:32'),
+(4, 'inv-4-19-10004', 'Full Payment', 5, 8, 6, '1', '25000', 'wal8126', 'White', '10', 'Mirpur', '2019-12-12', 1, '2019-12-12 04:08:36', '2019-12-12 04:08:36');
 
 -- --------------------------------------------------------
 
@@ -1009,7 +1048,9 @@ INSERT INTO `user_menus` (`id`, `parentMenu`, `menuName`, `menuLink`, `menuIcon`
 (34, '33', 'Group Sales Target', 'groupSalesTargetSetup.index', 'fa fa-caret', 27, '1', '2019-12-10 00:57:26', '2019-12-10 00:57:26'),
 (35, '33', 'Customer Registration', 'customerRegistraionSetup.index', 'fa fa-caret', 28, '1', '2019-12-10 23:34:27', '2019-12-10 23:34:27'),
 (36, '33', 'Invoice Setup', 'invoiceSetup.index', 'fa fa-caret', 29, '1', '2019-12-11 03:50:06', '2019-12-11 03:50:06'),
-(37, '33', 'Customer Outstanding', 'customerOutstanding.index', NULL, 30, '1', '2019-12-11 05:46:00', '2019-12-11 05:46:00');
+(37, '33', 'Customer Outstanding', 'customerOutstanding.index', NULL, 30, '1', '2019-12-11 05:46:00', '2019-12-11 05:46:00'),
+(38, '33', 'Cash Collection', 'cashCollection.index', 'fa fa-caret', 31, '1', '2019-12-12 04:34:25', '2019-12-12 04:34:25'),
+(39, '33', 'Customer Statements', 'customerStatement.index', 'fa fa-caret', 32, '1', '2019-12-12 07:14:33', '2019-12-12 07:14:33');
 
 -- --------------------------------------------------------
 
@@ -1126,8 +1167,14 @@ INSERT INTO `user_menu_actions` (`id`, `parentmenuId`, `menuType`, `actionName`,
 (96, 36, 1, 'Add', 'invoiceSetup.add', 94, 1, '2019-12-11 03:50:28', '2019-12-11 03:50:28'),
 (97, 36, 8, 'View Invoice', 'invoiceSetup.view', 95, 1, '2019-12-11 03:50:57', '2019-12-11 03:50:57'),
 (98, 36, 11, 'Print Invoice', 'invoiceSetup.printInvoice', 96, 1, '2019-12-11 03:51:20', '2019-12-11 03:51:20'),
-(99, 36, 4, 'Delete', 'invoiceSetup.delete', 97, 1, '2019-12-11 03:51:33', '2019-12-11 03:51:33'),
-(100, 37, 11, 'Print Customer Outstanding Report', 'customerOutstanding.print', 98, 1, '2019-12-11 05:46:53', '2019-12-11 05:46:53');
+(99, 36, 4, 'Delete', 'invoiceSetup.delete', 98, 1, '2019-12-11 03:51:33', '2019-12-12 06:35:10'),
+(100, 37, 11, 'Print Customer Outstanding Report', 'customerOutstanding.print', 98, 1, '2019-12-11 05:46:53', '2019-12-11 05:46:53'),
+(101, 38, 1, 'Add', 'cashCollection.add', 99, 1, '2019-12-12 04:35:04', '2019-12-12 04:35:04'),
+(102, 38, 2, 'Edit', 'cashCollection.edit', 100, 1, '2019-12-12 04:35:14', '2019-12-12 04:35:14'),
+(103, 38, 4, 'Delete', 'cashCollection.delete', 102, 1, '2019-12-12 04:35:28', '2019-12-12 04:53:47'),
+(104, 38, 11, 'Print Cash Collection', 'cashCollection.print', 101, 1, '2019-12-12 04:35:58', '2019-12-12 04:53:41'),
+(105, 36, 11, 'Print Chalan', 'invoiceSetup.printChalan', 97, 1, '2019-12-12 06:36:00', '2019-12-12 06:36:15'),
+(106, 39, 11, 'Print Customer Statement', 'customerStatement.print', 103, 1, '2019-12-12 07:15:30', '2019-12-12 07:15:30');
 
 -- --------------------------------------------------------
 
@@ -1150,8 +1197,43 @@ CREATE TABLE `user_roles` (
 --
 
 INSERT INTO `user_roles` (`id`, `name`, `status`, `permission`, `actionPermission`, `created_at`, `updated_at`) VALUES
-(1, 'Super Admin', 1, '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,20,18,19,17,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,57,58,59,60,61,62,63,64,65,66,81,67,69,70,71,72,73,74,75,76,77,78,79,80,82,83,84,85,86,88,89,90,91,94,95,93,96,97,98,99,100', '2019-11-20 22:48:03', '2019-12-11 05:47:07'),
+(1, 'Super Admin', 1, '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,20,18,19,17,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,57,58,59,60,61,62,63,64,65,66,81,67,69,70,71,72,73,74,75,76,77,78,79,80,82,83,84,85,86,88,89,90,91,94,95,93,96,97,98,105,99,100,101,102,104,103,106', '2019-11-20 22:48:03', '2019-12-12 07:15:41'),
 (5, 'Admin', 0, NULL, NULL, '2019-11-29 03:26:52', '2019-11-29 03:26:52');
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_customer_outstanding`
+-- (See below for the actual view)
+--
+CREATE TABLE `view_customer_outstanding` (
+`customerId` int(11)
+,`customerName` varchar(255)
+,`customerPhoneNo` varchar(255)
+,`productId` int(11)
+,`invoiceNo` varchar(100)
+,`productName` varchar(191)
+,`salesAmount` varchar(255)
+,`collection` double
+,`balance` double
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_customer_statement`
+-- (See below for the actual view)
+--
+CREATE TABLE `view_customer_statement` (
+`date` date
+,`customerId` int(11)
+,`customerName` varchar(255)
+,`productId` int(11)
+,`invoiceNo` varchar(100)
+,`productName` varchar(191)
+,`salesAmount` varchar(255)
+,`collection` varchar(255)
+);
 
 -- --------------------------------------------------------
 
@@ -1232,6 +1314,24 @@ CREATE TABLE `view_vendor_statement_report` (
 ,`payment` double
 ,`others` int(1)
 );
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_customer_outstanding`
+--
+DROP TABLE IF EXISTS `view_customer_outstanding`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_customer_outstanding`  AS  select `tbl_customer_products`.`customer_id` AS `customerId`,`tbl_customers`.`name` AS `customerName`,`tbl_customers`.`phone_no` AS `customerPhoneNo`,`tbl_customer_products`.`product_id` AS `productId`,`tbl_invoice`.`invoice_no` AS `invoiceNo`,`tbl_products`.`name` AS `productName`,`tbl_invoice`.`customer_product_price` AS `salesAmount`,sum(`tbl_cash_collection`.`collection_amount`) AS `collection`,`tbl_invoice`.`customer_product_price` - sum(`tbl_cash_collection`.`collection_amount`) AS `balance` from ((((`tbl_customer_products` left join `tbl_invoice` on(`tbl_invoice`.`customer_product_id` = `tbl_customer_products`.`id`)) left join `tbl_products` on(`tbl_products`.`id` = `tbl_customer_products`.`product_id`)) left join `tbl_customers` on(`tbl_customers`.`id` = `tbl_customer_products`.`customer_id`)) left join `tbl_cash_collection` on(`tbl_cash_collection`.`invoice_id` = `tbl_invoice`.`id`)) where `tbl_customer_products`.`purchase_type` = 'Cash' group by `tbl_invoice`.`invoice_no`,`tbl_cash_collection`.`invoice_id` ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_customer_statement`
+--
+DROP TABLE IF EXISTS `view_customer_statement`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_customer_statement`  AS  select `tbl_customer_products`.`purchase_date` AS `date`,`tbl_customer_products`.`customer_id` AS `customerId`,`tbl_customers`.`name` AS `customerName`,`tbl_customer_products`.`product_id` AS `productId`,`tbl_invoice`.`invoice_no` AS `invoiceNo`,`tbl_products`.`name` AS `productName`,`tbl_invoice`.`customer_product_price` AS `salesAmount`,0 AS `collection` from (((`tbl_customer_products` left join `tbl_invoice` on(`tbl_invoice`.`customer_product_id` = `tbl_customer_products`.`id`)) left join `tbl_products` on(`tbl_products`.`id` = `tbl_customer_products`.`product_id`)) left join `tbl_customers` on(`tbl_customers`.`id` = `tbl_customer_products`.`customer_id`)) where `tbl_customer_products`.`purchase_type` = 'Cash' union all select `tbl_cash_collection`.`collection_date` AS `date`,`tbl_customer_products`.`customer_id` AS `customerId`,`tbl_customers`.`name` AS `customerName`,`tbl_customer_products`.`product_id` AS `productId`,`tbl_invoice`.`invoice_no` AS `invoiceNo`,`tbl_products`.`name` AS `productName`,0 AS `salesAmount`,`tbl_cash_collection`.`collection_amount` AS `collection` from ((((`tbl_cash_collection` left join `tbl_invoice` on(`tbl_invoice`.`id` = `tbl_cash_collection`.`invoice_id`)) left join `tbl_customer_products` on(`tbl_customer_products`.`id` = `tbl_invoice`.`customer_product_id`)) left join `tbl_customers` on(`tbl_customers`.`id` = `tbl_invoice`.`customer_id`)) left join `tbl_products` on(`tbl_products`.`id` = `tbl_invoice`.`product_id`)) ;
 
 -- --------------------------------------------------------
 
@@ -1326,6 +1426,12 @@ ALTER TABLE `tbl_bank`
 -- Indexes for table `tbl_business_staffs`
 --
 ALTER TABLE `tbl_business_staffs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_cash_collection`
+--
+ALTER TABLE `tbl_cash_collection`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1504,7 +1610,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -1529,6 +1635,12 @@ ALTER TABLE `tbl_bank`
 --
 ALTER TABLE `tbl_business_staffs`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tbl_cash_collection`
+--
+ALTER TABLE `tbl_cash_collection`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_categories`
@@ -1564,7 +1676,7 @@ ALTER TABLE `tbl_customer_guarantor`
 -- AUTO_INCREMENT for table `tbl_customer_products`
 --
 ALTER TABLE `tbl_customer_products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tbl_groups`
@@ -1588,7 +1700,7 @@ ALTER TABLE `tbl_groups_sales_target_category`
 -- AUTO_INCREMENT for table `tbl_invoice`
 --
 ALTER TABLE `tbl_invoice`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tbl_liftings`
@@ -1666,13 +1778,13 @@ ALTER TABLE `tbl_vendors`
 -- AUTO_INCREMENT for table `user_menus`
 --
 ALTER TABLE `user_menus`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `user_menu_actions`
 --
 ALTER TABLE `user_menu_actions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 
 --
 -- AUTO_INCREMENT for table `user_roles`

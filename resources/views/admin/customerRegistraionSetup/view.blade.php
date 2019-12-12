@@ -95,6 +95,7 @@
         /*end code for new product block show*/
 
         /*code for purchase type cash or installment*/
+        $('.installmentRow').hide();
         $('.purchaseType').click(function(event) {
                 var purchaseType =  $("input[name='purchaseType']:checked").val();   
                 if(purchaseType == "Installment"){
@@ -133,17 +134,48 @@
                     data:{productId:productId},
                     success:function(data){
                         var product = data.product;
+                        var purchaseType =  $("input[name='purchaseType']:checked").val();
                         $('.productModel').val(product.model_no);
                         $('.cashPrice').val(product.price);
+                        $('.mrpPrice').val(product.mrp_price);
                         $('.warranty').val(product.warranty);
+                        if (purchaseType == 'Installment')
+                        {
+                            $('.installmentPrice').val(product.haire_price);
+                        }
+                        else
+                        {
+                            $('.installmentPrice').val('');                             
+                        }
+                        monthlyInstallment();
                     }
                 });
             }else{
                $('.productModel').val('');
-               $('.cashPrice').val(''); 
+               $('.cashPrice').val('');
+               $('.mrpPrice').val(''); 
                $('.warranty').val(''); 
+               $('.installmentPrice').val(''); 
             }
         });
+
+        function monthlyInstallment()
+        {
+            var deposite = parseFloat($('.deposite').val());
+            var installmentPrice = parseFloat($('.installmentPrice').val());
+            var totalInstallment = parseFloat($('.totalInstallment').val());
+
+            if (totalInstallment == 0 || $('.totalInstallment').val() == "")
+            {
+                var monthlyInstallmentPrice = (installmentPrice - deposite);
+            }
+            else
+            {
+                var monthlyInstallmentPrice = (installmentPrice - deposite)/totalInstallment;                
+            }
+
+            $('.monthlyInstallmentAmount').val(Math.round(monthlyInstallmentPrice));
+        }
 
     /*end code for product info*/
 

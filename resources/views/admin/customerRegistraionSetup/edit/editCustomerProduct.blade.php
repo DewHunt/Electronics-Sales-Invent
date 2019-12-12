@@ -26,6 +26,7 @@
                         <a class="btn btn-outline-info btn-lg" onclick="GoBack()">
                             <i class="fa fa-arrow-circle-left"></i> Go Back
                         </a>
+                        <button type="submit" class="btn btn-outline-info btn-lg waves-effect"><i class="fa fa-save"></i> {{ $buttonName }}</button>
                     </div>
                 </div>
             </div>
@@ -66,48 +67,6 @@
                     </div>
 
                     <div class="col-md-6">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group {{ $errors->has('productModel') ? ' has-danger' : '' }}">
-                                    <label for="nick-name">Product Model</label>
-                                    <input type="text" class="form-control productModel" name="productModel" value="{{ $customerProduct->product_model }}" required readonly="">
-                                    @if ($errors->has('productModel'))
-                                        @foreach($errors->get('productModel') as $error)
-                                            <div class="form-control-feedback">{{ $error }}</div>
-                                        @endforeach
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group {{ $errors->has('warranty') ? ' has-danger' : '' }}">
-                                    <label for="warranty">Warranty</label>
-                                    <input type="number" name="warranty" class="form-control warranty" value="{{$customerProduct->warranty}}" readonly>
-                                    @if ($errors->has('warranty'))
-                                        @foreach($errors->get('warranty') as $error)
-                                            <div class="form-control-feedback">{{ $error }}</div>
-                                        @endforeach
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group {{ $errors->has('cashPrice') ? ' has-danger' : '' }}">
-                                    <label for="cash-price">Cash Price</label>
-                                    <input type="number" name="cashPrice" class="form-control cashPrice" value="{{$customerProduct->cash_price}}" readonly>
-                                    @if ($errors->has('cashPrice'))
-                                        @foreach($errors->get('cashPrice') as $error)
-                                            <div class="form-control-feedback">{{ $error }}</div>
-                                        @endforeach
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6">
                         <div class="form-group {{ $errors->has('showroomId') ? ' has-danger' : '' }}">
                             <label for="showroom-id">Showroom</label>
                             <select class="form-control chosen-select" name="showroomId">
@@ -130,15 +89,17 @@
                             @endif
                         </div>
                     </div>
+                </div>
 
+                <div class="row">
                     <div class="col-md-6">
                         <div class="row">
                             <div class="col-md-6">
-                                 <div class="form-group {{ $errors->has('purchaseDate') ? ' has-danger' : '' }}">
-                                    <label for="purchase-date">Purchase Date</label>
-                                    <input type="text" name="purchaseDate" class="form-control datepicker" value="{{$purchaseDate}}" readonly="">
-                                    @if ($errors->has('purchaseDate'))
-                                        @foreach($errors->get('purchaseDate') as $error)
+                                <div class="form-group {{ $errors->has('productModel') ? ' has-danger' : '' }}">
+                                    <label for="nick-name">Product Model</label>
+                                    <input type="text" class="form-control productModel" name="productModel" value="{{ $customerProduct->product_model }}" required readonly="">
+                                    @if ($errors->has('productModel'))
+                                        @foreach($errors->get('productModel') as $error)
                                             <div class="form-control-feedback">{{ $error }}</div>
                                         @endforeach
                                     @endif
@@ -146,26 +107,79 @@
                             </div>
 
                             <div class="col-md-6">
-                                <label for="purchase-type">Purchase Type</label>
-                                 <div class="form-group {{ $errors->has('purchaseType') ? ' has-danger' : '' }}">
-                                     <div class="form-check-inline">
-                                        <label class="form-check-label">
-                                            <input type="radio" value="Cash" name="purchaseType" class="purchaseType" required {{ $customerProduct->purchase_type == "Cash" ? 'checked' : '' }}> Cash
-                                        </label>
-                                    </div>
-
-                                    <div class="form-check-inline">
-                                        <label class="form-check-label">
-                                            <input type="radio" value="Installment" name="purchaseType" class="purchaseType" {{ $customerProduct->purchase_type == "Installment" ? 'checked' : '' }}> Installment
-                                        </label>
-                                    </div>
-                                    @if ($errors->has('purchaseType'))
-                                        @foreach($errors->get('purchaseType') as $error)
+                                <div class="form-group {{ $errors->has('warranty') ? ' has-danger' : '' }}">
+                                    <label for="warranty">Warranty</label>
+                                    <input type="number" name="warranty" class="form-control warranty" value="{{$customerProduct->warranty}}" readonly>
+                                    @if ($errors->has('warranty'))
+                                        @foreach($errors->get('warranty') as $error)
                                             <div class="form-control-feedback">{{ $error }}</div>
                                         @endforeach
                                     @endif
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group {{ $errors->has('purchaseDate') ? ' has-danger' : '' }}">
+                            <label for="purchase-date">Purchase Date</label>
+                            <input type="text" name="purchaseDate" class="form-control datepicker" value="{{$purchaseDate}}" readonly="">
+                            @if ($errors->has('purchaseDate'))
+                                @foreach($errors->get('purchaseDate') as $error)
+                                    <div class="form-control-feedback">{{ $error }}</div>
+                                @endforeach
+                            @endif
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group {{ $errors->has('cashPrice') ? ' has-danger' : '' }}">
+                                    <label for="cash-price">Cash Price</label>
+                                    <input type="number" name="cashPrice" class="form-control cashPrice" value="{{$customerProduct->cash_price}}" readonly>
+                                    @if ($errors->has('cashPrice'))
+                                        @foreach($errors->get('cashPrice') as $error)
+                                            <div class="form-control-feedback">{{ $error }}</div>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group {{ $errors->has('mrpPrice') ? ' has-danger' : '' }}">
+                                    <label for="mrp-price">MRP Price</label>
+                                    <input type="number" name="mrpPrice" class="form-control mrpPrice" value="{{$customerProduct->mrp_price}}" readonly>
+                                    @if ($errors->has('mrpPrice'))
+                                        @foreach($errors->get('mrpPrice') as $error)
+                                            <div class="form-control-feedback">{{ $error }}</div>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="purchase-type">Purchase Type</label>
+                         <div class="form-group {{ $errors->has('purchaseType') ? ' has-danger' : '' }}">
+                             <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="radio" value="Cash" name="purchaseType" class="product purchaseType" required {{ $customerProduct->purchase_type == "Cash" ? 'checked' : '' }}> Cash
+                                </label>
+                            </div>
+
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="radio" value="Installment" name="purchaseType" class="product purchaseType" {{ $customerProduct->purchase_type == "Installment" ? 'checked' : '' }}> Installment
+                                </label>
+                            </div>
+                            @if ($errors->has('purchaseType'))
+                                @foreach($errors->get('purchaseType') as $error)
+                                    <div class="form-control-feedback">{{ $error }}</div>
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -176,7 +190,7 @@
                             <div class="col-md-6">
                                 <div class="form-group {{ $errors->has('deposite') ? ' has-danger' : '' }}">
                                     <label for="deposite">Deposite</label>
-                                    <input type="number" class="form-control" name="deposite" value="{{ $customerProduct->deposite }}">
+                                    <input type="number" class="form-control deposite" name="deposite" value="{{ $customerProduct->deposite }}">
                                     @if ($errors->has('deposite'))
                                         @foreach($errors->get('deposite') as $error)
                                             <div class="form-control-feedback">{{ $error }}</div>
@@ -188,7 +202,7 @@
                             <div class="col-md-6">
                                 <div class="form-group {{ $errors->has('installmentPrice') ? ' has-danger' : '' }}">
                                     <label for="installment-price">Installment Price</label>
-                                    <input type="number" class="form-control" name="installmentPrice" value="{{ $customerProduct->installment_price }}">
+                                    <input type="number" class="form-control installmentPrice" name="installmentPrice" value="{{ $customerProduct->installment_price }}">
                                     @if ($errors->has('installmentPrice'))
                                         @foreach($errors->get('installmentPrice') as $error)
                                             <div class="form-control-feedback">{{ $error }}</div>
@@ -204,7 +218,7 @@
                            <div class="col-md-6">
                                 <div class="form-group {{ $errors->has('totalInstallment') ? ' has-danger' : '' }}">
                                     <label for="total-installment">Total Installment</label>
-                                    <input type="number" class="form-control" name="totalInstallment" value="{{ $customerProduct->total_installment }}">
+                                    <input type="number" class="form-control totalInstallment" name="totalInstallment" value="{{ $customerProduct->total_installment }}" oninput="monthlyInstallment()">
                                     @if ($errors->has('totalInstallment'))
                                         @foreach($errors->get('totalInstallment') as $error)
                                             <div class="form-control-feedback">{{ $error }}</div>
@@ -216,7 +230,7 @@
                             <div class="col-md-6">
                                 <div class="form-group {{ $errors->has('monthlyInstallmentAmount') ? ' has-danger' : '' }}">
                                     <label for="monthly-installment-amount">Monthly Installment Amount</label>
-                                    <input type="number" class="form-control" name="monthlyInstallmentAmount" value="{{ $customerProduct->monthly_installment_amount }}">
+                                    <input type="number" class="form-control monthlyInstallmentAmount" name="monthlyInstallmentAmount" value="{{ $customerProduct->monthly_installment_amount }}">
                                     @if ($errors->has('monthlyInstallmentAmount'))
                                         @foreach($errors->get('monthlyInstallmentAmount') as $error)
                                             <div class="form-control-feedback">{{ $error }}</div>
@@ -254,7 +268,39 @@
 
 @section('custom-js')
     <script type="text/javascript">
-    /*code for product info*/
+
+        /*code for purchase type*/
+        var purchaseType =  $("input[name='purchaseType']:checked").val();
+
+        if (purchaseType == "Installment")
+        {
+            $('.installmentRow').show();
+        }
+        else
+        {
+            $('.installmentRow').hide();
+        }
+
+         $('.purchaseType').click(function(event) {
+            var purchaseType =  $("input[name='purchaseType']:checked").val();   
+            if(purchaseType == "Installment"){
+                 $('.installmentRow').show();
+                 $("input[name='deposite']").prop('required',true);
+                 $("input[name='installmentPrice']").prop('required',true);
+                 $("input[name='totalInstallment']").prop('required',true);
+                 $("input[name='monthlyInstallmentAmount']").prop('required',true);
+            }else{
+                $('.installmentRow').hide();
+                $("input[name='deposite']").prop('required',false);
+                $("input[name='installmentPrice']").prop('required',false);
+                $("input[name='totalInstallment']").prop('required',false);
+                $("input[name='monthlyInstallmentAmount']").prop('required',false);
+            }
+        })
+
+        /*end code for purchase type*/
+
+        /*code for product info*/
         $(document).on('change', '.product', function(){
             $.ajaxSetup({
                 headers: {
@@ -270,20 +316,49 @@
                     data:{productId:productId},
                     success:function(data){
                         var product = data.product;
+                        var purchaseType =  $("input[name='purchaseType']:checked").val();
                         $('.productModel').val(product.model_no);
                         $('.cashPrice').val(product.price);
+                        $('.mrpPrice').val(product.mrp_price);
                         $('.warranty').val(product.warranty);
+                        if (purchaseType == 'Installment')
+                        {
+                            $('.installmentPrice').val(product.haire_price);
+                        }
+                        else
+                        {
+                            $('.installmentPrice').val('');                             
+                        }
+                        monthlyInstallment();
                     }
                 });
             }else{
                $('.productModel').val('');
                $('.cashPrice').val(''); 
+               $('.mrpPrice').val(''); 
                $('.warranty').val(''); 
+               $('.installmentPrice').val('');  
             }
         });
+        /*end code for product info*/
 
-    /*end code for product info*/
+        function monthlyInstallment()
+        {
+            var deposite = parseFloat($('.deposite').val());
+            var installmentPrice = parseFloat($('.installmentPrice').val());
+            var totalInstallment = parseFloat($('.totalInstallment').val());
 
+            if (totalInstallment == 0 || $('.totalInstallment').val() == "")
+            {
+                var monthlyInstallmentPrice = (installmentPrice - deposite);
+            }
+            else
+            {
+                var monthlyInstallmentPrice = (installmentPrice - deposite)/totalInstallment;                
+            }
+
+            $('.monthlyInstallmentAmount').val(Math.round(monthlyInstallmentPrice));
+        }
     </script>
 
 @endsection

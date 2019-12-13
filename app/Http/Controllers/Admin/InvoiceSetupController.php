@@ -101,13 +101,23 @@ class InvoiceSetupController extends Controller
     public function printInvoice($invoiceId){
 
         $title = "Print Invoice";
-        $invoice = InvoiceSetup::orWhere('id',$invoiceId)->first();
-        $customer = CustomerRegistrationSetup::where('id',$invoice->customer_id)->first();
-        $getCustomerProduct = CustomerProduct::where('id',$invoice->customer_product_id)->first();
-        $productInfo = Product::where('id',$getCustomerProduct->product_id)->first();
-        $showRoom = ShowroomSetup::where('id',$getCustomerProduct->showroom_id)->first();
+        // $invoice = InvoiceSetup::orWhere('id',$invoiceId)->first();
+        // $customer = CustomerRegistrationSetup::where('id',$invoice->customer_id)->first();
+        // $getCustomerProduct = CustomerProduct::where('id',$invoice->customer_product_id)->first();
+        // $productInfo = Product::where('id',$getCustomerProduct->product_id)->first();
+        // $showRoom = ShowroomSetup::where('id',$getCustomerProduct->showroom_id)->first();
        
-        $pdf = PDF::loadView('admin.invoiceSetup.printInvoice',['title'=>$title,'invoice'=>$invoice,'customer'=>$customer,'getCustomerProduct'=>$getCustomerProduct,'productInfo'=>$productInfo,'showRoom'=>$showRoom]);
+        // $pdf = PDF::loadView('admin.invoiceSetup.printInvoice',['title'=>$title,'invoice'=>$invoice,'customer'=>$customer,'getCustomerProduct'=>$getCustomerProduct,'productInfo'=>$productInfo,'showRoom'=>$showRoom]);
+        $invoice = DB::table('tbl_invoice')
+            ->select('tbl_invoice.*','tbl_customers.name as customerName','tbl_customers.phone_no as customerPhoneNo','tbl_products.name as productName','tbl_products.code as productCode','tbl_showroom.name as showroomName')
+            ->join('tbl_customers','tbl_customers.id','=','tbl_invoice.customer_id')
+            ->join('tbl_products','tbl_products.id','=','tbl_invoice.product_id')
+            ->join('tbl_customer_products','tbl_customer_products.id','=','tbl_invoice.customer_product_id')
+            ->join('tbl_showroom','tbl_showroom.id','=','tbl_customer_products.showroom_id')
+            ->where('tbl_invoice.id',$invoiceId)
+            ->first();
+       
+        $pdf = PDF::loadView('admin.invoiceSetup.printInvoice',['title'=>$title,'invoice'=>$invoice]);
 
         return $pdf->stream('invoice.pdf');
     }
@@ -115,13 +125,15 @@ class InvoiceSetupController extends Controller
     public function printChalan($invoiceId){
 
         $title = "Print Chalan";
-        $invoice = InvoiceSetup::orWhere('id',$invoiceId)->first();
-        $customer = CustomerRegistrationSetup::where('id',$invoice->customer_id)->first();
-        $getCustomerProduct = CustomerProduct::where('id',$invoice->customer_product_id)->first();
-        $productInfo = Product::where('id',$getCustomerProduct->product_id)->first();
-        $showRoom = ShowroomSetup::where('id',$getCustomerProduct->showroom_id)->first();
+        $invoice = DB::table('tbl_invoice')
+            ->select('tbl_invoice.*','tbl_products.name as productName','tbl_products.code as productCode','tbl_showroom.name as showroomName')
+            ->join('tbl_products','tbl_products.id','=','tbl_invoice.product_id')
+            ->join('tbl_customer_products','tbl_customer_products.id','=','tbl_invoice.customer_product_id')
+            ->join('tbl_showroom','tbl_showroom.id','=','tbl_customer_products.showroom_id')
+            ->where('tbl_invoice.id',$invoiceId)
+            ->first();
        
-        $pdf = PDF::loadView('admin.invoiceSetup.printChalan',['title'=>$title,'invoice'=>$invoice,'customer'=>$customer,'getCustomerProduct'=>$getCustomerProduct,'productInfo'=>$productInfo,'showRoom'=>$showRoom]);
+        $pdf = PDF::loadView('admin.invoiceSetup.printChalan',['title'=>$title,'invoice'=>$invoice]);
 
         return $pdf->stream('invoice.pdf');
     }

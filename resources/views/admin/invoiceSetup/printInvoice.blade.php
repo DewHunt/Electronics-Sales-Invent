@@ -3,55 +3,54 @@
 @section('custome-css')
     <style>
         #report-table td, #report-table th {
-            border: 0px solid #ddd;
-           /* padding: 5px;*/
+            border: 1px solid #ddd;
         }
 
-        #up-header{
-            background-color: white;
+        #invoice-table{
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #invoice-table td{
+            width: 50%;
+            border: 0px solid black;
         }
     </style>
 @endsection
 
 @php
-    use App\Product;
-    use App\ShowroomSetup;
     $invoiceDate = date('d-m-Y',strtotime($invoice->created_at));
 @endphp
 
 @section('content')
-    <table width="100%">
+    <table id="invoice-table">
         <tr>
-            <td width="50%">
-                <div>
-                    <span><b>Invoice No</b></span> #{{@$invoice->invoice_no}}
-                </div>
-
-                <div>
-                    <span>Invoice Date : </span> {{@$invoiceDate}}
-                </div>
-
-                <div>
-                    <span>Invoice Print Date : </span> {{date('d-m-Y')}}
-                </div>
-                
+            <td colspan="2" align="right">
+                <span style="border-bottom: 1px solid black;"><b>Invoice To</b></span>
             </td>
-
-            <td width="50%" align="right">
-                <div>
-                    <span style="border-bottom: 1px solid black;"><b>Invoice To</b></span>
-                </div>
-                <br>
-                <div>
-                    <span>{{ $customer->name}}</span>
-                </div>
-                <div>
-                    <span>{{ $customer->phone_no}}</span>
-                </div>
-
-                <div>
-                    <span>{{$invoice->customer_product_usage_address }}</span>
-                </div>
+        </tr>
+        <tr>
+            <td>
+                <span><b>Invoice No</b></span> #{{@$invoice->invoice_no}}
+            </td>
+            <td align="right">
+                <span>{{ $invoice->customerName}}</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span><b>Invoice Date : </b></span> {{@$invoiceDate}}
+            </td>
+            <td align="right">
+                <span>{{ $invoice->customerPhoneNo}}</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span><b>Invoice Print Date : </b></span> {{date('d-m-Y')}}
+            </td>
+            <td align="right">
+                <span>{{$invoice->customer_product_usage_address }}</span>
             </td>
         </tr>
     </table>
@@ -74,9 +73,9 @@
 
         <tbody>
             <tr>
-                <td>{{$showRoom->name}}</td>
-                <td>{{$productInfo->code}}</td>
-                <td>{{$productInfo->name}}</td>
+                <td>{{$invoice->showroomName}}</td>
+                <td>{{$invoice->productCode}}</td>
+                <td>{{$invoice->productName}}</td>
                 <td>{{$invoice->customer_product_price}}</td>
                 <td>{{$invoice->customer_product_model}}</td>
                 <td>{{$invoice->customer_product_color}}</td>

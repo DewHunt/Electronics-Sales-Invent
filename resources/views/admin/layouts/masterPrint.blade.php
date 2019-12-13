@@ -24,6 +24,23 @@
                 color: white;
                 font-size: 13px;
                 vertical-align: middle;
+                padding: 3px;
+            }
+
+            .align-left{
+                text-align: left;
+            }
+
+            .align-center{
+                text-align: center;
+            }
+
+            .align-right{
+                text-align: right;
+            }
+
+            #report-table tfoot th{
+                background-color: #778899;
             }
 
             #report-table tr:nth-child(even){background-color: #f2f2f2;}
@@ -54,6 +71,10 @@
 
             #header-table th {
                 font-size: 20px;
+            }
+
+            #pad-bottom{
+                padding-bottom: 10px;
             }
         </style>
 

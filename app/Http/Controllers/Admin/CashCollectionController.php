@@ -12,21 +12,26 @@ use App\CustomerRegistrationSetup;
 
 class CashCollectionController extends Controller
 {
-    public function index(){
+    public function index()
+    {
     	$title = "Cash Collection";
     	$cashCollections = CashCollection::orderBy('id','ASC')->get();
     	return view('admin.cashCollection.index')->with(compact('title','cashCollections'));
     }
 
-    public function add(){
+    public function add()
+    {
     	$title = "New Cash Collection";
         $formLink = "cashCollection.save";
         $buttonName = "Save";
-        $invoiceList = InvoiceSetup::orderBy('id','asc')->get();
+        $invoiceList = InvoiceSetup::where('collection_type','!=','Installment')
+            ->orderBy('id','asc')
+            ->get();
     	return view('admin.cashCollection.add')->with(compact('title','formLink','buttonName','invoiceList'));
     }
 
-    public function save(Request $request){
+    public function save(Request $request)
+    {
     	$collectionDate = date('Y-m-d',strtotime($request->collectionDate));
     	$cashCollection = CashCollection::create( [
             'invoice_id' => $request->invoiceId,       
@@ -39,10 +44,11 @@ class CashCollectionController extends Controller
             'remarks' => $request->remarks        
         ]);
 
-        return redirect(route('cashCollection.index'))->with('msg', 'Cash Payment Collected Successfully');
+        return redirect(route('cashCollection.add'))->with('msg', 'Cash Payment Collected Successfully');
     }
 
-    public function update(Request $request){
+    public function update(Request $request)
+    {
     	$collectionId = $request->collectionId;
     	$cashCollection = CashCollection::find($collectionId);
     	$collectionDate = date('Y-m-d',strtotime($request->collectionDate));
@@ -58,7 +64,8 @@ class CashCollectionController extends Controller
         return redirect(route('cashCollection.index'))->with('msg', 'Cash Payment Collection Update Successfully');
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
     	$title = "Edit Cash Collection";
         $formLink = "cashCollection.update";
         $buttonName = "Update";
@@ -69,7 +76,8 @@ class CashCollectionController extends Controller
     	return view('admin.cashCollection.edit')->with(compact('title','formLink','buttonName','cashCollection','invoice','product'));
     }
 
-    public function print($collectionId){
+    public function print($collectionId)
+    {
         $title = "Money Receipt";
         $cashCollection = CashCollection::Where('id',$collectionId)->first();
         $invoice = InvoiceSetup::Where('id',$cashCollection->invoice_id)->first();

@@ -279,8 +279,9 @@ use App\CashCollection;
                 }
                 else
                 {
+                    swal('Invalid Amount!','','warning');
                     $('.collectionAmount').val(parseInt(invoiceAmount - previousCollection).toFixed(2));
-                    var currentDue = parseInt(invoiceAmount) - previousCollection;
+                    var currentDue = parseInt(invoiceAmount) - (parseInt($('#collectionAmount').val()) + previousCollection);
                     $('.currentDue').val(currentDue.toFixed(2));
                 }
 

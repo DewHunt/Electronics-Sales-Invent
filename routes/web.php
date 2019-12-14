@@ -353,6 +353,38 @@ Route::prefix('admin')->group(function()
 			Route::post('/customer-statement/print','Admin\CustomerStatementController@print')->name('customerStatement.print');
 
 		// End Sales Management
+
+		// Start Installment Management
+
+			/*Installment schedule section*/
+			Route::get('/installment-schedule','Admin\InstallmentScheduleController@index')->name('installmentSchedule.index');
+
+			Route::get('/installment-schedule-add','Admin\InstallmentScheduleController@add')->name('installmentSchedule.add');
+			Route::post('/installment-schedule-save','Admin\InstallmentScheduleController@save')->name('installmentSchedule.save');
+
+			Route::get('/installment-schedule-edit/{id}','Admin\InstallmentScheduleController@edit')->name('installmentSchedule.edit');
+			Route::post('/installment-schedule-update','Admin\InstallmentScheduleController@update')->name('installmentSchedule.update');
+
+			Route::post('/installment-schedule-delete','Admin\InstallmentScheduleController@delete')->name('installmentSchedule.delete');
+
+			Route::post('/installment-schedule-get-customerproduct-info','Admin\InstallmentScheduleController@getCustomerProductInfo')->name('installmentSchedule.getCustomerProductInfo');
+
+			//End Installment Module
+
+			/*Installment  collection*/
+			Route::get('/installment-collection','Admin\InstallmentCollectionController@index')->name('installmentCollection.index');
+
+			Route::get('/installment-collection-add','Admin\InstallmentCollectionController@add')->name('installmentCollection.add');
+			Route::post('/installment-collection-save','Admin\InstallmentCollectionController@save')->name('installmentCollection.save');
+
+			Route::get('/installment-collection-edit/{id}','Admin\InstallmentCollectionController@edit')->name('installmentCollection.edit');
+			Route::post('/installment-collection-update','Admin\InstallmentCollectionController@update')->name('installmentCollection.update');
+
+			Route::post('/installment-collection-delete','Admin\InstallmentCollectionController@delete')->name('installmentCollection.delete');
+
+			Route::post('/installment-collection-get-installment-info','Admin\InstallmentCollectionController@getInstallmentInfo')->name('installmentCollection.getInstallmentInfo');
+			
+		// End Installment Management
 		});
 	});
 

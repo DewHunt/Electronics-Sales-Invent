@@ -5,6 +5,53 @@
         table{
             font-family: Times, "Times New Roman", serif;
         }
+        
+        #report-table td, #report-table th {
+            border: 1px solid #ddd;
+        }
+
+        #report-table tbody td{
+            height: 500px;
+            vertical-align: top;
+        }
+
+        #invoice-table{
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #invoice-table td{
+            width: 50%;
+            border: 0px solid black;
+        }
+
+        #invoice-header{
+            background-color: lightgray;
+            width: 100%;
+            padding: 5px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        #invoice-footer{
+            background-color: lightgray;
+            width: 100%;
+        }
+
+        #invoice-footer th{
+            border: 0px solid white;
+            padding: 5px;
+            text-align: right;
+            font-size: 14px;
+            width: 180px;
+        }
+
+        #invoice-footer td{
+            border: 1px solid black;
+            padding: 5px;
+        }
+
         .moneyReceiptHeader{
             font-size: 13px;
         }
@@ -33,22 +80,47 @@
 @endphp
 
 @section('content')
-    <caption style="text-decoration: none;"><h2>Money Receipt</h2></caption>
-    <table width="100%">
+    <table id="invoice-header">
         <tr>
-            <td width="50%">
-                <span class="moneyReceiptHeader"><b>Receipt No</b> #{{$cashCollection->collection_no}}</span>
-                <br>
-                <span class="moneyReceiptHeader"><b>Invoice No</b> #{{$invoice->invoice_no}}</span>
-            </td>
-            <td width="50%" align="right">
-                <span class="moneyReceiptHeader">
-                    <b>Collection Date</b> : {{$collectionDate}}
-                    <br>
-                    <b>Print Date</b> : {{date('d-m-Y')}}
-                </span>
-            </td>
+            <td>Money Receipt</td>
         </tr>
+    </table>
+    {{-- <caption style="text-decoration: none;"><h2>Money Receipt</h2></caption> --}}
+    <div id="pad-bottom"></div>
+
+    <table width="100%" border="0">
+        <tbody>
+            <tr>
+                <td>
+                    <table width="100%">
+                        <tr>
+                            <td width="90px"><span><b>Receipt No</b></span></td>
+                            <td width="10px">:</td>
+                            <td>{{ $cashCollection->collection_no }}</td>
+                        </tr>
+                        <tr>
+                            <td width="90px"><span><b>Invoice No</b></span></td>
+                            <td width="10px">:</td>
+                            <td>{{$invoice->invoice_no}}</td>
+                        </tr>
+                    </table>
+                </td>
+                <td align="right">
+                    <table width="100%">
+                        <tr>
+                            <td><span><b>Collection Date</b></span></td>
+                            <td width="10px">:</td>
+                            <td width="90px">{{ $collectionDate }}</td>
+                        </tr>
+                        <tr>
+                            <td><span><b>Print Date</b></span></td>
+                            <td width="10px">:</td>
+                            <td width="90px">{{ date('d-m-Y') }}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
     </table>
 
     <div id="pad-bottom"></div>

@@ -74,19 +74,19 @@
                 <td>
                     <table width="100%" border="0">
                         <tr>
-                            <td width="105px"><span><b>Invoice No </b></span></td>
+                            <td width="105px"><span><b>Invoice No</b></span></td>
                             <td width="10px">:</td>
                             <td>{{ @$invoice->invoice_no }}</td>
                         </tr>
                         <tr>
-                            <td width="105px"><span><b>Invoice Date </b></span></td>
+                            <td width="105px"><span><b>Invoice Date</b></span></td>
                             <td width="10px">:</td>
-                            <td> {{ @$invoiceDate }}</td>
+                            <td>{{ @$invoiceDate }}</td>
                         </tr>
                         <tr>
-                            <td width="105px"><span><b>Print Date </b></span></td>
+                            <td width="105px"><span><b>Print Date</b></span></td>
                             <td width="10px">:</td>
-                            <td>{{date('d-m-Y')}}</td>
+                            <td>{{ date('d-m-Y') }}</td>
                         </tr>
                     </table>
                 </td>

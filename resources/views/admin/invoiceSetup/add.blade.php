@@ -46,6 +46,7 @@
                         <a class="btn btn-outline-info btn-lg" href="{{ route($goBackLink) }}">
                             <i class="fa fa-arrow-circle-left"></i> Go Back
                         </a>
+                        <button type="submit" class="btn btn-outline-info btn-lg waves-effect"><i class="fa fa-save"></i> {{ $buttonName }}</button>
                     </div>
                 </div>
             </div>
@@ -53,27 +54,12 @@
             <div class="card-body">
                 <input type="hidden" value="print" name="print">
                 <div class="row">
-                    <div class="col-md-7">
-                        <label for="customer-product-name">Product Name</label>
-                        <div class="form-group {{ $errors->has('customerProductId') ? ' has-danger' : '' }}">
-                            <select class="form-control chosen-select" name="customerProductId" data-placeholder="Select Product" required="">
-                                <option value="">Select Product</option>
-                                @foreach ($customerProducts as $customerProduct)
-{{--                                     @php
-                                        $product = Product::where('id',$customerProduct->product_id)->first();
-                                    @endphp --}}
-                                    <option value="{{$customerProduct->id}}">{{$customerProduct->productName}} ({{$customerProduct->productCode}})</option>
-                                @endforeach
-                            </select>
-                            @if ($errors->has('customerProductId'))
-                                @foreach($errors->get('customerProductId') as $error)
-                                    <div class="form-control-feedback">{{ $error }}</div>
-                                @endforeach
-                            @endif
-                        </div>
+                    <div class="col-md-6">
+                        <label for="from-date">Invoice Date</label>
+                        <input  type="text" class="form-control add_datepicker" name="invoiceDate" placeholder="Select Date From">
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-6">
                         <label>Collection Type</label>
                         <div class="form-group {{ $errors->has('collectionType') ? ' has-danger' : '' }}" style="height: 40px; line-height: 40px;">
                             <div class="form-check-inline">
@@ -87,13 +73,32 @@
                                     <input type="radio" value="Partial Payment" class="collectionType" name="collectionType"> Partial Payment
                                 </label>
                             </div>
+
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="radio" value="Installment" class="collectionType" name="collectionType"> Installment
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="customer-product-name">Customer & Product Name</label>
+                        <div class="form-group" id="prodct-select-menu">
+                            <select class="form-control chosen-select" name="customerProductId" id="customerProductId">
+                                <option value="">Select Product</option>
+                            </select>
                         </div>
                     </div>
 
-                    <div class="col-md-2">
-                        <label for=""></label>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-outline-info btn-md waves-effect"><i class="fa fa-save"></i> {{ $buttonName }}</button>
+                    <div class="col-md-6">
+                        <label for="customer-product-serial">Product Serial</label>
+                        <div class="form-group" id="prodct-serial-select-menu">
+                            <select class="form-control chosen-select" name="productSerial" id="productSerial">
+                                <option value="">Select Product Serial</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -178,12 +183,70 @@
 @section('custom-js')
     <script type="text/javascript">
         $(document).ready(function () {
-            $("form").submit(function(e){
-/*                    var collectionType = $(".collectionType").val(); */
-                    if ( ! $("input[name='collectionType']").is(':checked') ){
-                         e.preventDefault();
-                        swal("Please! Select Collection Type", "", "warning");   
+            $("form").submit(function(e)
+            {
+                if (!$("input[name='collectionType']").is(':checked'))
+                {
+                    e.preventDefault();
+                    swal("Please! Select Collection Type", "", "warning");   
+                }
+                else
+                {
+                    if (!$("#customerProductId").val())
+                    {
+                        e.preventDefault();
+                        swal("Please! Select A Product", "", "warning");   
                     }
+                    else
+                    {
+                        if (!$("#productSerial").val())
+                        {
+                            e.preventDefault();
+                            swal("Please! Select Product Serial", "", "warning");   
+                        }
+                    }
+                }
+
+            });
+        });
+
+        $("input[type='radio']").click(function(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });            
+            
+            var collectionType = $("input[name='collectionType']:checked").val();
+
+            $.ajax({
+                type:'post',
+                url:'{{ route('invoiceSetup.getAllProduct') }}',
+                data:{collectionType:collectionType},
+                success:function(data){
+                    $('#prodct-select-menu').html(data);
+                    $(".chosen-select").chosen();
+                }
+            });
+        });
+
+        $(document).on('change', '#customerProductId', function(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            
+            var customerProductId = $('#customerProductId').val();
+
+            $.ajax({
+                type:'post',
+                url:'{{ route('invoiceSetup.getAllProductSerial') }}',
+                data:{customerProductId:customerProductId},
+                success:function(data){
+                    $('#prodct-serial-select-menu').html(data);
+                    $(".chosen-select").chosen();
+                }
             });
         });
     </script>

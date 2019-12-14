@@ -76,10 +76,17 @@
             #pad-bottom{
                 padding-bottom: 10px;
             }
+
+            .overline {
+                border-top: 2px solid currentColor;
+            }
         </style>
 
         @yield('custome-css')
     </head>
+
+    @php
+    @endphp
 
     <body align="center">
     	@php

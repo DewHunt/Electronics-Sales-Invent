@@ -62,7 +62,7 @@
 </script> -->
 
 <script type="text/javascript">
-	$(".chosen-select").chosen();
+	$(".chosen-select").chosen({search_contains: true});
 </script>
 
 

@@ -317,6 +317,8 @@ Route::prefix('admin')->group(function()
 			Route::get('/invoice-setup-print-invoice/{invoiceId}','Admin\InvoiceSetupController@printInvoice')->name('invoiceSetup.printInvoice');
 			Route::get('/invoice-setup-print-chalan/{invoiceId}','Admin\InvoiceSetupController@printChalan')->name('invoiceSetup.printChalan');
 			Route::post('/invoice-setup-delete','Admin\InvoiceSetupController@delete')->name('invoiceSetup.delete');
+			Route::post('/invoice-setup/product-list','Admin\InvoiceSetupController@getAllProduct')->name('invoiceSetup.getAllProduct');
+			Route::post('/invoice-setup/product-serial-list','Admin\InvoiceSetupController@getAllProductSerial')->name('invoiceSetup.getAllProductSerial');
 
 			//Cash Collection developed by Jisan
 			Route::get('/cash-collection','Admin\CashCollectionController@index')->name('cashCollection.index');

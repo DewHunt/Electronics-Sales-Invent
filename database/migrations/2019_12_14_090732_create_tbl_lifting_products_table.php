@@ -24,6 +24,7 @@ class CreateTblLiftingProductsTable extends Migration
             $table->string('price')->nullable();
             $table->string('mrp_price')->nullable();
             $table->string('haire_price')->nullable();
+            $table->tinyInteger('status')->default('1');
             $table->timestamps();
         });
     }

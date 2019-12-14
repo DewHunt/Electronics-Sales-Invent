@@ -259,19 +259,36 @@ use App\CashCollection;
 
             function CalculateDue(){
                 var collectionAmount = document.getElementById('collectionAmount').value;
-                if (document.getElementById('previousCollection').value) {
+                if (document.getElementById('previousCollection').value)
+                {
                     var previousCollection = document.getElementById('previousCollection').value;
-                }else{
+                }
+                else
+                {
                     var previousCollection = 0;
                 }
-                 var invoiceAmount = document.getElementById('invoiceAmount').value;
-                 var newAmount = parseInt(collectionAmount) + parseInt(previousCollection);
-                 var currentDue = parseInt(invoiceAmount) - parseInt(newAmount);
-                $('.currentDue').val(currentDue.toFixed(2));
 
-                if (currentDue < 0) {
-                    alert('Collection amount sholuld not be cross invoice amount!');
+                var invoiceAmount = document.getElementById('invoiceAmount').value;
+                var previousCollection = parseInt($('.previousCollection').val());
+
+                if (collectionAmount <= (invoiceAmount - previousCollection))
+                {
+                    var newAmount = parseInt(collectionAmount) + parseInt(previousCollection);
+                    var currentDue = parseInt(invoiceAmount) - parseInt(newAmount);
+                    $('.currentDue').val(currentDue.toFixed(2));
                 }
+                else
+                {
+                    $('.collectionAmount').val(parseInt(invoiceAmount - previousCollection).toFixed(2));
+                    var currentDue = parseInt(invoiceAmount) - previousCollection;
+                    $('.currentDue').val(currentDue.toFixed(2));
+                }
+
+                // if (currentDue < 0)
+                // {
+                //     alert('Collection amount sholuld not be cross invoice amount!');
+                //     $('.collectionAmount').val(parseInt(invoiceAmount - previousCollection).toFixed(2));
+                // }
             }
 
         /*end code for product info*/

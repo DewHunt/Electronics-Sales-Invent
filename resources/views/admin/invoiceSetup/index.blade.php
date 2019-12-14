@@ -58,6 +58,7 @@
                             <th>Invoice Date</th>
                             <th>Showroom</th>
                             <th>Product Code</th>
+                            <th>Product Serial No</th>
                             <th>Collection Type</th>
                             <th>Price</th>
                             <th width="95px">Action</th>
@@ -83,6 +84,7 @@
                                 <td>{{$invoiceDate}}</td>
                                 <td>{{$showRoom->name}}</td>
                                 <td>{{$productInfo->code}}</td>
+                                <td>{{$invoice->product_serial_no}}</td>
                                 <td>{{$invoice->collection_type}}</td>
                                 <td>{{$invoice->customer_product_price}}</td>
                                 <td>

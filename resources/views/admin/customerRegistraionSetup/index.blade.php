@@ -51,7 +51,7 @@
                             <th>Customer Name</th>
                             <th width="100px">Phone No</th>
                             <th>Address</th>
-                            <th width="75px">Action</th>
+                            <th width="80px">Action</th>
                         </tr>
                     </thead>
                     <tbody>

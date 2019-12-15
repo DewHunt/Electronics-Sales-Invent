@@ -33,7 +33,10 @@ class AdminController extends Controller
     {
         $this->validation($request);
 
-        $showroomId = implode(',', $request->showrooms);
+        if ($request->showrooms)
+        {
+            $showroomId = implode(',', $request->showrooms);
+        }
 
         if (isset($request->userImage))
         {
@@ -46,7 +49,7 @@ class AdminController extends Controller
 
         $users = Admin::create( [           
             'role' => $request->role,     
-            'showroomId' => $showroomId,     
+            'showroomId' => @$showroomId,     
             'name' => $request->name,           
             'username' => $request->username,           
             'image' => $userImage,           

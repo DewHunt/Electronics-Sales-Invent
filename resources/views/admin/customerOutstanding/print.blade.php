@@ -1,8 +1,15 @@
 @extends('admin.layouts.masterPrint')
 
 @section('content')
+    <table id="report-header">
+        <tr>
+            <td>Customer Outstanding</td>
+        </tr>
+    </table>
+
+    <div id="pad-bottom"></div>
+
     <table  id="report-table">
-        <caption>Customer Outstandings</caption>
         <thead>
             <tr>
                 <th width="20px">Sl</th>

@@ -22,7 +22,7 @@
                     <label for="product-image">Product Image</label> 
                     <span style="color: red;">( Standard Image Size: 700px * 700px )</span>
                     <div class="form-group {{ $errors->has('productImage') ? ' has-danger' : '' }}">
-                        <input type="file" class="form-control" id="productImage" aria-describedby="fileHelp" name="productImage">
+                        <input type="file" class="form-control" id="productImage" aria-describedby="fileHelp" name="productImage" required>
                         @if ($errors->has('productImage'))
                             @foreach($errors->get('productImage') as $error)
                                 <div class="form-control-feedback">{{ $error }}</div>

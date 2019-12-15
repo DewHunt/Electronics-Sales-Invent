@@ -1,8 +1,15 @@
 @extends('admin.layouts.masterPrint')
 
 @section('content')
+    <table id="report-header">
+        <tr>
+            <td>Vendor Statement On {{ $fromDate }} To {{ $toDate }}</td>
+        </tr>
+    </table>
+
+    <div id="pad-bottom"></div>
+
     <table  id="report-table">
-        <caption>Vendor Statement On {{ $fromDate }} To {{ $toDate }}</caption>
         <thead class="thead-light">
             <tr>
                 @php

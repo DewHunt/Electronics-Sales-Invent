@@ -119,7 +119,11 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <img src="{{ url($users->image) }}" class="img-thumbnail" alt="User Image" width="100px" height="100px">
+                        @if ($users->image)
+                            <img src="{{ asset('$users->image') }}" class="img-thumbnail" alt="User Image" width="100px" height="100px">
+                        @else
+                            <img src="{{ asset('/public/others_images/no_image.png') }}" class="img-thumbnail" alt="User Image" width="100px" height="100px">
+                        @endif
                     </div>
                 </div>                                        
             </div>

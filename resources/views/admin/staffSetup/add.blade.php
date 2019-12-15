@@ -24,7 +24,7 @@
     		<div class="col-md-6">
                 <div class="form-group {{ $errors->has('staffName') ? ' has-danger' : '' }}">
                     <label for="staff-name">Staff Name</label>
-                    <input type="text" class="form-control" name="staffName" value="{{ old('staffName') }}" required>
+                    <input type="text" class="form-control" name="staffName" value="{{ old('staffName') }}">
                     @if ($errors->has('staffName'))
                         @foreach($errors->get('staffName') as $error)
                             <div class="form-control-feedback">{{ $error }}</div>
@@ -79,7 +79,7 @@
                     <div class="col-md-12">
                         <div class="form-group {{ $errors->has('email') ? ' has-danger' : '' }}">
                             <label for="email">Email</label>
-                            <input type="text" class="form-control" name="email" value="{{ old('email') }}" required>
+                            <input type="text" class="form-control" name="email" value="{{ old('email') }}">
                             @if ($errors->has('email'))
                                 @foreach($errors->get('email') as $error)
                                     <div class="form-control-feedback">{{ $error }}</div>

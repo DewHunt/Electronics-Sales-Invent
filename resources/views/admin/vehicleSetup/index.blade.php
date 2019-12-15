@@ -13,7 +13,7 @@
                         <th width="20px">SL</th>
                         <th>Type</th>
                         <th>Registration No</th>
-                        <th>Caoacity</th>
+                        <th>Capacity</th>
                         <th width="20px">Status</th>
                         <th width="20px">Action</th>
                     </tr>
@@ -104,7 +104,7 @@
                         swal({
                             title: "Cancelled", 
                             type: "error",
-                            text: "Your User is safe :)",
+                            text: "Your Vehicle Is Safe :)",
                             timer: 1000,
                             html: true,
                         });    

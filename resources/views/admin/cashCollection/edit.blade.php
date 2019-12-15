@@ -149,7 +149,7 @@ $collectionDate = date('d-m-Y',strtotime($cashCollection->collection_date));
                     <div class="col-md-6">
                         <div class="form-group {{ $errors->has('collectionAmount') ? ' has-danger' : '' }}">
                             <label for="collection-amount">Collection Amount</label>
-                            <input type="number" name="collectionAmount" class="form-control collectionAmount" id="collectionAmount" value="{{$cashCollection->collection_amount}}" required="" onkeyup="CalculateDue()">
+                            <input type="number" name="collectionAmount" class="form-control collectionAmount" id="collectionAmount" value="{{$cashCollection->collection_amount}}" required="" oninput="CalculateDue()">
                             @if ($errors->has('collectionAmount'))
                                 @foreach($errors->get('collectionAmount') as $error)
                                     <div class="form-control-feedback">{{ $error }}</div>

@@ -153,7 +153,7 @@
             }         
 
             //ajax delete code
-            $('#usersTable tbody').on( 'click', 'i.fa-trash', function () {
+            $('#dataTable tbody').on( 'click', 'i.fa-trash', function () {
                 $.ajaxSetup({
                   headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

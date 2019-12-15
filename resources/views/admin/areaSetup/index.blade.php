@@ -110,7 +110,7 @@
                         swal({
                             title: "Cancelled", 
                             type: "error",
-                            text: "Your User is safe :)",
+                            text: "This Area Is Safe :)",
                             timer: 1000,
                             html: true,
                         });    

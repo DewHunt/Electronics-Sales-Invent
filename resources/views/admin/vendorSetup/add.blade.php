@@ -12,7 +12,7 @@
             <div class="col-md-6">
                 <label for="Code" >Code</label>
                 <div class="form-group {{ $errors->has('code') ? ' has-danger' : '' }}">
-                    <input type="text" class="form-control form-control-danger" name="code" value="{{ old('code') }}">
+                    <input type="text" class="form-control form-control-danger" name="code" value="{{ old('code') }}" required="">
                     @if ($errors->has('code'))
                         @foreach($errors->get('code') as $error)
                             <div class="form-control-feedback">{{ $error }}</div>

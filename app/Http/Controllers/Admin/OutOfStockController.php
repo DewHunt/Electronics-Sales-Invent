@@ -16,7 +16,7 @@ class OutOfStockController extends Controller
 {
 	public function index(Request $request)
 	{
-		$title = "Product List Preport";
+		$title = "Out Of Stock";
 		$searchFormLink = "outOfStock.index";
 		$printFormLink = "outOfStock.print";
 
@@ -62,7 +62,7 @@ class OutOfStockController extends Controller
 
 	public function print(Request $request)
 	{
-		$title = "Product List Preport";
+		$title = "Print Out Of Stock";
 
         $productCategory = $request->productCategory;
         $product = $request->product;

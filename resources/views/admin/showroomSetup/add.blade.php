@@ -38,7 +38,7 @@
     		<div class="col-md-6">
             	<div class="form-group {{ $errors->has('tradeLicense') ? ' has-danger' : '' }}">
             		<label for="trade-license">Trade License</label>
-        			<input type="text" class="form-control" name="tradeLicense" value="{{ old('tradeLicense') }}" required>
+        			<input type="text" class="form-control" name="tradeLicense" value="{{ old('tradeLicense') }}">
         			@if ($errors->has('tradeLicense'))
             			@foreach($errors->get('tradeLicense') as $error)
             				<div class="form-control-feedback">{{ $error }}</div>
@@ -52,7 +52,7 @@
         			<div class="col-md-6">
                     	<div class="form-group {{ $errors->has('vat') ? ' has-danger' : '' }}">
                     		<label for="vat">VAT</label>
-                			<input type="text" class="form-control" name="vat" value="{{ old('vat') }}" required>
+                			<input type="text" class="form-control" name="vat" value="{{ old('vat') }}">
                 			@if ($errors->has('vat'))
                     			@foreach($errors->get('vat') as $error)
                     				<div class="form-control-feedback">{{ $error }}</div>
@@ -64,7 +64,7 @@
             		<div class="col-md-6">
                     	<div class="form-group {{ $errors->has('tin') ? ' has-danger' : '' }}">
                     		<label for="tin">TIN</label>
-                			<input type="text" class="form-control" name="tin" value="{{ old('tin') }}" required>
+                			<input type="text" class="form-control" name="tin" value="{{ old('tin') }}">
                 			@if ($errors->has('tin'))
                     			@foreach($errors->get('tin') as $error)
                     				<div class="form-control-feedback">{{ $error }}</div>
@@ -96,7 +96,7 @@
         			<div class="col-md-6">
                     	<div class="form-group {{ $errors->has('email') ? ' has-danger' : '' }}">
                     		<label for="email">Email</label>
-                			<input type="text" class="form-control" name="email" value="{{ old('email') }}" required>
+                			<input type="text" class="form-control" name="email" value="{{ old('email') }}">
                 			@if ($errors->has('email'))
                     			@foreach($errors->get('email') as $error)
                     				<div class="form-control-feedback">{{ $error }}</div>
@@ -108,7 +108,7 @@
             		<div class="col-md-6">
                     	<div class="form-group {{ $errors->has('webSite') ? ' has-danger' : '' }}">
                     		<label for="web-site">Web Site</label>
-                			<input type="text" class="form-control" name="webSite" value="{{ old('webSite') }}" required>
+                			<input type="text" class="form-control" name="webSite" value="{{ old('webSite') }}">
                 			@if ($errors->has('webSite'))
                     			@foreach($errors->get('webSite') as $error)
                     				<div class="form-control-feedback">{{ $error }}</div>
@@ -134,7 +134,7 @@
             		<div class="col-md-6">
                     	<div class="form-group {{ $errors->has('faxNumber') ? ' has-danger' : '' }}">
                     		<label for="fax-no">Fax No.</label>
-                			<input type="text" class="form-control" name="faxNumber" value="{{ old('faxNumber') }}" required>
+                			<input type="text" class="form-control" name="faxNumber" value="{{ old('faxNumber') }}">
                 			@if ($errors->has('faxNumber'))
                     			@foreach($errors->get('faxNumber') as $error)
                     				<div class="form-control-feedback">{{ $error }}</div>

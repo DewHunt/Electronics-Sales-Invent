@@ -29,9 +29,16 @@ class CustomerOutstandingController extends Controller
     	{
 	    	$customerOutstandings = DB::table('view_customer_outstanding')
 	    		->select('view_customer_outstanding.*')
-	    		->whereIn('customerId',$customer)
-	    		->where('balance','>','0')
-	    		->whereNull('balance')
+                ->where(function($query) use($customer){
+                    if ($customer)
+                    {
+                        $query->whereIn('customerId',$customer);
+                    }
+                })
+                ->where(function ($query) {
+                    $query->where('balance','>','0')
+                    ->orWhereNull('balance');
+                })
 	    		->orderBy('customerName')
 	    		->get();
     	}
@@ -56,13 +63,20 @@ class CustomerOutstandingController extends Controller
 
     	if ($customer)
     	{
-	    	$customerOutstandings = DB::table('view_customer_outstanding')
-	    		->select('view_customer_outstanding.*')
-	    		->whereIn('customerId',$customer)
-	    		->where('balance','>','0')
-	    		->whereNull('balance')
-	    		->orderBy('customerName')
-	    		->get();
+            $customerOutstandings = DB::table('view_customer_outstanding')
+                ->select('view_customer_outstanding.*')
+                ->where(function($query) use($customer){
+                    if ($customer)
+                    {
+                        $query->whereIn('customerId',$customer);
+                    }
+                })
+                ->where(function ($query) {
+                    $query->where('balance','>','0')
+                    ->orWhereNull('balance');
+                })
+                ->orderBy('customerName')
+                ->get();
     	}
     	else
     	{

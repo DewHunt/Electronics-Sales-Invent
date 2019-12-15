@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+
 use DB;
 use PDF;
 use MPDF;
@@ -13,6 +14,7 @@ use App\CustomerGuarantor;
 use App\ShowroomSetup;
 use App\Product;
 use App\InvoiceSetup;
+
 class CustomerRegistrationSetupController extends Controller
 {
     public function index(){
@@ -122,8 +124,9 @@ class CustomerRegistrationSetupController extends Controller
         return redirect(route('customerRegistraionSetup.index'))->with('msg','Customer Registration Successfuly  Complete');
     }
 
-    public function viewCustomerDetails($id){
-        $title = "Add Product for Existing Customer";
+    public function viewCustomerDetails($id)
+    {
+        $title = "Customer Details Information";
         $formLink = "customerRegistraionSetup.NewProductSave";
         $buttonName = "Save";
         $customer = CustomerRegistrationSetup::orWhere('id',$id)->first();

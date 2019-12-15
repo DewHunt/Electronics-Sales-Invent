@@ -1,6 +1,14 @@
 @extends('admin.layouts.masterPrint')
 
 @section('content')
+    <table id="report-header">
+        <tr>
+            <td>Product List Report</td>
+        </tr>
+    </table>
+
+    <div id="pad-bottom"></div>
+
     <table id="report-table">
         <thead>
             <tr>

@@ -27,6 +27,15 @@
                 padding: 3px;
             }
 
+            #report-header{
+                background-color: lightgray;
+                width: 100%;
+                padding: 0px;
+                text-align: center;
+                font-weight: bold;
+                font-size: 15px;
+            }
+
             .align-left{
                 text-align: left;
             }

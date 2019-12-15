@@ -1,13 +1,19 @@
 @extends('admin.layouts.masterPrint')
 
 @section('content')
+    <table id="report-header">
+        <tr>
+            <td>Stock Valuation</td>
+        </tr>
+    </table>
+
+    <div id="pad-bottom"></div>
+
     <table id="report-table">
-        <caption>Stock Valuation Report</caption>
         <thead>
             <tr>
                 <th width="20px">Sl</th>
                 <th>Product</th>
-                <th width="60px">Serial No</th>
                 <th width="80px">Model No</th>
                 <th width="50px">Color</th>
                 <th width="60px">Sales Price</th>
@@ -30,18 +36,17 @@
             @foreach ($stockValuationReports as $stockValuationReport)
                 @php
                     $sales = $stockValuationReport->salesPrice * $stockValuationReport->stockQty;
-                    $lifting = $stockValuationReport->avgLifting * $stockValuationReport->stockQty;
+                    $lifting = $stockValuationReport->price * $stockValuationReport->stockQty;
                     $totalSales = $totalSales + $sales;
                     $totalLifting = $totalLifting + $lifting;
                 @endphp
                 <tr>
                     <td>{{ $sl++ }}</td>
                     <td>{{ $stockValuationReport->productName }}</td>
-                    <td>{{ $stockValuationReport->serialNo }}</td>
                     <td>{{ $stockValuationReport->modelNo }}</td>
                     <td>{{ $stockValuationReport->color }}</td>
                     <td style="text-align: right;">{{ $stockValuationReport->salesPrice }}</td>
-                    <td style="text-align: right;">{{ number_format($stockValuationReport->avgLifting,'2','.','') }}</td>
+                    <td style="text-align: right;">{{ number_format($stockValuationReport->price,'2','.','') }}</td>
                     <td style="text-align: right;">{{ $stockValuationReport->stockQty }}</td>
                     <td style="text-align: right;">{{ number_format($sales,'2','.','') }}</td>
                     <td style="text-align: right;">{{ number_format($lifting,'2','.','') }}</td>

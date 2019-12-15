@@ -20,7 +20,7 @@
 	    		<div class="col-md-6"> 
 	                <div class="form-group {{ $errors->has('category') ? ' has-danger' : '' }}">
 	                    <label for="category">Category</label>
-	                    <select class="form-control chosen-select" id="category" name="category">
+	                    <select class="form-control chosen-select" id="category" name="category" required>
 	                    	<option value="">Select Category</option>
 	                        @foreach($categories as $categoryInfo)
 	                            <option value="{{$categoryInfo->id}}">{{$categoryInfo->name}}</option>

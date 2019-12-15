@@ -1,8 +1,16 @@
 @extends('admin.layouts.masterPrint')
 
 @section('content')
+    <table id="report-header">
+        <tr>
+            <td>Lifting Payment Summary For The Month Of {{ date('F', mktime(0, 0, 0,$month, 10)) }} Of {{ $year }}</td>
+        </tr>
+    </table>
+
+    <div id="pad-bottom"></div>
+
     <table  id="report-table">
-        <caption>Lifting Payment Summary For The {{ $month }} Of {{ $year }}</caption>
+        <caption></caption>
         <thead>
             <tr>
                 <th width="20px" rowspan="2">Sl</th>

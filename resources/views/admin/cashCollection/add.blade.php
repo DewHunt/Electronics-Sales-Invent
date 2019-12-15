@@ -169,7 +169,7 @@ use App\CashCollection;
                     <div class="col-md-6">
                         <div class="form-group {{ $errors->has('collectionAmount') ? ' has-danger' : '' }}">
                             <label for="collection-amount">Collection Amount</label>
-                            <input type="number" name="collectionAmount" class="form-control collectionAmount" id="collectionAmount" required="" onkeyup="CalculateDue()">
+                            <input type="number" name="collectionAmount" class="form-control collectionAmount" id="collectionAmount" required="" oninput="CalculateDue()">
                             @if ($errors->has('collectionAmount'))
                                 @foreach($errors->get('collectionAmount') as $error)
                                     <div class="form-control-feedback">{{ $error }}</div>

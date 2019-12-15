@@ -108,7 +108,7 @@
                         swal({
                             title: "Cancelled", 
                             type: "error",
-                            text: "Your User is safe :)",
+                            text: "This Payment To Company User Is Safe :)",
                             timer: 1000,
                             html: true,
                         });    

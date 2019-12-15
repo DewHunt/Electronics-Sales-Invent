@@ -20,6 +20,13 @@
 @endphp
 
 @section('content')
+    <table id="report-header">
+        <tr>
+            <td>Customer Details Information</td>
+        </tr>
+    </table>
+
+    <div id="pad-bottom"></div>
 
     <table width="100%">
         <tr>

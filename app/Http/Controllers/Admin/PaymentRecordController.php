@@ -75,7 +75,7 @@ class PaymentRecordController extends Controller
     		->get();
 
 
-        $pdf = PDF::loadView('admin.paymentRecord.print',['title'=>$title,'productRecords'=>$productRecords]);
+        $pdf = PDF::loadView('admin.paymentRecord.print',['title'=>$title,'fromDate'=>$fromDate,'toDate'=>$toDate,'productRecords'=>$productRecords]);
         return $pdf->stream('product_record.pdf');
     }
 }

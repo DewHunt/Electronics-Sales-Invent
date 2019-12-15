@@ -85,7 +85,7 @@ class LiftingController extends Controller
 
     public function edit($liftingId)
     {
-    	$title = "Add Product Lifting";
+    	$title = "Edit Product Lifting";
     	$formLink = "lifting.update";
     	$buttonName = "Update";
 

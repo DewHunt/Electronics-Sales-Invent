@@ -24,7 +24,7 @@ class GroupSetupController extends Controller
 
     public function add()
     {
-    	$title = "Add New Showroom";
+    	$title = "Add New Group";
         $formLink = "groupSetup.save";
         $buttonName = "Save";
 
@@ -57,7 +57,7 @@ class GroupSetupController extends Controller
 
     public function edit($id)
     {
-    	$title = "Edit Showroom";
+    	$title = "Edit Group";
         $formLink = "groupSetup.update";
         $buttonName = "Update";
 

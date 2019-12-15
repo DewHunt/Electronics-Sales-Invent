@@ -18,9 +18,11 @@ class CreateAdminsTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->text('username')->nullable();
+            $table->text('image')->nullable();
             $table->integer('role')->nullable();
+            $table->string('showroomId')->nullable();
             $table->string('password');
-            $table->integer('status');
+            $table->integer('status')->default('0');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -27,7 +27,7 @@
                 			<td>{{ $sl++ }}</td>
                 			<td>{{ $category->name }}</td>
                 			<td>
-                				<img src="{{ url($category->image) }}" class="img-thumbnail" alt="Category Image" width="100px" height="100px">
+                				<img src="{{ $category->image == "" ? url('public/others_images/no_image.png') :  url($category->image) }}" class="img-thumbnail" alt="Category Image" width="100px" height="100px">
                 			</td>
                 			<td>{{ $category->parentName }}</td>
                 			<td>
@@ -106,7 +106,7 @@
                         swal({
                             title: "Cancelled", 
                             type: "error",
-                            text: "Your User is safe :)",
+                            text: "Your Category Is Safe :)",
                             timer: 1000,
                             html: true,
                         });    

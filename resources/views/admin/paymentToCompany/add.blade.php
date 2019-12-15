@@ -81,7 +81,7 @@
             <div class="col-6">
                 <label for="payment-now">Payment Now</label>
                 <div class="form-group {{ $errors->has('paymentNow') ? ' has-danger' : '' }}">
-                    <input type="text" class="form-control paymentNow" name="paymentNow" oninput="Balance()" value="0" required>
+                    <input type="number" class="form-control paymentNow" name="paymentNow" oninput="Balance()" value="0" required>
                     @if ($errors->has('paymentNow'))
                         @foreach($errors->get('paymentNow') as $error)
                             <div class="form-control-feedback">{{ $error }}</div>
@@ -186,7 +186,7 @@
     					var liftingReturn = parseFloat(data.liftingReturn);
     					var currentDue = parseFloat(data.currentDue);
 
-    					var currentDue =lifting - liftingReturn - currentDue;
+    					var currentDue = lifting - liftingReturn - currentDue;
 
     					$(".currentDue").val(currentDue);
     					Balance();
@@ -211,6 +211,15 @@
             }
 
             var balance = parseFloat(currentDue) - parseFloat(paymentNow);
+
+            if (balance < 0)
+            {
+                swal('Invalid Payment!','','warning');
+                $('.paymentNow').val(currentDue);
+                paymentNow = currentDue;
+                balance = parseFloat(currentDue) - parseFloat(paymentNow); 
+            }
+            
             if (balance == currentDue)
             {
                 $(".balance").val("0");            

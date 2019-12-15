@@ -1,8 +1,15 @@
 @extends('admin.layouts.masterPrint')
 
 @section('content')
+    <table id="report-header">
+        <tr>
+            <td>Lifting Record On {{ $fromDate }} To {{ $toDate }}</td>
+        </tr>
+    </table>
+
+    <div id="pad-bottom"></div>
+
     <table  id="report-table">
-        <caption>Lifting Record On {{ $fromDate }} To {{ $toDate }}</caption>
         <thead class="thead-light">
             <tr>
                 <th width="20px">Sl</th>

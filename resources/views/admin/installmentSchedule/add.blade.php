@@ -68,7 +68,7 @@
                                         $installment = Installment::where('customer_product_id',$customerProduct->id)->first();
                                         if(!@$installment){
                                     @endphp
-                                  <option value="{{$customerProduct->id}}">{{$optionName}}</option>
+                                  <option value="{{$customerProduct->customer_product_id}}">{{$optionName}}</option>
                                   @php
                                       }
                                   @endphp

@@ -269,7 +269,7 @@
                             <div class="col-md-6">
                                 <div class="form-group {{ $errors->has('longInstallmentDeposite') ? ' has-danger' : '' }}">
                                     <label for="deposite">Deposite</label>
-                                    <input type="number" class="form-control longInstallmentDeposite" name="longInstallmentDeposite" value="{{ old('longInstallmentDeposite') }}">
+                                    <input type="number" class="form-control longInstallmentDeposite" name="longInstallmentDeposite" value="{{ $customerProduct->deposite }}">
                                     @if ($errors->has('longInstallmentDeposite'))
                                         @foreach($errors->get('longInstallmentDeposite') as $error)
                                             <div class="form-control-feedback">{{ $error }}</div>
@@ -281,7 +281,7 @@
                             <div class="col-md-6">
                                 <div class="form-group {{ $errors->has('longInstallmentPrice') ? ' has-danger' : '' }}">
                                     <label for="higher-price">Higher Price</label>
-                                    <input type="number" class="form-control longInstallmentPrice" name="longInstallmentPrice" value="{{ old('longInstallmentPrice') }}">
+                                    <input type="number" class="form-control longInstallmentPrice" name="longInstallmentPrice" value="{{ $customerProduct->installment_price }}">
                                     @if ($errors->has('longInstallmentPrice'))
                                         @foreach($errors->get('longInstallmentPrice') as $error)
                                             <div class="form-control-feedback">{{ $error }}</div>
@@ -297,7 +297,7 @@
                            <div class="col-md-6">
                                 <div class="form-group {{ $errors->has('longTotalInstallment') ? ' has-danger' : '' }}">
                                     <label for="total-installment">Total Installment</label>
-                                    <input type="text" class="form-control longTotalInstallment" name="longTotalInstallment" value="{{ old('longTotalInstallment') }}" oninput="calculateLongInstallmentAmount()">
+                                    <input type="text" class="form-control longTotalInstallment" name="longTotalInstallment" value="{{ $customerProduct->total_installment }}" oninput="calculateLongInstallmentAmount()">
                                     @if ($errors->has('longTotalInstallment'))
                                         @foreach($errors->get('longTotalInstallment') as $error)
                                             <div class="form-control-feedback">{{ $error }}</div>
@@ -309,7 +309,7 @@
                             <div class="col-md-6">
                                 <div class="form-group {{ $errors->has('longInstallmentAmount') ? ' has-danger' : '' }}">
                                     <label for="monthly-installment-amount">Installment Amount</label>
-                                    <input type="number" class="form-control longInstallmentAmount" name="longInstallmentAmount" value="{{ old('longInstallmentAmount') }}">
+                                    <input type="number" class="form-control longInstallmentAmount" name="longInstallmentAmount" value="{{ $customerProduct->monthly_installment_amount }}">
                                     @if ($errors->has('longInstallmentAmount'))
                                         @foreach($errors->get('longInstallmentAmount') as $error)
                                             <div class="form-control-feedback">{{ $error }}</div>
@@ -380,7 +380,6 @@
                 $("input[name='shortInstallmentPrice']").prop('required',false);
                 $("input[name='shortTotalInstallment']").prop('required',false);
                 $("input[name='shortInstallmentAmount']").prop('required',false);
-                $("input[name='shortInstallmentAmount']").prop('required',true);
             }
 
             if(purchaseType == "Long Installment")

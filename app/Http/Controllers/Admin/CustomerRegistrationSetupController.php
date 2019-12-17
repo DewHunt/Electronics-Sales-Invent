@@ -86,10 +86,10 @@ class CustomerRegistrationSetupController extends Controller
 
             if($request->purchaseType == 'Long Installment')
             {
-                $deposite = $request->longInstallmentDeposite = '';
+                $deposite = $request->longInstallmentDeposite;
                 $request->shortInstallmentPrice = '';
-                $totalInstallment = $request->longTotalInstallment = '';
-                $installmentAmount = $request->longInstallmentAmount = '';
+                $totalInstallment = $request->longTotalInstallment;
+                $installmentAmount = $request->longInstallmentAmount;
             }
 
             $product = CustomerProduct::create( [
@@ -191,10 +191,10 @@ class CustomerRegistrationSetupController extends Controller
 
             if($request->purchaseType == 'Long Installment')
             {
-                $deposite = $request->longInstallmentDeposite = '';
+                $deposite = $request->longInstallmentDeposite;
                 $request->shortInstallmentPrice = '';
-                $totalInstallment = $request->longTotalInstallment = '';
-                $installmentAmount = $request->longInstallmentAmount = '';
+                $totalInstallment = $request->longTotalInstallment;
+                $installmentAmount = $request->longInstallmentAmount;
             }
 
             $product = CustomerProduct::create( [
@@ -333,10 +333,10 @@ class CustomerRegistrationSetupController extends Controller
 
                 if($request->purchaseType == 'Long Installment')
                 {
-                    $deposite = $request->longInstallmentDeposite = '';
+                    $deposite = $request->longInstallmentDeposite;
                     $request->shortInstallmentPrice = '';
-                    $totalInstallment = $request->longTotalInstallment = '';
-                    $installmentAmount = $request->longInstallmentAmount = '';
+                    $totalInstallment = $request->longTotalInstallment;
+                    $installmentAmount = $request->longInstallmentAmount;
                 }
 
                 $updateCustomerProduct = $customerExistProduct->update([

@@ -134,7 +134,7 @@
 	            		<div class="col-md-6">
 	                        <label for="price">Price</label>
 	                        <div class="form-group {{ $errors->has('price') ? ' has-danger' : '' }}">
-	                            <input type="number" class="form-control form-control-danger" id="price" name="price" value="{{ $product->price }}" oninput="findMrpHairePrice()" required>
+	                            <input type="text" class="form-control form-control-danger" id="price" name="price" value="{{ $product->price }}" oninput="findMrpHairePrice()" required>
 	                            @if ($errors->has('price'))
 	                                @foreach($errors->get('price') as $error)
 	                                    <div class="form-control-feedback">{{ $error }}</div>
@@ -216,7 +216,7 @@
 	        			<div class="col-md-6">
 	                        <label for="order-by">Order By</label>
 	                        <div class="form-group {{ $errors->has('orderBy') ? ' has-danger' : '' }}">
-	                            <input type="number" class="form-control form-control-danger" name="orderBy" value="{{ $product->order_by }}" required>
+	                            <input type="number" class="form-control form-control-danger" name="orderBy" value="{{ $product->order_by }}">
 	                            @if ($errors->has('orderBy'))
 	                                @foreach($errors->get('orderBy') as $error)
 	                                    <div class="form-control-feedback">{{ $error }}</div>
@@ -227,7 +227,7 @@
 	        			<div class="col-md-6">
 	                        <label for="transport-point">Transport Point</label>
 	                        <div class="form-group {{ $errors->has('transportPoint') ? ' has-danger' : '' }}">
-	                            <input type="number" class="form-control form-control-danger" name="transportPoint" value="{{ $product->transport_point }}" required>
+	                            <input type="number" class="form-control form-control-danger" name="transportPoint" value="{{ $product->transport_point }}">
 	                            @if ($errors->has('transportPoint'))
 	                                @foreach($errors->get('transportPoint') as $error)
 	                                    <div class="form-control-feedback">{{ $error }}</div>

@@ -138,7 +138,7 @@ class InvoiceSetupController extends Controller
             $purchaseType = "Installment";
         }
 
-        $customerProducts = CustomerProduct::select('tbl_customer_products.*','tbl_customers.name as customerName','tbl_products.name as productName','tbl_products.code as productCode')
+        $customerProducts = CustomerProduct::select('tbl_customer_products.*','tbl_customers.name as customerName','tbl_products.name as productName','tbl_products.code as productCode','tbl_products.color as productColor','tbl_products.model_no as productModelNo')
             ->join('tbl_products','tbl_products.id','=','tbl_customer_products.product_id')
             ->join('tbl_customers','tbl_customers.id','=','tbl_customer_products.customer_id')
             ->where('tbl_customer_products.purchase_type',$purchaseType)
@@ -151,7 +151,8 @@ class InvoiceSetupController extends Controller
             $output .= '<option value="">Select Product</option>';          
             foreach ($customerProducts as $customerProduct)
             {
-                $output .= '<option value="'.$customerProduct->id.'">'.$customerProduct->customerName.' / '.$customerProduct->productName.'</option>';
+                // $output .= '<option value="'.$customerProduct->id.'">'.$customerProduct->customerName.' / '.$customerProduct->productName.'</option>';
+                $output .= '<option value="'.$customerProduct->id.'">'.$customerProduct->customerName.' / '.$customerProduct->productName.' ('.$customerProduct->productCode.' - '.$customerProduct->productColor.' - '.$customerProduct->productModelNo.')</option>';
             }
             $output .= '</select>';         
         }

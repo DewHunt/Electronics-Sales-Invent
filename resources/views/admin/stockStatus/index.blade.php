@@ -32,11 +32,11 @@
             <div class="row">
                 <div class="col-md-6 form-group">
                     <label for="from-date">From Date</label>
-                    <input  type="text" class="form-control datepicker" id="from_date" name="{{ $print == "print" ? "" : "from_date" }}" placeholder="Select Date From" value="{{ date('d-m-Y',strtotime($fromDate)) }}" readonly>
+                    <input  type="text" class="form-control datepicker" id="{{ $print == "print" ? "" : "from_date" }}" name="fromDate" placeholder="Select Date From" value="{{ date('d-m-Y',strtotime($fromDate)) }}" readonly>
                 </div>
                 <div class="col-md-6 form-group">
                     <label for="to-date">To Date</label>
-                    <input  type="text" class="form-control datepicker" id="to_date" name="{{ $print == "print" ? "" : "to_date" }}" placeholder="Select Date To" value="{{ date('d-m-Y',strtotime($toDate)) }}" readonly>
+                    <input  type="text" class="form-control datepicker" id="{{ $print == "print" ? "" : "to_date" }}" name="toDate" placeholder="Select Date To" value="{{ date('d-m-Y',strtotime($toDate)) }}" readonly>
                 </div>
             </div>                                  
         </div>

@@ -94,31 +94,67 @@
             })
         /*end code for new product block show*/
 
-        /*code for purchase type cash or installment*/
-        $('.installmentRow').hide();
-        $('.purchaseType').click(function(event) {
-                var purchaseType =  $("input[name='purchaseType']:checked").val();   
-                if(purchaseType == "Installment"){
-                     $('.installmentRow').show();
-                     $("input[name='deposite']").prop('required',true);
-                     $("input[name='installmentPrice']").prop('required',true);
-                     $("input[name='totalInstallment']").prop('required',true);
-                     $("input[name='monthlyInstallmentAmount']").prop('required',true);
-                }else{
-                    $('.installmentRow').hide();
-                    $("input[name='deposite']").prop('required',false);
-                    $("input[name='installmentPrice']").prop('required',false);
-                    $("input[name='totalInstallment']").prop('required',false);
-                    $("input[name='monthlyInstallmentAmount']").prop('required',false);
-                }
-            })
-        /*end code for purchase type cash or installment*/
+        // start code installment
+
+        $('.installmentType').hide();
+        $('.longInstallmentRow').hide();
+        $('.shortInstallmentRow').hide();
+
+         $('.purchaseType').click(function(event) {
+            var purchaseType =  $("input[name='purchaseType']:checked").val();
+
+            if(purchaseType == "Cash")
+            {
+                $('.installmentType').hide();
+                $("select[name='installmentType']").prop('required',false);
+            }
+
+            if(purchaseType == "Short Installment")
+            {
+                $('.shortInstallmentRow').show();
+                $('.installmentType').show();
+                $("input[name='shortInstallmentDeposite']").prop('required',true);
+                $("input[name='shortInstallmentPrice']").prop('required',true);
+                $("input[name='shortTotalInstallment']").prop('required',true);
+                $("input[name='shortInstallmentAmount']").prop('required',true);
+                $("select[name='installmentType']").prop('required',true);
+            }
+            else
+            {
+                $('.shortInstallmentRow').hide();
+                $("input[name='shortInstallmentDeposite']").prop('required',false);
+                $("input[name='shortInstallmentPrice']").prop('required',false);
+                $("input[name='shortTotalInstallment']").prop('required',false);
+                $("input[name='shortInstallmentAmount']").prop('required',false);
+            }
+
+            if(purchaseType == "Long Installment")
+            {
+                $('.longInstallmentRow').show();
+                $('.installmentType').show();
+                $("input[name='longInstallmentDeposite']").prop('required',true);
+                $("input[name='longInstallmentPrice']").prop('required',true);
+                $("input[name='longTotalInstallment']").prop('required',true);
+                $("input[name='longInstallmentAmount']").prop('required',true);
+                $("select[name='installmentType']").prop('required',true);
+            }
+            else
+            {
+                $('.longInstallmentRow').hide();
+                $("input[name='longInstallmentDeposite']").prop('required',false);
+                $("input[name='longInstallmentPrice']").prop('required',false);
+                $("input[name='longTotalInstallment']").prop('required',false);
+                $("input[name='longInstallmentAmount']").prop('required',false);
+            }
+        })
+
+        /*end code for installment*/
             
         });
     </script>
 
     <script type="text/javascript">
-    /*code for product info*/
+        /*code for product info*/
         $(document).on('change', '.product', function(){
             $.ajaxSetup({
                 headers: {
@@ -127,7 +163,8 @@
             });
             
             var productId = $('.product option:selected').val();
-            if(productId != ''){
+            if(productId != '')
+            {
                 $.ajax({
                     type:'post',
                     url:'{{ route('customerRegistration.getProductInfo') }}',
@@ -137,47 +174,77 @@
                         var purchaseType =  $("input[name='purchaseType']:checked").val();
                         $('.productModel').val(product.model_no);
                         $('.cashPrice').val(product.price);
-                        $('.mrpPrice').val(product.mrp_price);
                         $('.warranty').val(product.warranty);
-                        if (purchaseType == 'Installment')
+
+                        if (purchaseType == 'Short Installment')
                         {
-                            $('.installmentPrice').val(product.haire_price);
+                            $('.shortInstallmentPrice').val(product.mrp_price);
                         }
                         else
                         {
-                            $('.installmentPrice').val('');                             
+                            $('.shortInstallmentPrice').val('');                             
                         }
-                        monthlyInstallment();
+
+                        if (purchaseType == 'Long Installment')
+                        {
+                            $('.longInstallmentPrice').val(product.haire_price);
+                        }
+                        else
+                        {
+                            $('.longInstallmentPrice').val('');                             
+                        }
+                        calculateShortInstallmentAmount();
+                        calculateLongInstallmentAmount();
                     }
                 });
-            }else{
-               $('.productModel').val('');
-               $('.cashPrice').val('');
-               $('.mrpPrice').val(''); 
-               $('.warranty').val(''); 
-               $('.installmentPrice').val(''); 
-            }
-        });
-
-        function monthlyInstallment()
-        {
-            var deposite = parseFloat($('.deposite').val());
-            var installmentPrice = parseFloat($('.installmentPrice').val());
-            var totalInstallment = parseFloat($('.totalInstallment').val());
-
-            if (totalInstallment == 0 || $('.totalInstallment').val() == "")
-            {
-                var monthlyInstallmentPrice = (installmentPrice - deposite);
             }
             else
             {
-                var monthlyInstallmentPrice = (installmentPrice - deposite)/totalInstallment;                
+               $('.productModel').val('');
+               $('.cashPrice').val('');  
+               $('.warranty').val(''); 
+               $('.longInstallmentPrice').val(''); 
+               $('.shortInstallmentPrice').val(''); 
+            }
+        });
+
+        function calculateShortInstallmentAmount()
+        {
+            var shortInstallmentDeposite = parseFloat($('.shortInstallmentDeposite').val());
+            var shortInstallmentPrice = parseFloat($('.shortInstallmentPrice').val());
+            var shortTotalInstallment = parseFloat($('.shortTotalInstallment').val());
+
+            if (shortTotalInstallment == 0 || $('.shortTotalInstallment').val() == "")
+            {
+                var shortInstallmentAmount = (shortInstallmentPrice - shortInstallmentDeposite);
+            }
+            else
+            {
+                var shortInstallmentAmount = (shortInstallmentPrice - shortInstallmentDeposite)/shortTotalInstallment;                
             }
 
-            $('.monthlyInstallmentAmount').val(Math.round(monthlyInstallmentPrice));
+            $('.shortInstallmentAmount').val(Math.round(shortInstallmentAmount));
         }
 
-    /*end code for product info*/
+        function calculateLongInstallmentAmount()
+        {
+            var longInstallmentDeposite = parseFloat($('.longInstallmentDeposite').val());
+            var longInstallmentPrice = parseFloat($('.longInstallmentPrice').val());
+            var longTotalInstallment = parseFloat($('.longTotalInstallment').val());
+
+            if (longTotalInstallment == 0 || $('.longTotalInstallment').val() == "")
+            {
+                var longInstallmentAmount = (longInstallmentPrice - longInstallmentDeposite);
+            }
+            else
+            {
+                var longInstallmentAmount = (longInstallmentPrice - longInstallmentDeposite)/longTotalInstallment;                
+            }
+
+            $('.longInstallmentAmount').val(Math.round(longInstallmentAmount));
+        }
+
+        /*end code for product info*/
 
     </script>
 

@@ -24,12 +24,13 @@ class InstallmentCollectionController extends Controller
     	$title = "Collect Installment ";
         $formLink = "installmentCollection.save";
         $buttonName = "Save";
-        $customerProducts = CustomerProduct::where('purchase_type','Installment')
-            ->get();
+        // $customerProducts = CustomerProduct::where('purchase_type','Installment')->get();
+        $customerProducts = Installment::where('status','1')->get();
     	return view('admin.installmentCollection.add')->with(compact('title','formLink','buttonName','customerProducts'));
     }
 
-    public function save(Request $request){
+    public function save(Request $request)
+    {
         $getCustomerProduct = CustomerProduct::where('id',$request->customerProductId)->first();
         $installment = Installment::where('customer_product_id',$getCustomerProduct->id)->first();
         $exist_installment_collection = InstallmentCollection::where('installment_id',$installment->id)->first();

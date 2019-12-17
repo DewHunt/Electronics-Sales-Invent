@@ -78,10 +78,18 @@
 		var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
 		// var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
 
-		$("#from_date").datepicker({ dateFormat: 'dd-mm-yy' });
+		$("#from_date").datepicker({
+            dateFormat: 'dd-mm-yy',
+            changeMonth: true,
+            changeYear: true,
+        });
 		$("#from_date").datepicker("setDate", firstDay);
 
-		$("#to_date").datepicker({ dateFormat: 'dd-mm-yy' });
+		$("#to_date").datepicker({
+            dateFormat: 'dd-mm-yy',
+            changeMonth: true,
+            changeYear: true,
+        });
 		$("#to_date").datepicker("setDate", 'today');
 
 		$(".datepicker").datepicker({

@@ -25,14 +25,7 @@ use App\CashCollection;
                             <select class="form-control chosen-select invoiceNo" name="invoiceId" data-placeholder="Select invoice" required="">
                                 <option value="">Select Invoice No</option>
                                 @foreach ($invoiceList as $invoice)
-                                @php
-                                    $collectionAmount = CashCollection::where('invoice_id',$invoice->id)->sum('collection_amount');
-                                    if($collectionAmount != $invoice->customer_product_price){
-                                @endphp
-                                  <option value="{{$invoice->id}}">{{$invoice->invoice_no}}</option>
-                                  @php
-                                      }
-                                  @endphp
+                                    <option value="{{$invoice->id}}">{{$invoice->invoice_no}}</option>
                                 @endforeach
                             </select>
                             @if ($errors->has('invoiceId'))

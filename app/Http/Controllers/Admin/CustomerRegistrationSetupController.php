@@ -63,26 +63,50 @@ class CustomerRegistrationSetupController extends Controller
 
         if($customerRegistraion){
             $purchaseDate = date('Y-m-d', strtotime($request->purchaseDate));
-            if($request->purchaseType == 'Cash'){
-                $request->deposite = '';
-                $request->installmentPrice = '';
-                $request->totalInstallment = '';
-                $request->monthlyInstallmentAmount = '';
+            if($request->purchaseType == 'Cash')
+            {
+                $request->installmentType = '';
+                $deposite = '';
+
+                $request->shortInstallmentPrice = '';
+                $request->longInstallmentPrice = '';
+
+                $totalInstallment = '';
+
+                $installmentAmount = '';
             }
+
+            if($request->purchaseType == 'Short Installment')
+            {
+                $deposite = $request->shortInstallmentDeposite;
+                $request->longInstallmentPrice = '';
+                $totalInstallment = $request->shortTotalInstallment;
+                $installmentAmount = $request->shortInstallmentAmount;
+            }
+
+            if($request->purchaseType == 'Long Installment')
+            {
+                $deposite = $request->longInstallmentDeposite = '';
+                $request->shortInstallmentPrice = '';
+                $totalInstallment = $request->longTotalInstallment = '';
+                $installmentAmount = $request->longInstallmentAmount = '';
+            }
+
             $product = CustomerProduct::create( [
                 'customer_id' => $customerRegistraion->id,       
                 'product_id' => $request->productId,       
                 'product_model' => $request->productModel,       
                 'cash_price' => $request->cashPrice,
-                'mrp_price' => $request->mrpPrice,
+                'mrp_price' => $request->shortInstallmentPrice,
                 'showroom_id' => $request->showroomId,       
                 'warranty' => $request->warranty,       
                 'purchase_date' => $purchaseDate,       
                 'purchase_type' => $request->purchaseType,       
-                'deposite' => $request->deposite,       
-                'installment_price' => $request->installmentPrice,       
-                'total_installment' => $request->totalInstallment,       
-                'monthly_installment_amount' => $request->monthlyInstallmentAmount,       
+                'installment_type' => $request->installmentType,       
+                'deposite' => $deposite,       
+                'installment_price' => $request->longInstallmentPrice,       
+                'total_installment' => $totalInstallment,       
+                'monthly_installment_amount' => $installmentAmount,       
                 'product_usage_address' => $request->productUsageAddress,         
             ]);
         }
@@ -144,26 +168,50 @@ class CustomerRegistrationSetupController extends Controller
         if($request->hiddenProduct == '1')
         {
             $purchaseDate = date('Y-m-d', strtotime($request->purchaseDate));
-            if($request->purchaseType == 'Cash'){
-                $request->deposite = '';
-                $request->installmentPrice = '';
-                $request->totalInstallment = '';
-                $request->monthlyInstallmentAmount = '';
+            if($request->purchaseType == 'Cash')
+            {
+                $request->installmentType = '';
+                $deposite = '';
+
+                $request->shortInstallmentPrice = '';
+                $request->longInstallmentPrice = '';
+
+                $totalInstallment = '';
+
+                $installmentAmount = '';
             }
+
+            if($request->purchaseType == 'Short Installment')
+            {
+                $deposite = $request->shortInstallmentDeposite;
+                $request->longInstallmentPrice = '';
+                $totalInstallment = $request->shortTotalInstallment;
+                $installmentAmount = $request->shortInstallmentAmount;
+            }
+
+            if($request->purchaseType == 'Long Installment')
+            {
+                $deposite = $request->longInstallmentDeposite = '';
+                $request->shortInstallmentPrice = '';
+                $totalInstallment = $request->longTotalInstallment = '';
+                $installmentAmount = $request->longInstallmentAmount = '';
+            }
+
             $product = CustomerProduct::create( [
                 'customer_id' => $customerId,       
                 'product_id' => $request->productId,       
                 'product_model' => $request->productModel,       
                 'cash_price' => $request->cashPrice,
-                'mrp_price' => $request->mrpPrice,
+                'mrp_price' => $request->shortInstallmentPrice,
                 'showroom_id' => $request->showroomId,       
                 'warranty' => $request->warranty,       
                 'purchase_date' => $purchaseDate,       
                 'purchase_type' => $request->purchaseType,       
-                'deposite' => $request->deposite,       
-                'installment_price' => $request->installmentPrice,       
-                'total_installment' => $request->totalInstallment,       
-                'monthly_installment_amount' => $request->monthlyInstallmentAmount,       
+                'installment_type' => $request->installmentType,       
+                'deposite' => $deposite,       
+                'installment_price' => $request->longInstallmentPrice,       
+                'total_installment' => $totalInstallment,       
+                'monthly_installment_amount' => $installmentAmount,       
                 'product_usage_address' => $request->productUsageAddress,         
             ]);
         }
@@ -249,6 +297,7 @@ class CustomerRegistrationSetupController extends Controller
         if($request->isMethod('post'))
         {
             if(count($request->all()) > 0){
+                // dd($request->all());
                 $customerId = $request->customerId;
                 $customerProductId = $request->customerProductId;
                 $customerExistProduct = CustomerProduct::where('customer_id',$customerId)->where('id',$customerProductId)->first();
@@ -259,21 +308,52 @@ class CustomerRegistrationSetupController extends Controller
                         'product_id' => $request->productId,
                     ]);
                 }
+
                 $purchaseDate = date('Y-m-d', strtotime($request->purchaseDate));
-                $updateCustomerProduct = $customerExistProduct->update( [
+                if($request->purchaseType == 'Cash')
+                {
+                    // $request->installmentType = '';
+                    $deposite = '';
+
+                    $request->shortInstallmentPrice = '';
+                    $request->longInstallmentPrice = '';
+
+                    $totalInstallment = '';
+
+                    $installmentAmount = '';
+                }
+
+                if($request->purchaseType == 'Short Installment')
+                {
+                    $deposite = $request->shortInstallmentDeposite;
+                    $request->longInstallmentPrice = '';
+                    $totalInstallment = $request->shortTotalInstallment;
+                    $installmentAmount = $request->shortInstallmentAmount;
+                }
+
+                if($request->purchaseType == 'Long Installment')
+                {
+                    $deposite = $request->longInstallmentDeposite = '';
+                    $request->shortInstallmentPrice = '';
+                    $totalInstallment = $request->longTotalInstallment = '';
+                    $installmentAmount = $request->longInstallmentAmount = '';
+                }
+
+                $updateCustomerProduct = $customerExistProduct->update([
                     'customer_id' => $customerId,       
                     'product_id' => $request->productId,       
                     'product_model' => $request->productModel,       
                     'cash_price' => $request->cashPrice,
-                    'mrp_price' => $request->mrpPrice,
+                    'mrp_price' => $request->shortInstallmentPrice,
                     'showroom_id' => $request->showroomId,       
                     'warranty' => $request->warranty,       
                     'purchase_date' => $purchaseDate,       
-                    'purchase_type' => $request->purchaseType,       
-                    'deposite' => $request->deposite,       
-                    'installment_price' => $request->installmentPrice,       
-                    'total_installment' => $request->totalInstallment,       
-                    'monthly_installment_amount' => $request->monthlyInstallmentAmount,       
+                    'purchase_type' => $request->purchaseType,
+                    'installment_type' => $request->installmentType,       
+                    'deposite' => $deposite,       
+                    'installment_price' => $request->longInstallmentPrice,       
+                    'total_installment' => $totalInstallment,       
+                    'monthly_installment_amount' => $installmentAmount,       
                     'product_usage_address' => $request->productUsageAddress,         
                 ]);
 
@@ -294,6 +374,7 @@ class CustomerRegistrationSetupController extends Controller
             $showrooms = ShowroomSetup::orderBy('name','asc')->where('status',1)->get();
             $products = Product::where('status',1)->orderBy('name','ASC')->get();
             $customerProduct = CustomerProduct::where('customer_id',$customerId)->where('id',$customerProductId)->first();
+            // dd($customerProduct);
             return view('admin.customerRegistraionSetup.edit.editCustomerProduct')->with(compact('title','formLink','buttonName','customerProduct','showrooms','products'));
         }
     }

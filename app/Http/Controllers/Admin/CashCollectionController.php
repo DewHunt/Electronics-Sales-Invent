@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+
 use PDF;
 use App\InvoiceSetup;
 use App\CashCollection;
 use App\Product;
 use App\CustomerRegistrationSetup;
+use DB;
 
 class CashCollectionController extends Controller
 {
@@ -25,6 +27,7 @@ class CashCollectionController extends Controller
         $formLink = "cashCollection.save";
         $buttonName = "Save";
         $invoiceList = InvoiceSetup::where('collection_type','!=','Installment')
+            ->where('status','1')
             ->orderBy('id','asc')
             ->get();
     	return view('admin.cashCollection.add')->with(compact('title','formLink','buttonName','invoiceList'));
@@ -43,6 +46,21 @@ class CashCollectionController extends Controller
             'current_due' => $request->currentDue, 
             'remarks' => $request->remarks        
         ]);
+
+        $collectionAmount = InvoiceSetup::select('tbl_invoice.customer_product_price as customerProductPrice',DB::raw('SUM(tbl_cash_collection.collection_amount) as cashCollectionAmount'))
+            ->leftJoin('tbl_cash_collection','tbl_cash_collection.invoice_id','=','tbl_invoice.id')
+            ->where('tbl_invoice.collection_type','!=','Installment')
+            ->where('tbl_invoice.id',$request->invoiceId)
+            ->groupBy('tbl_invoice.id')
+            ->first();
+        if($collectionAmount->customerProductPrice == $collectionAmount->cashCollectionAmount)
+        {
+            $invoice = InvoiceSetup::find($request->invoiceId);
+
+            $invoice->update([
+                'status' => '0'
+            ]);
+        }
 
         return redirect(route('cashCollection.add'))->with('msg', 'Cash Payment Collected Successfully');
     }
@@ -90,6 +108,14 @@ class CashCollectionController extends Controller
 
     public function delete(Request $request)
     {
+        $cashCollection = CashCollection::find($request->collectionId);
+
+        $invoice = InvoiceSetup::find($cashCollection->invoice_id);
+
+        $invoice->update([
+            'status' => '1'
+        ]);
+
         CashCollection::where('id',$request->collectionId)->delete();
     }
 

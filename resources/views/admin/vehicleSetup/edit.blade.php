@@ -42,8 +42,7 @@
 		            					else
 		            					{
 		            						$select = '';
-		            					}
-		            					
+		            					}		            					
 		            				@endphp
 		            				<option value="{{ $key }}" {{ $select }}>{{ $value }}</option>
 		            			@endforeach

@@ -13,6 +13,7 @@
                         <th width="20px">SL</th>
                         <th>Name</th>
                         <th>Category</th>
+                        <th>Model</th>
                         <th>Code</th>
                         <th>Price</th>
                         <th>Discount</th>
@@ -29,6 +30,7 @@
                             <td>{{ $sl }}</td>
                             <td>{{ $product->name }}</td>
                             <td>{{ $product->catName }}</td>
+                            <td>{{ $product->model_no }}</td>
                             <td>{{ $product->code }}</td>
                             <td>{{ $product->price }}</td>
                             <td>{{ $product->discount }}</td>                                        

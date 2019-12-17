@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 14, 2019 at 09:53 PM
--- Server version: 10.1.28-MariaDB
--- PHP Version: 7.1.10
+-- Generation Time: Dec 17, 2019 at 04:43 AM
+-- Server version: 10.4.6-MariaDB
+-- PHP Version: 7.3.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -32,12 +32,12 @@ CREATE TABLE `admins` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `username` text COLLATE utf8mb4_unicode_ci,
-  `image` text COLLATE utf8mb4_unicode_ci,
+  `username` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `role` int(11) DEFAULT NULL,
-  `showroomId` int(11) NOT NULL,
+  `showroomId` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT 0,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -48,10 +48,10 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `name`, `email`, `username`, `image`, `role`, `showroomId`, `password`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'admin@gmail.com', 'admin', NULL, 1, 0, '$2y$10$wcjSEsgXU5pSM16fpwouju905lsZrFFxc5J68jQanfo8Jl6EQWXbe', 1, NULL, NULL, NULL),
-(3, 'Salman', 'salman@gmail.com', 'salman', 'D:\\xampp\\tmp\\php13B2.tmp', 5, 1, '$2y$10$C2upubhDeyF0wm732wpGdeHB2dn68KOUpAAHCnynvHbyRXOxyoJzO', 0, NULL, '2019-11-23 19:28:37', '2019-11-23 19:28:37'),
-(4, 'Dew Hunt', 'dew@gmail.com', 'DewHunt', 'public/uploads/admin_images/avatar7_20165942041.png', 5, 1, '$2y$10$nP/X0y6wMRBy7RqMk2Yz9.8SMR8FrDS2UWcs2NTAI6oTOQiiWKbIe', 0, NULL, '2019-11-23 20:03:40', '2019-11-30 02:44:47'),
-(5, 'Fattah', 'fattah@gmail.com', 'fattah', 'public/uploads/admin_images/images_21444773304.jpg', 5, 1, '$2y$10$wpFxh0bQbgbOU2n9ZSBhPOiOFvloC3WiLvpEj8MccqmLarwjHOcG2', 0, NULL, '2019-11-23 20:09:05', '2019-11-23 21:15:50');
+(1, 'Admin', 'admin@gmail.com', 'admin', NULL, 1, '0', '$2y$10$wcjSEsgXU5pSM16fpwouju905lsZrFFxc5J68jQanfo8Jl6EQWXbe', 1, NULL, NULL, NULL),
+(3, 'Salman', 'salman@gmail.com', 'salman', 'D:\\xampp\\tmp\\php13B2.tmp', 5, '1', '$2y$10$C2upubhDeyF0wm732wpGdeHB2dn68KOUpAAHCnynvHbyRXOxyoJzO', 0, NULL, '2019-11-23 13:28:37', '2019-11-23 13:28:37'),
+(4, 'Dew Hunt', 'dew@gmail.com', 'DewHunt', 'public/uploads/admin_images/avatar7_20165942041.png', 5, '1', '$2y$10$nP/X0y6wMRBy7RqMk2Yz9.8SMR8FrDS2UWcs2NTAI6oTOQiiWKbIe', 1, NULL, '2019-11-23 14:03:40', '2019-12-15 06:04:49'),
+(5, 'Fattah', 'fattah@gmail.com', 'fattah', 'public/uploads/admin_images/images_21444773304.jpg', 5, '1', '$2y$10$wpFxh0bQbgbOU2n9ZSBhPOiOFvloC3WiLvpEj8MccqmLarwjHOcG2', 0, NULL, '2019-11-23 14:09:05', '2019-11-23 15:15:50');
 
 -- --------------------------------------------------------
 
@@ -62,7 +62,7 @@ INSERT INTO `admins` (`id`, `name`, `email`, `username`, `image`, `role`, `showr
 CREATE TABLE `alphabets` (
   `id` int(11) NOT NULL,
   `name` varchar(250) NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT '1'
+  `status` tinyint(4) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -86,12 +86,12 @@ CREATE TABLE `menus` (
   `id` int(10) UNSIGNED NOT NULL,
   `menuName` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `menuTitle` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `menuContent` text COLLATE utf8mb4_unicode_ci,
-  `menuStatus` tinyint(1) NOT NULL DEFAULT '1',
-  `menuType` int(11) NOT NULL DEFAULT '1',
-  `metaTitle` text COLLATE utf8mb4_unicode_ci,
-  `metaKeyword` text COLLATE utf8mb4_unicode_ci,
-  `metaDescription` text COLLATE utf8mb4_unicode_ci,
+  `menuContent` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `menuStatus` tinyint(1) NOT NULL DEFAULT 1,
+  `menuType` int(11) NOT NULL DEFAULT 1,
+  `metaTitle` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `metaKeyword` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `metaDescription` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `orderBy` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -168,7 +168,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (52, '2019_12_13_161937_create_tbl_installment_table', 33),
 (53, '2019_12_13_162441_create_tbl_installment_schedule_table', 33),
 (54, '2019_12_14_110135_create_tbl_installment_collection_table', 33),
-(55, '2019_12_14_110402_create_tbl_installment_collection_list_table', 33);
+(55, '2019_12_14_110402_create_tbl_installment_collection_list_table', 33),
+(56, '2019_12_15_074151_create_admins_table', 34),
+(57, '2019_12_15_082743_create_tbl_showroom_table', 35);
 
 -- --------------------------------------------------------
 
@@ -190,18 +192,18 @@ CREATE TABLE `password_resets` (
 
 CREATE TABLE `settings` (
   `id` int(10) UNSIGNED NOT NULL,
-  `siteLogo` text COLLATE utf8mb4_unicode_ci,
-  `adminLogo` text COLLATE utf8mb4_unicode_ci,
-  `mobile1` text COLLATE utf8mb4_unicode_ci,
-  `mobile2` text COLLATE utf8mb4_unicode_ci,
-  `siteEmail1` text COLLATE utf8mb4_unicode_ci,
-  `siteEmail2` text COLLATE utf8mb4_unicode_ci,
-  `siteAddress1` text COLLATE utf8mb4_unicode_ci,
-  `siteAddress2` text COLLATE utf8mb4_unicode_ci,
+  `siteLogo` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `adminLogo` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mobile1` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mobile2` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `siteEmail1` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `siteEmail2` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `siteAddress1` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `siteAddress2` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `sitestatus` int(11) DEFAULT NULL,
-  `metaTitle` text COLLATE utf8mb4_unicode_ci,
-  `metaKeyword` text COLLATE utf8mb4_unicode_ci,
-  `metaDescription` text COLLATE utf8mb4_unicode_ci,
+  `metaTitle` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `metaKeyword` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `metaDescription` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `orderBy` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -218,10 +220,10 @@ CREATE TABLE `tbl_area` (
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `incharge_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci,
+  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `contact` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT '0',
+  `status` tinyint(4) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -245,18 +247,11 @@ CREATE TABLE `tbl_bank` (
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci,
-  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `tbl_bank`
---
-
-INSERT INTO `tbl_bank` (`id`, `code`, `name`, `phone`, `address`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'bal-00', 'Bank Asia Ltd.', '01317243494', 'Mirpur - 11', 0, '2019-11-30 00:15:25', '2019-11-30 14:23:45');
 
 -- --------------------------------------------------------
 
@@ -269,11 +264,11 @@ CREATE TABLE `tbl_business_staffs` (
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `contact` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci,
+  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `national_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `joining_date` date DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT '0',
+  `status` tinyint(4) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -300,8 +295,8 @@ CREATE TABLE `tbl_cash_collection` (
   `collection_date` date DEFAULT NULL,
   `collection_amount` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `current_due` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `remarks` text COLLATE utf8mb4_unicode_ci,
-  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `remarks` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -311,12 +306,11 @@ CREATE TABLE `tbl_cash_collection` (
 --
 
 INSERT INTO `tbl_cash_collection` (`id`, `invoice_id`, `collection_no`, `invoice_amount`, `previous_collection`, `collection_date`, `collection_amount`, `current_due`, `remarks`, `status`, `created_at`, `updated_at`) VALUES
-(7, 5, 'col-1-19-10001', '35000.00', '0.00', '2019-12-15', '10000', '25000.00', 'Ten Thousand Taka Only', 1, '2019-12-14 13:45:48', '2019-12-14 13:45:48'),
-(8, 5, 'col-8-19-10008', '35000.00', '10000.00', '2019-12-15', '10000.00', '15000.00', 'Ten Thousand Taka Only.', 1, '2019-12-14 13:46:32', '2019-12-14 13:46:32'),
-(9, 5, 'col-9-19-10009', '35000.00', '20000.00', '2019-12-15', '15000.00', '0.00', 'Fifteen Thousand Taka Only.', 1, '2019-12-14 13:47:17', '2019-12-14 13:47:17'),
-(10, 6, 'col-10-19-10010', '25000.00', '0.00', '2019-12-15', '10000.00', '15000.00', 'Ten Thousand Taka Only.', 1, '2019-12-14 13:48:41', '2019-12-14 13:48:41'),
-(11, 6, 'col-11-19-10011', '25000.00', '10000.00', '2019-12-15', '10000.00', '5000.00', 'Ten Thousand Taka Only.', 1, '2019-12-14 13:49:00', '2019-12-14 13:49:00'),
-(12, 6, 'col-12-19-10012', '25000.00', '20000.00', '2019-12-15', '5000.00', '0', 'FiveThousand Taka Only.', 1, '2019-12-14 13:49:13', '2019-12-14 13:49:13');
+(19, 5, 'col-1-19-10001', '35000.00', '0.00', '2019-12-16', '35000.00', '0', NULL, 1, '2019-12-16 05:48:32', '2019-12-16 05:48:32'),
+(20, 6, 'col-20-19-10020', '25000.00', '0.00', '2019-12-16', '25000.00', '0', NULL, 1, '2019-12-16 05:48:55', '2019-12-16 05:48:55'),
+(21, 17, 'col-21-19-10021', '10990.00', '0.00', '2019-12-16', '3990', '7000.00', NULL, 1, '2019-12-16 05:49:48', '2019-12-16 05:49:48'),
+(23, 17, 'col-23-19-10023', '10990.00', '6990.00', '2019-12-16', '4000.00', '0', NULL, 1, '2019-12-16 05:50:53', '2019-12-16 05:50:53'),
+(24, 17, 'col-24-19-10024', '10990.00', '7990.00', '2019-12-16', '3000.00', '0', NULL, 1, '2019-12-16 06:00:29', '2019-12-16 06:00:29');
 
 -- --------------------------------------------------------
 
@@ -327,14 +321,14 @@ INSERT INTO `tbl_cash_collection` (`id`, `invoice_id`, `collection_no`, `invoice
 CREATE TABLE `tbl_categories` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cover_image` text COLLATE utf8mb4_unicode_ci,
-  `image` text COLLATE utf8mb4_unicode_ci,
-  `status` tinyint(4) NOT NULL DEFAULT '1',
-  `parent` text COLLATE utf8mb4_unicode_ci,
+  `cover_image` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `parent` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `show_in_home_page` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_title` text COLLATE utf8mb4_unicode_ci,
-  `meta_keyword` text COLLATE utf8mb4_unicode_ci,
-  `meta_description` text COLLATE utf8mb4_unicode_ci,
+  `meta_title` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_keyword` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `order_by` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -345,12 +339,10 @@ CREATE TABLE `tbl_categories` (
 --
 
 INSERT INTO `tbl_categories` (`id`, `name`, `cover_image`, `image`, `status`, `parent`, `show_in_home_page`, `meta_title`, `meta_keyword`, `meta_description`, `order_by`, `created_at`, `updated_at`) VALUES
-(1, '4K Ultra HD TV', 'public/uploads/category_image/download_14321410993.jpg', 'public/uploads/category_image/W49E3000AS-1-220x220h_12931520932.jpg', 1, '2', 'Yes', 'Electronics || Bangladeshi Electronics Products', 'Electronics, Electronocs in Bangladesh', 'Electronics Products.', 2, '2019-11-25 18:07:28', '2019-12-01 04:11:06'),
-(2, 'Television', 'public/uploads/category_image/81OwqiQckgL._SL1500__96781947791.jpg', 'public/uploads/category_image/43UM7400_original_65661783580.jpg', 1, NULL, 'Yes', 'Electronics || Bangladeshi Electronics Products', 'Electronics, Electronocs in Bangladesh', 'Electronics Products.', NULL, '2019-11-25 18:13:09', '2019-11-30 14:15:44'),
-(3, 'LED TV', 'public/uploads/category_image/81wNGMjOgjL._SL1500__79232159608.jpg', 'public/uploads/category_image/W49E3000AS-1-220x220h_58193168071.jpg', 1, '2', 'Yes', 'LED TV', 'LED TV', 'LED TV', 4, '2019-12-01 04:13:46', '2019-12-01 04:13:46'),
-(4, 'Refrigerator & Freezer', '', '', 1, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-01 04:15:37', '2019-12-01 22:15:46'),
-(5, 'Freezer', '', '', 1, '4', NULL, NULL, NULL, NULL, NULL, '2019-12-01 04:19:17', '2019-12-01 04:20:05'),
-(6, 'Non-Frost Refrigerator', '', '', 1, '4', NULL, NULL, NULL, NULL, NULL, '2019-12-01 04:20:02', '2019-12-01 04:20:07');
+(8, 'Television', '', '', 1, NULL, NULL, NULL, NULL, NULL, 1, '2019-12-16 00:18:32', '2019-12-16 00:23:52'),
+(9, 'Refrigerator & Freezer', '', '', 1, NULL, NULL, NULL, NULL, NULL, 2, '2019-12-16 00:19:15', '2019-12-16 00:23:49'),
+(10, 'Air Conditioner', NULL, NULL, 1, NULL, 'No', NULL, NULL, NULL, 2, '2019-12-16 00:43:26', '2019-12-16 00:46:37'),
+(11, 'Home Applince', '', '', 1, NULL, NULL, NULL, NULL, NULL, 4, '2019-12-16 00:45:24', '2019-12-16 00:45:30');
 
 -- --------------------------------------------------------
 
@@ -369,7 +361,7 @@ CREATE TABLE `tbl_company` (
   `vat` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tin` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `trade_license` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci,
+  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -393,18 +385,11 @@ CREATE TABLE `tbl_couriers` (
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci,
-  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `tbl_couriers`
---
-
-INSERT INTO `tbl_couriers` (`id`, `code`, `name`, `phone`, `address`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'scl-00', 'Sundarban Courier Ltd', '01418253595', 'Mirpur - 11', 0, '2019-11-30 01:04:15', '2019-11-30 14:24:44');
 
 -- --------------------------------------------------------
 
@@ -435,7 +420,7 @@ CREATE TABLE `tbl_customers` (
   `designation` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `monthly_income` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `work_place_address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `status` tinyint(4) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -448,7 +433,12 @@ INSERT INTO `tbl_customers` (`id`, `code`, `name`, `nick_name`, `age`, `phone_no
 (1, 'mnh-1-494', 'Md. Salman Sabbir', 'Salman', 30, '01317243494', 'Married', 'Jorina', 'Abdul Jabbar', 'Shamima Khatun', 'Male', 'own', '9', '5', 'Mirpur', 'Mirpur', 'Service Holder', '5', '1', 'Software Engineer', '35000', 'Badda', 1, '2019-12-11 01:04:07', '2019-12-11 01:04:07'),
 (2, 'mnh-3-744', 'Md. Dew Hunt', 'Salman', 30, '01515269744', 'Unmarried', NULL, 'Md. Aziz', 'Shamima Ferdous', 'Male', 'rent', '8', '5', 'Mirpur - 1', 'Mirpur - 1', 'Service Holder', '7', '2', 'Software Engineer', '30000', 'Badda', 1, '2019-12-11 01:08:56', '2019-12-11 01:15:30'),
 (4, 'mnh-3-746', 'Mrs. Simran Khan', 'Simran', 26, '01715283746', 'Married', 'Md. Siam Khan', 'Md. Aziz', 'Mrs. Kumkum', 'Female', 'rent', '7', '3', 'Dhanmondi', 'Dhanmondi', 'Housewife', NULL, '1', NULL, NULL, NULL, 1, '2019-12-11 02:27:57', '2019-12-11 02:27:57'),
-(5, 'mnh-5-746', 'Mrs. Akhi Akter', 'Akhi', 28, '01715394746', 'Married', 'Md. Soleman', 'Md. Razib', 'Mrs. Selina', 'Female', 'rent', '4', '2', 'Uttara', 'Uttara', 'Housewife', NULL, '1', NULL, NULL, NULL, 1, '2019-12-11 02:35:50', '2019-12-11 02:35:50');
+(5, 'mnh-5-746', 'Mrs. Akhi Akter', 'Akhi', 28, '01715394746', 'Married', 'Md. Soleman', 'Md. Razib', 'Mrs. Selina', 'Female', 'rent', '4', '2', 'Uttara', 'Uttara', 'Housewife', NULL, '1', NULL, NULL, NULL, 1, '2019-12-11 02:35:50', '2019-12-11 02:35:50'),
+(6, 'mnh-6-915', 'Md. Sajal', 'sajal', 23, '01790941915', 'Unmarried', NULL, 'Md Ranjit', 'Mrs. Chadni', 'Male', 'own', '23', '2', 'Barisal', 'Barisal', 'Service Holder', '1', '2', 'Computer Operator', '25000', 'Barisal', 1, '2019-12-16 01:46:34', '2019-12-16 01:46:34'),
+(7, 'mnh-7-541', 'Tonni Das', 'Tonni', 25, '01765984541', 'Unmarried', NULL, 'Md. Aziz', 'Shamima Khatun', 'Female', 'own', '10', '5', 'Barishal', 'Barishal', 'Service Holder', '1', '2', 'Computer Operator', '10000', 'Barshal', 1, '2019-12-16 02:33:12', '2019-12-16 02:33:12'),
+(8, 'mnh-8-746', 'Md. Salman Sabbir', 'Salman', 28, '01715394746', 'Unmarried', NULL, 'Abdul Jabbar', 'Mrs. Chadni', 'Male', 'rent', '4', '2', 'Barishal', 'Barishal', 'Service Holder', '3', '1', 'Computer Operator', '10000', 'Barishal', 1, '2019-12-16 02:38:08', '2019-12-16 02:38:08'),
+(9, 'mnh-9-746', 'Md. Nasir', 'Opu', 27, '01715394746', 'Married', 'Mrs. Tumpa', 'Md. Ranjit', 'Mrs. Chadni', 'Male', 'rent', '7', '5', 'Dhaka', 'Dhaka', 'Service Holder', '8', '2', 'Banker', '25000', 'Dhaka', 1, '2019-12-16 13:54:19', '2019-12-16 13:54:19'),
+(10, 'mnh-10-465', 'gfsdfsfgdsfg', NULL, 23, '1234235465', 'Unmarried', NULL, 'fasdgfsdg', 'sdfsdgg', 'Male', 'own', '1', '4', 'sdgasd', 'asdgad', 'asdgadsg', '23', '23', '5fdggdfb', '3242', 'zxcbzcbc', 0, '2019-12-16 16:01:44', '2019-12-16 16:02:38');
 
 -- --------------------------------------------------------
 
@@ -485,7 +475,17 @@ INSERT INTO `tbl_customer_guarantor` (`id`, `customer_id`, `product_id`, `gurant
 (1, 2, 3, 'Md. Salam', '01415239865', '35', 'Married', 'Halima', 'Md. Selim', 'Mirpur', 'Mirpur', 'Service Holder', 'Accountant', '01415239865', '40000', 'Uttara', NULL, NULL),
 (2, 2, 3, 'Md. Hanif', '01617269635', '40', 'Married', 'Simu', 'Md. Rajjak', 'Mirpur', 'Mirpur', 'Service Holder', 'Accountant', '01617269635', '40000', 'Gulshan', NULL, NULL),
 (3, 2, 7, 'Md. Hanif', '01617269635', '40', 'Married', 'Simu', 'Md. Rajjak', 'Mirpur', 'Mirpur', 'Service Holder', 'Accountant', '01617269635', '40000', 'U', NULL, NULL),
-(4, 2, 7, 'Md. Salam', '01415239865', '35', 'Married', 'Halima', 'Md. Selim', 'Mirpur', 'Mirpur', 'Service Holder', 'Accountant', '01415239865', '40000', 't', NULL, NULL);
+(4, 2, 7, 'Md. Salam', '01415239865', '35', 'Married', 'Halima', 'Md. Selim', 'Mirpur', 'Mirpur', 'Service Holder', 'Accountant', '01415239865', '40000', 't', NULL, NULL),
+(9, 6, 12, 'Md. Salam', '01415239865', '35', 'Married', 'Simu', 'Md. Selim', 'Barisal', 'Barisal', 'Service Holder', 'Accountant', '0172348909', '40000', 'Barisal', NULL, NULL),
+(10, 6, 12, 'Md. Hanif', '01415239865', '40', 'Married', 'Simu', 'Md. Rajjak', 'Barisal', 'Barisal', 'Service Holder', 'Accountant', '01923455779', '45000', 'Barisal', NULL, NULL),
+(11, 6, 11, 'Md. Salam', '01415239865', '35', 'Married', 'Simu', 'Md. Selim', 'Barisal', 'Barisal', 'Service Holder', 'Accountant', '0172348909', '40000', 'B', NULL, NULL),
+(12, 6, 11, 'Md. Hanif', '01415239865', '40', 'Married', 'Simu', 'Md. Rajjak', 'Barisal', 'Barisal', 'Service Holder', 'Accountant', '01923455779', '45000', 'a', NULL, NULL),
+(13, 7, 10, 'Sajal', '01617269635', '30', 'Unmarried', NULL, 'Md. Selim', 'Barishal', 'Barishal', 'Service Holder', 'Accountant', '019874273647', '199998', 'Barishal', NULL, NULL),
+(14, 7, 10, 'Md. Hanif', '01415239865', '25', 'Unmarried', NULL, 'Md. Rajjak', 'Barishal', 'Barishal', 'Service Holder', 'Accountant', '01415239865', '20002', 'Barishal', NULL, NULL),
+(15, 9, 8, 'Md. Salam', '01415239865', '40', 'Married', 'Simu', 'Md. Selim', 'Dhaka', 'Dhaka', 'Service Holder', 'Accountant', '01627920223', '40000', 'Dhaka', NULL, '2019-12-16 15:52:27'),
+(16, 9, 8, 'Md. Hanif', '01415239865', '35', 'Married', 'Himu', 'Md. Selim', 'Dhaka', 'Dhaka', 'Service Holder', 'Accountant', '019235473', '35000', 'Dhaka', NULL, '2019-12-16 15:52:54'),
+(19, 9, 12, 'Md. Salam', '01415239865', '40', 'Married', 'Simu', 'Md. Selim', 'Dhaka', 'Dhaka', 'Service Holder', 'Accountant', '01627920223', '40000', 'D', NULL, NULL),
+(20, 9, 12, 'Md. Hanif', '01415239865', '35', 'Married', 'Himu', 'Md. Selim', 'Dhaka', 'Dhaka', 'Service Holder', 'Accountant', '019235473', '35000', 'h', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -498,10 +498,11 @@ CREATE TABLE `tbl_customer_products` (
   `customer_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `showroom_id` int(11) DEFAULT NULL,
-  `qty` int(11) NOT NULL DEFAULT '1',
+  `qty` int(11) NOT NULL DEFAULT 1,
   `warranty` int(11) DEFAULT NULL,
   `purchase_date` date DEFAULT NULL,
   `purchase_type` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `installment_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `product_model` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `cash_price` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `mrp_price` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -510,7 +511,7 @@ CREATE TABLE `tbl_customer_products` (
   `total_installment` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `monthly_installment_amount` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `product_usage_address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `status` tinyint(4) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -519,14 +520,23 @@ CREATE TABLE `tbl_customer_products` (
 -- Dumping data for table `tbl_customer_products`
 --
 
-INSERT INTO `tbl_customer_products` (`id`, `customer_id`, `product_id`, `showroom_id`, `qty`, `warranty`, `purchase_date`, `purchase_type`, `product_model`, `cash_price`, `mrp_price`, `deposite`, `installment_price`, `total_installment`, `monthly_installment_amount`, `product_usage_address`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 3, 1, 1, 5, '2019-12-11', 'Installment', 'wal890', '45000', '48600', '15000', '54432', '12', '3286', 'MMirpur', 0, '2019-12-10 13:04:07', '2019-12-14 05:12:27'),
-(2, 2, 3, 1, 1, 5, '2019-12-11', 'Installment', 'wal890', '45000', '48600', '15000', '54432', '12', '3286', 'MMirpur', 0, '2019-12-10 13:08:56', '2019-12-14 05:21:41'),
-(3, 2, 7, 3, 1, 10, '2019-12-11', 'Installment', 'Wal119', '65000', '70200', '25000', '78624', '15', '3575', 'Mirpur - 1', 0, '2019-12-10 13:19:38', '2019-12-14 05:22:08'),
-(5, 4, 5, 3, 1, 5, '2019-12-11', 'Cash', 'wal1234', '35000', '37800', NULL, NULL, NULL, NULL, 'Dhanmondi', 0, '2019-12-10 14:27:57', '2019-12-14 04:13:04'),
-(6, 5, 6, 1, 1, 10, '2019-12-11', 'Cash', 'wal8126', '25000', '27000', NULL, NULL, NULL, NULL, 'Uttara', 0, '2019-12-10 14:35:50', '2019-12-14 04:13:50'),
-(7, 2, 5, 1, 1, 5, '2019-12-11', 'Cash', 'wal1234', '35000', '37800', NULL, NULL, NULL, NULL, 'Mirpur', 0, '2019-12-10 14:45:40', '2019-12-14 05:12:03'),
-(8, 5, 6, 1, 1, 10, '2019-12-12', 'Cash', 'wal8126', '25000', '27000', '', '', '', '', 'Mirpur', 0, '2019-12-12 03:07:41', '2019-12-14 05:12:12');
+INSERT INTO `tbl_customer_products` (`id`, `customer_id`, `product_id`, `showroom_id`, `qty`, `warranty`, `purchase_date`, `purchase_type`, `installment_type`, `product_model`, `cash_price`, `mrp_price`, `deposite`, `installment_price`, `total_installment`, `monthly_installment_amount`, `product_usage_address`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 3, 1, 1, 5, '2019-12-11', 'Installment', NULL, 'wal890', '45000', '48600', '15000', '54432', '12', '3286', 'MMirpur', 1, '2019-12-10 13:04:07', '2019-12-15 06:01:02'),
+(2, 2, 3, 1, 1, 5, '2019-12-11', 'Installment', NULL, 'wal890', '45000', '48600', '15000', '54432', '12', '3286', 'MMirpur', 0, '2019-12-10 13:08:56', '2019-12-14 05:21:41'),
+(3, 2, 7, 3, 1, 10, '2019-12-11', 'Installment', NULL, 'Wal119', '65000', '70200', '25000', '78624', '15', '3575', 'Mirpur - 1', 0, '2019-12-10 13:19:38', '2019-12-14 05:22:08'),
+(5, 4, 5, 3, 1, 5, '2019-12-11', 'Cash', NULL, 'wal1234', '35000', '37800', NULL, NULL, NULL, NULL, 'Dhanmondi', 0, '2019-12-10 14:27:57', '2019-12-14 04:13:04'),
+(6, 5, 6, 1, 1, 10, '2019-12-11', 'Cash', NULL, 'wal8126', '25000', '27000', NULL, NULL, NULL, NULL, 'Uttara', 0, '2019-12-10 14:35:50', '2019-12-14 04:13:50'),
+(7, 2, 5, 1, 1, 5, '2019-12-11', 'Cash', NULL, 'wal1234', '35000', '37800', NULL, NULL, NULL, NULL, 'Mirpur', 0, '2019-12-10 14:45:40', '2019-12-14 05:12:03'),
+(8, 5, 6, 1, 1, 10, '2019-12-12', 'Cash', NULL, 'wal8126', '25000', '27000', '', '', '', '', 'Mirpur', 0, '2019-12-12 03:07:41', '2019-12-14 05:12:12'),
+(9, 6, 12, 1, 1, 10, '2019-12-16', 'Installment', NULL, 'MSN-12K-ECXXA', '35500', '38340', '10000', '42941', '12', '2745', 'Barisal', 0, '2019-12-16 01:46:34', '2019-12-16 02:19:19'),
+(10, 6, 11, 3, 1, 5, '2019-12-16', 'Installment', NULL, 'MSD49FD-1.245 m (49\'\')', '49900', '53892', '10000', '60359', '12', '4197', 'Barisal', 0, '2019-12-16 01:53:45', '2019-12-16 02:20:55'),
+(11, 6, 8, 1, 1, 12, '2019-12-16', 'Cash', NULL, 'MFO-JET-RXXX-XX', '10990', '11869', '', '', '', '', 'Barisal', 0, '2019-12-16 01:59:01', '2019-12-16 02:24:12'),
+(12, 7, 10, 3, 1, 5, '2019-12-16', 'Installment', NULL, 'MSD55FD-1.397 m (55\'\')', '59900', '64692', '50000', '72455', '12', '1871', 'Barishal', 0, '2019-12-16 02:33:12', '2019-12-16 03:42:09'),
+(13, 8, 8, 1, 1, 12, '2019-12-16', 'Cash', NULL, 'MFO-JET-RXXX-XX', '10990', '11869', '', '', '', '', 'Barishal', 0, '2019-12-16 02:38:08', '2019-12-16 04:21:11'),
+(14, 9, 11, 1, 1, 5, '2019-12-17', 'Cash', NULL, 'MSD49FD-1.245 m (49\'\')', '49900', '', '', '', '', '', 'Dhaka', 1, '2019-12-16 13:54:19', '2019-12-16 13:54:19'),
+(15, 9, 8, 1, 1, 12, '2019-12-17', 'Short Installment', 'Weekly', 'MFO-JET-RXXX-XX', '10990', '11869', '1869', '', '10', '1000', 'Dhaka', 1, '2019-12-16 14:55:13', '2019-12-16 15:46:27'),
+(18, 9, 12, 3, 1, 10, '2019-12-17', 'Long Installment', 'Monthly', 'MSN-12K-ECXXA', '35500', '', '', '42941', '', '', 'Dhaka', 1, '2019-12-16 15:56:15', '2019-12-16 15:56:15'),
+(19, 10, 12, 1, 1, 10, '2019-12-17', 'Short Installment', NULL, 'MSN-12K-ECXXA', '35500', '38340', '1232', '', '12', '3092', NULL, 1, '2019-12-16 16:01:44', '2019-12-16 16:01:44');
 
 -- --------------------------------------------------------
 
@@ -618,10 +628,17 @@ CREATE TABLE `tbl_installment` (
   `booking_amount` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `installment_qty` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `installment_amount` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `status` tinyint(4) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_installment`
+--
+
+INSERT INTO `tbl_installment` (`id`, `customer_product_id`, `customer_id`, `product_id`, `invoice_no`, `customer_name`, `installment_price`, `booking_amount`, `installment_qty`, `installment_amount`, `status`, `created_at`, `updated_at`) VALUES
+(7, 3, 2, 7, 'inv-14-19-10014', 'Md. Dew Hunt', '78624', '25000', '15', '3575', 1, '2019-12-16 08:53:02', '2019-12-16 08:53:02');
 
 -- --------------------------------------------------------
 
@@ -641,7 +658,7 @@ CREATE TABLE `tbl_installment_collection` (
   `booking_amount` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `installment_qty` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `installment_amount` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `status` tinyint(4) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -660,7 +677,7 @@ CREATE TABLE `tbl_installment_collection_list` (
   `invoice_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `installment_schedule_date` date DEFAULT NULL,
   `installment_schedule_amount` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `status` tinyint(4) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -677,10 +694,32 @@ CREATE TABLE `tbl_installment_schedule` (
   `invoice_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `installment_schedule_date` date DEFAULT NULL,
   `installment_schedule_amount` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `status` tinyint(4) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_installment_schedule`
+--
+
+INSERT INTO `tbl_installment_schedule` (`id`, `installment_id`, `invoice_no`, `installment_schedule_date`, `installment_schedule_amount`, `status`, `created_at`, `updated_at`) VALUES
+(79, 7, 'inv-14-19-10014', '2019-12-11', '25000', 1, NULL, NULL),
+(80, 7, 'inv-14-19-10014', '2020-01-11', '3575', 1, NULL, NULL),
+(81, 7, 'inv-14-19-10014', '2020-02-11', '3575', 1, NULL, NULL),
+(82, 7, 'inv-14-19-10014', '2020-03-11', '3575', 1, NULL, NULL),
+(83, 7, 'inv-14-19-10014', '2020-04-11', '3575', 1, NULL, NULL),
+(84, 7, 'inv-14-19-10014', '2020-05-11', '3575', 1, NULL, NULL),
+(85, 7, 'inv-14-19-10014', '2020-06-11', '3575', 1, NULL, NULL),
+(86, 7, 'inv-14-19-10014', '2020-07-11', '3575', 1, NULL, NULL),
+(87, 7, 'inv-14-19-10014', '2020-08-11', '3575', 1, NULL, NULL),
+(88, 7, 'inv-14-19-10014', '2020-09-11', '3575', 1, NULL, NULL),
+(89, 7, 'inv-14-19-10014', '2020-10-11', '3575', 1, NULL, NULL),
+(90, 7, 'inv-14-19-10014', '2020-11-11', '3575', 1, NULL, NULL),
+(91, 7, 'inv-14-19-10014', '2020-12-11', '3575', 1, NULL, NULL),
+(92, 7, 'inv-14-19-10014', '2021-01-11', '3575', 1, NULL, NULL),
+(93, 7, 'inv-14-19-10014', '2021-02-11', '3575', 1, NULL, NULL),
+(94, 7, 'inv-14-19-10014', '2021-03-11', '3575', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -705,7 +744,7 @@ CREATE TABLE `tbl_invoice` (
   `qty` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `customer_product_usage_address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `customer_product_purchase_date` date DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `status` tinyint(4) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -715,13 +754,17 @@ CREATE TABLE `tbl_invoice` (
 --
 
 INSERT INTO `tbl_invoice` (`id`, `invoice_date`, `invoice_no`, `collection_type`, `customer_id`, `customer_product_id`, `product_id`, `product_serial_no`, `product_name`, `customer_product_price`, `customer_product_model`, `customer_product_color`, `customer_product_waranty`, `qty`, `customer_product_usage_address`, `customer_product_purchase_date`, `status`, `created_at`, `updated_at`) VALUES
-(5, '2019-12-14', 'inv-1-19-10001', 'Full Payment', 4, 5, 5, '09373848', NULL, '35000', 'wal1234', 'Silver', '5', '1', 'Dhanmondi', '2019-12-11', 1, '2019-12-14 04:13:04', '2019-12-14 04:13:04'),
-(6, '2019-12-14', 'inv-6-19-10006', 'Full Payment', 5, 6, 6, 'fsdafa', NULL, '25000', 'wal8126', 'White', '10', '1', 'Uttara', '2019-12-11', 1, '2019-12-14 04:13:50', '2019-12-14 04:13:50'),
+(5, '2019-12-14', 'inv-1-19-10001', 'Full Payment', 4, 5, 5, '09373848', NULL, '35000', 'wal1234', 'Silver', '5', '1', 'Dhanmondi', '2019-12-11', 0, '2019-12-14 04:13:04', '2019-12-16 05:48:32'),
+(6, '2019-12-14', 'inv-6-19-10006', 'Full Payment', 5, 6, 6, 'fsdafa', NULL, '25000', 'wal8126', 'White', '10', '1', 'Uttara', '2019-12-11', 0, '2019-12-14 04:13:50', '2019-12-16 05:48:55'),
 (8, '2019-12-14', 'inv-7-19-10007', 'Partial Payment', 2, 7, 5, 'u7gfrth0987', NULL, '37800', 'wal1234', 'Silver', '5', '1', 'Mirpur', '2019-12-11', 1, '2019-12-14 05:12:03', '2019-12-14 05:12:03'),
 (9, '2019-12-14', 'inv-9-19-10009', 'Partial Payment', 5, 8, 6, '09364573', NULL, '27000', 'wal8126', 'White', '10', '1', 'Mirpur', '2019-12-12', 1, '2019-12-14 05:12:11', '2019-12-14 05:12:11'),
-(10, '2019-12-14', 'inv-10-19-10010', 'Installment', 1, 1, 3, 'poiuytrty', NULL, '54432', 'wal890', 'Black', '5', '1', 'MMirpur', '2019-12-11', 1, '2019-12-14 05:12:27', '2019-12-14 05:12:27'),
-(13, '2019-12-14', 'inv-11-19-10011', 'Installment', 2, 2, 3, 'No Serial Number', NULL, '54432', 'wal890', 'Black', '5', '1', 'MMirpur', '2019-12-11', 1, '2019-12-14 05:21:41', '2019-12-14 05:21:41'),
-(14, '2019-12-14', 'inv-14-19-10014', 'Installment', 2, 3, 7, 'sdgfasdgasd', NULL, '78624', 'Wal119', 'Red', '10', '1', 'Mirpur - 1', '2019-12-11', 1, '2019-12-14 05:22:08', '2019-12-14 05:22:08');
+(13, '2019-12-14', 'inv-11-19-10011', 'Installment', 2, 2, 3, 'No Serial Number', NULL, '54432', 'wal890', 'Black', '5', '1', 'MMirpur', '2019-12-11', 1, '2019-12-14 05:21:41', '2019-12-16 09:04:07'),
+(14, '2019-12-14', 'inv-14-19-10014', 'Installment', 2, 3, 7, 'sdgfasdgasd', NULL, '78624', 'Wal119', 'Red', '10', '1', 'Mirpur - 1', '2019-12-11', 0, '2019-12-14 05:22:08', '2019-12-16 08:53:02'),
+(15, '2019-12-16', 'inv-15-19-10015', 'Installment', 6, 9, 12, 'fgdgdgsdf', NULL, '42941', 'MSN-12K-ECXXA', 'White', '10', '1', 'Barisal', '2019-12-16', 1, '2019-12-16 02:19:19', '2019-12-16 02:19:19'),
+(16, '2019-12-16', 'inv-16-19-10016', 'Installment', 6, 10, 11, 'mar3423412412', NULL, '60359', 'MSD49FD-1.245 m (49\'\')', 'White', '5', '1', 'Barisal', '2019-12-16', 1, '2019-12-16 02:20:55', '2019-12-16 02:20:55'),
+(17, '2019-12-16', 'inv-17-19-10017', 'Full Payment', 6, 11, 8, 'mar123408', NULL, '10990', 'MFO-JET-RXXX-XX', 'Black', '12', '1', 'Barisal', '2019-12-16', 0, '2019-12-16 02:24:12', '2019-12-16 06:00:29'),
+(18, '2019-12-16', 'inv-18-19-10018', 'Installment', 7, 12, 10, '234567890', NULL, '72455', 'MSD55FD-1.397 m (55\'\')', 'Black', '5', '1', 'Barishal', '2019-12-16', 1, '2019-12-16 03:42:09', '2019-12-16 09:05:00'),
+(19, '2019-12-16', 'inv-19-19-10019', 'Full Payment', 8, 13, 8, 'mmmm', NULL, '10990', 'MFO-JET-RXXX-XX', 'Black', '12', '1', 'Barishal', '2019-12-16', 1, '2019-12-16 04:21:11', '2019-12-16 04:21:11');
 
 -- --------------------------------------------------------
 
@@ -754,7 +797,14 @@ CREATE TABLE `tbl_liftings` (
 
 INSERT INTO `tbl_liftings` (`id`, `serial_no`, `vaouchar_no`, `vendor_id`, `purchase_by`, `submission_date`, `vouchar_date`, `total_qty`, `total_price`, `total_mrp_price`, `total_haire_price`, `discount`, `vat`, `net_amount`, `created_at`, `updated_at`) VALUES
 (2, '1000001', '56789546', 1, 'Admin', '2019-11-01', '2019-12-01', '3', '135000.00', '145800.00', '163296.00', NULL, NULL, NULL, '2019-12-02 03:43:11', '2019-12-05 12:29:59'),
-(3, '1000003', '01273', 2, 'Admin', '2019-11-15', '2019-12-03', '3', '95000.00', '102600.00', '114912.00', NULL, NULL, NULL, '2019-12-02 03:56:03', '2019-12-14 04:09:12');
+(3, '1000003', '01273', 2, 'Admin', '2019-11-15', '2019-12-03', '3', '95000.00', '102600.00', '114912.00', NULL, NULL, NULL, '2019-12-02 03:56:03', '2019-12-14 04:09:12'),
+(4, '1000004', 'vou-001', 5, 'Admin', '2019-12-16', '2014-01-01', '3', '149700.00', '161676.00', '181077.00', NULL, NULL, NULL, '2019-12-16 01:12:40', '2019-12-16 01:12:40'),
+(6, '1000005', 'VOU-004', 6, 'Admin', '2019-12-16', '2019-12-16', '2', '70000.00', '75600.00', '84672.00', NULL, NULL, NULL, '2019-12-16 01:20:19', '2019-12-16 01:20:19'),
+(7, '1000007', '768867', 5, 'Admin', '2019-12-16', '2019-12-07', '3', '106500.00', '115020.00', '128823.00', NULL, NULL, NULL, '2019-12-16 01:27:48', '2019-12-16 01:27:48'),
+(8, '1000008', 'vou-006', 5, 'Admin', '2019-12-16', '2014-01-03', '2', '29190.00', '31525.00', '35309.00', NULL, NULL, NULL, '2019-12-16 02:23:19', '2019-12-16 02:23:19'),
+(9, '1000009', 'hhdhd', 5, 'Admin', '2019-12-16', '2019-12-16', '1', '10990.00', '11869.00', '13294.00', NULL, NULL, NULL, '2019-12-16 02:43:19', '2019-12-16 02:43:19'),
+(10, '1000010', 'fasd', 5, 'Admin', '2019-12-16', '2019-12-16', '1', '49900.00', '53892.00', '60359.00', NULL, NULL, NULL, '2019-12-16 02:46:03', '2019-12-16 02:46:03'),
+(11, '1000011', 'vou-978654', 5, 'Admin', '2019-12-16', '2019-12-16', '1', '59900.00', '64692.00', '72455.00', NULL, NULL, NULL, '2019-12-16 03:41:51', '2019-12-16 03:41:51');
 
 -- --------------------------------------------------------
 
@@ -773,7 +823,7 @@ CREATE TABLE `tbl_lifting_products` (
   `price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `mrp_price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `haire_price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `status` tinyint(4) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -783,12 +833,25 @@ CREATE TABLE `tbl_lifting_products` (
 --
 
 INSERT INTO `tbl_lifting_products` (`id`, `lifting_id`, `product_id`, `model_no`, `serial_no`, `color`, `qty`, `price`, `mrp_price`, `haire_price`, `status`, `created_at`, `updated_at`) VALUES
-(16, 2, 3, 'wal890', 'poiuytrty', 'Black', '1', '45000', '48600', '54432', 0, NULL, '2019-12-14 05:12:27'),
+(16, 2, 3, 'wal890', 'poiuytrty', 'Black', '1', '45000', '48600', '54432', 1, NULL, '2019-12-15 06:01:02'),
 (17, 2, 6, 'wal8126', 'fsdafa', 'White', '1', '25000', '27000', '30240', 0, NULL, '2019-12-14 04:13:50'),
 (18, 2, 7, 'Wal119', 'sdgfasdgasd', 'Red', '1', '65000', '70200', '78624', 0, NULL, '2019-12-14 05:22:08'),
 (21, 3, 5, 'wal1234', '09373848', 'Silver', '1', '35000', '37800', '42336', 0, NULL, '2019-12-14 04:13:04'),
 (22, 3, 6, 'wal8126', '09364573', 'White', '1', '25000', '27000', '30240', 0, NULL, '2019-12-14 05:12:12'),
-(23, 3, 5, 'wal1234', 'u7gfrth0987', 'Silver', '1', '35000', '37800', '42336', 0, NULL, '2019-12-14 05:12:03');
+(23, 3, 5, 'wal1234', 'u7gfrth0987', 'Silver', '1', '35000', '37800', '42336', 0, NULL, '2019-12-14 05:12:03'),
+(24, 4, 11, 'MSD49FD-1.245 m (49\'\')', 'mar3423412412', 'White', '1', '49900', '53892', '60359', 0, NULL, '2019-12-16 02:20:56'),
+(25, 4, 11, 'MSD49FD-1.245 m (49\'\')', 'mar123557456845', 'White', '1', '49900', '53892', '60359', 1, NULL, NULL),
+(26, 4, 11, 'MSD49FD-1.245 m (49\'\')', 'mar0990756', 'White', '1', '49900', '53892', '60359', 1, NULL, NULL),
+(30, 6, 6, 'wal8126', 'SDADAER3434', 'White', '1', '25000', '27000', '30240', 1, NULL, NULL),
+(31, 6, 3, 'wal890', 'FSEDF456456', 'Black', '1', '45000', '48600', '54432', 1, NULL, NULL),
+(32, 7, 12, 'MSN-12K-ECXXA', 'fgdgdgsdf', 'White', '1', '35500', '38340', '42941', 0, NULL, '2019-12-16 02:19:19'),
+(33, 7, 12, 'MSN-12K-ECXXA', 'esefef', 'White', '1', '35500', '38340', '42941', 1, NULL, NULL),
+(34, 7, 12, 'MSN-12K-ECXXA', 'sssdfd', 'White', '1', '35500', '38340', '42941', 1, NULL, NULL),
+(35, 8, 9, 'MFD-1B6-RXXX-XX', 'mar345678', 'Silver', '1', '18200', '19656', '22015', 1, NULL, NULL),
+(36, 8, 8, 'MFO-JET-RXXX-XX', 'mar123408', 'Black', '1', '10990', '11869', '13294', 0, NULL, '2019-12-16 02:24:12'),
+(37, 9, 8, 'MFO-JET-RXXX-XX', 'mmmm', 'Black', '1', '10990', '11869', '13294', 0, NULL, '2019-12-16 04:21:11'),
+(38, 10, 11, 'MSD49FD-1.245 m (49\'\')', 'eeee', 'White', '1', '49900', '53892', '60359', 1, NULL, NULL),
+(39, 11, 10, 'MSD55FD-1.397 m (55\'\')', '234567890', 'Black', '1', '59900', '64692', '72455', 0, NULL, '2019-12-16 03:42:09');
 
 -- --------------------------------------------------------
 
@@ -806,7 +869,7 @@ CREATE TABLE `tbl_payment_to_company` (
   `balance` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `money_receipt` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `payment_type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `remarks` text COLLATE utf8mb4_unicode_ci,
+  `remarks` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -816,9 +879,7 @@ CREATE TABLE `tbl_payment_to_company` (
 --
 
 INSERT INTO `tbl_payment_to_company` (`id`, `vendor_id`, `payment_no`, `payment_date`, `current_due`, `payment_now`, `balance`, `money_receipt`, `payment_type`, `remarks`, `created_at`, `updated_at`) VALUES
-(1, 1, '1000001', '2019-12-04', '135000', '5000', '130000.00', 'd12e34w', 'Cash', 'Five Thousand Taka Cash.', '2019-12-05 03:31:53', '2019-12-05 05:58:10'),
-(2, 1, '1000002', '2019-12-03', '130000', '2000', '128000.00', 'e348je0k', 'Cash', 'Two Thousand Taka Cash.', '2019-12-05 03:57:43', '2019-12-05 04:07:49'),
-(3, 1, '1000003', '2019-12-02', '127000', '4000', '123000.00', 'lk43n93jc', 'Cash', 'Four Thousand Taka Cash.', '2019-12-05 03:58:54', '2019-12-05 03:58:54');
+(5, 1, '1000001', '2019-12-15', '135000', '5000', '130000.00', 'phoohlik', 'Cash', 'kgkjhgkhj', '2019-12-15 03:46:29', '2019-12-15 03:46:29');
 
 -- --------------------------------------------------------
 
@@ -845,11 +906,11 @@ CREATE TABLE `tbl_products` (
   `status` tinyint(4) DEFAULT NULL,
   `youtube_link` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tag_line` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `short_description` text COLLATE utf8mb4_unicode_ci,
-  `long_description` text COLLATE utf8mb4_unicode_ci,
+  `short_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `long_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `meta_title` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `meta_keyword` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_description` text COLLATE utf8mb4_unicode_ci,
+  `meta_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -862,7 +923,14 @@ INSERT INTO `tbl_products` (`id`, `category_id`, `name`, `code`, `model_no`, `co
 (3, '1', 'Walton ANDROID  ATV', 'wal123', 'wal890', 'Black', 'Pcs', 45000, 48600, 54432, '1000', 5, 5, 2, 3, 1, NULL, 'Smart TV', 'rogif;f;ehflk;lfjds;fanfkrengahglkan', ';jglangfarngfarnvafngabrflbFBDLB', 'Smart Tv', 'Smart Tv', 'Smart Tv', '2019-11-27 19:04:54', '2019-12-08 03:17:55'),
 (5, '3', 'Walton LED TV', 'wal009', 'wal1234', 'Silver', 'Pcs', 35000, 37800, 42336, '1000', 5, 5, 2, 5, 1, NULL, 'LED TV', 'LED Tv', 'LED TV', 'LED Tv', 'LED Tv', 'LED Tv', '2019-12-01 04:31:48', '2019-12-01 04:33:04'),
 (6, '5', 'Walton Freezer', 'wal567', 'wal8126', 'White', 'Pcs', 25000, 27000, 30240, '2500', 10, 5, 9, 5, 1, NULL, 'freezer', 'Walton Freezer', 'Walton Freezer', 'Walton Freezer', 'Walton Freezer', 'Walton Freezer', '2019-12-01 04:37:18', '2019-12-01 04:45:31'),
-(7, '6', 'Walton Side by Side Intelligent Inverter Refrigerator', 'wal009', 'Wal119', 'Red', 'Pcs', 65000, 70200, 78624, '4998', 10, 5, 7, 8, 1, NULL, 'Walton Non Frost Freez', 'Walton Non Frost Freez', 'Walton Non Frost Freez', 'Walton Freezer', 'Walton Freezer', 'Walton Freezer', '2019-12-01 04:48:04', '2019-12-01 04:50:28');
+(7, '6', 'Walton Side by Side Intelligent Inverter Refrigerator', 'wal009', 'Wal119', 'Red', 'Pcs', 65000, 70200, 78624, '4998', 10, 5, 7, 8, 1, NULL, 'Walton Non Frost Freez', 'Walton Non Frost Freez', 'Walton Non Frost Freez', 'Walton Freezer', 'Walton Freezer', 'Walton Freezer', '2019-12-01 04:48:04', '2019-12-01 04:50:28'),
+(8, '9', 'Marcel Refrigerator', 'mar-001', 'MFO-JET-RXXX-XX', 'Black', 'Pcs', 10990, 11869, 13294, NULL, 12, NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 00:27:51', '2019-12-16 00:34:18'),
+(9, '9', 'Marcel Refrigerator', 'Mar-002', 'MFD-1B6-RXXX-XX', 'Silver', 'Pcs', 18200, 19656, 22015, NULL, 12, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 00:31:13', '2019-12-16 00:37:29'),
+(10, '8', 'Marcel LED TV', 'Mar-tv-001', 'MSD55FD-1.397 m (55\'\')', 'Black', 'Pcs', 59900, 64692, 72455, NULL, 5, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 00:37:12', '2019-12-16 00:37:21'),
+(11, '8', 'Marcel LED TV', 'Mar-tv-002', 'MSD49FD-1.245 m (49\'\')', 'White', 'Pcs', 49900, 53892, 60359, NULL, 5, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 00:38:43', '2019-12-16 00:40:02'),
+(12, '10', 'Marcel Air Conditioner', 'mar-ac-001', 'MSN-12K-ECXXA', 'White', 'Kg', 35500, 38340, 42941, NULL, 10, 5, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 00:49:32', '2019-12-16 00:52:05'),
+(13, '11', 'Marcel FAN', 'mar-fan-001', 'MCF5601 WR', 'White', 'Pcs', 2700, 2916, 3266, NULL, 5, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 00:56:30', '2019-12-16 00:56:30'),
+(14, '10', 'AIr conditioner', 'ac-002', 'MSN-21K-0101-RXXXB', 'Red', 'Kg', 52900, 57132, 63988, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 01:00:08', '2019-12-16 01:00:08');
 
 -- --------------------------------------------------------
 
@@ -893,7 +961,14 @@ INSERT INTO `tbl_product_advance` (`id`, `product_id`, `product_section`, `relat
 (3, 3, 'New Arrival,Best Seller', '3', '160', 'free', 40000, '0000-00-00', NULL, NULL, '2019-11-27 19:04:54', '2019-11-28 01:18:22'),
 (5, 5, 'Featured Product,Top Rated', '3', '10', 'free', 30000, '0000-00-00', NULL, NULL, '2019-12-01 04:31:48', '2019-12-01 04:32:31'),
 (6, 6, 'Top Rated,Best Seller', '', '16', NULL, 20000, '0000-00-00', NULL, NULL, '2019-12-01 04:37:18', '2019-12-01 04:44:45'),
-(7, 7, 'New Arrival,Top Rated', '6', '10', 'free', 60000, '0000-00-00', NULL, NULL, '2019-12-01 04:48:04', '2019-12-01 04:48:30');
+(7, 7, 'New Arrival,Top Rated', '6', '10', 'free', 60000, '0000-00-00', NULL, NULL, '2019-12-01 04:48:04', '2019-12-01 04:48:30'),
+(8, 8, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 00:27:51', '2019-12-16 00:27:51'),
+(9, 9, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 00:31:13', '2019-12-16 00:31:13'),
+(10, 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 00:37:12', '2019-12-16 00:37:12'),
+(11, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 00:38:43', '2019-12-16 00:38:43'),
+(12, 12, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 00:49:32', '2019-12-16 00:49:32'),
+(13, 13, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 00:56:30', '2019-12-16 00:56:30'),
+(14, 14, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 01:00:08', '2019-12-16 01:00:08');
 
 -- --------------------------------------------------------
 
@@ -931,18 +1006,18 @@ INSERT INTO `tbl_product_images` (`id`, `product_id`, `image`, `created_at`, `up
 
 CREATE TABLE `tbl_showroom` (
   `id` int(10) UNSIGNED NOT NULL,
-  `prefix` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `prefix` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `contact_person` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `fax` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `website` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `vat` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tin` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `trade_license` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -952,8 +1027,8 @@ CREATE TABLE `tbl_showroom` (
 --
 
 INSERT INTO `tbl_showroom` (`id`, `prefix`, `name`, `contact_person`, `email`, `phone`, `fax`, `website`, `vat`, `tin`, `trade_license`, `address`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Dew', 'Dew Electronics', 'Dew Hunt', 'dewelectronics@gmail.com', '01317243494', '02243493', 'dewelectronics.com', 'v-12345', 'tin-12345', 'tl-12345', 'Mirpur 11, Dhaka, Bangladesh', 1, '2019-11-22 22:17:46', '2019-11-22 22:17:46'),
-(3, 'TEL', 'Techno Electronics Ltd.', 'Simon', 'simon@gmail.com', '01711116677', '02667711', 'technoelectronicsltd.com.bd', 'v-9876', 'tin-9876', 'tl-9876', 'Merul Badda, Bangladesh', 1, '2019-11-22 23:20:18', '2019-11-22 23:20:18');
+(1, 'Dew', 'Dew Electronics', 'Dew Hunt', 'dewelectronics@gmail.com', '01317243494', '02243493', 'dewelectronics.com', 'v-12345', 'tin-12345', 'tl-12345', 'Mirpur 11, Dhaka, Bangladesh', 1, '2019-11-22 16:17:46', '2019-11-22 16:17:46'),
+(3, 'TEL', 'Techno Electronics Ltd.', 'Simon', 'simon@gmail.com', '01711116677', '02667711', 'technoelectronicsltd.com.bd', 'v-9876', 'tin-9876', 'tl-9876', 'Merul Badda, Bangladesh', 1, '2019-11-22 17:20:18', '2019-11-22 17:20:18');
 
 -- --------------------------------------------------------
 
@@ -966,24 +1041,14 @@ CREATE TABLE `tbl_staffs` (
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `contact` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci,
+  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `national_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `joining_date` date DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT '0',
+  `status` tinyint(4) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `tbl_staffs`
---
-
-INSERT INTO `tbl_staffs` (`id`, `code`, `name`, `contact`, `address`, `email`, `national_id`, `joining_date`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'dh007', 'Dew Hunt', '01317243494', 'Mirpur', 'dew@gmail.com', '5089769966', '2019-02-01', 1, '2019-11-30 23:30:01', '2019-12-07 02:08:49'),
-(2, 'jis', 'Jishan', '01417243595', 'Badda', 'jishan@gmail.com', '5089768766', '2018-07-01', 1, '2019-12-07 02:03:52', '2019-12-07 02:08:47'),
-(3, 'sal', 'Salman', '01317243494', 'Gulshan', 'salman@gmail.com', '5089730966', '2017-02-01', 1, '2019-12-07 02:04:31', '2019-12-07 02:08:44'),
-(4, 'sab', 'Sabbir', '01317243494', 'Uttora', 'sabbir@gmail.com', '50098769966', '2016-01-01', 1, '2019-12-07 02:08:41', '2019-12-07 02:08:46');
 
 -- --------------------------------------------------------
 
@@ -996,9 +1061,9 @@ CREATE TABLE `tbl_stores` (
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci,
-  `remarks` text COLLATE utf8mb4_unicode_ci,
-  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remarks` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1008,8 +1073,7 @@ CREATE TABLE `tbl_stores` (
 --
 
 INSERT INTO `tbl_stores` (`id`, `code`, `type`, `name`, `address`, `remarks`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'st-00', 'Purchase Item Stock,Production Floor (Raw/Finish)', 'Dew Store', 'Mirpur', 'Best Store', 1, '2019-11-29 02:34:43', '2019-11-30 05:52:19'),
-(3, 'st-01', 'Production Floor (Raw/Finish)', 'Dew Hunt Store', 'dsga', 'sgasgasgd', 0, '2019-11-29 04:47:34', '2019-11-30 05:52:15');
+(4, 'cas', 'Finish Stock (Warehouse)', 'College Avenue Store', 'Barisal', 'College Avenue Store', 1, '2019-12-16 01:09:24', '2019-12-16 01:09:24');
 
 -- --------------------------------------------------------
 
@@ -1023,9 +1087,9 @@ CREATE TABLE `tbl_territories` (
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `incharge_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci,
+  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `contact` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT '0',
+  `status` tinyint(4) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1048,7 +1112,7 @@ CREATE TABLE `tbl_vehicles` (
   `registration_no` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `capacity` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT '0',
+  `status` tinyint(4) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1075,8 +1139,8 @@ CREATE TABLE `tbl_vendors` (
   `contact_person` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `contact` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci,
-  `status` tinyint(4) NOT NULL DEFAULT '0',
+  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1086,9 +1150,9 @@ CREATE TABLE `tbl_vendors` (
 --
 
 INSERT INTO `tbl_vendors` (`id`, `code`, `name`, `contact_person`, `contact`, `email`, `address`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'v001', 'Dew Hunt', 'Salman', '01317243494', 'dew@gmail.com', 'Mirpur', 1, '2019-12-01 00:56:51', '2019-12-01 01:14:11'),
-(2, 'v002', 'Jisan', 'Jisan', '01417243595', 'jishan@gmail.com', 'Badda', 1, '2019-12-01 01:15:02', '2019-12-01 01:15:05'),
-(3, 'v003', 'Ritu', 'Ritu', '01717243595', 'ritu@gmail.com', 'Uttar Badda', 1, '2019-12-01 01:16:12', '2019-12-01 01:16:14');
+(4, 'je', 'Jamuna Electronics & Automobiles', 'Kroim', '01724394735', 'korim@gmail.com', 'Barisal', 1, '2019-12-16 01:05:42', '2019-12-16 01:05:50'),
+(5, 'mar', 'Marcel Electronics', 'Sajjad', '01417243595', 'sajjad@gmailc.com', 'Barisal', 1, '2019-12-16 01:06:37', '2019-12-16 01:06:40'),
+(6, 'whti', 'Walton Hi-Tech Industries Ltd.', 'Saddam', '01717243595', 'sadddam@gmail.com', 'Barisal', 1, '2019-12-16 01:07:51', '2019-12-16 01:09:49');
 
 -- --------------------------------------------------------
 
@@ -1121,7 +1185,6 @@ INSERT INTO `user_menus` (`id`, `parentMenu`, `menuName`, `menuLink`, `menuIcon`
 (6, NULL, 'Business Settings', 'admin.index', 'fa fa-bars', 5, '1', '2019-11-24 17:01:00', '2019-11-24 17:01:00'),
 (7, '6', 'Category Setup', 'categorySetup.index', 'fa fa-caret', 1, '1', '2019-11-24 18:19:54', '2019-11-26 08:29:29'),
 (8, '6', 'Product Setup', 'productSetup.index', 'fa fa-caret', 2, '1', '2019-11-25 21:04:52', '2019-11-25 21:04:52'),
-(9, '6', 'Drop Down Prob', 'dropDownProb.index', 'fa fa-caret', 3, '1', '2019-11-27 07:20:07', '2019-11-27 07:20:07'),
 (10, '6', 'Store Setup', 'storeSetup.index', 'fa fa-bars', 4, '1', '2019-11-29 02:36:29', '2019-11-29 02:36:29'),
 (11, '6', 'Bank Setup', 'bankSetup.index', 'fa fa-caret', 5, '1', '2019-11-29 22:55:21', '2019-11-29 22:55:21'),
 (12, '6', 'Courier Setup', 'courierSetup.index', 'fa fa-caret', 6, '1', '2019-11-30 00:43:18', '2019-11-30 00:43:18'),
@@ -1293,10 +1356,10 @@ INSERT INTO `user_menu_actions` (`id`, `parentmenuId`, `menuType`, `actionName`,
 
 CREATE TABLE `user_roles` (
   `id` int(10) UNSIGNED NOT NULL,
-  `name` text COLLATE utf8mb4_unicode_ci,
+  `name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
-  `permission` text COLLATE utf8mb4_unicode_ci,
-  `actionPermission` text COLLATE utf8mb4_unicode_ci,
+  `permission` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `actionPermission` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1307,7 +1370,7 @@ CREATE TABLE `user_roles` (
 
 INSERT INTO `user_roles` (`id`, `name`, `status`, `permission`, `actionPermission`, `created_at`, `updated_at`) VALUES
 (1, 'Super Admin', 1, '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,20,18,19,17,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,57,58,59,60,61,62,63,64,65,66,81,67,69,70,71,72,73,74,75,76,77,78,79,80,82,83,84,85,86,88,89,90,91,94,95,93,96,97,98,105,99,100,101,102,104,103,106,107,108,109,110,111,112', '2019-11-20 22:48:03', '2019-12-14 14:49:44'),
-(5, 'Admin', 0, NULL, NULL, '2019-11-29 03:26:52', '2019-11-29 03:26:52');
+(5, 'Admin', 0, '1,2,5,22', '16,20,18,19,17', '2019-11-29 03:26:52', '2019-12-15 06:09:43');
 
 -- --------------------------------------------------------
 
@@ -1421,7 +1484,7 @@ CREATE TABLE `view_vendor_statement_report` (
 ,`date` varchar(191)
 ,`lifting` double
 ,`payment` double
-,`others` bigint(20)
+,`others` int(1)
 );
 
 -- --------------------------------------------------------
@@ -1431,7 +1494,7 @@ CREATE TABLE `view_vendor_statement_report` (
 --
 DROP TABLE IF EXISTS `view_customer_outstanding`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_customer_outstanding`  AS  select `tbl_customer_products`.`customer_id` AS `customerId`,`tbl_customers`.`name` AS `customerName`,`tbl_customers`.`phone_no` AS `customerPhoneNo`,`tbl_customer_products`.`product_id` AS `productId`,`tbl_invoice`.`invoice_no` AS `invoiceNo`,`tbl_products`.`name` AS `productName`,`tbl_invoice`.`customer_product_price` AS `salesAmount`,sum(`tbl_cash_collection`.`collection_amount`) AS `collection`,(`tbl_invoice`.`customer_product_price` - sum(`tbl_cash_collection`.`collection_amount`)) AS `balance` from ((((`tbl_customer_products` left join `tbl_invoice` on((`tbl_invoice`.`customer_product_id` = `tbl_customer_products`.`id`))) left join `tbl_products` on((`tbl_products`.`id` = `tbl_customer_products`.`product_id`))) left join `tbl_customers` on((`tbl_customers`.`id` = `tbl_customer_products`.`customer_id`))) left join `tbl_cash_collection` on((`tbl_cash_collection`.`invoice_id` = `tbl_invoice`.`id`))) where (`tbl_customer_products`.`purchase_type` = 'Cash') group by `tbl_invoice`.`invoice_no`,`tbl_cash_collection`.`invoice_id` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_customer_outstanding`  AS  select `tbl_customer_products`.`customer_id` AS `customerId`,`tbl_customers`.`name` AS `customerName`,`tbl_customers`.`phone_no` AS `customerPhoneNo`,`tbl_customer_products`.`product_id` AS `productId`,`tbl_invoice`.`invoice_no` AS `invoiceNo`,`tbl_products`.`name` AS `productName`,`tbl_invoice`.`customer_product_price` AS `salesAmount`,sum(`tbl_cash_collection`.`collection_amount`) AS `collection`,`tbl_invoice`.`customer_product_price` - sum(`tbl_cash_collection`.`collection_amount`) AS `balance` from ((((`tbl_customer_products` left join `tbl_invoice` on(`tbl_invoice`.`customer_product_id` = `tbl_customer_products`.`id`)) left join `tbl_products` on(`tbl_products`.`id` = `tbl_customer_products`.`product_id`)) left join `tbl_customers` on(`tbl_customers`.`id` = `tbl_customer_products`.`customer_id`)) left join `tbl_cash_collection` on(`tbl_cash_collection`.`invoice_id` = `tbl_invoice`.`id`)) where `tbl_customer_products`.`purchase_type` = 'Cash' group by `tbl_invoice`.`invoice_no`,`tbl_cash_collection`.`invoice_id` ;
 
 -- --------------------------------------------------------
 
@@ -1440,7 +1503,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `view_customer_statement`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_customer_statement`  AS  select `tbl_customer_products`.`purchase_date` AS `date`,`tbl_customer_products`.`customer_id` AS `customerId`,`tbl_customers`.`name` AS `customerName`,`tbl_customer_products`.`product_id` AS `productId`,`tbl_invoice`.`invoice_no` AS `invoiceNo`,`tbl_products`.`name` AS `productName`,`tbl_invoice`.`customer_product_price` AS `salesAmount`,0 AS `collection` from (((`tbl_customer_products` left join `tbl_invoice` on((`tbl_invoice`.`customer_product_id` = `tbl_customer_products`.`id`))) left join `tbl_products` on((`tbl_products`.`id` = `tbl_customer_products`.`product_id`))) left join `tbl_customers` on((`tbl_customers`.`id` = `tbl_customer_products`.`customer_id`))) where (`tbl_customer_products`.`purchase_type` = 'Cash') union all select `tbl_cash_collection`.`collection_date` AS `date`,`tbl_customer_products`.`customer_id` AS `customerId`,`tbl_customers`.`name` AS `customerName`,`tbl_customer_products`.`product_id` AS `productId`,`tbl_invoice`.`invoice_no` AS `invoiceNo`,`tbl_products`.`name` AS `productName`,0 AS `salesAmount`,`tbl_cash_collection`.`collection_amount` AS `collection` from ((((`tbl_cash_collection` left join `tbl_invoice` on((`tbl_invoice`.`id` = `tbl_cash_collection`.`invoice_id`))) left join `tbl_customer_products` on((`tbl_customer_products`.`id` = `tbl_invoice`.`customer_product_id`))) left join `tbl_customers` on((`tbl_customers`.`id` = `tbl_invoice`.`customer_id`))) left join `tbl_products` on((`tbl_products`.`id` = `tbl_invoice`.`product_id`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_customer_statement`  AS  select `tbl_customer_products`.`purchase_date` AS `date`,`tbl_customer_products`.`customer_id` AS `customerId`,`tbl_customers`.`name` AS `customerName`,`tbl_customer_products`.`product_id` AS `productId`,`tbl_invoice`.`invoice_no` AS `invoiceNo`,`tbl_products`.`name` AS `productName`,`tbl_invoice`.`customer_product_price` AS `salesAmount`,0 AS `collection` from (((`tbl_customer_products` left join `tbl_invoice` on(`tbl_invoice`.`customer_product_id` = `tbl_customer_products`.`id`)) left join `tbl_products` on(`tbl_products`.`id` = `tbl_customer_products`.`product_id`)) left join `tbl_customers` on(`tbl_customers`.`id` = `tbl_customer_products`.`customer_id`)) where `tbl_customer_products`.`purchase_type` = 'Cash' union all select `tbl_cash_collection`.`collection_date` AS `date`,`tbl_customer_products`.`customer_id` AS `customerId`,`tbl_customers`.`name` AS `customerName`,`tbl_customer_products`.`product_id` AS `productId`,`tbl_invoice`.`invoice_no` AS `invoiceNo`,`tbl_products`.`name` AS `productName`,0 AS `salesAmount`,`tbl_cash_collection`.`collection_amount` AS `collection` from ((((`tbl_cash_collection` left join `tbl_invoice` on(`tbl_invoice`.`id` = `tbl_cash_collection`.`invoice_id`)) left join `tbl_customer_products` on(`tbl_customer_products`.`id` = `tbl_invoice`.`customer_product_id`)) left join `tbl_customers` on(`tbl_customers`.`id` = `tbl_invoice`.`customer_id`)) left join `tbl_products` on(`tbl_products`.`id` = `tbl_invoice`.`product_id`)) ;
 
 -- --------------------------------------------------------
 
@@ -1449,7 +1512,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `view_lifting_payment_summary`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_lifting_payment_summary`  AS  select `tbl_liftings`.`vendor_id` AS `vendorId`,`tbl_vendors`.`name` AS `vendorName`,`tbl_liftings`.`vouchar_date` AS `date`,`tbl_liftings`.`total_price` AS `lifting`,0 AS `payment` from (`tbl_liftings` join `tbl_vendors` on((`tbl_vendors`.`id` = `tbl_liftings`.`vendor_id`))) union all select `tbl_payment_to_company`.`vendor_id` AS `vendorId`,`tbl_vendors`.`name` AS `vendorName`,`tbl_payment_to_company`.`payment_date` AS `date`,0 AS `lifting`,`tbl_payment_to_company`.`payment_now` AS `payment` from (`tbl_payment_to_company` join `tbl_vendors` on((`tbl_vendors`.`id` = `tbl_payment_to_company`.`vendor_id`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_lifting_payment_summary`  AS  select `tbl_liftings`.`vendor_id` AS `vendorId`,`tbl_vendors`.`name` AS `vendorName`,`tbl_liftings`.`vouchar_date` AS `date`,`tbl_liftings`.`total_price` AS `lifting`,0 AS `payment` from (`tbl_liftings` join `tbl_vendors` on(`tbl_vendors`.`id` = `tbl_liftings`.`vendor_id`)) union all select `tbl_payment_to_company`.`vendor_id` AS `vendorId`,`tbl_vendors`.`name` AS `vendorName`,`tbl_payment_to_company`.`payment_date` AS `date`,0 AS `lifting`,`tbl_payment_to_company`.`payment_now` AS `payment` from (`tbl_payment_to_company` join `tbl_vendors` on(`tbl_vendors`.`id` = `tbl_payment_to_company`.`vendor_id`)) ;
 
 -- --------------------------------------------------------
 
@@ -1458,7 +1521,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `view_lifting_record`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_lifting_record`  AS  select `tbl_liftings`.`vouchar_date` AS `liftingDate`,`tbl_liftings`.`vaouchar_no` AS `liftingNo`,`tbl_liftings`.`vendor_id` AS `vendorId`,`tbl_vendors`.`name` AS `vendorName`,`tbl_products`.`category_id` AS `categoryId`,`tbl_categories`.`parent` AS `parentId`,`tbl_categories`.`name` AS `categoryName`,`tbl_lifting_products`.`product_id` AS `productId`,`tbl_products`.`name` AS `productName`,`tbl_products`.`model_no` AS `productModelNo`,`tbl_products`.`color` AS `productColor`,`tbl_lifting_products`.`serial_no` AS `productSerialNo`,`tbl_lifting_products`.`qty` AS `productQty`,`tbl_lifting_products`.`price` AS `price` from ((((`tbl_liftings` join `tbl_vendors` on((`tbl_vendors`.`id` = `tbl_liftings`.`vendor_id`))) join `tbl_lifting_products` on((`tbl_lifting_products`.`lifting_id` = `tbl_liftings`.`id`))) join `tbl_products` on((`tbl_products`.`id` = `tbl_lifting_products`.`product_id`))) join `tbl_categories` on((`tbl_categories`.`id` = `tbl_products`.`category_id`))) order by `tbl_lifting_products`.`product_id` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_lifting_record`  AS  select `tbl_liftings`.`vouchar_date` AS `liftingDate`,`tbl_liftings`.`vaouchar_no` AS `liftingNo`,`tbl_liftings`.`vendor_id` AS `vendorId`,`tbl_vendors`.`name` AS `vendorName`,`tbl_products`.`category_id` AS `categoryId`,`tbl_categories`.`parent` AS `parentId`,`tbl_categories`.`name` AS `categoryName`,`tbl_lifting_products`.`product_id` AS `productId`,`tbl_products`.`name` AS `productName`,`tbl_products`.`model_no` AS `productModelNo`,`tbl_products`.`color` AS `productColor`,`tbl_lifting_products`.`serial_no` AS `productSerialNo`,`tbl_lifting_products`.`qty` AS `productQty`,`tbl_lifting_products`.`price` AS `price` from ((((`tbl_liftings` join `tbl_vendors` on(`tbl_vendors`.`id` = `tbl_liftings`.`vendor_id`)) join `tbl_lifting_products` on(`tbl_lifting_products`.`lifting_id` = `tbl_liftings`.`id`)) join `tbl_products` on(`tbl_products`.`id` = `tbl_lifting_products`.`product_id`)) join `tbl_categories` on(`tbl_categories`.`id` = `tbl_products`.`category_id`)) order by `tbl_lifting_products`.`product_id` ;
 
 -- --------------------------------------------------------
 
@@ -1467,7 +1530,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `view_stock_valuation`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_stock_valuation`  AS  select `tbl_liftings`.`vouchar_date` AS `date`,`tbl_liftings`.`vendor_id` AS `vendorId`,`tbl_vendors`.`name` AS `vendorName`,`tbl_products`.`category_id` AS `categoryId`,`tbl_categories`.`parent` AS `categoryParent`,`tbl_categories`.`name` AS `categoryName`,`tbl_lifting_products`.`product_id` AS `productId`,`tbl_products`.`name` AS `productName`,`tbl_lifting_products`.`serial_no` AS `serialNo`,`tbl_products`.`model_no` AS `modelNo`,`tbl_products`.`color` AS `color`,`tbl_products`.`reorder_level_qty` AS `reorderQty`,`tbl_lifting_products`.`qty` AS `liftingQty`,`tbl_lifting_products`.`price` AS `liftingAmount`,0 AS `liftingReturnQty`,0 AS `liftingReturnAmount`,0 AS `salesQty`,0 AS `salesAmount`,0 AS `salesReturnQty`,0 AS `salesReturnAmount` from ((((`tbl_liftings` join `tbl_vendors` on((`tbl_vendors`.`id` = `tbl_liftings`.`vendor_id`))) join `tbl_lifting_products` on((`tbl_lifting_products`.`lifting_id` = `tbl_liftings`.`id`))) join `tbl_products` on((`tbl_products`.`id` = `tbl_lifting_products`.`product_id`))) join `tbl_categories` on((`tbl_categories`.`id` = `tbl_products`.`category_id`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_stock_valuation`  AS  select `tbl_liftings`.`vouchar_date` AS `date`,`tbl_liftings`.`vendor_id` AS `vendorId`,`tbl_vendors`.`name` AS `vendorName`,`tbl_products`.`category_id` AS `categoryId`,`tbl_categories`.`parent` AS `categoryParent`,`tbl_categories`.`name` AS `categoryName`,`tbl_lifting_products`.`product_id` AS `productId`,`tbl_products`.`name` AS `productName`,`tbl_lifting_products`.`serial_no` AS `serialNo`,`tbl_products`.`model_no` AS `modelNo`,`tbl_products`.`color` AS `color`,`tbl_products`.`reorder_level_qty` AS `reorderQty`,`tbl_lifting_products`.`qty` AS `liftingQty`,`tbl_lifting_products`.`price` AS `liftingAmount`,0 AS `liftingReturnQty`,0 AS `liftingReturnAmount`,0 AS `salesQty`,0 AS `salesAmount`,0 AS `salesReturnQty`,0 AS `salesReturnAmount` from ((((`tbl_liftings` join `tbl_vendors` on(`tbl_vendors`.`id` = `tbl_liftings`.`vendor_id`)) join `tbl_lifting_products` on(`tbl_lifting_products`.`lifting_id` = `tbl_liftings`.`id`)) join `tbl_products` on(`tbl_products`.`id` = `tbl_lifting_products`.`product_id`)) join `tbl_categories` on(`tbl_categories`.`id` = `tbl_products`.`category_id`)) ;
 
 -- --------------------------------------------------------
 
@@ -1725,7 +1788,7 @@ ALTER TABLE `user_roles`
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `alphabets`
@@ -1743,7 +1806,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -1755,7 +1818,7 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT for table `tbl_area`
 --
 ALTER TABLE `tbl_area`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tbl_bank`
@@ -1773,13 +1836,13 @@ ALTER TABLE `tbl_business_staffs`
 -- AUTO_INCREMENT for table `tbl_cash_collection`
 --
 ALTER TABLE `tbl_cash_collection`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `tbl_categories`
 --
 ALTER TABLE `tbl_categories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tbl_company`
@@ -1791,25 +1854,25 @@ ALTER TABLE `tbl_company`
 -- AUTO_INCREMENT for table `tbl_couriers`
 --
 ALTER TABLE `tbl_couriers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tbl_customers`
 --
 ALTER TABLE `tbl_customers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `tbl_customer_guarantor`
 --
 ALTER TABLE `tbl_customer_guarantor`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `tbl_customer_products`
 --
 ALTER TABLE `tbl_customer_products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `tbl_groups`
@@ -1833,61 +1896,61 @@ ALTER TABLE `tbl_groups_sales_target_category`
 -- AUTO_INCREMENT for table `tbl_installment`
 --
 ALTER TABLE `tbl_installment`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tbl_installment_collection`
 --
 ALTER TABLE `tbl_installment_collection`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tbl_installment_collection_list`
 --
 ALTER TABLE `tbl_installment_collection_list`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_installment_schedule`
 --
 ALTER TABLE `tbl_installment_schedule`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
 
 --
 -- AUTO_INCREMENT for table `tbl_invoice`
 --
 ALTER TABLE `tbl_invoice`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `tbl_liftings`
 --
 ALTER TABLE `tbl_liftings`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tbl_lifting_products`
 --
 ALTER TABLE `tbl_lifting_products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `tbl_payment_to_company`
 --
 ALTER TABLE `tbl_payment_to_company`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbl_products`
 --
 ALTER TABLE `tbl_products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `tbl_product_advance`
 --
 ALTER TABLE `tbl_product_advance`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `tbl_product_images`
@@ -1911,25 +1974,25 @@ ALTER TABLE `tbl_staffs`
 -- AUTO_INCREMENT for table `tbl_stores`
 --
 ALTER TABLE `tbl_stores`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tbl_territories`
 --
 ALTER TABLE `tbl_territories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tbl_vehicles`
 --
 ALTER TABLE `tbl_vehicles`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tbl_vendors`
 --
 ALTER TABLE `tbl_vendors`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `user_menus`

@@ -68,7 +68,8 @@
                                        /* $installment = Installment::where('customer_product_id',$customerProduct->id)->first();
                                         if(!@$installment){*/
                                     @endphp
-                                  <option value="{{$customerProduct->id}}">{{$optionName}}</option>
+                                  {{-- <option value="{{$customerProduct->id}}">{{$optionName}}</option> --}}
+                                  <option value="{{$customerProduct->customer_product_id}}">{{$optionName}}</option>
                                   @php
                                       //}
                                   @endphp
@@ -179,7 +180,7 @@
                                         <th class="text-center" width="120px">Invoice No</th>
                                         <th class="text-center" width="120px">Schedule Date</th>
                                         <th class="text-center" width="160px">Installment Amount</th>
-                                        <th class="text-center">Status</th>
+                                        <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
 
@@ -196,9 +197,9 @@
                             <table class="table table-striped gridTable collectionTable">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">Invoice No</th>
+                                        <th class="text-center" width="120px">Invoice No</th>
                                         <th class="text-center" width="120px;">Schedule Date</th>
-                                        <th class="text-center">Installment Amount</th>
+                                        <th class="text-center" width="160px">Installment Amount</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                 </thead>

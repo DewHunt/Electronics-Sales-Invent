@@ -43,55 +43,86 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-        /*code for guarantor info*/
-        $(".firstGuarantorSpouce").prop('disabled', true);
-        $(".secondGuarantorSpouce").prop('disabled', true);
-            $('.firstGuarantorMaritalStatus').click(function(event) {
-                var firstGuarantorMaritalStatus = $('.firstGuarantorMaritalStatus').val();
-                if(firstGuarantorMaritalStatus == "Married"){
-                     $(".firstGuarantorSpouce").prop('disabled', false);
-                }else{
-                     $(".firstGuarantorSpouce").prop('disabled', true);
-                    $(".firstGuarantorSpouce").val('');
-                }
-            })
+            /*code for guarantor info*/
+            $(".firstGuarantorSpouce").prop('disabled', true);
+            $(".secondGuarantorSpouce").prop('disabled', true);
+                $('.firstGuarantorMaritalStatus').click(function(event) {
+                    var firstGuarantorMaritalStatus = $('.firstGuarantorMaritalStatus').val();
+                    if(firstGuarantorMaritalStatus == "Married"){
+                         $(".firstGuarantorSpouce").prop('disabled', false);
+                    }else{
+                         $(".firstGuarantorSpouce").prop('disabled', true);
+                        $(".firstGuarantorSpouce").val('');
+                    }
+                })
 
-            $('.secondGuarantorMaritalStatus').click(function(event) {
-                var secondGuarantorMaritalStatus = $('.secondGuarantorMaritalStatus').val();
-                if(secondGuarantorMaritalStatus == "Married"){
-                     $(".secondGuarantorSpouce").prop('disabled', false);
-                }else{
-                     $(".secondGuarantorSpouce").prop('disabled', true);
-                    $(".secondGuarantorSpouce").val('');
-                }
-            })
+                $('.secondGuarantorMaritalStatus').click(function(event) {
+                    var secondGuarantorMaritalStatus = $('.secondGuarantorMaritalStatus').val();
+                    if(secondGuarantorMaritalStatus == "Married"){
+                         $(".secondGuarantorSpouce").prop('disabled', false);
+                    }else{
+                         $(".secondGuarantorSpouce").prop('disabled', true);
+                        $(".secondGuarantorSpouce").val('');
+                    }
+                })
 
-        /*end code for guarantor info*/
+            /*end code for guarantor info*/
 
-        /*code for purchase type*/
+            // start code installment
 
-            $('.installmentRow').hide();
+            $('.installmentType').hide();
+            $('.longInstallmentRow').hide();
+            $('.shortInstallmentRow').hide();
 
              $('.purchaseType').click(function(event) {
-                var purchaseType =  $("input[name='purchaseType']:checked").val();   
-                if(purchaseType == "Installment"){
-                     $('.installmentRow').show();
-                     $("input[name='deposite']").prop('required',true);
-                     $("input[name='installmentPrice']").prop('required',true);
-                     $("input[name='totalInstallment']").prop('required',true);
-                     $("input[name='monthlyInstallmentAmount']").prop('required',true);
-                }else{
-                    $('.installmentRow').hide();
-                    $("input[name='deposite']").prop('required',false);
-                    $("input[name='installmentPrice']").prop('required',false);
-                    $("input[name='totalInstallment']").prop('required',false);
-                    $("input[name='monthlyInstallmentAmount']").prop('required',false);
+                var purchaseType =  $("input[name='purchaseType']:checked").val();
+
+                if(purchaseType == "Cash")
+                {
+                    $('.installmentType').hide();
+                    $("select[name='installmentType']").prop('required',false);
+                }
+
+                if(purchaseType == "Short Installment")
+                {
+                    $('.shortInstallmentRow').show();
+                    $('.installmentType').show();
+                    $("input[name='shortInstallmentDeposite']").prop('required',true);
+                    $("input[name='shortInstallmentPrice']").prop('required',true);
+                    $("input[name='shortTotalInstallment']").prop('required',true);
+                    $("input[name='shortInstallmentAmount']").prop('required',true);
+                    $("select[name='installmentType']").prop('required',true);
+                }
+                else
+                {
+                    $('.shortInstallmentRow').hide();
+                    $("input[name='shortInstallmentDeposite']").prop('required',false);
+                    $("input[name='shortInstallmentPrice']").prop('required',false);
+                    $("input[name='shortTotalInstallment']").prop('required',false);
+                    $("input[name='shortInstallmentAmount']").prop('required',false);
+                }
+
+                if(purchaseType == "Long Installment")
+                {
+                    $('.longInstallmentRow').show();
+                    $('.installmentType').show();
+                    $("input[name='longInstallmentDeposite']").prop('required',true);
+                    $("input[name='longInstallmentPrice']").prop('required',true);
+                    $("input[name='longTotalInstallment']").prop('required',true);
+                    $("input[name='longInstallmentAmount']").prop('required',true);
+                    $("select[name='installmentType']").prop('required',true);
+                }
+                else
+                {
+                    $('.longInstallmentRow').hide();
+                    $("input[name='longInstallmentDeposite']").prop('required',false);
+                    $("input[name='longInstallmentPrice']").prop('required',false);
+                    $("input[name='longTotalInstallment']").prop('required',false);
+                    $("input[name='longInstallmentAmount']").prop('required',false);
                 }
             })
 
-        /*end code for purchase type*/
-
-            
+            /*end code for installment*/            
         });
     </script>
 
@@ -118,46 +149,74 @@
                         var purchaseType =  $("input[name='purchaseType']:checked").val();
                         $('.productModel').val(product.model_no);
                         $('.cashPrice').val(product.price);
-                        $('.mrpPrice').val(product.mrp_price);
                         $('.warranty').val(product.warranty);
-                        if (purchaseType == 'Installment')
+
+                        if (purchaseType == 'Short Installment')
                         {
-                            $('.installmentPrice').val(product.haire_price);
+                            $('.shortInstallmentPrice').val(product.mrp_price);
                         }
                         else
                         {
-                            $('.installmentPrice').val('');                             
+                            $('.shortInstallmentPrice').val('');                             
                         }
-                        monthlyInstallment();
+
+                        if (purchaseType == 'Long Installment')
+                        {
+                            $('.longInstallmentPrice').val(product.haire_price);
+                        }
+                        else
+                        {
+                            $('.longInstallmentPrice').val('');                             
+                        }
+                        calculateShortInstallmentAmount();
+                        calculateLongInstallmentAmount();
                     }
                 });
             }
             else
             {
                $('.productModel').val('');
-               $('.cashPrice').val(''); 
-               $('.mrpPrice').val(''); 
+               $('.cashPrice').val('');  
                $('.warranty').val(''); 
-               $('.installmentPrice').val(''); 
+               $('.longInstallmentPrice').val(''); 
+               $('.shortInstallmentPrice').val(''); 
             }
         });
 
-        function monthlyInstallment()
+        function calculateShortInstallmentAmount()
         {
-            var deposite = parseFloat($('.deposite').val());
-            var installmentPrice = parseFloat($('.installmentPrice').val());
-            var totalInstallment = parseFloat($('.totalInstallment').val());
+            var shortInstallmentDeposite = parseFloat($('.shortInstallmentDeposite').val());
+            var shortInstallmentPrice = parseFloat($('.shortInstallmentPrice').val());
+            var shortTotalInstallment = parseFloat($('.shortTotalInstallment').val());
 
-            if (totalInstallment == 0 || $('.totalInstallment').val() == "")
+            if (shortTotalInstallment == 0 || $('.shortTotalInstallment').val() == "")
             {
-                var monthlyInstallmentPrice = (installmentPrice - deposite);
+                var shortInstallmentAmount = (shortInstallmentPrice - shortInstallmentDeposite);
             }
             else
             {
-                var monthlyInstallmentPrice = (installmentPrice - deposite)/totalInstallment;                
+                var shortInstallmentAmount = (shortInstallmentPrice - shortInstallmentDeposite)/shortTotalInstallment;                
             }
 
-            $('.monthlyInstallmentAmount').val(Math.round(monthlyInstallmentPrice));
+            $('.shortInstallmentAmount').val(Math.round(shortInstallmentAmount));
+        }
+
+        function calculateLongInstallmentAmount()
+        {
+            var longInstallmentDeposite = parseFloat($('.longInstallmentDeposite').val());
+            var longInstallmentPrice = parseFloat($('.longInstallmentPrice').val());
+            var longTotalInstallment = parseFloat($('.longTotalInstallment').val());
+
+            if (longTotalInstallment == 0 || $('.longTotalInstallment').val() == "")
+            {
+                var longInstallmentAmount = (longInstallmentPrice - longInstallmentDeposite);
+            }
+            else
+            {
+                var longInstallmentAmount = (longInstallmentPrice - longInstallmentDeposite)/longTotalInstallment;                
+            }
+
+            $('.longInstallmentAmount').val(Math.round(longInstallmentAmount));
         }
 
     /*end code for product info*/

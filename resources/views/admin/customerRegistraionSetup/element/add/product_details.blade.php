@@ -26,7 +26,7 @@
         <div class="col-md-6">
             <div class="form-group {{ $errors->has('showroomId') ? ' has-danger' : '' }}">
                 <label for="showroom-id">Showroom</label>
-                <select class="form-control chosen-select" name="showroomId">
+                <select class="form-control chosen-select" name="showroomId" required>
                     <option value="">Select Showroom</option>
                     @foreach ($showrooms as $showroom)
                         <option value="{{$showroom->id}}">{{$showroom->name}}</option>
@@ -83,33 +83,19 @@
     </div>
 
     <div class="row">
-        <div class="col-md-6">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group {{ $errors->has('cashPrice') ? ' has-danger' : '' }}">
-                        <label for="regular-price">Regular Price</label>
-                        <input type="number" name="cashPrice" class="form-control cashPrice" readonly>
-                        @if ($errors->has('cashPrice'))
-                            @foreach($errors->get('cashPrice') as $error)
-                                <div class="form-control-feedback">{{ $error }}</div>
-                            @endforeach
-                        @endif
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group {{ $errors->has('mrpPrice') ? ' has-danger' : '' }}">
-                        <label for="mrp-price">MRP Price</label>
-                        <input type="number" name="mrpPrice" class="form-control mrpPrice" readonly>
-                        @if ($errors->has('mrpPrice'))
-                            @foreach($errors->get('mrpPrice') as $error)
-                                <div class="form-control-feedback">{{ $error }}</div>
-                            @endforeach
-                        @endif
-                    </div>
-                </div>
+        <div class="col-md-4">
+            <div class="form-group {{ $errors->has('cashPrice') ? ' has-danger' : '' }}">
+                <label for="cash-price">Cash Price</label>
+                <input type="number" name="cashPrice" class="form-control cashPrice" readonly>
+                @if ($errors->has('cashPrice'))
+                    @foreach($errors->get('cashPrice') as $error)
+                        <div class="form-control-feedback">{{ $error }}</div>
+                    @endforeach
+                @endif
             </div>
         </div>
-        <div class="col-md-6">
+
+        <div class="col-md-4">
             <label for="purchase-type">Purchase Type</label>
              <div class="form-group {{ $errors->has('purchaseType') ? ' has-danger' : '' }}">
                  <div class="form-check-inline">
@@ -120,7 +106,13 @@
 
                 <div class="form-check-inline">
                     <label class="form-check-label">
-                        <input type="radio" value="Installment" name="purchaseType" class="product purchaseType"> Installment
+                        <input type="radio" value="Short Installment" name="purchaseType" class="product purchaseType"> Short Installment
+                    </label>
+                </div>
+
+                <div class="form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" value="Long Installment" name="purchaseType" class="product purchaseType"> Long Installment
                     </label>
                 </div>
                 @if ($errors->has('purchaseType'))
@@ -130,17 +122,37 @@
                 @endif
             </div>
         </div>
+
+        <div class="col-md-4 installmentType">
+            <div class="form-group {{ $errors->has('installmentType') ? ' has-danger' : '' }}">
+                <label for="installment-type">Installment Type</label>
+                @php
+                    $installmentTypes = array('Daily'=>'Daily','Weekly'=>'Weekly','Bi-Monthlyt'=>'Bi-Monthly','Monthly'=>'Monthly')
+                @endphp
+                <select class="form-control" name="installmentType">
+                    <option value="">Select Installment Type</option>
+                    @foreach ($installmentTypes as $key => $value)
+                        <option value="{{ $key }}">{{ $value }}</option>
+                    @endforeach
+                </select>
+                @if ($errors->has('installmentType'))
+                    @foreach($errors->get('installmentType') as $error)
+                        <div class="form-control-feedback">{{ $error }}</div>
+                    @endforeach
+                @endif
+            </div>
+        </div>
     </div>
 
-    <div class="row installmentRow">
+    <div class="row shortInstallmentRow">
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-6">
-                    <div class="form-group {{ $errors->has('deposite') ? ' has-danger' : '' }}">
+                    <div class="form-group {{ $errors->has('shortInstallmentDeposite') ? ' has-danger' : '' }}">
                         <label for="deposite">Deposite</label>
-                        <input type="number" class="form-control deposite" name="deposite" value="{{ old('deposite') }}">
-                        @if ($errors->has('deposite'))
-                            @foreach($errors->get('deposite') as $error)
+                        <input type="number" class="form-control shortInstallmentDeposite" name="shortInstallmentDeposite" value="{{ old('shortInstallmentDeposite') }}">
+                        @if ($errors->has('shortInstallmentDeposite'))
+                            @foreach($errors->get('shortInstallmentDeposite') as $error)
                                 <div class="form-control-feedback">{{ $error }}</div>
                             @endforeach
                         @endif
@@ -148,11 +160,11 @@
                 </div>
 
                 <div class="col-md-6">
-                    <div class="form-group {{ $errors->has('installmentPrice') ? ' has-danger' : '' }}">
-                        <label for="haire-price">Haire Price</label>
-                        <input type="number" class="form-control installmentPrice" name="installmentPrice" value="{{ old('installmentPrice') }}">
-                        @if ($errors->has('installmentPrice'))
-                            @foreach($errors->get('installmentPrice') as $error)
+                    <div class="form-group {{ $errors->has('shortInstallmentPrice') ? ' has-danger' : '' }}">
+                        <label for="mrp-price">MRP Price</label>
+                        <input type="number" class="form-control shortInstallmentPrice" name="shortInstallmentPrice" value="{{ old('shortInstallmentPrice') }}">
+                        @if ($errors->has('shortInstallmentPrice'))
+                            @foreach($errors->get('shortInstallmentPrice') as $error)
                                 <div class="form-control-feedback">{{ $error }}</div>
                             @endforeach
                         @endif
@@ -164,11 +176,11 @@
         <div class="col-md-6">
             <div class="row">
                <div class="col-md-6">
-                    <div class="form-group {{ $errors->has('totalInstallment') ? ' has-danger' : '' }}">
+                    <div class="form-group {{ $errors->has('shortTotalInstallment') ? ' has-danger' : '' }}">
                         <label for="total-installment">Total Installment</label>
-                        <input type="text" class="form-control totalInstallment" name="totalInstallment" value="{{ old('totalInstallment') }}" oninput="monthlyInstallment()">
-                        @if ($errors->has('totalInstallment'))
-                            @foreach($errors->get('totalInstallment') as $error)
+                        <input type="text" class="form-control shortTotalInstallment" name="shortTotalInstallment" value="{{ old('shortTotalInstallment') }}" oninput="calculateShortInstallmentAmount()">
+                        @if ($errors->has('shortTotalInstallment'))
+                            @foreach($errors->get('shortTotalInstallment') as $error)
                                 <div class="form-control-feedback">{{ $error }}</div>
                             @endforeach
                         @endif
@@ -176,11 +188,69 @@
                 </div>
 
                 <div class="col-md-6">
-                    <div class="form-group {{ $errors->has('monthlyInstallmentAmount') ? ' has-danger' : '' }}">
-                        <label for="monthly-installment-amount">Monthly Installment Amount</label>
-                        <input type="number" class="form-control monthlyInstallmentAmount" name="monthlyInstallmentAmount" value="{{ old('monthlyInstallmentAmount') }}">
-                        @if ($errors->has('monthlyInstallmentAmount'))
-                            @foreach($errors->get('monthlyInstallmentAmount') as $error)
+                    <div class="form-group {{ $errors->has('shortInstallmentAmount') ? ' has-danger' : '' }}">
+                        <label for="monthly-installment-amount">Installment Amount</label>
+                        <input type="number" class="form-control shortInstallmentAmount" name="shortInstallmentAmount" value="{{ old('shortInstallmentAmount') }}">
+                        @if ($errors->has('shortInstallmentAmount'))
+                            @foreach($errors->get('shortInstallmentAmount') as $error)
+                                <div class="form-control-feedback">{{ $error }}</div>
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row longInstallmentRow">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group {{ $errors->has('longInstallmentDeposite') ? ' has-danger' : '' }}">
+                        <label for="deposite">Deposite</label>
+                        <input type="number" class="form-control longInstallmentDeposite" name="longInstallmentDeposite" value="{{ old('longInstallmentDeposite') }}">
+                        @if ($errors->has('longInstallmentDeposite'))
+                            @foreach($errors->get('longInstallmentDeposite') as $error)
+                                <div class="form-control-feedback">{{ $error }}</div>
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group {{ $errors->has('longInstallmentPrice') ? ' has-danger' : '' }}">
+                        <label for="higher-price">Higher Price</label>
+                        <input type="number" class="form-control longInstallmentPrice" name="longInstallmentPrice" value="{{ old('longInstallmentPrice') }}">
+                        @if ($errors->has('longInstallmentPrice'))
+                            @foreach($errors->get('longInstallmentPrice') as $error)
+                                <div class="form-control-feedback">{{ $error }}</div>
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="row">
+               <div class="col-md-6">
+                    <div class="form-group {{ $errors->has('longTotalInstallment') ? ' has-danger' : '' }}">
+                        <label for="total-installment">Total Installment</label>
+                        <input type="text" class="form-control longTotalInstallment" name="longTotalInstallment" value="{{ old('longTotalInstallment') }}" oninput="calculateLongInstallmentAmount()">
+                        @if ($errors->has('longTotalInstallment'))
+                            @foreach($errors->get('longTotalInstallment') as $error)
+                                <div class="form-control-feedback">{{ $error }}</div>
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group {{ $errors->has('longInstallmentAmount') ? ' has-danger' : '' }}">
+                        <label for="monthly-installment-amount">Installment Amount</label>
+                        <input type="number" class="form-control longInstallmentAmount" name="longInstallmentAmount" value="{{ old('longInstallmentAmount') }}">
+                        @if ($errors->has('longInstallmentAmount'))
+                            @foreach($errors->get('longInstallmentAmount') as $error)
                                 <div class="form-control-feedback">{{ $error }}</div>
                             @endforeach
                         @endif

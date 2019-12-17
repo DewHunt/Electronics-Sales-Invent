@@ -25,13 +25,14 @@ class InstallmentScheduleController extends Controller
         $formLink = "installmentSchedule.save";
         $buttonName = "Save";
         $customerProducts = InvoiceSetup::where('collection_type','Installment')
+            ->where('status','1')
             ->get();
     	return view('admin.installmentSchedule.add')->with(compact('title','formLink','buttonName','customerProducts'));
     }
 
     public function save(Request $request){
         $getCustomerProduct = CustomerProduct::where('id',$request->customerProductId)->first();
-        $installment = Installment::create( [
+        $installment = Installment::create([
             'customer_product_id' => $request->customerProductId,       
             'customer_id' => $getCustomerProduct->customer_id,       
             'product_id' => $getCustomerProduct->product_id,       
@@ -43,25 +44,33 @@ class InstallmentScheduleController extends Controller
             'installment_amount' => $request->installmentAmount        
         ]);
 
-        if($installment){
-          $countInstallmentSchedule = count($request->installmentScheduleDate);
-                $postData = [];
-                for ($i=0; $i <$countInstallmentSchedule ; $i++) { 
-                    $installmentScheduleDate = date('Y-m-d',strtotime($request->installmentScheduleDate[$i]));
-                    $postData[] = [
-                        'installment_id'=> $installment->id,
-                        'invoice_no' => $request->invoiceNo,
-                        'installment_schedule_date' => $installmentScheduleDate, 
-                        'installment_schedule_amount' => $request->installmentScheduleAmount[$i], 
-                    ];
-                }
-            InstallmentSchedule::insert($postData); 
+        if($installment)
+        {
+            $countInstallmentSchedule = count($request->installmentScheduleDate);
+            $postData = [];
+            for ($i=0; $i <$countInstallmentSchedule ; $i++) { 
+                $installmentScheduleDate = date('Y-m-d',strtotime($request->installmentScheduleDate[$i]));
+                $postData[] = [
+                    'installment_id'=> $installment->id,
+                    'invoice_no' => $request->invoiceNo,
+                    'installment_schedule_date' => $installmentScheduleDate, 
+                    'installment_schedule_amount' => $request->installmentScheduleAmount[$i], 
+                ];
+            }
+            InstallmentSchedule::insert($postData);
+
+            $invoice = InvoiceSetup::where('invoice_no',$request->invoiceNo)->first();
+
+            $invoice->update([
+                'status' => '0'
+            ]);             
         }
 
         return redirect(route('installmentSchedule.index'))->with('msg','Installment Schedule Created Successfully');
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $title = "Edit Installment Schedule";
         $formLink = "installmentSchedule.update";
         $buttonName = "Update";
@@ -92,6 +101,13 @@ class InstallmentScheduleController extends Controller
 
     public function delete(Request $request)
     {
+        $installment = Installment::find($request->installmentId);
+        $invoice = InvoiceSetup::where('invoice_no',$installment->invoice_no)->first();
+
+        $invoice->update([
+            'status' => '1'
+        ]);
+
         Installment::where('id',$request->installmentId)->delete();
         InstallmentSchedule::where('installment_id',$request->installmentId)->delete();
     }

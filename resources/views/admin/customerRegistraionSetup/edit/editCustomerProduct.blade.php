@@ -69,7 +69,7 @@
                     <div class="col-md-6">
                         <div class="form-group {{ $errors->has('showroomId') ? ' has-danger' : '' }}">
                             <label for="showroom-id">Showroom</label>
-                            <select class="form-control chosen-select" name="showroomId">
+                            <select class="form-control chosen-select" name="showroomId" required>
                                 <option value="">Select Showroom</option>
                                 @foreach ($showrooms as $showroom)
                                  @php
@@ -134,45 +134,36 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6">                        
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group {{ $errors->has('cashPrice') ? ' has-danger' : '' }}">
-                                    <label for="cash-price">Cash Price</label>
-                                    <input type="number" name="cashPrice" class="form-control cashPrice" value="{{$customerProduct->cash_price}}" readonly>
-                                    @if ($errors->has('cashPrice'))
-                                        @foreach($errors->get('cashPrice') as $error)
-                                            <div class="form-control-feedback">{{ $error }}</div>
-                                        @endforeach
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group {{ $errors->has('mrpPrice') ? ' has-danger' : '' }}">
-                                    <label for="mrp-price">MRP Price</label>
-                                    <input type="number" name="mrpPrice" class="form-control mrpPrice" value="{{$customerProduct->mrp_price}}" readonly>
-                                    @if ($errors->has('mrpPrice'))
-                                        @foreach($errors->get('mrpPrice') as $error)
-                                            <div class="form-control-feedback">{{ $error }}</div>
-                                        @endforeach
-                                    @endif
-                                </div>
-                            </div>
+                    <div class="col-md-4">
+                        <div class="form-group {{ $errors->has('cashPrice') ? ' has-danger' : '' }}">
+                            <label for="cash-price">Cash Price</label>
+                            <input type="number" name="cashPrice" class="form-control cashPrice" value="{{ $customerProduct->cash_price }}" readonly>
+                            @if ($errors->has('cashPrice'))
+                                @foreach($errors->get('cashPrice') as $error)
+                                    <div class="form-control-feedback">{{ $error }}</div>
+                                @endforeach
+                            @endif
                         </div>
                     </div>
-                    <div class="col-md-6">
+
+                    <div class="col-md-4">
                         <label for="purchase-type">Purchase Type</label>
                          <div class="form-group {{ $errors->has('purchaseType') ? ' has-danger' : '' }}">
                              <div class="form-check-inline">
                                 <label class="form-check-label">
-                                    <input type="radio" value="Cash" name="purchaseType" class="product purchaseType" required {{ $customerProduct->purchase_type == "Cash" ? 'checked' : '' }}> Cash
+                                    <input type="radio" value="Cash" name="purchaseType" class="product purchaseType" {{ $customerProduct->purchase_type == "Cash" ? "checked" : ""}} required> Cash
                                 </label>
                             </div>
 
                             <div class="form-check-inline">
                                 <label class="form-check-label">
-                                    <input type="radio" value="Installment" name="purchaseType" class="product purchaseType" {{ $customerProduct->purchase_type == "Installment" ? 'checked' : '' }}> Installment
+                                    <input type="radio" value="Short Installment" name="purchaseType" class="product purchaseType" {{ $customerProduct->purchase_type == "Short Installment" ? "checked" : ""}}> Short Installment
+                                </label>
+                            </div>
+
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="radio" value="Long Installment" name="purchaseType" class="product purchaseType" {{ $customerProduct->purchase_type == "Long Installment" ? "checked" : ""}}> Long Installment
                                 </label>
                             </div>
                             @if ($errors->has('purchaseType'))
@@ -182,17 +173,47 @@
                             @endif
                         </div>
                     </div>
+
+                    <div class="col-md-4 installmentType">
+                        <div class="form-group {{ $errors->has('installmentType') ? ' has-danger' : '' }}">
+                            <label for="installment-type">Installment Type</label>
+                            @php
+                                $installmentTypes = array('Daily'=>'Daily','Weekly'=>'Weekly','Bi-Monthlyt'=>'Bi-Monthly','Monthly'=>'Monthly')
+                            @endphp
+                            <select class="form-control" name="installmentType">
+                                <option value="">Select Installment Type</option>
+                                @foreach ($installmentTypes as $key => $value)
+                                    @php
+                                        if ($key == $customerProduct->installment_type)
+                                        {
+                                            $select= "selected";
+                                        }
+                                        else
+                                        {
+                                            $select= "";
+                                        }
+                                    @endphp
+                                    <option value="{{ $key }}" {{ $select }}>{{ $value }}</option>
+                                @endforeach
+                            </select>
+                            @if ($errors->has('installmentType'))
+                                @foreach($errors->get('installmentType') as $error)
+                                    <div class="form-control-feedback">{{ $error }}</div>
+                                @endforeach
+                            @endif
+                        </div>
+                    </div>
                 </div>
 
-                <div class="row installmentRow">
+                <div class="row shortInstallmentRow">
                     <div class="col-md-6">
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="form-group {{ $errors->has('deposite') ? ' has-danger' : '' }}">
+                                <div class="form-group {{ $errors->has('shortInstallmentDeposite') ? ' has-danger' : '' }}">
                                     <label for="deposite">Deposite</label>
-                                    <input type="number" class="form-control deposite" name="deposite" value="{{ $customerProduct->deposite }}">
-                                    @if ($errors->has('deposite'))
-                                        @foreach($errors->get('deposite') as $error)
+                                    <input type="number" class="form-control shortInstallmentDeposite" name="shortInstallmentDeposite" value="{{ $customerProduct->deposite }}">
+                                    @if ($errors->has('shortInstallmentDeposite'))
+                                        @foreach($errors->get('shortInstallmentDeposite') as $error)
                                             <div class="form-control-feedback">{{ $error }}</div>
                                         @endforeach
                                     @endif
@@ -200,11 +221,11 @@
                             </div>
 
                             <div class="col-md-6">
-                                <div class="form-group {{ $errors->has('installmentPrice') ? ' has-danger' : '' }}">
-                                    <label for="installment-price">Installment Price</label>
-                                    <input type="number" class="form-control installmentPrice" name="installmentPrice" value="{{ $customerProduct->installment_price }}">
-                                    @if ($errors->has('installmentPrice'))
-                                        @foreach($errors->get('installmentPrice') as $error)
+                                <div class="form-group {{ $errors->has('shortInstallmentPrice') ? ' has-danger' : '' }}">
+                                    <label for="mrp-price">MRP Price</label>
+                                    <input type="number" class="form-control shortInstallmentPrice" name="shortInstallmentPrice" value="{{ $customerProduct->mrp_price }}">
+                                    @if ($errors->has('shortInstallmentPrice'))
+                                        @foreach($errors->get('shortInstallmentPrice') as $error)
                                             <div class="form-control-feedback">{{ $error }}</div>
                                         @endforeach
                                     @endif
@@ -216,11 +237,11 @@
                     <div class="col-md-6">
                         <div class="row">
                            <div class="col-md-6">
-                                <div class="form-group {{ $errors->has('totalInstallment') ? ' has-danger' : '' }}">
+                                <div class="form-group {{ $errors->has('shortTotalInstallment') ? ' has-danger' : '' }}">
                                     <label for="total-installment">Total Installment</label>
-                                    <input type="number" class="form-control totalInstallment" name="totalInstallment" value="{{ $customerProduct->total_installment }}" oninput="monthlyInstallment()">
-                                    @if ($errors->has('totalInstallment'))
-                                        @foreach($errors->get('totalInstallment') as $error)
+                                    <input type="text" class="form-control shortTotalInstallment" name="shortTotalInstallment" value="{{ $customerProduct->total_installment }}" oninput="calculateShortInstallmentAmount()">
+                                    @if ($errors->has('shortTotalInstallment'))
+                                        @foreach($errors->get('shortTotalInstallment') as $error)
                                             <div class="form-control-feedback">{{ $error }}</div>
                                         @endforeach
                                     @endif
@@ -228,11 +249,69 @@
                             </div>
 
                             <div class="col-md-6">
-                                <div class="form-group {{ $errors->has('monthlyInstallmentAmount') ? ' has-danger' : '' }}">
-                                    <label for="monthly-installment-amount">Monthly Installment Amount</label>
-                                    <input type="number" class="form-control monthlyInstallmentAmount" name="monthlyInstallmentAmount" value="{{ $customerProduct->monthly_installment_amount }}">
-                                    @if ($errors->has('monthlyInstallmentAmount'))
-                                        @foreach($errors->get('monthlyInstallmentAmount') as $error)
+                                <div class="form-group {{ $errors->has('shortInstallmentAmount') ? ' has-danger' : '' }}">
+                                    <label for="monthly-installment-amount">Installment Amount</label>
+                                    <input type="number" class="form-control shortInstallmentAmount" name="shortInstallmentAmount" value="{{ $customerProduct->monthly_installment_amount }}">
+                                    @if ($errors->has('shortInstallmentAmount'))
+                                        @foreach($errors->get('shortInstallmentAmount') as $error)
+                                            <div class="form-control-feedback">{{ $error }}</div>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row longInstallmentRow">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group {{ $errors->has('longInstallmentDeposite') ? ' has-danger' : '' }}">
+                                    <label for="deposite">Deposite</label>
+                                    <input type="number" class="form-control longInstallmentDeposite" name="longInstallmentDeposite" value="{{ old('longInstallmentDeposite') }}">
+                                    @if ($errors->has('longInstallmentDeposite'))
+                                        @foreach($errors->get('longInstallmentDeposite') as $error)
+                                            <div class="form-control-feedback">{{ $error }}</div>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group {{ $errors->has('longInstallmentPrice') ? ' has-danger' : '' }}">
+                                    <label for="higher-price">Higher Price</label>
+                                    <input type="number" class="form-control longInstallmentPrice" name="longInstallmentPrice" value="{{ old('longInstallmentPrice') }}">
+                                    @if ($errors->has('longInstallmentPrice'))
+                                        @foreach($errors->get('longInstallmentPrice') as $error)
+                                            <div class="form-control-feedback">{{ $error }}</div>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="row">
+                           <div class="col-md-6">
+                                <div class="form-group {{ $errors->has('longTotalInstallment') ? ' has-danger' : '' }}">
+                                    <label for="total-installment">Total Installment</label>
+                                    <input type="text" class="form-control longTotalInstallment" name="longTotalInstallment" value="{{ old('longTotalInstallment') }}" oninput="calculateLongInstallmentAmount()">
+                                    @if ($errors->has('longTotalInstallment'))
+                                        @foreach($errors->get('longTotalInstallment') as $error)
+                                            <div class="form-control-feedback">{{ $error }}</div>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group {{ $errors->has('longInstallmentAmount') ? ' has-danger' : '' }}">
+                                    <label for="monthly-installment-amount">Installment Amount</label>
+                                    <input type="number" class="form-control longInstallmentAmount" name="longInstallmentAmount" value="{{ old('longInstallmentAmount') }}">
+                                    @if ($errors->has('longInstallmentAmount'))
+                                        @foreach($errors->get('longInstallmentAmount') as $error)
                                             <div class="form-control-feedback">{{ $error }}</div>
                                         @endforeach
                                     @endif
@@ -269,77 +348,154 @@
 @section('custom-js')
     <script type="text/javascript">
 
-        /*code for purchase type*/
-        var purchaseType =  $("input[name='purchaseType']:checked").val();
+        // start code installment
 
-        if (purchaseType == "Installment")
-        {
-            $('.installmentRow').show();
-        }
-        else
-        {
-            $('.installmentRow').hide();
-        }
+        $('.installmentType').hide();
+        $('.longInstallmentRow').hide();
+        $('.shortInstallmentRow').hide();
 
          $('.purchaseType').click(function(event) {
-            var purchaseType =  $("input[name='purchaseType']:checked").val();   
-            if(purchaseType == "Installment"){
-                 $('.installmentRow').show();
-                 $("input[name='deposite']").prop('required',true);
-                 $("input[name='installmentPrice']").prop('required',true);
-                 $("input[name='totalInstallment']").prop('required',true);
-                 $("input[name='monthlyInstallmentAmount']").prop('required',true);
-            }else{
-                $('.installmentRow').hide();
-                $("input[name='deposite']").prop('required',false);
-                $("input[name='installmentPrice']").prop('required',false);
-                $("input[name='totalInstallment']").prop('required',false);
-                $("input[name='monthlyInstallmentAmount']").prop('required',false);
+            var purchaseType =  $("input[name='purchaseType']:checked").val();
+
+            if(purchaseType == "Cash")
+            {
+                $('.installmentType').hide();
+                $("select[name='installmentType']").prop('required',false);
+            }
+
+            if(purchaseType == "Short Installment")
+            {
+                $('.shortInstallmentRow').show();
+                $('.installmentType').show();
+                $("input[name='shortInstallmentDeposite']").prop('required',true);
+                $("input[name='shortInstallmentPrice']").prop('required',true);
+                $("input[name='shortTotalInstallment']").prop('required',true);
+                $("input[name='shortInstallmentAmount']").prop('required',true);
+                $("select[name='installmentType']").prop('required',true);
+            }
+            else
+            {
+                $('.shortInstallmentRow').hide();
+                $("input[name='shortInstallmentDeposite']").prop('required',false);
+                $("input[name='shortInstallmentPrice']").prop('required',false);
+                $("input[name='shortTotalInstallment']").prop('required',false);
+                $("input[name='shortInstallmentAmount']").prop('required',false);
+                $("input[name='shortInstallmentAmount']").prop('required',true);
+            }
+
+            if(purchaseType == "Long Installment")
+            {
+                $('.longInstallmentRow').show();
+                $('.installmentType').show();
+                $("input[name='longInstallmentDeposite']").prop('required',true);
+                $("input[name='longInstallmentPrice']").prop('required',true);
+                $("input[name='longTotalInstallment']").prop('required',true);
+                $("input[name='longInstallmentAmount']").prop('required',true);
+                $("select[name='installmentType']").prop('required',true);
+            }
+            else
+            {
+                $('.longInstallmentRow').hide();
+                $("input[name='longInstallmentDeposite']").prop('required',false);
+                $("input[name='longInstallmentPrice']").prop('required',false);
+                $("input[name='longTotalInstallment']").prop('required',false);
+                $("input[name='longInstallmentAmount']").prop('required',false);
             }
         })
 
-        /*end code for purchase type*/
+        /*end code for installment*/
 
         /*code for product info*/
-        $(document).on('change', '.product', function(){
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            
-            var productId = $('.product option:selected').val();
-            if(productId != ''){
-                $.ajax({
-                    type:'post',
-                    url:'{{ route('customerRegistration.getProductInfo') }}',
-                    data:{productId:productId},
-                    success:function(data){
-                        var product = data.product;
-                        var purchaseType =  $("input[name='purchaseType']:checked").val();
-                        $('.productModel').val(product.model_no);
-                        $('.cashPrice').val(product.price);
-                        $('.mrpPrice').val(product.mrp_price);
-                        $('.warranty').val(product.warranty);
-                        if (purchaseType == 'Installment')
-                        {
-                            $('.installmentPrice').val(product.haire_price);
-                        }
-                        else
-                        {
-                            $('.installmentPrice').val('');                             
-                        }
-                        monthlyInstallment();
+
+            $(document).on('change', '.product', function(){
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
-            }else{
-               $('.productModel').val('');
-               $('.cashPrice').val(''); 
-               $('.mrpPrice').val(''); 
-               $('.warranty').val(''); 
-               $('.installmentPrice').val('');  
+                
+                var productId = $('.product option:selected').val();
+                if(productId != '')
+                {
+                    $.ajax({
+                        type:'post',
+                        url:'{{ route('customerRegistration.getProductInfo') }}',
+                        data:{productId:productId},
+                        success:function(data){
+                            var product = data.product;
+                            var purchaseType =  $("input[name='purchaseType']:checked").val();
+                            $('.productModel').val(product.model_no);
+                            $('.cashPrice').val(product.price);
+                            $('.warranty').val(product.warranty);
+
+                            if (purchaseType == 'Short Installment')
+                            {
+                                $('.shortInstallmentPrice').val(product.mrp_price);
+                            }
+                            else
+                            {
+                                $('.shortInstallmentPrice').val('');                             
+                            }
+
+                            if (purchaseType == 'Long Installment')
+                            {
+                                $('.longInstallmentPrice').val(product.haire_price);
+                            }
+                            else
+                            {
+                                $('.longInstallmentPrice').val('');                             
+                            }
+                            calculateShortInstallmentAmount();
+                            calculateLongInstallmentAmount();
+                        }
+                    });
+                }
+                else
+                {
+                   $('.productModel').val('');
+                   $('.cashPrice').val('');  
+                   $('.warranty').val(''); 
+                   $('.longInstallmentPrice').val(''); 
+                   $('.shortInstallmentPrice').val(''); 
+                }
+            });
+
+            function calculateShortInstallmentAmount()
+            {
+                var shortInstallmentDeposite = parseFloat($('.shortInstallmentDeposite').val());
+                var shortInstallmentPrice = parseFloat($('.shortInstallmentPrice').val());
+                var shortTotalInstallment = parseFloat($('.shortTotalInstallment').val());
+
+                if (shortTotalInstallment == 0 || $('.shortTotalInstallment').val() == "")
+                {
+                    var shortInstallmentAmount = (shortInstallmentPrice - shortInstallmentDeposite);
+                }
+                else
+                {
+                    var shortInstallmentAmount = (shortInstallmentPrice - shortInstallmentDeposite)/shortTotalInstallment;                
+                }
+
+                $('.shortInstallmentAmount').val(Math.round(shortInstallmentAmount));
             }
-        });
+
+            function calculateLongInstallmentAmount()
+            {
+                var longInstallmentDeposite = parseFloat($('.longInstallmentDeposite').val());
+                var longInstallmentPrice = parseFloat($('.longInstallmentPrice').val());
+                var longTotalInstallment = parseFloat($('.longTotalInstallment').val());
+
+                if (longTotalInstallment == 0 || $('.longTotalInstallment').val() == "")
+                {
+                    var longInstallmentAmount = (longInstallmentPrice - longInstallmentDeposite);
+                }
+                else
+                {
+                    var longInstallmentAmount = (longInstallmentPrice - longInstallmentDeposite)/longTotalInstallment;                
+                }
+
+                $('.longInstallmentAmount').val(Math.round(longInstallmentAmount));
+            }
+
         /*end code for product info*/
 
         function monthlyInstallment()

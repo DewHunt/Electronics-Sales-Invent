@@ -1,20 +1,20 @@
 @extends('admin.layouts.masterAddEdit')
 
 @section('card_body')
-@php
-use App\CashCollection;
-    $lastCashCollection = CashCollection::max('id');
-    if(@$lastCashCollection)
-    {
-        $lastCashCollectionId = $lastCashCollection + 1;
-    }
-    else
-    {
-        $lastCashCollectionId = 1;
-    }
-    $randomNumber = 10000+$lastCashCollectionId;
-    $collectionNo = "col-".$lastCashCollectionId."-".date('y')."-".$randomNumber;
-@endphp
+    @php
+        use App\CashCollection;
+        $lastCashCollection = CashCollection::max('id');
+        if(@$lastCashCollection)
+        {
+            $lastCashCollectionId = $lastCashCollection + 1;
+        }
+        else
+        {
+            $lastCashCollectionId = 1;
+        }
+        $randomNumber = 10000+$lastCashCollectionId;
+        $collectionNo = "col-".$lastCashCollectionId."-".date('y')."-".$randomNumber;
+    @endphp
     <div class="card-body">
         <div class="row">
             <div class="col-md-6">

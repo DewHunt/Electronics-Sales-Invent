@@ -24,7 +24,7 @@ class InstallmentScheduleController extends Controller
     	$title = "Prepare Installment Schedule";
         $formLink = "installmentSchedule.save";
         $buttonName = "Save";
-        $customerProducts = InvoiceSetup::where('collection_type','Installment')
+        $customerProducts = InvoiceSetup::where('collection_type','!=','Cash')
             ->where('status','1')
             ->get();
     	return view('admin.installmentSchedule.add')->with(compact('title','formLink','buttonName','customerProducts'));

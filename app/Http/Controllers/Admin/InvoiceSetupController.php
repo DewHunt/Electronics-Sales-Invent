@@ -31,17 +31,17 @@ class InvoiceSetupController extends Controller
             $print = $request->print;
             $getCustomerProduct = CustomerProduct::where('id',$customerProductId)->first();
 
-            if($request->collectionType == "Full Payment")
+            if($request->purchaseType == "Cash")
             {
                 $customerProductPrice = $getCustomerProduct->cash_price;
             }
 
-            if($request->collectionType == "Partial Payment")
+            if($request->purchaseType == "Short Installment")
             {
                 $customerProductPrice = $getCustomerProduct->mrp_price;
             }
 
-            if($request->collectionType == "Installment")
+            if($request->purchaseType == "Long Installment")
             {
                 $customerProductPrice = $getCustomerProduct->installment_price;
             }
@@ -70,11 +70,11 @@ class InvoiceSetupController extends Controller
                 $invoice = InvoiceSetup::create( [
                     'invoice_date' => $invoiceDate,
                     'invoice_no' => $invoiceNo,
-                    'collection_type' => $request->collectionType,       
+                    'collection_type' => $request->purchaseType,       
                     'customer_id' => $getCustomerProduct->customer_id,       
                     'customer_product_id' => $customerProductId,       
                     'product_id' => $getCustomerProduct->product_id,
-                    'product_name' => $getCustomerProduct->product_name,
+                    'product_name' => $productInfo->name,
                     'product_serial_no' => $request->productSerial,
                     'qty' => $getCustomerProduct->qty,       
                     'customer_product_price' => $customerProductPrice,       
@@ -121,21 +121,21 @@ class InvoiceSetupController extends Controller
     {
         $output = '';
         $results = '';
-        $collectionType = $request->collectionType;
+        $purchaseType = $request->purchaseType;
 
-        if($collectionType == "Full Payment")
+        if($purchaseType == "Cash")
         {
             $purchaseType = "Cash";
         }
 
-        if($collectionType == "Partial Payment")
+        if($purchaseType == "Short Installment")
         {
-            $purchaseType = "Cash";
+            $purchaseType = "Short Installment";
         }
 
-        if($collectionType == "Installment")
+        if($purchaseType == "Long Installment")
         {
-            $purchaseType = "Installment";
+            $purchaseType = "Long Installment";
         }
 
         $customerProducts = CustomerProduct::select('tbl_customer_products.*','tbl_customers.name as customerName','tbl_products.name as productName','tbl_products.code as productCode','tbl_products.color as productColor','tbl_products.model_no as productModelNo')

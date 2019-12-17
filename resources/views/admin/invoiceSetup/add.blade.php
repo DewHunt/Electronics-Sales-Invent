@@ -60,26 +60,31 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label>Collection Type</label>
-                        <div class="form-group {{ $errors->has('collectionType') ? ' has-danger' : '' }}" style="height: 40px; line-height: 40px;">
-                            <div class="form-check-inline">
-                                <label class="form-check-label">
-                                    <input type="radio" value="Full Payment" class="collectionType" name="collectionType"> Full Payment
-                                </label>
-                            </div>
-
-                            <div class="form-check-inline">
-                                <label class="form-check-label">
-                                    <input type="radio" value="Partial Payment" class="collectionType" name="collectionType"> Partial Payment
-                                </label>
-                            </div>
-
-                            <div class="form-check-inline">
-                                <label class="form-check-label">
-                                    <input type="radio" value="Installment" class="collectionType" name="collectionType"> Installment
-                                </label>
-                            </div>
+                        <label for="purchase-type">Purchase Type</label>
+                        <div class="form-group {{ $errors->has('purchaseType') ? ' has-danger' : '' }}">
+                           <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" value="Cash" name="purchaseType" class="product purchaseType" required> Cash
+                            </label>
                         </div>
+
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" value="Short Installment" name="purchaseType" class="product purchaseType"> Short Installment
+                            </label>
+                        </div>
+
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" value="Long Installment" name="purchaseType" class="product purchaseType"> Long Installment
+                            </label>
+                        </div>
+                        @if ($errors->has('purchaseType'))
+                            @foreach($errors->get('purchaseType') as $error)
+                                <div class="form-control-feedback">{{ $error }}</div>
+                            @endforeach
+                        @endif
+                    </div>
                     </div>
                 </div>
 
@@ -185,10 +190,10 @@
         $(document).ready(function () {
             $("form").submit(function(e)
             {
-                if (!$("input[name='collectionType']").is(':checked'))
+                if (!$("input[name='purchaseType']").is(':checked'))
                 {
                     e.preventDefault();
-                    swal("Please! Select Collection Type", "", "warning");   
+                    swal("Please! Select Purchase Type", "", "warning");   
                 }
                 else
                 {
@@ -217,12 +222,12 @@
                 }
             });            
             
-            var collectionType = $("input[name='collectionType']:checked").val();
+            var purchaseType = $("input[name='purchaseType']:checked").val();
 
             $.ajax({
                 type:'post',
                 url:'{{ route('invoiceSetup.getAllProduct') }}',
-                data:{collectionType:collectionType},
+                data:{purchaseType:purchaseType},
                 success:function(data){
                     $('#prodct-select-menu').html(data);
                     $(".chosen-select").chosen();

@@ -53,15 +53,15 @@
                     <thead>
                         <tr>
                             <th width="20px">SL</th>
-                            <th>Customer Name</th>
-                            <th>Invoice No</th>
-                            <th>Invoice Date</th>
-                            <th>Showroom</th>
-                            <th>Product Code</th>
-                            <th>Product Serial No</th>
-                            <th>Collection Type</th>
-                            <th>Price</th>
-                            <th width="95px">Action</th>
+                            <th width="100px">Customer Name</th>
+                            <th width="70px">Invoice No</th>
+                            <th width="70px">Invoice Date</th>
+                            <th width="100px">Showroom</th>
+                            <th width="80px">Product Name</th>
+                            <th width="90px">Product Serial No</th>
+                            <th width="80px">Collection Type</th>
+                            <th width="50px">Price</th>
+                            <th width="60px">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -83,7 +83,7 @@
                                 <td>{{$invoice->invoice_no}}</td>
                                 <td>{{$invoiceDate}}</td>
                                 <td>{{$showRoom->name}}</td>
-                                <td>{{$productInfo->code}}</td>
+                                <td>{{$invoice->product_name}}</td>
                                 <td>{{$invoice->product_serial_no}}</td>
                                 <td>{{$invoice->collection_type}}</td>
                                 <td>{{$invoice->customer_product_price}}</td>

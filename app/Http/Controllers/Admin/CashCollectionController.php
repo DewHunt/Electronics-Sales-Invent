@@ -26,7 +26,7 @@ class CashCollectionController extends Controller
     	$title = "New Cash Collection";
         $formLink = "cashCollection.save";
         $buttonName = "Save";
-        $invoiceList = InvoiceSetup::where('collection_type','!=','Installment')
+        $invoiceList = InvoiceSetup::where('collection_type','=','Cash')
             ->where('status','1')
             ->orderBy('id','asc')
             ->get();

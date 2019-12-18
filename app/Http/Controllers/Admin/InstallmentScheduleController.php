@@ -117,14 +117,13 @@ class InstallmentScheduleController extends Controller
         $customerProductId = $request->customerProductId;
 
         $invoice = InvoiceSetup::where('customer_product_id',$customerProductId)->first();
-        $customerProduct = CustomerProduct::where('id',$customerProductId)
-            ->first();
+        $customerProduct = CustomerProduct::where('id',$customerProductId)->first();
         $customer = CustomerRegistrationSetup::where('id',$customerProduct->customer_id)->first();
 
         if($request->ajax()){
         return response()
                 ->json([
-                    'invoiceNo'=>$invoice->invoice_no,
+                    'invoice'=>$invoice,
                     'customerProduct'=>$customerProduct,
                     'customer'=>$customer,
                 ]);

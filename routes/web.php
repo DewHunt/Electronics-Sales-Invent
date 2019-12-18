@@ -216,6 +216,15 @@ Route::prefix('admin')->group(function()
 			Route::post('/product-list','Admin\ProductListController@index')->name('productList.index');
 			Route::post('/product-list/print','Admin\ProductListController@print')->name('productList.print');
 
+			// Dealer Setup
+			Route::get('/dealer-setup','Admin\DealerSetupController@index')->name('dealerSetup.index');
+			Route::get('/dealer-setup-add','Admin\DealerSetupController@add')->name('dealerSetup.add');
+			Route::post('/dealer-setup-save','Admin\DealerSetupController@save')->name('dealerSetup.save');
+			Route::get('/dealer-setup-edit/{id}','Admin\DealerSetupController@edit')->name('dealerSetup.edit');
+			Route::post('/dealer-setup-update','Admin\DealerSetupController@update')->name('dealerSetup.update');
+			Route::post('/dealer-setup-delete','Admin\DealerSetupController@delete')->name('dealerSetup.delete');
+			Route::post('/dealer-setup-status','Admin\DealerSetupController@changeStatus')->name('dealerSetup.status');
+
 		// Business Settings End
 
 		// Product Lifting Start

@@ -207,7 +207,7 @@ use App\ShowroomSetup;
             <div class="col-md-4">
                 <div class="form-group {{ $errors->has('cashPrice') ? ' has-danger' : '' }}">
                     <label for="cash-price">Cash Price</label>
-                    <input type="number" name="cashPrice" class="form-control cashPrice" readonly>
+                    <input type="number" name="cashPrice" class="form-control cashPrice">
                     @if ($errors->has('cashPrice'))
                         @foreach($errors->get('cashPrice') as $error)
                             <div class="form-control-feedback">{{ $error }}</div>

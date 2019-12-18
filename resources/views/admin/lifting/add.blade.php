@@ -163,87 +163,46 @@
                                 <thead>
                                     <tr>
                                         <th>Product Name & Code</th>
-                                        <th width="10%">Model</th>
-                                        <th width="10%">Color</th>
-                                        <th width="150px">Serial No</th>
-                                        <th width="100px">Price</th>
+                                        <th width="160px">Model</th>
+                                        <th width="100px">Color</th>
+                                        <th width="160px">Serial No</th>
+                                        <th width="80px">Price</th>
+                                        <th width="90px">MRP Price</th>
+                                        <th width="110px">Higher Price</th>
                                         <th width="80px">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody">
                                 </tbody>
-
-                                {{-- <tfoot>
-                                    <tr>
-                                        <th>Total Quantity</th>
-                                        <td>
-                                            <input class="total_qty" type="number" name="total_qty" value="1" readonly>
-                                        </td>
-
-                                        <th>Total Amount</th>
-                                        <td>
-                                            <input style="text-align: right;" class="total_amount" type="number" name="total_amount" value="0" readonly>
-                                        </td>
-
-                                        <td align="center">
-                                            <input type="hidden" class="row_count" value="1">
-                                            <span class="btn btn-outline-success add_item">
-                                                <i class="fa fa-plus-circle"></i> Add More
-                                            </span>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td rowspan="3" colspan="2"></td>
-                                        <th>Discount</th>
-                                        <td>
-                                            <input style="text-align: right;" class="discount" type="number" name="discount" value="0" oninput="netAmount()">
-                                        </td>
-
-                                        <td rowspan="3" class="text-right" style="padding-top: 5px;">
-                                            <div style="padding-top: 10px;">
-                                                <button type="submit" class="btn btn-outline-info btn-md waves-effect">
-                                                    <span style="font-size: 16px;">
-                                                        <i class="fa fa-save"></i> Save Data
-                                                    </span>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>Vat</th>
-                                        <td>
-                                            <input style="text-align: right;" class="vat" type="number" name="vat" value="0" oninput="netAmount()">
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>Net Amount</th>
-                                        <td>
-                                            <input style="text-align: right;" class="net_amount" type="number" name="net_amount" value="0" readonly>
-                                        </td>
-                                    </tr>
-                                </tfoot> --}}
                             </table>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <label for="supplier">Total Quantity</label>
                         <div class="form-group">
                         	<input style="text-align: right;" class="form-control totalQty" type="number" name="totalQty" value="0" readonly>
                         </div>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <label for="supplier">Total Price</label>
-                        <div class="form-group {{ $errors->has('productId') ? ' has-danger' : '' }}">
+                        <div class="form-group">
                         	<input style="text-align: right;" class="form-control totalPrice" type="number" name="totalPrice" value="0" readonly>
-                        	<input style="text-align: right;" class="form-control totalMrpPrice" type="hidden" name="totalMrpPrice" value="0" readonly>
-                        	<input style="text-align: right;" class="form-control totalHairePrice" type="hidden" name="totalHairePrice" value="0" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="supplier">Total MRP Price</label>
+                        <div class="form-group">
+                            <input style="text-align: right;" class="form-control totalMrpPrice" type="number" name="totalMrpPrice" value="0" readonly>
+                        </div>
+                    </div>             <div class="col-md-3">
+                        <label for="supplier">Total Higher Price</label>
+                        <div class="form-group">
+                            <input style="text-align: right;" class="form-control totalHairePrice" type="number" name="totalHairePrice" value="0" readonly>
                         </div>
                     </div>
                 </div>
@@ -279,14 +238,21 @@
 		                	'<input class="productColor_'+total+'" type="text" name="productColor[]" value="" readonly>'+
 		                '</td>'+
 		                '<td>'+
-		                	'<input class="productSerialNo_'+total+'" type="text" name="productSerialNo[]" value="" readonly>'+
+		                	'<input class="productSerialNo_'+total+'" type="text" name="productSerialNo[]" value="" required>'+
 		                '</td>'+
 
 		                '<td>'+
-		                    '<input class="productQty productQty_'+total+'" type="hidden" name="productQty[]" value="1">'+
-		                    '<input style="text-align: right;" class="productPrice productPrice_'+total+'" type="number" name="productPrice[]" value="" readonly>'+
-	                        '<input class="productMrpPrice_'+total+'" type="hidden" name="productMrpPrice[]" value="">'+
-	                        '<input class="productHairePrice_'+total+'" type="hidden" name="productHairePrice[]" value="">'+
+		                    '<input class="productQty_'+total+'" type="hidden" name="productQty[]" value="1">'+
+		                    '<input style="text-align: right;" class="productPrice productPrice_'+total+'" type="number" name="productPrice[]" value="" oninput="findMrpHairePrice('+total+')" required>'+
+                            '<input class="price_'+total+'" type="hidden" name="price[]" value="">'+
+                        '</td>'+
+
+                        '<td>'+
+	                        '<input style="text-align: right;" class="productMrpPrice_'+total+'" type="number" name="productMrpPrice[]" value="" readonly>'+
+                        '</td>'+
+
+                        '<td>'+
+	                        '<input style="text-align: right;" class="productHairePrice_'+total+'" type="number" name="productHairePrice[]" value="" readonly>'+
 		                '</td>'+
 		                '<td align="center">'+
 		                	'<span class="btn btn-outline-danger btn-sm item_remove" onclick="itemRemove('+total+')" style="width: 100%;">'+
@@ -307,23 +273,24 @@
 	                success: function(response) {
 	                    var product = response.product;
 
-			            var totalQty = parseFloat($('.totalQty').val()) + parseFloat($('.productQty_'+total).val());
-			            var totalPrice = parseFloat($('.totalPrice').val()) + parseFloat(product.price);
-			            var totalMrpPrice = parseFloat($('.totalMrpPrice').val()) + parseFloat(product.mrp_price);
-			            var totalHairePrice = parseFloat($('.totalHairePrice').val()) + parseFloat(product.haire_price);
+                        $('.productId_'+total).val(product.id);
+                        $('.productName_'+total).val(product.name);
+                        $('.productModel_'+total).val(product.model_no);
+                        $('.productColor_'+total).val(product.color);
+                        $('.productSerialNo_'+total).val(serialNo);
+                        $('.price_'+total).val(product.price);
+                        $('.productPrice_'+total).val(product.price);
+                        $('.productMrpPrice_'+total).val(product.mrp_price);
+                        $('.productHairePrice_'+total).val(product.haire_price);
 
-	                    $('.productId_'+total).val(product.id);
-	                    $('.productName_'+total).val(product.name);
-	                    $('.productModel_'+total).val(product.model_no);
-	                    $('.productColor_'+total).val(product.color);
-	                    $('.productSerialNo_'+total).val(serialNo);
-	                    $('.productPrice_'+total).val(product.price);
-	                    $('.productMrpPrice_'+total).val(product.mrp_price);
-	                    $('.productHairePrice_'+total).val(product.haire_price);
+			            var totalQty = parseFloat($('.totalQty').val()) + parseFloat($('.productQty_'+total).val());
+			            var totalPrice = parseFloat($('.totalPrice').val()) + parseFloat($('.productPrice_'+total).val());
+			            var totalMrpPrice = parseFloat($('.totalMrpPrice').val()) + parseFloat($('.productMrpPrice_'+total).val());
+			            var totalHairePrice = parseFloat($('.totalHairePrice').val()) + parseFloat($('.productHairePrice_'+total).val());
 	                    $('.totalQty').val(totalQty);
-	                    $('.totalPrice').val(parseFloat(totalPrice).toFixed(2));
-	                    $('.totalMrpPrice').val(parseFloat(totalMrpPrice).toFixed(2));
-	                    $('.totalHairePrice').val(parseFloat(totalHairePrice).toFixed(2));
+	                    $('.totalPrice').val(Math.round(totalPrice));
+	                    $('.totalMrpPrice').val(Math.round(totalMrpPrice));
+	                    $('.totalHairePrice').val(Math.round(totalHairePrice));
 	                },
 	                error: function(response) {
 
@@ -331,9 +298,39 @@
 	            });
 
 	            $('#product_serial_no').val('').focus();
-        	}
-            
+        	}            
         });
+
+        function findMrpHairePrice(i)
+        {
+            var totalPrice = parseFloat($('.totalPrice').val()) - parseFloat($('.price_'+i).val());
+            var totalMrpPrice = parseFloat($('.totalMrpPrice').val()) - parseFloat($('.productMrpPrice_'+i).val());
+            var totalHairePrice = parseFloat($('.totalHairePrice').val()) - parseFloat($('.productHairePrice_'+i).val());
+
+            if ($(".productPrice_"+i).val() == "")
+            {
+                var price = 0
+            }
+            else
+            {
+                var price = parseFloat($(".productPrice_"+i).val());
+            }
+
+            var mrpPrice = price + (price * 8)/100;
+            var hairePrice = mrpPrice + (mrpPrice * 12)/100;
+            $(".productMrpPrice_"+i).val(Math.round(mrpPrice));
+            $(".productHairePrice_"+i).val(Math.round(hairePrice));
+
+            totalPrice = totalPrice + price;
+            // alert(totalPrice);
+            totalMrpPrice = totalMrpPrice + parseFloat($('.productMrpPrice_'+i).val());
+            totalHairePrice = totalHairePrice + parseFloat($('.productHairePrice_'+i).val());
+
+            $('.totalPrice').val(Math.round(totalPrice));
+            $('.totalMrpPrice').val(Math.round(totalMrpPrice));
+            $('.totalHairePrice').val(Math.round(totalHairePrice));
+            $('.price_'+i).val(Math.round(price));
+        }
 
         function itemRemove(i) {
             var totalQty = parseFloat($('.totalQty').val());
@@ -358,58 +355,7 @@
 
             $("#itemRow_" + i).remove();
             $('#product_serial_no').val('').focus();
-        }
-
-        // function row_sum() {
-        //     var totalQty = $('.total_qty').val();
-        //     var totalAmount = $('.total_amount').val();
-
-        //     var quantity = $('.productQty'+i).val();
-        //     var amount = $('.productPrice_'+i).val();
-
-        //     totalQty = totalQty + quantity;
-        //     totalAmount = totalAmount + amount;
-
-        //     $('.totalQty').val(totalQty.toFixed(2));
-        //     $('.totalAmount').val(totalAmount.toFixed(2));
-        // }
-
-        // function netAmount(){
-        //     var net_amount = 0;
-        //     var total_amount = parseFloat($(".total_amount").val());
-
-        //     if($(".discount").val() == '')
-        //     {
-        //         alert("Discount Amount Can't Empty");
-        //         var discount = 0;
-        //         $(".discount").val(0);
-        //     }
-        //     else
-        //     {
-        //         if (parseFloat($(".discount").val()) > total_amount)
-        //         {
-        //             alert("You Can't Get Discount Greater Than Total Amount");
-        //             $(".discount").val(0);
-        //             var discount = 0;
-        //         }
-        //         else
-        //         {
-        //             var discount = parseFloat($(".discount").val());
-        //         }
-        //     }
-
-        //     if(parseFloat($(".vat").val()) == '')
-        //     {
-        //         var vat = 0;
-        //     }
-        //     else
-        //     {
-        //         var vat = parseFloat($(".vat").val());
-        //     }
-
-        //     net_amount = (total_amount + vat) - discount;
-        //     $('.net_amount').val(net_amount.toFixed(2));
-        // }          
+        }          
     </script>
 
 @endsection

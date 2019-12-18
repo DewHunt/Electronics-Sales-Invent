@@ -18,8 +18,9 @@ class ProductSetupController extends Controller
 
         $products = Product::select('tbl_products.*','tbl_categories.name as catName')
             ->join('tbl_categories','tbl_categories.id','=','tbl_products.category_id')
-            ->orderBy('tbl_categories.name','asc')
-            ->orderBy('tbl_products.name','asc')
+            ->orderBy('tbl_products.id','dsc')
+            // ->orderBy('tbl_categories.name','asc')
+            // ->orderBy('tbl_products.name','asc')
             ->get();
 
     	return view('admin.productSetup.index')->with(compact('title','products'));

@@ -62,7 +62,7 @@
 	            		<div class="col-md-6">
 			                <label for="product-code">Product Code</label>
 			                <div class="form-group {{ $errors->has('productCode') ? ' has-danger' : '' }}">
-			                    <input type="text" class="form-control form-control-danger" name="productCode" value="{{ $product->code }}" required>
+			                    <input type="text" class="form-control form-control-danger" name="productCode" value="{{ $product->code }}">
 			                    @if ($errors->has('productCode'))
 			                        @foreach($errors->get('productCode') as $error)
 			                            <div class="form-control-feedback">{{ $error }}</div>
@@ -88,7 +88,7 @@
 	            		<div class="col-md-6">
 			                <label for="product-color">Product Color</label>
 			                <div class="form-group {{ $errors->has('productColor') ? ' has-danger' : '' }}">
-			                    <input type="text" class="form-control form-control-danger" name="productColor" value="{{ $product->color }}" required>
+			                    <input type="text" class="form-control form-control-danger" name="productColor" value="{{ $product->color }}">
 			                    @if ($errors->has('productColor'))
 			                        @foreach($errors->get('productColor') as $error)
 			                            <div class="form-control-feedback">{{ $error }}</div>

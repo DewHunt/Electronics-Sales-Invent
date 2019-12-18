@@ -10010,7 +10010,7 @@ sidebar navigation
         padding: 10px 35px 10px 15px;
         display: block;
         align-items: center;
-        font-size: 14px;
+        font-size: 12px;
         font-weight: 400; }
         .sidebar-nav ul li a.active, .sidebar-nav ul li a:hover {
           color: #fb9678; }
@@ -10019,7 +10019,7 @@ sidebar navigation
         .sidebar-nav ul li a.active {
           font-weight: 550;
           color: #00060c;
-          font-size: 15px;
+          font-size: 12px;
         }
       .sidebar-nav ul li ul {
         padding-left: 30px; }

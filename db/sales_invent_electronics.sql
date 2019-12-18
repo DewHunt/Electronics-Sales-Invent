@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 17, 2019 at 04:43 AM
+-- Generation Time: Dec 18, 2019 at 11:47 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -170,7 +170,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (54, '2019_12_14_110135_create_tbl_installment_collection_table', 33),
 (55, '2019_12_14_110402_create_tbl_installment_collection_list_table', 33),
 (56, '2019_12_15_074151_create_admins_table', 34),
-(57, '2019_12_15_082743_create_tbl_showroom_table', 35);
+(57, '2019_12_15_082743_create_tbl_showroom_table', 35),
+(58, '2019_12_18_095202_create_tbl_dealers_table', 36),
+(59, '2019_12_18_102145_create_tbl_dealers_table', 37);
 
 -- --------------------------------------------------------
 
@@ -306,11 +308,8 @@ CREATE TABLE `tbl_cash_collection` (
 --
 
 INSERT INTO `tbl_cash_collection` (`id`, `invoice_id`, `collection_no`, `invoice_amount`, `previous_collection`, `collection_date`, `collection_amount`, `current_due`, `remarks`, `status`, `created_at`, `updated_at`) VALUES
-(19, 5, 'col-1-19-10001', '35000.00', '0.00', '2019-12-16', '35000.00', '0', NULL, 1, '2019-12-16 05:48:32', '2019-12-16 05:48:32'),
-(20, 6, 'col-20-19-10020', '25000.00', '0.00', '2019-12-16', '25000.00', '0', NULL, 1, '2019-12-16 05:48:55', '2019-12-16 05:48:55'),
-(21, 17, 'col-21-19-10021', '10990.00', '0.00', '2019-12-16', '3990', '7000.00', NULL, 1, '2019-12-16 05:49:48', '2019-12-16 05:49:48'),
-(23, 17, 'col-23-19-10023', '10990.00', '6990.00', '2019-12-16', '4000.00', '0', NULL, 1, '2019-12-16 05:50:53', '2019-12-16 05:50:53'),
-(24, 17, 'col-24-19-10024', '10990.00', '7990.00', '2019-12-16', '3000.00', '0', NULL, 1, '2019-12-16 06:00:29', '2019-12-16 06:00:29');
+(25, 26, 'col-1-19-10001', '35000.00', '0.00', '2019-12-17', '25000', '10000.00', NULL, 1, '2019-12-17 01:19:40', '2019-12-17 01:19:40'),
+(26, 26, 'col-26-19-10026', '35000.00', '25000.00', '2019-12-17', '10000.00', '0', NULL, 1, '2019-12-17 01:19:58', '2019-12-17 01:19:58');
 
 -- --------------------------------------------------------
 
@@ -342,7 +341,9 @@ INSERT INTO `tbl_categories` (`id`, `name`, `cover_image`, `image`, `status`, `p
 (8, 'Television', '', '', 1, NULL, NULL, NULL, NULL, NULL, 1, '2019-12-16 00:18:32', '2019-12-16 00:23:52'),
 (9, 'Refrigerator & Freezer', '', '', 1, NULL, NULL, NULL, NULL, NULL, 2, '2019-12-16 00:19:15', '2019-12-16 00:23:49'),
 (10, 'Air Conditioner', NULL, NULL, 1, NULL, 'No', NULL, NULL, NULL, 2, '2019-12-16 00:43:26', '2019-12-16 00:46:37'),
-(11, 'Home Applince', '', '', 1, NULL, NULL, NULL, NULL, NULL, 4, '2019-12-16 00:45:24', '2019-12-16 00:45:30');
+(11, 'Home Applince', '', '', 1, NULL, NULL, NULL, NULL, NULL, 4, '2019-12-16 00:45:24', '2019-12-16 00:45:30'),
+(12, 'LED TV', '', '', 1, NULL, NULL, NULL, NULL, NULL, 6, '2019-12-16 22:32:14', '2019-12-16 22:33:02'),
+(13, 'Fridge (Beverage Cooler)', '', '', 1, '9', NULL, NULL, NULL, NULL, 2, '2019-12-17 01:40:25', '2019-12-17 01:40:25');
 
 -- --------------------------------------------------------
 
@@ -438,7 +439,8 @@ INSERT INTO `tbl_customers` (`id`, `code`, `name`, `nick_name`, `age`, `phone_no
 (7, 'mnh-7-541', 'Tonni Das', 'Tonni', 25, '01765984541', 'Unmarried', NULL, 'Md. Aziz', 'Shamima Khatun', 'Female', 'own', '10', '5', 'Barishal', 'Barishal', 'Service Holder', '1', '2', 'Computer Operator', '10000', 'Barshal', 1, '2019-12-16 02:33:12', '2019-12-16 02:33:12'),
 (8, 'mnh-8-746', 'Md. Salman Sabbir', 'Salman', 28, '01715394746', 'Unmarried', NULL, 'Abdul Jabbar', 'Mrs. Chadni', 'Male', 'rent', '4', '2', 'Barishal', 'Barishal', 'Service Holder', '3', '1', 'Computer Operator', '10000', 'Barishal', 1, '2019-12-16 02:38:08', '2019-12-16 02:38:08'),
 (9, 'mnh-9-746', 'Md. Nasir', 'Opu', 27, '01715394746', 'Married', 'Mrs. Tumpa', 'Md. Ranjit', 'Mrs. Chadni', 'Male', 'rent', '7', '5', 'Dhaka', 'Dhaka', 'Service Holder', '8', '2', 'Banker', '25000', 'Dhaka', 1, '2019-12-16 13:54:19', '2019-12-16 13:54:19'),
-(10, 'mnh-10-465', 'gfsdfsfgdsfg', NULL, 23, '1234235465', 'Unmarried', NULL, 'fasdgfsdg', 'sdfsdgg', 'Male', 'own', '1', '4', 'sdgasd', 'asdgad', 'asdgadsg', '23', '23', '5fdggdfb', '3242', 'zxcbzcbc', 0, '2019-12-16 16:01:44', '2019-12-16 16:02:38');
+(10, 'mnh-10-465', 'gfsdfsfgdsfg', NULL, 23, '1234235465', 'Unmarried', NULL, 'fasdgfsdg', 'sdfsdgg', 'Male', 'own', '1', '4', 'sdgasd', 'asdgad', 'asdgadsg', '23', '23', '5fdggdfb', '3242', 'zxcbzcbc', 1, '2019-12-16 16:01:44', '2019-12-16 16:02:38'),
+(11, 'mnh-11-746', 'Md. Saddam', 'saddam', 29, '01715283746', 'Unmarried', NULL, 'Md. Aziz', 'Mrs. Chadni', 'Male', 'rent', '8', '5', 'Barisal', 'Barisal', 'Service Holder', '5', '1', 'Computer Operator', '25000', 'Barisal', 1, '2019-12-16 22:57:53', '2019-12-16 22:57:53');
 
 -- --------------------------------------------------------
 
@@ -485,7 +487,11 @@ INSERT INTO `tbl_customer_guarantor` (`id`, `customer_id`, `product_id`, `gurant
 (15, 9, 8, 'Md. Salam', '01415239865', '40', 'Married', 'Simu', 'Md. Selim', 'Dhaka', 'Dhaka', 'Service Holder', 'Accountant', '01627920223', '40000', 'Dhaka', NULL, '2019-12-16 15:52:27'),
 (16, 9, 8, 'Md. Hanif', '01415239865', '35', 'Married', 'Himu', 'Md. Selim', 'Dhaka', 'Dhaka', 'Service Holder', 'Accountant', '019235473', '35000', 'Dhaka', NULL, '2019-12-16 15:52:54'),
 (19, 9, 12, 'Md. Salam', '01415239865', '40', 'Married', 'Simu', 'Md. Selim', 'Dhaka', 'Dhaka', 'Service Holder', 'Accountant', '01627920223', '40000', 'D', NULL, NULL),
-(20, 9, 12, 'Md. Hanif', '01415239865', '35', 'Married', 'Himu', 'Md. Selim', 'Dhaka', 'Dhaka', 'Service Holder', 'Accountant', '019235473', '35000', 'h', NULL, NULL);
+(20, 9, 12, 'Md. Hanif', '01415239865', '35', 'Married', 'Himu', 'Md. Selim', 'Dhaka', 'Dhaka', 'Service Holder', 'Accountant', '019235473', '35000', 'h', NULL, NULL),
+(21, 11, 12, 'Md. Salam', '01415239865', '26', 'Unmarried', NULL, 'Md. Selim', 'Barisal', 'Barisal', 'Service Holder', 'Accountant', '015829374343', '29000', 'Barisal', NULL, NULL),
+(22, 11, 12, 'Md. Salam', '01415239865', '25', 'Unmarried', NULL, 'Md. Selim', 'Barisal', 'Barisal', 'Service Holder', 'Accountant', '017236345734', '30000', 'Barisal', NULL, NULL),
+(23, 11, 10, 'Md. Salam', '01415239865', '26', 'Unmarried', NULL, 'Md. Selim', 'Barisal', 'Barisal', 'Service Holder', 'Accountant', '015829374343', '29000', 'B', NULL, NULL),
+(24, 11, 10, 'Md. Salam', '01415239865', '25', 'Unmarried', NULL, 'Md. Selim', 'Barisal', 'Barisal', 'Service Holder', 'Accountant', '017236345734', '30000', 'a', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -521,22 +527,47 @@ CREATE TABLE `tbl_customer_products` (
 --
 
 INSERT INTO `tbl_customer_products` (`id`, `customer_id`, `product_id`, `showroom_id`, `qty`, `warranty`, `purchase_date`, `purchase_type`, `installment_type`, `product_model`, `cash_price`, `mrp_price`, `deposite`, `installment_price`, `total_installment`, `monthly_installment_amount`, `product_usage_address`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 3, 1, 1, 5, '2019-12-11', 'Installment', NULL, 'wal890', '45000', '48600', '15000', '54432', '12', '3286', 'MMirpur', 1, '2019-12-10 13:04:07', '2019-12-15 06:01:02'),
-(2, 2, 3, 1, 1, 5, '2019-12-11', 'Installment', NULL, 'wal890', '45000', '48600', '15000', '54432', '12', '3286', 'MMirpur', 0, '2019-12-10 13:08:56', '2019-12-14 05:21:41'),
-(3, 2, 7, 3, 1, 10, '2019-12-11', 'Installment', NULL, 'Wal119', '65000', '70200', '25000', '78624', '15', '3575', 'Mirpur - 1', 0, '2019-12-10 13:19:38', '2019-12-14 05:22:08'),
-(5, 4, 5, 3, 1, 5, '2019-12-11', 'Cash', NULL, 'wal1234', '35000', '37800', NULL, NULL, NULL, NULL, 'Dhanmondi', 0, '2019-12-10 14:27:57', '2019-12-14 04:13:04'),
-(6, 5, 6, 1, 1, 10, '2019-12-11', 'Cash', NULL, 'wal8126', '25000', '27000', NULL, NULL, NULL, NULL, 'Uttara', 0, '2019-12-10 14:35:50', '2019-12-14 04:13:50'),
-(7, 2, 5, 1, 1, 5, '2019-12-11', 'Cash', NULL, 'wal1234', '35000', '37800', NULL, NULL, NULL, NULL, 'Mirpur', 0, '2019-12-10 14:45:40', '2019-12-14 05:12:03'),
-(8, 5, 6, 1, 1, 10, '2019-12-12', 'Cash', NULL, 'wal8126', '25000', '27000', '', '', '', '', 'Mirpur', 0, '2019-12-12 03:07:41', '2019-12-14 05:12:12'),
-(9, 6, 12, 1, 1, 10, '2019-12-16', 'Installment', NULL, 'MSN-12K-ECXXA', '35500', '38340', '10000', '42941', '12', '2745', 'Barisal', 0, '2019-12-16 01:46:34', '2019-12-16 02:19:19'),
-(10, 6, 11, 3, 1, 5, '2019-12-16', 'Installment', NULL, 'MSD49FD-1.245 m (49\'\')', '49900', '53892', '10000', '60359', '12', '4197', 'Barisal', 0, '2019-12-16 01:53:45', '2019-12-16 02:20:55'),
-(11, 6, 8, 1, 1, 12, '2019-12-16', 'Cash', NULL, 'MFO-JET-RXXX-XX', '10990', '11869', '', '', '', '', 'Barisal', 0, '2019-12-16 01:59:01', '2019-12-16 02:24:12'),
-(12, 7, 10, 3, 1, 5, '2019-12-16', 'Installment', NULL, 'MSD55FD-1.397 m (55\'\')', '59900', '64692', '50000', '72455', '12', '1871', 'Barishal', 0, '2019-12-16 02:33:12', '2019-12-16 03:42:09'),
-(13, 8, 8, 1, 1, 12, '2019-12-16', 'Cash', NULL, 'MFO-JET-RXXX-XX', '10990', '11869', '', '', '', '', 'Barishal', 0, '2019-12-16 02:38:08', '2019-12-16 04:21:11'),
-(14, 9, 11, 1, 1, 5, '2019-12-17', 'Cash', NULL, 'MSD49FD-1.245 m (49\'\')', '49900', '', '', '', '', '', 'Dhaka', 1, '2019-12-16 13:54:19', '2019-12-16 13:54:19'),
-(15, 9, 8, 1, 1, 12, '2019-12-17', 'Short Installment', 'Weekly', 'MFO-JET-RXXX-XX', '10990', '11869', '1869', '', '10', '1000', 'Dhaka', 1, '2019-12-16 14:55:13', '2019-12-16 15:46:27'),
-(18, 9, 12, 3, 1, 10, '2019-12-17', 'Long Installment', 'Monthly', 'MSN-12K-ECXXA', '35500', '', '', '42941', '', '', 'Dhaka', 1, '2019-12-16 15:56:15', '2019-12-16 15:56:15'),
-(19, 10, 12, 1, 1, 10, '2019-12-17', 'Short Installment', NULL, 'MSN-12K-ECXXA', '35500', '38340', '1232', '', '12', '3092', NULL, 1, '2019-12-16 16:01:44', '2019-12-16 16:01:44');
+(1, 1, 3, 1, 1, 5, '2019-12-11', 'Long Installment', 'Monthly', 'wal890', '45000', '', '15000', '54432', '12', '3286', 'MMirpur', 0, '2019-12-10 13:04:07', '2019-12-17 01:56:31'),
+(2, 2, 3, 1, 1, 5, '2019-12-11', 'Long Installment', 'Monthly', 'wal890', '45000', '', '15000', '54432', '12', '3286', 'MMirpur', 0, '2019-12-10 13:08:56', '2019-12-16 22:21:47'),
+(3, 2, 7, 3, 1, 10, '2019-12-11', 'Long Installment', 'Monthly', 'Wal119', '65000', '', '25000', '78624', '15', '3575', 'Mirpur - 1', 0, '2019-12-10 13:19:38', '2019-12-16 22:22:04'),
+(5, 4, 5, 3, 1, 5, '2019-12-11', 'Cash', NULL, 'wal1234', '35000', '37800', NULL, NULL, NULL, NULL, 'Dhanmondi', 0, '2019-12-10 14:27:57', '2019-12-17 01:09:59'),
+(6, 5, 6, 1, 1, 10, '2019-12-11', 'Cash', NULL, 'wal8126', '25000', '27000', NULL, NULL, NULL, NULL, 'Uttara', 0, '2019-12-10 14:35:50', '2019-12-17 01:15:02'),
+(7, 2, 5, 1, 1, 5, '2019-12-11', 'Cash', NULL, 'wal1234', '35000', '', '', '', '', '', 'Mirpur', 0, '2019-12-10 14:45:40', '2019-12-16 22:21:28'),
+(8, 5, 6, 1, 1, 10, '2019-12-12', 'Cash', NULL, 'wal8126', '25000', '27000', '', '', '', '', 'Mirpur', 0, '2019-12-12 03:07:41', '2019-12-17 01:15:11'),
+(9, 6, 12, 1, 1, 10, '2019-12-16', 'Short Installment', 'Weekly', 'MSN-12K-ECXXA', '35500', '38340', '10000', '', '12', '2362', 'Barisal', 0, '2019-12-16 01:46:34', '2019-12-16 22:23:14'),
+(10, 6, 11, 3, 1, 5, '2019-12-16', 'Short Installment', 'Bi-Monthlyt', 'MSD49FD-1.245 m (49\'\')', '49900', '53892', '10000', '', '12', '3658', 'Barisal', 0, '2019-12-16 01:53:45', '2019-12-16 22:25:25'),
+(11, 6, 8, 1, 1, 12, '2019-12-16', 'Cash', NULL, 'MFO-JET-RXXX-XX', '10990', '11869', '', '', '', '', 'Barisal', 0, '2019-12-16 01:59:01', '2019-12-17 01:15:18'),
+(12, 7, 10, 3, 1, 5, '2019-12-16', 'Long Installment', 'Monthly', 'MSD55FD-1.397 m (55\'\')', '59900', '', '50000', '72455', '12', '1871', 'Barishal', 0, '2019-12-16 02:33:12', '2019-12-16 22:24:49'),
+(13, 8, 8, 1, 1, 12, '2019-12-16', 'Cash', NULL, 'MFO-JET-RXXX-XX', '10990', '11869', '', '', '', '', 'Barishal', 0, '2019-12-16 02:38:08', '2019-12-17 01:15:25'),
+(14, 9, 11, 1, 1, 5, '2019-12-17', 'Cash', NULL, 'MSD49FD-1.245 m (49\'\')', '49900', '', '', '', '', '', 'Dhaka', 0, '2019-12-16 13:54:19', '2019-12-17 01:15:31'),
+(15, 9, 8, 1, 1, 12, '2019-12-17', 'Short Installment', 'Weekly', 'MFO-JET-RXXX-XX', '10990', '11869', '1869', '', '10', '1000', 'Dhaka', 0, '2019-12-16 14:55:13', '2019-12-17 01:54:22'),
+(18, 9, 12, 3, 1, 10, '2019-12-17', 'Long Installment', 'Monthly', 'MSN-12K-ECXXA', '35500', '', '2941', '42941', '12', '3333', 'Dhaka', 0, '2019-12-16 15:56:15', '2019-12-17 01:56:36'),
+(19, 10, 12, 1, 1, 10, '2019-12-17', 'Short Installment', NULL, 'MSN-12K-ECXXA', '35500', '38340', '1232', '', '12', '3092', NULL, 0, '2019-12-16 16:01:44', '2019-12-17 01:54:28'),
+(20, 11, 12, 3, 1, 10, '2019-12-17', 'Long Installment', 'Daily', 'MSN-12K-ECXXA', '35500', '', '10000', '42941', '18', '1830', 'Barisal', 0, '2019-12-16 22:57:53', '2019-12-17 01:56:45'),
+(21, 11, 10, 1, 1, 5, '2019-12-17', 'Short Installment', 'Bi-Monthlyt', 'MSD55FD-1.397 m (55\'\')', '59900', '64692', '10000', '', '12', '4558', 'Barisal', 0, '2019-12-16 23:06:55', '2019-12-17 01:56:22');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_dealers`
+--
+
+CREATE TABLE `tbl_dealers` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `district_id` int(11) DEFAULT NULL,
+  `territory_id` int(11) DEFAULT NULL,
+  `type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `code` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `contact_person` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mobile` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `credit_limit` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -638,7 +669,8 @@ CREATE TABLE `tbl_installment` (
 --
 
 INSERT INTO `tbl_installment` (`id`, `customer_product_id`, `customer_id`, `product_id`, `invoice_no`, `customer_name`, `installment_price`, `booking_amount`, `installment_qty`, `installment_amount`, `status`, `created_at`, `updated_at`) VALUES
-(7, 3, 2, 7, 'inv-14-19-10014', 'Md. Dew Hunt', '78624', '25000', '15', '3575', 1, '2019-12-16 08:53:02', '2019-12-16 08:53:02');
+(11, 15, 9, 8, 'inv-32-19-10032', 'Md. Nasir', '11869', '1869', '10', '1000', 0, '2019-12-17 05:51:05', '2019-12-17 07:04:35'),
+(12, 19, 10, 12, 'inv-33-19-10033', 'gfsdfsfgdsfg', '38340', '1232', '12', '3092', 1, '2019-12-17 05:51:46', '2019-12-17 22:06:25');
 
 -- --------------------------------------------------------
 
@@ -663,6 +695,13 @@ CREATE TABLE `tbl_installment_collection` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `tbl_installment_collection`
+--
+
+INSERT INTO `tbl_installment_collection` (`id`, `installment_id`, `customer_product_id`, `customer_id`, `product_id`, `invoice_no`, `customer_name`, `installment_price`, `booking_amount`, `installment_qty`, `installment_amount`, `status`, `created_at`, `updated_at`) VALUES
+(11, 11, 15, 9, 8, 'inv-32-19-10032', 'Md. Nasir', '11869', '1869', '10', '1000', 1, '2019-12-17 07:04:34', '2019-12-17 07:04:34');
+
 -- --------------------------------------------------------
 
 --
@@ -681,6 +720,23 @@ CREATE TABLE `tbl_installment_collection_list` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_installment_collection_list`
+--
+
+INSERT INTO `tbl_installment_collection_list` (`id`, `installment_id`, `installment_schedule_id`, `installment_collection_id`, `invoice_no`, `installment_schedule_date`, `installment_schedule_amount`, `status`, `created_at`, `updated_at`) VALUES
+(103, 11, 132, 11, 'inv-32-19-10032', '2019-12-17', '1869', 1, '2019-12-17 07:04:34', '2019-12-17 07:04:34'),
+(104, 11, 133, 11, 'inv-32-19-10032', '2020-01-17', '1000', 1, '2019-12-17 07:04:34', '2019-12-17 07:04:34'),
+(105, 11, 134, 11, 'inv-32-19-10032', '2020-02-17', '1000', 1, '2019-12-17 07:04:34', '2019-12-17 07:04:34'),
+(106, 11, 135, 11, 'inv-32-19-10032', '2020-03-17', '1000', 1, '2019-12-17 07:04:34', '2019-12-17 07:04:34'),
+(107, 11, 136, 11, 'inv-32-19-10032', '2020-04-17', '1000', 1, '2019-12-17 07:04:35', '2019-12-17 07:04:35'),
+(108, 11, 137, 11, 'inv-32-19-10032', '2020-05-17', '1000', 1, '2019-12-17 07:04:35', '2019-12-17 07:04:35'),
+(109, 11, 138, 11, 'inv-32-19-10032', '2020-06-17', '1000', 1, '2019-12-17 07:04:35', '2019-12-17 07:04:35'),
+(110, 11, 139, 11, 'inv-32-19-10032', '2020-07-17', '1000', 1, '2019-12-17 07:04:35', '2019-12-17 07:04:35'),
+(111, 11, 140, 11, 'inv-32-19-10032', '2020-08-17', '1000', 1, '2019-12-17 07:04:35', '2019-12-17 07:04:35'),
+(112, 11, 141, 11, 'inv-32-19-10032', '2020-09-17', '1000', 1, '2019-12-17 07:04:35', '2019-12-17 07:04:35'),
+(113, 11, 142, 11, 'inv-32-19-10032', '2020-10-17', '1000', 1, '2019-12-17 07:04:35', '2019-12-17 07:04:35');
 
 -- --------------------------------------------------------
 
@@ -704,22 +760,30 @@ CREATE TABLE `tbl_installment_schedule` (
 --
 
 INSERT INTO `tbl_installment_schedule` (`id`, `installment_id`, `invoice_no`, `installment_schedule_date`, `installment_schedule_amount`, `status`, `created_at`, `updated_at`) VALUES
-(79, 7, 'inv-14-19-10014', '2019-12-11', '25000', 1, NULL, NULL),
-(80, 7, 'inv-14-19-10014', '2020-01-11', '3575', 1, NULL, NULL),
-(81, 7, 'inv-14-19-10014', '2020-02-11', '3575', 1, NULL, NULL),
-(82, 7, 'inv-14-19-10014', '2020-03-11', '3575', 1, NULL, NULL),
-(83, 7, 'inv-14-19-10014', '2020-04-11', '3575', 1, NULL, NULL),
-(84, 7, 'inv-14-19-10014', '2020-05-11', '3575', 1, NULL, NULL),
-(85, 7, 'inv-14-19-10014', '2020-06-11', '3575', 1, NULL, NULL),
-(86, 7, 'inv-14-19-10014', '2020-07-11', '3575', 1, NULL, NULL),
-(87, 7, 'inv-14-19-10014', '2020-08-11', '3575', 1, NULL, NULL),
-(88, 7, 'inv-14-19-10014', '2020-09-11', '3575', 1, NULL, NULL),
-(89, 7, 'inv-14-19-10014', '2020-10-11', '3575', 1, NULL, NULL),
-(90, 7, 'inv-14-19-10014', '2020-11-11', '3575', 1, NULL, NULL),
-(91, 7, 'inv-14-19-10014', '2020-12-11', '3575', 1, NULL, NULL),
-(92, 7, 'inv-14-19-10014', '2021-01-11', '3575', 1, NULL, NULL),
-(93, 7, 'inv-14-19-10014', '2021-02-11', '3575', 1, NULL, NULL),
-(94, 7, 'inv-14-19-10014', '2021-03-11', '3575', 1, NULL, NULL);
+(132, 11, 'inv-32-19-10032', '2019-12-17', '1869', 0, NULL, '2019-12-17 07:04:34'),
+(133, 11, 'inv-32-19-10032', '2020-01-17', '1000', 0, NULL, '2019-12-17 07:04:34'),
+(134, 11, 'inv-32-19-10032', '2020-02-17', '1000', 0, NULL, '2019-12-17 07:04:34'),
+(135, 11, 'inv-32-19-10032', '2020-03-17', '1000', 0, NULL, '2019-12-17 07:04:34'),
+(136, 11, 'inv-32-19-10032', '2020-04-17', '1000', 0, NULL, '2019-12-17 07:04:35'),
+(137, 11, 'inv-32-19-10032', '2020-05-17', '1000', 0, NULL, '2019-12-17 07:04:35'),
+(138, 11, 'inv-32-19-10032', '2020-06-17', '1000', 0, NULL, '2019-12-17 07:04:35'),
+(139, 11, 'inv-32-19-10032', '2020-07-17', '1000', 0, NULL, '2019-12-17 07:04:35'),
+(140, 11, 'inv-32-19-10032', '2020-08-17', '1000', 0, NULL, '2019-12-17 07:04:35'),
+(141, 11, 'inv-32-19-10032', '2020-09-17', '1000', 0, NULL, '2019-12-17 07:04:35'),
+(142, 11, 'inv-32-19-10032', '2020-10-17', '1000', 0, NULL, '2019-12-17 07:04:35'),
+(143, 12, 'inv-33-19-10033', '2019-12-17', '1232', 1, NULL, '2019-12-17 22:06:25'),
+(144, 12, 'inv-33-19-10033', '2020-01-17', '3092', 1, NULL, '2019-12-17 22:06:25'),
+(145, 12, 'inv-33-19-10033', '2020-02-17', '3092', 1, NULL, '2019-12-17 22:06:25'),
+(146, 12, 'inv-33-19-10033', '2020-03-17', '3092', 1, NULL, '2019-12-17 22:06:25'),
+(147, 12, 'inv-33-19-10033', '2020-04-17', '3092', 1, NULL, '2019-12-17 22:06:25'),
+(148, 12, 'inv-33-19-10033', '2020-05-17', '3092', 1, NULL, '2019-12-17 22:06:25'),
+(149, 12, 'inv-33-19-10033', '2020-06-17', '3092', 1, NULL, '2019-12-17 22:06:25'),
+(150, 12, 'inv-33-19-10033', '2020-07-17', '3092', 1, NULL, '2019-12-17 22:06:25'),
+(151, 12, 'inv-33-19-10033', '2020-08-17', '3092', 1, NULL, '2019-12-17 22:06:25'),
+(152, 12, 'inv-33-19-10033', '2020-09-17', '3092', 1, NULL, '2019-12-17 22:06:25'),
+(153, 12, 'inv-33-19-10033', '2020-10-17', '3092', 1, NULL, '2019-12-17 22:06:25'),
+(154, 12, 'inv-33-19-10033', '2020-11-17', '3092', 1, NULL, '2019-12-17 22:06:25'),
+(155, 12, 'inv-33-19-10033', '2020-12-17', '3092', 1, NULL, '2019-12-17 22:06:25');
 
 -- --------------------------------------------------------
 
@@ -754,17 +818,18 @@ CREATE TABLE `tbl_invoice` (
 --
 
 INSERT INTO `tbl_invoice` (`id`, `invoice_date`, `invoice_no`, `collection_type`, `customer_id`, `customer_product_id`, `product_id`, `product_serial_no`, `product_name`, `customer_product_price`, `customer_product_model`, `customer_product_color`, `customer_product_waranty`, `qty`, `customer_product_usage_address`, `customer_product_purchase_date`, `status`, `created_at`, `updated_at`) VALUES
-(5, '2019-12-14', 'inv-1-19-10001', 'Full Payment', 4, 5, 5, '09373848', NULL, '35000', 'wal1234', 'Silver', '5', '1', 'Dhanmondi', '2019-12-11', 0, '2019-12-14 04:13:04', '2019-12-16 05:48:32'),
-(6, '2019-12-14', 'inv-6-19-10006', 'Full Payment', 5, 6, 6, 'fsdafa', NULL, '25000', 'wal8126', 'White', '10', '1', 'Uttara', '2019-12-11', 0, '2019-12-14 04:13:50', '2019-12-16 05:48:55'),
-(8, '2019-12-14', 'inv-7-19-10007', 'Partial Payment', 2, 7, 5, 'u7gfrth0987', NULL, '37800', 'wal1234', 'Silver', '5', '1', 'Mirpur', '2019-12-11', 1, '2019-12-14 05:12:03', '2019-12-14 05:12:03'),
-(9, '2019-12-14', 'inv-9-19-10009', 'Partial Payment', 5, 8, 6, '09364573', NULL, '27000', 'wal8126', 'White', '10', '1', 'Mirpur', '2019-12-12', 1, '2019-12-14 05:12:11', '2019-12-14 05:12:11'),
-(13, '2019-12-14', 'inv-11-19-10011', 'Installment', 2, 2, 3, 'No Serial Number', NULL, '54432', 'wal890', 'Black', '5', '1', 'MMirpur', '2019-12-11', 1, '2019-12-14 05:21:41', '2019-12-16 09:04:07'),
-(14, '2019-12-14', 'inv-14-19-10014', 'Installment', 2, 3, 7, 'sdgfasdgasd', NULL, '78624', 'Wal119', 'Red', '10', '1', 'Mirpur - 1', '2019-12-11', 0, '2019-12-14 05:22:08', '2019-12-16 08:53:02'),
-(15, '2019-12-16', 'inv-15-19-10015', 'Installment', 6, 9, 12, 'fgdgdgsdf', NULL, '42941', 'MSN-12K-ECXXA', 'White', '10', '1', 'Barisal', '2019-12-16', 1, '2019-12-16 02:19:19', '2019-12-16 02:19:19'),
-(16, '2019-12-16', 'inv-16-19-10016', 'Installment', 6, 10, 11, 'mar3423412412', NULL, '60359', 'MSD49FD-1.245 m (49\'\')', 'White', '5', '1', 'Barisal', '2019-12-16', 1, '2019-12-16 02:20:55', '2019-12-16 02:20:55'),
-(17, '2019-12-16', 'inv-17-19-10017', 'Full Payment', 6, 11, 8, 'mar123408', NULL, '10990', 'MFO-JET-RXXX-XX', 'Black', '12', '1', 'Barisal', '2019-12-16', 0, '2019-12-16 02:24:12', '2019-12-16 06:00:29'),
-(18, '2019-12-16', 'inv-18-19-10018', 'Installment', 7, 12, 10, '234567890', NULL, '72455', 'MSD55FD-1.397 m (55\'\')', 'Black', '5', '1', 'Barishal', '2019-12-16', 1, '2019-12-16 03:42:09', '2019-12-16 09:05:00'),
-(19, '2019-12-16', 'inv-19-19-10019', 'Full Payment', 8, 13, 8, 'mmmm', NULL, '10990', 'MFO-JET-RXXX-XX', 'Black', '12', '1', 'Barishal', '2019-12-16', 1, '2019-12-16 04:21:11', '2019-12-16 04:21:11');
+(26, '2019-12-17', 'inv-1-19-10001', 'Cash', 4, 5, 5, '09373848', 'Walton LED TV', '35000', 'wal1234', 'Silver', '5', '1', 'Dhanmondi', '2019-12-11', 0, '2019-12-17 01:09:59', '2019-12-17 01:19:58'),
+(27, '2019-12-17', 'inv-27-19-10027', 'Cash', 5, 6, 6, 'fsdafa', 'Walton Freezer', '25000', 'wal8126', 'White', '10', '1', 'Uttara', '2019-12-11', 1, '2019-12-17 01:15:02', '2019-12-17 01:15:02'),
+(28, '2019-12-17', 'inv-28-19-10028', 'Cash', 5, 8, 6, '09364573', 'Walton Freezer', '25000', 'wal8126', 'White', '10', '1', 'Mirpur', '2019-12-12', 1, '2019-12-17 01:15:11', '2019-12-17 01:15:11'),
+(29, '2019-12-17', 'inv-29-19-10029', 'Cash', 6, 11, 8, 'mar123408', 'Marcel Refrigerator', '10990', 'MFO-JET-RXXX-XX', 'Black', '12', '1', 'Barisal', '2019-12-16', 1, '2019-12-17 01:15:18', '2019-12-17 01:15:18'),
+(30, '2019-12-17', 'inv-30-19-10030', 'Cash', 8, 13, 8, 'mmmm', 'Marcel Refrigerator', '10990', 'MFO-JET-RXXX-XX', 'Black', '12', '1', 'Barishal', '2019-12-16', 1, '2019-12-17 01:15:25', '2019-12-17 01:15:25'),
+(31, '2019-12-17', 'inv-31-19-10031', 'Cash', 9, 14, 11, 'mar123557456845', 'Marcel LED TV', '49900', 'MSD49FD-1.245 m (49\'\')', 'White', '5', '1', 'Dhaka', '2019-12-17', 1, '2019-12-17 01:15:31', '2019-12-17 01:15:31'),
+(32, '2019-12-17', 'inv-32-19-10032', 'Short Installment', 9, 15, 8, '4567gibjjkuygf', 'Marcel Refrigerator', '11869', 'MFO-JET-RXXX-XX', 'Black', '12', '1', 'Dhaka', '2019-12-17', 0, '2019-12-17 01:54:21', '2019-12-17 05:51:05'),
+(33, '2019-12-17', 'inv-33-19-10033', 'Short Installment', 10, 19, 12, 'esefef', 'Marcel Air Conditioner', '38340', 'MSN-12K-ECXXA', 'White', '10', '1', NULL, '2019-12-17', 0, '2019-12-17 01:54:28', '2019-12-17 05:51:46'),
+(34, '2019-12-17', 'inv-34-19-10034', 'Short Installment', 11, 21, 10, '09huiy546ets4', 'Marcel LED TV', '64692', 'MSD55FD-1.397 m (55\'\')', 'Black', '5', '1', 'Barisal', '2019-12-17', 1, '2019-12-17 01:56:22', '2019-12-17 01:56:22'),
+(35, '2019-12-17', 'inv-35-19-10035', 'Long Installment', 1, 1, 3, 'poiuytrty', 'Walton ANDROID  ATV', '54432', 'wal890', 'Black', '5', '1', 'MMirpur', '2019-12-11', 1, '2019-12-17 01:56:31', '2019-12-17 01:56:31'),
+(36, '2019-12-17', 'inv-36-19-10036', 'Long Installment', 9, 18, 12, 'sssdfd', 'Marcel Air Conditioner', '42941', 'MSN-12K-ECXXA', 'White', '10', '1', 'Dhaka', '2019-12-17', 1, '2019-12-17 01:56:36', '2019-12-17 01:56:36'),
+(37, '2019-12-17', 'inv-37-19-10037', 'Long Installment', 11, 20, 12, '34536577i', 'Marcel Air Conditioner', '42941', 'MSN-12K-ECXXA', 'White', '10', '1', 'Barisal', '2019-12-17', 1, '2019-12-17 01:56:45', '2019-12-17 01:56:45');
 
 -- --------------------------------------------------------
 
@@ -804,7 +869,11 @@ INSERT INTO `tbl_liftings` (`id`, `serial_no`, `vaouchar_no`, `vendor_id`, `purc
 (8, '1000008', 'vou-006', 5, 'Admin', '2019-12-16', '2014-01-03', '2', '29190.00', '31525.00', '35309.00', NULL, NULL, NULL, '2019-12-16 02:23:19', '2019-12-16 02:23:19'),
 (9, '1000009', 'hhdhd', 5, 'Admin', '2019-12-16', '2019-12-16', '1', '10990.00', '11869.00', '13294.00', NULL, NULL, NULL, '2019-12-16 02:43:19', '2019-12-16 02:43:19'),
 (10, '1000010', 'fasd', 5, 'Admin', '2019-12-16', '2019-12-16', '1', '49900.00', '53892.00', '60359.00', NULL, NULL, NULL, '2019-12-16 02:46:03', '2019-12-16 02:46:03'),
-(11, '1000011', 'vou-978654', 5, 'Admin', '2019-12-16', '2019-12-16', '1', '59900.00', '64692.00', '72455.00', NULL, NULL, NULL, '2019-12-16 03:41:51', '2019-12-16 03:41:51');
+(11, '1000011', 'vou-978654', 5, 'Admin', '2019-12-16', '2019-12-16', '1', '59900.00', '64692.00', '72455.00', NULL, NULL, NULL, '2019-12-16 03:41:51', '2019-12-16 03:41:51'),
+(12, '1000012', '245467i8outg', 5, 'Admin', '2019-12-17', '2019-12-17', '3', '106500.00', '115020.00', '128823.00', NULL, NULL, NULL, '2019-12-16 22:48:24', '2019-12-16 22:48:24'),
+(13, '1000013', '67984gdfghcvt58', 5, 'Admin', '2019-12-17', '2019-12-17', '4', '43960.00', '47476.00', '53176.00', NULL, NULL, NULL, '2019-12-17 01:53:48', '2019-12-17 01:53:48'),
+(14, '1000014', '0970igiyufcted', 5, 'Admin', '2019-12-17', '2019-12-17', '4', '239600.00', '258768.00', '289820.00', NULL, NULL, NULL, '2019-12-17 01:56:03', '2019-12-17 01:56:03'),
+(15, '1000015', '56789546', 5, 'Admin', '2019-12-18', '2019-12-18', '4', '420', '454', '507', NULL, NULL, NULL, '2019-12-18 02:11:45', '2019-12-18 02:40:08');
 
 -- --------------------------------------------------------
 
@@ -833,25 +902,40 @@ CREATE TABLE `tbl_lifting_products` (
 --
 
 INSERT INTO `tbl_lifting_products` (`id`, `lifting_id`, `product_id`, `model_no`, `serial_no`, `color`, `qty`, `price`, `mrp_price`, `haire_price`, `status`, `created_at`, `updated_at`) VALUES
-(16, 2, 3, 'wal890', 'poiuytrty', 'Black', '1', '45000', '48600', '54432', 1, NULL, '2019-12-15 06:01:02'),
-(17, 2, 6, 'wal8126', 'fsdafa', 'White', '1', '25000', '27000', '30240', 0, NULL, '2019-12-14 04:13:50'),
+(16, 2, 3, 'wal890', 'poiuytrty', 'Black', '1', '45000', '48600', '54432', 0, NULL, '2019-12-17 01:56:31'),
+(17, 2, 6, 'wal8126', 'fsdafa', 'White', '1', '25000', '27000', '30240', 0, NULL, '2019-12-17 01:15:02'),
 (18, 2, 7, 'Wal119', 'sdgfasdgasd', 'Red', '1', '65000', '70200', '78624', 0, NULL, '2019-12-14 05:22:08'),
-(21, 3, 5, 'wal1234', '09373848', 'Silver', '1', '35000', '37800', '42336', 0, NULL, '2019-12-14 04:13:04'),
-(22, 3, 6, 'wal8126', '09364573', 'White', '1', '25000', '27000', '30240', 0, NULL, '2019-12-14 05:12:12'),
+(21, 3, 5, 'wal1234', '09373848', 'Silver', '1', '35000', '37800', '42336', 0, NULL, '2019-12-17 01:09:59'),
+(22, 3, 6, 'wal8126', '09364573', 'White', '1', '25000', '27000', '30240', 0, NULL, '2019-12-17 01:15:11'),
 (23, 3, 5, 'wal1234', 'u7gfrth0987', 'Silver', '1', '35000', '37800', '42336', 0, NULL, '2019-12-14 05:12:03'),
 (24, 4, 11, 'MSD49FD-1.245 m (49\'\')', 'mar3423412412', 'White', '1', '49900', '53892', '60359', 0, NULL, '2019-12-16 02:20:56'),
-(25, 4, 11, 'MSD49FD-1.245 m (49\'\')', 'mar123557456845', 'White', '1', '49900', '53892', '60359', 1, NULL, NULL),
+(25, 4, 11, 'MSD49FD-1.245 m (49\'\')', 'mar123557456845', 'White', '1', '49900', '53892', '60359', 0, NULL, '2019-12-17 01:15:31'),
 (26, 4, 11, 'MSD49FD-1.245 m (49\'\')', 'mar0990756', 'White', '1', '49900', '53892', '60359', 1, NULL, NULL),
 (30, 6, 6, 'wal8126', 'SDADAER3434', 'White', '1', '25000', '27000', '30240', 1, NULL, NULL),
 (31, 6, 3, 'wal890', 'FSEDF456456', 'Black', '1', '45000', '48600', '54432', 1, NULL, NULL),
 (32, 7, 12, 'MSN-12K-ECXXA', 'fgdgdgsdf', 'White', '1', '35500', '38340', '42941', 0, NULL, '2019-12-16 02:19:19'),
-(33, 7, 12, 'MSN-12K-ECXXA', 'esefef', 'White', '1', '35500', '38340', '42941', 1, NULL, NULL),
-(34, 7, 12, 'MSN-12K-ECXXA', 'sssdfd', 'White', '1', '35500', '38340', '42941', 1, NULL, NULL),
+(33, 7, 12, 'MSN-12K-ECXXA', 'esefef', 'White', '1', '35500', '38340', '42941', 0, NULL, '2019-12-17 01:54:29'),
+(34, 7, 12, 'MSN-12K-ECXXA', 'sssdfd', 'White', '1', '35500', '38340', '42941', 0, NULL, '2019-12-17 01:56:36'),
 (35, 8, 9, 'MFD-1B6-RXXX-XX', 'mar345678', 'Silver', '1', '18200', '19656', '22015', 1, NULL, NULL),
-(36, 8, 8, 'MFO-JET-RXXX-XX', 'mar123408', 'Black', '1', '10990', '11869', '13294', 0, NULL, '2019-12-16 02:24:12'),
-(37, 9, 8, 'MFO-JET-RXXX-XX', 'mmmm', 'Black', '1', '10990', '11869', '13294', 0, NULL, '2019-12-16 04:21:11'),
+(36, 8, 8, 'MFO-JET-RXXX-XX', 'mar123408', 'Black', '1', '10990', '11869', '13294', 0, NULL, '2019-12-17 01:15:18'),
+(37, 9, 8, 'MFO-JET-RXXX-XX', 'mmmm', 'Black', '1', '10990', '11869', '13294', 0, NULL, '2019-12-17 01:15:25'),
 (38, 10, 11, 'MSD49FD-1.245 m (49\'\')', 'eeee', 'White', '1', '49900', '53892', '60359', 1, NULL, NULL),
-(39, 11, 10, 'MSD55FD-1.397 m (55\'\')', '234567890', 'Black', '1', '59900', '64692', '72455', 0, NULL, '2019-12-16 03:42:09');
+(39, 11, 10, 'MSD55FD-1.397 m (55\'\')', '234567890', 'Black', '1', '59900', '64692', '72455', 0, NULL, '2019-12-16 03:42:09'),
+(40, 12, 12, 'MSN-12K-ECXXA', '34536577i', 'White', '1', '35500', '38340', '42941', 0, NULL, '2019-12-17 01:56:45'),
+(41, 12, 12, 'MSN-12K-ECXXA', '35657iore', 'White', '1', '35500', '38340', '42941', 1, NULL, NULL),
+(42, 12, 12, 'MSN-12K-ECXXA', 'nmg7zsnbn vd', 'White', '1', '35500', '38340', '42941', 1, NULL, NULL),
+(43, 13, 8, 'MFO-JET-RXXX-XX', '4567gibjjkuygf', 'Black', '1', '10990', '11869', '13294', 0, NULL, '2019-12-17 01:54:22'),
+(44, 13, 8, 'MFO-JET-RXXX-XX', '09uy6ygkhs', 'Black', '1', '10990', '11869', '13294', 1, NULL, NULL),
+(45, 13, 8, 'MFO-JET-RXXX-XX', '0gh0oivhjknbr', 'Black', '1', '10990', '11869', '13294', 1, NULL, NULL),
+(46, 13, 8, 'MFO-JET-RXXX-XX', '098hjkr5rfedfgh', 'Black', '1', '10990', '11869', '13294', 1, NULL, NULL),
+(47, 14, 10, 'MSD55FD-1.397 m (55\'\')', '09huiy546ets4', 'Black', '1', '59900', '64692', '72455', 0, NULL, '2019-12-17 01:56:22'),
+(48, 14, 10, 'MSD55FD-1.397 m (55\'\')', '095f53drjfyjh', 'Black', '1', '59900', '64692', '72455', 1, NULL, NULL),
+(49, 14, 10, 'MSD55FD-1.397 m (55\'\')', '907hutt65546f', 'Black', '1', '59900', '64692', '72455', 1, NULL, NULL),
+(50, 14, 10, 'MSD55FD-1.397 m (55\'\')', '090787576rufy', 'Black', '1', '59900', '64692', '72455', 1, NULL, NULL),
+(54, 15, 14, 'MSN-21K-0101-RXXXB', 'asfasdf', 'Red', '1', '100', '108', '121', 1, NULL, NULL),
+(55, 15, 14, 'MSN-21K-0101-RXXXB', 'asfasdf', 'Red', '1', '150', '162', '181', 1, NULL, NULL),
+(56, 15, 14, 'MSN-21K-0101-RXXXB', 'asfasdf', 'Red', '1', '50', '54', '60', 1, NULL, NULL),
+(57, 15, 14, 'MSN-21K-0101-RXXXB', 'asfasdf', 'Red', '1', '120', '130', '145', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -930,7 +1014,8 @@ INSERT INTO `tbl_products` (`id`, `category_id`, `name`, `code`, `model_no`, `co
 (11, '8', 'Marcel LED TV', 'Mar-tv-002', 'MSD49FD-1.245 m (49\'\')', 'White', 'Pcs', 49900, 53892, 60359, NULL, 5, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 00:38:43', '2019-12-16 00:40:02'),
 (12, '10', 'Marcel Air Conditioner', 'mar-ac-001', 'MSN-12K-ECXXA', 'White', 'Kg', 35500, 38340, 42941, NULL, 10, 5, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 00:49:32', '2019-12-16 00:52:05'),
 (13, '11', 'Marcel FAN', 'mar-fan-001', 'MCF5601 WR', 'White', 'Pcs', 2700, 2916, 3266, NULL, 5, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 00:56:30', '2019-12-16 00:56:30'),
-(14, '10', 'AIr conditioner', 'ac-002', 'MSN-21K-0101-RXXXB', 'Red', 'Kg', 52900, 57132, 63988, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 01:00:08', '2019-12-16 01:00:08');
+(14, '10', 'AIr conditioner', 'ac-002', 'MSN-21K-0101-RXXXB', 'Red', 'Kg', 52900, 57132, 63988, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 01:00:08', '2019-12-16 22:42:40'),
+(15, '12', 'Walton LED TV', 'sam123', 'sam890', 'Black', NULL, 12000, 12960, 14515, NULL, 5, 5, -2, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 22:41:43', '2019-12-16 22:42:37');
 
 -- --------------------------------------------------------
 
@@ -968,7 +1053,8 @@ INSERT INTO `tbl_product_advance` (`id`, `product_id`, `product_section`, `relat
 (11, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 00:38:43', '2019-12-16 00:38:43'),
 (12, 12, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 00:49:32', '2019-12-16 00:49:32'),
 (13, 13, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 00:56:30', '2019-12-16 00:56:30'),
-(14, 14, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 01:00:08', '2019-12-16 01:00:08');
+(14, 14, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 01:00:08', '2019-12-16 01:00:08'),
+(15, 15, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 22:41:43', '2019-12-16 22:41:43');
 
 -- --------------------------------------------------------
 
@@ -1073,7 +1159,8 @@ CREATE TABLE `tbl_stores` (
 --
 
 INSERT INTO `tbl_stores` (`id`, `code`, `type`, `name`, `address`, `remarks`, `status`, `created_at`, `updated_at`) VALUES
-(4, 'cas', 'Finish Stock (Warehouse)', 'College Avenue Store', 'Barisal', 'College Avenue Store', 1, '2019-12-16 01:09:24', '2019-12-16 01:09:24');
+(4, 'cas', 'Finish Stock (Warehouse)', 'College Avenue Store', 'Barisal', 'College Avenue Store', 1, '2019-12-16 01:09:24', '2019-12-16 01:09:24'),
+(5, 'fdf', 'Finish Stock (Warehouse)', 'sdfsfdf', 'dfsdfsdf', 'dfsdfsdf', 1, '2019-12-16 22:43:44', '2019-12-16 22:43:44');
 
 -- --------------------------------------------------------
 
@@ -1202,7 +1289,7 @@ INSERT INTO `user_menus` (`id`, `parentMenu`, `menuName`, `menuLink`, `menuIcon`
 (25, '19', 'Vendor Statement', 'vendorStatement.index', 'fa fa-caret', 18, '1', '2019-12-05 06:30:54', '2019-12-05 06:30:54'),
 (26, '6', 'Group Setup', 'groupSetup.index', 'fa fa-caret', 19, '1', '2019-12-07 00:56:48', '2019-12-07 23:18:33'),
 (27, '19', 'Lifting Record', 'liftingRecord.index', 'fa fa-caret', 20, '1', '2019-12-07 23:18:06', '2019-12-07 23:18:06'),
-(28, '19', 'Lifting Payment Summery', 'liftingPaymentSummary.index', 'fa fa-caret', 21, '1', '2019-12-08 05:24:21', '2019-12-08 05:24:21'),
+(28, '19', 'Payment Summery', 'liftingPaymentSummary.index', 'fa fa-caret', 21, '1', '2019-12-08 05:24:21', '2019-12-18 03:49:21'),
 (29, NULL, 'Inventory Management', 'admin.index', 'fa fa-bars', 22, '1', '2019-12-08 22:20:50', '2019-12-08 22:20:50'),
 (30, '29', 'Out Of Stock', 'outOfStock.index', 'fa fa-caret', 23, '1', '2019-12-08 22:21:38', '2019-12-08 22:21:38'),
 (31, '29', 'Stock Valuation', 'stockValuation.index', 'fa fa-caret', 24, '1', '2019-12-08 23:18:53', '2019-12-08 23:18:53'),
@@ -1216,7 +1303,8 @@ INSERT INTO `user_menus` (`id`, `parentMenu`, `menuName`, `menuLink`, `menuIcon`
 (39, '33', 'Customer Statements', 'customerStatement.index', 'fa fa-caret', 32, '1', '2019-12-12 07:14:33', '2019-12-12 07:14:33'),
 (40, NULL, 'Installment Management', 'admin.index', 'fa fa-bars', 33, '1', '2019-12-14 14:43:55', '2019-12-14 14:43:55'),
 (41, '40', 'Installment Schedule', 'installmentSchedule.index', 'fa fa-caret', 34, '1', '2019-12-14 14:45:08', '2019-12-14 14:45:08'),
-(42, '40', 'Installment Collection', 'installmentCollection.index', 'fa fa-caret', 35, '1', '2019-12-14 14:47:55', '2019-12-14 14:47:55');
+(42, '40', 'Installment Collection', 'installmentCollection.index', 'fa fa-caret', 35, '1', '2019-12-14 14:47:55', '2019-12-14 14:47:55'),
+(43, '6', 'Dealer Setup', 'dealerSetup.index', 'fa fa-bars', 36, '1', '2019-12-18 03:37:33', '2019-12-18 03:37:33');
 
 -- --------------------------------------------------------
 
@@ -1346,7 +1434,11 @@ INSERT INTO `user_menu_actions` (`id`, `parentmenuId`, `menuType`, `actionName`,
 (109, 41, 4, 'Delete', 'installmentSchedule.delete', 106, 1, '2019-12-14 14:46:42', '2019-12-14 14:46:42'),
 (110, 42, 1, 'Add', 'installmentCollection.add', 107, 1, '2019-12-14 14:48:38', '2019-12-14 14:48:38'),
 (111, 42, 2, 'Edit', 'installmentCollection.edit', 108, 1, '2019-12-14 14:48:55', '2019-12-14 14:48:55'),
-(112, 42, 4, 'Delete', 'installmentCollection.delete', 109, 1, '2019-12-14 14:49:14', '2019-12-14 14:49:14');
+(112, 42, 4, 'Delete', 'installmentCollection.delete', 109, 1, '2019-12-14 14:49:14', '2019-12-14 14:49:14'),
+(113, 43, 1, 'Add', 'dealerSetup.add', 110, 1, '2019-12-18 03:47:21', '2019-12-18 03:47:21'),
+(114, 43, 2, 'Edit', 'dealerSetup.edit', 111, 1, '2019-12-18 03:47:48', '2019-12-18 03:47:48'),
+(115, 43, 4, 'Delete', 'dealerSetup.delete', 112, 1, '2019-12-18 03:48:17', '2019-12-18 03:48:17'),
+(116, 43, 3, 'Status', 'dealerSetup.status', 113, 1, '2019-12-18 03:48:30', '2019-12-18 03:48:30');
 
 -- --------------------------------------------------------
 
@@ -1369,7 +1461,7 @@ CREATE TABLE `user_roles` (
 --
 
 INSERT INTO `user_roles` (`id`, `name`, `status`, `permission`, `actionPermission`, `created_at`, `updated_at`) VALUES
-(1, 'Super Admin', 1, '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,20,18,19,17,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,57,58,59,60,61,62,63,64,65,66,81,67,69,70,71,72,73,74,75,76,77,78,79,80,82,83,84,85,86,88,89,90,91,94,95,93,96,97,98,105,99,100,101,102,104,103,106,107,108,109,110,111,112', '2019-11-20 22:48:03', '2019-12-14 14:49:44'),
+(1, 'Super Admin', 1, '1,2,3,4,5,6,7,8,10,11,12,13,14,15,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,20,18,19,17,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,57,58,59,60,61,62,63,64,65,66,81,67,69,70,71,72,73,74,75,76,77,78,79,80,82,83,84,85,86,88,89,90,91,94,95,93,96,97,98,105,99,100,101,102,104,103,106,107,108,109,110,111,112,113,114,115,116', '2019-11-20 22:48:03', '2019-12-18 03:49:51'),
 (5, 'Admin', 0, '1,2,5,22', '16,20,18,19,17', '2019-11-29 03:26:52', '2019-12-15 06:09:43');
 
 -- --------------------------------------------------------
@@ -1643,6 +1735,12 @@ ALTER TABLE `tbl_customer_products`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tbl_dealers`
+--
+ALTER TABLE `tbl_dealers`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tbl_groups`
 --
 ALTER TABLE `tbl_groups`
@@ -1806,7 +1904,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -1836,13 +1934,13 @@ ALTER TABLE `tbl_business_staffs`
 -- AUTO_INCREMENT for table `tbl_cash_collection`
 --
 ALTER TABLE `tbl_cash_collection`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `tbl_categories`
 --
 ALTER TABLE `tbl_categories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `tbl_company`
@@ -1860,19 +1958,25 @@ ALTER TABLE `tbl_couriers`
 -- AUTO_INCREMENT for table `tbl_customers`
 --
 ALTER TABLE `tbl_customers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tbl_customer_guarantor`
 --
 ALTER TABLE `tbl_customer_guarantor`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `tbl_customer_products`
 --
 ALTER TABLE `tbl_customer_products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT for table `tbl_dealers`
+--
+ALTER TABLE `tbl_dealers`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tbl_groups`
@@ -1896,43 +2000,43 @@ ALTER TABLE `tbl_groups_sales_target_category`
 -- AUTO_INCREMENT for table `tbl_installment`
 --
 ALTER TABLE `tbl_installment`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `tbl_installment_collection`
 --
 ALTER TABLE `tbl_installment_collection`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `tbl_installment_collection_list`
 --
 ALTER TABLE `tbl_installment_collection_list`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
 
 --
 -- AUTO_INCREMENT for table `tbl_installment_schedule`
 --
 ALTER TABLE `tbl_installment_schedule`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
 
 --
 -- AUTO_INCREMENT for table `tbl_invoice`
 --
 ALTER TABLE `tbl_invoice`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `tbl_liftings`
 --
 ALTER TABLE `tbl_liftings`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `tbl_lifting_products`
 --
 ALTER TABLE `tbl_lifting_products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `tbl_payment_to_company`
@@ -1944,13 +2048,13 @@ ALTER TABLE `tbl_payment_to_company`
 -- AUTO_INCREMENT for table `tbl_products`
 --
 ALTER TABLE `tbl_products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `tbl_product_advance`
 --
 ALTER TABLE `tbl_product_advance`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `tbl_product_images`
@@ -1974,7 +2078,7 @@ ALTER TABLE `tbl_staffs`
 -- AUTO_INCREMENT for table `tbl_stores`
 --
 ALTER TABLE `tbl_stores`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbl_territories`
@@ -1998,13 +2102,13 @@ ALTER TABLE `tbl_vendors`
 -- AUTO_INCREMENT for table `user_menus`
 --
 ALTER TABLE `user_menus`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `user_menu_actions`
 --
 ALTER TABLE `user_menu_actions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
 
 --
 -- AUTO_INCREMENT for table `user_roles`

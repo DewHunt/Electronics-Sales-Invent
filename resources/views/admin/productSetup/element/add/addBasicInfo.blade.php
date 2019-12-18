@@ -52,7 +52,7 @@
 	            		<div class="col-md-6">
 			                <label for="product-code">Product Code</label>
 			                <div class="form-group {{ $errors->has('productCode') ? ' has-danger' : '' }}">
-			                    <input type="text" class="form-control form-control-danger" name="productCode" value="{{ old('productCode') }}" required>
+			                    <input type="text" class="form-control form-control-danger" name="productCode" value="{{ old('productCode') }}">
 			                    @if ($errors->has('productCode'))
 			                        @foreach($errors->get('productCode') as $error)
 			                            <div class="form-control-feedback">{{ $error }}</div>
@@ -78,7 +78,7 @@
 	            		<div class="col-md-6">
 			                <label for="product-color">Product Color</label>
 			                <div class="form-group {{ $errors->has('productColor') ? ' has-danger' : '' }}">
-			                    <input type="text" class="form-control form-control-danger" name="productColor" value="{{ old('productColor') }}" required>
+			                    <input type="text" class="form-control form-control-danger" name="productColor" value="{{ old('productColor') }}">
 			                    @if ($errors->has('productColor'))
 			                        @foreach($errors->get('productColor') as $error)
 			                            <div class="form-control-feedback">{{ $error }}</div>
@@ -226,13 +226,13 @@
 			                <div class="form-group {{ $errors->has('status') ? ' has-danger' : '' }}" style="height: 40px; line-height: 40px;">
 			                    <div class="form-check-inline">
 			                        <label class="form-check-label">
-			                            <input type="radio" value="1" name="status" id="published" required> Published
+			                            <input type="radio" value="1" name="status" id="published" required checked> Published
 			                        </label>
 			                    </div>
 
 			                    <div class="form-check-inline">
 			                        <label class="form-check-label">
-			                            <input type="radio" value="0" name="status" id="unpublished" checked> Unpublished
+			                            <input type="radio" value="0" name="status" id="unpublished" > Unpublished
 			                        </label>
 			                    </div>
 			                </div>

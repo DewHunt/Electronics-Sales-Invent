@@ -234,9 +234,10 @@
                     success:function(data){
                         var customerProduct = data.customerProduct;
                         var customer = data.customer;
-                        $('.invoiceNo').val(data.invoiceNo);
+                        var invoice = data.invoice;
+                        $('.invoiceNo').val(invoice.invoice_no);
                         $('.customerName').val(customer.name);
-                        $('.productAmount').val(customerProduct.installment_price);
+                        $('.productAmount').val(invoice.customer_product_price);
                         $('.bookingAmount').val(customerProduct.deposite);
                         $('.bookingDate').val(customerProduct.purchase_date);
                         $('.installmentAmount').val(customerProduct.monthly_installment_amount);
@@ -253,17 +254,22 @@
         $(".createSchedule").click(function () {
             var product = $('.product').val();
             var scheduleDate = $('.installmentScheduleDate').val();
-            if(product != '' && scheduleDate != ''){
+
+            if(product != '' && scheduleDate != '')
+            {
                 var row_count = $('.row_count').val();
                 var total = parseInt(row_count) + 1; 
 
                 var invoiceNo = $('.invoiceNo').val();
                 var installmentQty = $('.installmentQty').val();
 
-                if(total == 1){
+                if(total == 1)
+                {
                      var installmentAmount = $('.bookingAmount').val();
                      var scheduleDate = DateFormate($('.bookingDate').val());
-                }else{
+                }
+                else
+                {
                    var installmentAmount = $('.installmentAmount').val(); 
                 }
 
@@ -277,11 +283,17 @@
                 var installmentScheduleDate = $('.installmentScheduleDate_'+total).val();
                 $('.installmentScheduleDate').val(NextScheduleDate(installmentScheduleDate));
                 TotalInstallmetnQty(total);
-            }else{
-                if(product == ''){
+            }
+            else
+            {
+                if(product == '')
+                {
                     swal("Please! Select Product", "", "warning");
-                }else{
-                    if(scheduleDate == ''){
+                }
+                else
+                {
+                    if(scheduleDate == '')
+                    {
                         swal("Please! Select Schedule Date", "", "warning");  
                     }
                 }
@@ -289,19 +301,24 @@
         });
     
 
-        function itemRemove(total) {
+        function itemRemove(total)
+        {
             var total_row_value = total-1;
             $('.row_count').val(total_row_value);
             $("#itemRow_" + total).remove();
             TotalInstallmetnQty(total)
         }
 
-        function TotalInstallmetnQty(total){
+        function TotalInstallmetnQty(total)
+        {
             var installmentQty = parseInt($('.installmentQty').val())+parseInt(1);
-            if(total == installmentQty){
+            if(total == installmentQty)
+            {
                 $('.createSchedule').hide();
                 $('.saveButton').show();
-            }else{
+            }
+            else
+            {
                $('.createSchedule').show();
                $('.saveButton').hide(); 
             }
@@ -320,9 +337,12 @@
             const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
               "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"
             ];
-            if(d.getMonth()+1 == 12){
+            if(d.getMonth()+1 == 12)
+            {
                 var nextYear = d.getFullYear()+1;
-            }else{
+            }
+            else
+            {
                 var nextYear = d.getFullYear();
             }
             var datestring = ("0" + (d.getDate())).slice(-2)  + "-" + (monthNames[(d.getMonth()+1)%12]) + "-" + nextYear;

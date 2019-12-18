@@ -22,8 +22,9 @@ class LiftingController extends Controller
 
     	$liftings = Lifting::select('tbl_liftings.*','tbl_vendors.name as vendorName')
     		->join('tbl_vendors','tbl_vendors.id','=','tbl_liftings.vendor_id')
-    		->orderBy('tbl_liftings.purchase_by','asc')
-    		->orderBy('tbl_vendors.name','asc')
+    		->orderBy('tbl_liftings.id','dsc')
+            // ->orderBy('tbl_liftings.purchase_by','asc')
+    		// ->orderBy('tbl_vendors.name','asc')
             ->get();
 
     	return view('admin.lifting.index')->with(compact('title','liftings'));

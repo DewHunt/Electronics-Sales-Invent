@@ -224,12 +224,13 @@ Route::prefix('admin')->group(function()
 			Route::post('/dealer-setup-update','Admin\DealerSetupController@update')->name('dealerSetup.update');
 			Route::post('/dealer-setup-delete','Admin\DealerSetupController@delete')->name('dealerSetup.delete');
 			Route::post('/dealer-setup-status','Admin\DealerSetupController@changeStatus')->name('dealerSetup.status');
+			Route::post('/dealer-setup-status/upazila-list','Admin\DealerSetupController@getAllUpazilaByDistrict')->name('dealerSetup.getAllUpazilaByDistrict');
 
 		// Business Settings End
 
 		// Product Lifting Start
 
-			// Lifting Setup
+			// Lifting
 			Route::get('/lifting','Admin\LiftingController@index')->name('lifting.index');
 			Route::get('/lifting-add','Admin\LiftingController@add')->name('lifting.add');
 			Route::post('/lifting-save','Admin\LiftingController@save')->name('lifting.save');
@@ -238,6 +239,16 @@ Route::prefix('admin')->group(function()
 			Route::post('/lifting-delete','Admin\LiftingController@delete')->name('lifting.delete');
 			Route::post('/lifting-product-info','Admin\LiftingController@liftingProductInfo')->name('lifting.productInfo');
 			Route::get('/lifting-print/{id}','Admin\LiftingController@print')->name('lifting.print');
+
+			// Lifting Return
+			Route::get('/lifting-return','Admin\LiftingReturnController@index')->name('liftingReturn.index');
+			Route::get('/lifting-return-add','Admin\LiftingReturnController@add')->name('liftingReturn.add');
+			Route::post('/lifting-return-save','Admin\LiftingReturnController@save')->name('liftingReturn.save');
+			Route::get('/lifting-return-edit/{id}','Admin\LiftingReturnController@edit')->name('liftingReturn.edit');
+			Route::post('/lifting-return-update','Admin\LiftingReturnController@update')->name('liftingReturn.update');
+			Route::post('/lifting-return-delete','Admin\LiftingReturnController@delete')->name('liftingReturn.delete');
+			Route::post('/lifting-return-product-info','Admin\LiftingReturnController@liftingProductInfo')->name('liftingReturn.productInfo');
+			Route::get('/lifting-return-print/{id}','Admin\LiftingReturnController@print')->name('liftingReturn.print');
 
 			// Payment to Company
 			Route::get('/payment-to-company','Admin\PaymentToCompanyController@index')->name('paymentToCompany.index');
@@ -267,6 +278,17 @@ Route::prefix('admin')->group(function()
 			Route::get('/vendor-statement','Admin\VendorStatementController@index')->name('vendorStatement.index');
 			Route::post('/vendor-statement','Admin\VendorStatementController@index')->name('vendorStatement.index');
 			Route::post('/vendor-statement/print', 'Admin\VendorStatementController@print')->name('vendorStatement.print');
+
+			// Product Transfer
+			Route::get('/transfer-product','Admin\TransferProductController@index')->name('transferProduct.index');
+			Route::get('/transfer-product-add','Admin\TransferProductController@add')->name('transferProduct.add');
+			Route::post('/transfer-product-save','Admin\TransferProductController@save')->name('transferProduct.save');
+			Route::get('/transfer-product-edit/{id}','Admin\TransferProductController@edit')->name('transferProduct.edit');
+			Route::post('-transfer-product-update','Admin\TransferProductController@update')->name('transferProduct.update');
+			Route::post('/transfer-product-delete','Admin\TransferProductController@delete')->name('transferProduct.delete');
+			Route::post('/transfer-product/store-showroom-list','Admin\TransferProductController@storeAndShowroomInfo')->name('transferProduct.storeAndShowroomInfo');
+			Route::post('/transfer-product/product-info','Admin\TransferProductController@liftingProductInfo')->name('transferProduct.liftingProductInfo');
+			Route::get('/transfer-product-print/{id}','Admin\TransferProductController@print')->name('transferProduct.print');
 
 		// Product Lifting End
 

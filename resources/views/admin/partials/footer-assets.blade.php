@@ -117,6 +117,8 @@
                 cell.innerHTML = i+1;
             } );
         } ).draw();
+        
+        $('[data-toggle="tooltip"]').tooltip();
     });
 </script>
 

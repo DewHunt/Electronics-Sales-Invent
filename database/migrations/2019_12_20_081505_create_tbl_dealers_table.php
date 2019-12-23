@@ -16,6 +16,7 @@ class CreateTblDealersTable extends Migration
         Schema::create('tbl_dealers', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('district_id')->nullable();
+            $table->integer('upazila_id')->nullable();
             $table->integer('territory_id')->nullable();
             $table->string('type')->nullable();
             $table->string('code')->nullable();

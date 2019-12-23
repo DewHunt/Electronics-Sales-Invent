@@ -12,19 +12,29 @@
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="form-group {{ $errors->has('districtId') ? ' has-danger' : '' }}">
+                        <div class="form-group">
                             <label for="district">District</label>
-                            <select class="form-control" name="districtId">
+                            <select class="form-control chosen-select" name="districtId" id="districtId">
                                 <option value="">Select District</option>
-                            </select>
-                            @if ($errors->has('districtId'))
-                                @foreach($errors->get('districtId') as $error)
-                                    <div class="form-control-feedback">{{ $error }}</div>
+                                @foreach ($districts as $district)
+                                    <option value="{{ $district->id }}">{{ $district->name }} / {{ $district->bangla_name }}</option>
                                 @endforeach
-                            @endif
+                            </select>
                         </div>
                     </div>
 
+                    <div class="col-md-6">
+                        <label for="upazila">Upazila</label>
+                        <div class="form-group" id="upazila-select-menu">
+                            <select class="form-control chosen-select" name="upazilaId" id="upazilaId">
+                                <option value="">Select Upazila</option>
+                            </select>
+                        </div>
+                    </div>                   
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
                     <div class="col-md-6">
                         <div class="form-group {{ $errors->has('territoryId') ? ' has-danger' : '' }}">
                             <label for="territory">Territory</label>
@@ -40,11 +50,7 @@
                                 @endforeach
                             @endif
                         </div>
-                    </div>                    
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="row">
+                    </div> 
                     <div class="col-md-6">
                         @php
                             $dealerTypes = array('Non-Executive'=>'Non-Executive','Executive'=>'Executive')
@@ -59,18 +65,6 @@
                             </select>
                             @if ($errors->has('dealerType'))
                                 @foreach($errors->get('dealerType') as $error)
-                                    <div class="form-control-feedback">{{ $error }}</div>
-                                @endforeach
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group {{ $errors->has('credit-limit') ? ' has-danger' : '' }}">
-                            <label for="credit-limit">Credit Limit</label>
-                            <input type="text" class="form-control" name="credit-limit" value="{{ old('credit-limit') }}" required>
-                            @if ($errors->has('credit-limit'))
-                                @foreach($errors->get('credit-limit') as $error)
                                     <div class="form-control-feedback">{{ $error }}</div>
                                 @endforeach
                             @endif
@@ -106,12 +100,13 @@
                             @endif
                         </div>
                     </div>
+
                     <div class="col-md-6">
-                        <div class="form-group {{ $errors->has('contactPerson') ? ' has-danger' : '' }}">
-                            <label for="contact-person">Contact Person</label>
-                            <input type="text" class="form-control" name="contactPerson" value="{{ old('contactPerson') }}" required>
-                            @if ($errors->has('contactPerson'))
-                                @foreach($errors->get('contactPerson') as $error)
+                        <div class="form-group {{ $errors->has('creditLimit') ? ' has-danger' : '' }}">
+                            <label for="credit-limit">Credit Limit</label>
+                            <input type="text" class="form-control" name="creditLimit" value="{{ old('creditLimit') }}" required>
+                            @if ($errors->has('creditLimit'))
+                                @foreach($errors->get('creditLimit') as $error)
                                     <div class="form-control-feedback">{{ $error }}</div>
                                 @endforeach
                             @endif
@@ -125,6 +120,19 @@
     		<div class="col-md-6">
                 <div class="row">
                     <div class="col-md-12">
+                        <div class="form-group {{ $errors->has('contactPerson') ? ' has-danger' : '' }}">
+                            <label for="contact-person">Contact Person</label>
+                            <input type="text" class="form-control" name="contactPerson" value="{{ old('contactPerson') }}" required>
+                            @if ($errors->has('contactPerson'))
+                                @foreach($errors->get('contactPerson') as $error)
+                                    <div class="form-control-feedback">{{ $error }}</div>
+                                @endforeach
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
                         <div class="form-group {{ $errors->has('mobile') ? ' has-danger' : '' }}">
                             <label for="mobile">Mobile</label>
                             <input type="text" class="form-control" name="mobile" value="{{ old('mobile') }}" required>
@@ -135,9 +143,7 @@
                             @endif
                         </div>
                     </div>
-                </div>
-    			<div class="row">
-    				<div class="col-md-12">
+    				<div class="col-md-6">
 		            	<div class="form-group {{ $errors->has('email') ? ' has-danger' : '' }}">
 		            		<label for="email">Email</label>
 		        			<input type="text" class="form-control" name="email" value="{{ old('email') }}" required>
@@ -164,4 +170,29 @@
     		</div>
     	</div>
     </div>
+@endsection
+
+@section('custom-js')
+    <script type="text/javascript">
+        $(document).on('change', '#districtId', function(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            
+            var districtId = $('#districtId').val();
+
+            $.ajax({
+                type:'post',
+                url:'{{ route('dealerSetup.getAllUpazilaByDistrict') }}',
+                data:{districtId:districtId},
+                success:function(data){
+                    $('#upazila-select-menu').html(data);
+                    $(".chosen-select").chosen();
+                }
+            });
+        });
+
+    </script>
 @endsection

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 18, 2019 at 11:47 AM
+-- Generation Time: Dec 23, 2019 at 08:23 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -172,7 +172,30 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (56, '2019_12_15_074151_create_admins_table', 34),
 (57, '2019_12_15_082743_create_tbl_showroom_table', 35),
 (58, '2019_12_18_095202_create_tbl_dealers_table', 36),
-(59, '2019_12_18_102145_create_tbl_dealers_table', 37);
+(59, '2019_12_18_102145_create_tbl_dealers_table', 37),
+(60, '2019_12_20_081505_create_tbl_dealers_table', 38),
+(61, '2019_12_21_053354_create_tbl_liftings_table', 39),
+(62, '2019_12_21_053958_create_tbl_liftings_table', 40),
+(63, '2019_12_21_064729_create_tbl_transfer_products_table', 41),
+(64, '2019_12_21_073947_create_tbl_transfers_table', 42),
+(65, '2019_12_21_114555_create_tbl_liftings_table', 43),
+(66, '2019_12_21_114623_create_tbl_lifting_products_table', 43),
+(67, '2019_12_21_120031_create_tbl_liftings_table', 44),
+(68, '2019_12_21_123008_create_tbl_liftings_table', 45),
+(69, '2019_12_22_062554_create_tbl_transfers_table', 46),
+(70, '2019_12_22_063043_create_tbl_transfer_products_table', 46),
+(71, '2019_12_22_071029_create_tbl_transfer_products_table', 47),
+(72, '2019_12_22_071351_create_tbl_liftings_table', 47),
+(73, '2019_12_22_071446_create_tbl_lifting_products_table', 47),
+(74, '2019_12_22_091356_create_tbl_transfers_table', 48),
+(75, '2019_12_22_091504_create_tbl_transfer_products_table', 48),
+(76, '2019_12_22_094704_create_tbl_transfers_table', 49),
+(77, '2019_12_22_100323_create_tbl_transfer_products_table', 50),
+(78, '2019_12_22_114503_create_tbl_liftings_table', 51),
+(79, '2019_12_22_114628_create_tbl_lifting_products_table', 51),
+(80, '2019_12_23_062450_create_tbl_lifting_returns_table', 52),
+(81, '2019_12_23_062907_create_tbl_lifting_return_products_table', 53),
+(82, '2019_12_23_071031_create_tbl_lifting_returns_table', 54);
 
 -- --------------------------------------------------------
 
@@ -236,7 +259,8 @@ CREATE TABLE `tbl_area` (
 
 INSERT INTO `tbl_area` (`id`, `code`, `name`, `incharge_name`, `address`, `contact`, `email`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'm11', 'Mirpur - 11', 'Dew Hunt', 'Mirpur - 11', '01317243494', 'dew@gmail.com', 1, '2019-11-30 04:33:14', '2019-11-30 06:21:02'),
-(3, 'gu-00', 'Gulshan', 'Salman', 'Gulshan', '01317243494', 'sdsd@sdsd.com', 1, '2019-11-30 06:20:03', '2019-11-30 14:26:48');
+(3, 'gu-00', 'Gulshan', 'Salman', 'Gulshan', '01317243494', 'sdsd@sdsd.com', 1, '2019-11-30 06:20:03', '2019-11-30 14:26:48'),
+(5, 'bar-000', 'Barisal Sadar', 'Kuddus', 'Barisal', '01717243595', 'kuddus@gmail.com', 1, '2019-12-20 02:38:38', '2019-12-20 02:38:42');
 
 -- --------------------------------------------------------
 
@@ -555,6 +579,7 @@ INSERT INTO `tbl_customer_products` (`id`, `customer_id`, `product_id`, `showroo
 CREATE TABLE `tbl_dealers` (
   `id` int(10) UNSIGNED NOT NULL,
   `district_id` int(11) DEFAULT NULL,
+  `upazila_id` int(11) DEFAULT NULL,
   `territory_id` int(11) DEFAULT NULL,
   `type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `code` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -568,6 +593,98 @@ CREATE TABLE `tbl_dealers` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_dealers`
+--
+
+INSERT INTO `tbl_dealers` (`id`, `district_id`, `upazila_id`, `territory_id`, `type`, `code`, `name`, `contact_person`, `mobile`, `email`, `address`, `credit_limit`, `status`, `created_at`, `updated_at`) VALUES
+(1, 35, 9, 4, 'Non-Executive', 'es-000', 'Electronics Shop', 'Dew Hunt', '01317243494', 'dew@gmail.com', 'Barisal', '50000', 1, '2019-12-20 02:40:34', '2019-12-20 13:28:02');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_districts`
+--
+
+CREATE TABLE `tbl_districts` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `bangla_name` varchar(255) DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_districts`
+--
+
+INSERT INTO `tbl_districts` (`id`, `name`, `bangla_name`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Dhaka', 'ঢাকা', 1, NULL, NULL),
+(2, 'Faridpur', 'ফরিদপুর', 1, NULL, NULL),
+(3, 'Gazipur', 'গাজীপুর', 1, NULL, NULL),
+(4, 'Gopalganj', 'গোপালগঞ্জ', 1, NULL, NULL),
+(5, 'Jamalpur', 'জামালপুর', 1, NULL, NULL),
+(6, 'Kishoreganj', 'কিশোরগঞ্জ', 1, NULL, NULL),
+(7, 'Madaripur', 'মাদারীপুর', 1, NULL, NULL),
+(8, 'Manikganj', 'মানিকগঞ্জ', 1, NULL, NULL),
+(9, 'Munshiganj', 'মুন্সিগঞ্জ', 1, NULL, NULL),
+(10, 'Mymensingh', 'ময়মনসিং', 1, NULL, NULL),
+(11, 'Narayanganj', 'নারায়াণগঞ্জ', 1, NULL, NULL),
+(12, 'Narsingdi', 'নরসিংদী', 1, NULL, NULL),
+(13, 'Netrokona', 'নেত্রকোনা', 1, NULL, NULL),
+(14, 'Rajbari', 'রাজবাড়ি', 1, NULL, NULL),
+(15, 'Shariatpur', 'শরীয়তপুর', 1, NULL, NULL),
+(16, 'Sherpur', 'শেরপুর', 1, NULL, NULL),
+(17, 'Tangail', 'টাঙ্গাইল', 1, NULL, NULL),
+(18, 'Bogra', 'বগুড়া', 1, NULL, NULL),
+(19, 'Joypurhat', 'জয়পুরহাট', 1, NULL, NULL),
+(20, 'Naogaon', 'নওগাঁ', 1, NULL, NULL),
+(21, 'Natore', 'নাটোর', 1, NULL, NULL),
+(22, 'Nawabganj', 'নবাবগঞ্জ', 1, NULL, NULL),
+(23, 'Pabna', 'পাবনা', 1, NULL, NULL),
+(24, 'Rajshahi', 'রাজশাহী', 1, NULL, NULL),
+(25, 'Sirajgonj', 'সিরাজগঞ্জ', 1, NULL, NULL),
+(26, 'Dinajpur', 'দিনাজপুর', 1, NULL, NULL),
+(27, 'Gaibandha', 'গাইবান্ধা', 1, NULL, NULL),
+(28, 'Kurigram', 'কুড়িগ্রাম', 1, NULL, NULL),
+(29, 'Lalmonirhat', 'লালমনিরহাট', 1, NULL, NULL),
+(30, 'Nilphamari', 'নীলফামারী', 1, NULL, NULL),
+(31, 'Panchagarh', 'পঞ্চগড়', 1, NULL, NULL),
+(32, 'Rangpur', 'রংপুর', 1, NULL, NULL),
+(33, 'Thakurgaon', 'ঠাকুরগাঁও', 1, NULL, NULL),
+(34, 'Barguna', 'বরগুনা', 1, NULL, NULL),
+(35, 'Barisal', 'বরিশাল', 1, NULL, NULL),
+(36, 'Bhola', 'ভোলা', 1, NULL, NULL),
+(37, 'Jhalokati', 'ঝালকাঠি', 1, NULL, NULL),
+(38, 'Patuakhali', 'পটুয়াখালী', 1, NULL, NULL),
+(39, 'Pirojpur', 'পিরোজপুর', 1, NULL, NULL),
+(40, 'Bandarban', 'বান্দরবান', 1, NULL, NULL),
+(41, 'Brahmanbaria', 'ব্রাহ্মণবাড়িয়া', 1, NULL, NULL),
+(42, 'Chandpur', 'চাঁদপুর', 1, NULL, NULL),
+(43, 'Chittagong', 'চট্টগ্রাম', 1, NULL, NULL),
+(44, 'Comilla', 'কুমিল্লা', 1, NULL, NULL),
+(45, 'Cox\'s Bazar', 'কক্স বাজার', 1, NULL, NULL),
+(46, 'Feni', 'ফেনী', 1, NULL, NULL),
+(47, 'Khagrachari', 'খাগড়াছড়ি', 1, NULL, NULL),
+(48, 'Lakshmipur', 'লক্ষ্মীপুর', 1, NULL, NULL),
+(49, 'Noakhali', 'নোয়াখালী', 1, NULL, NULL),
+(50, 'Rangamati', 'রাঙ্গামাটি', 1, NULL, NULL),
+(51, 'Habiganj', 'হবিগঞ্জ', 1, NULL, NULL),
+(52, 'Maulvibazar', 'মৌলভীবাজার', 1, NULL, NULL),
+(53, 'Sunamganj', 'সুনামগঞ্জ', 1, NULL, NULL),
+(54, 'Sylhet', 'সিলেট', 1, NULL, NULL),
+(55, 'Bagerhat', 'বাগেরহাট', 1, NULL, NULL),
+(56, 'Chuadanga', 'চুয়াডাঙ্গা', 1, NULL, NULL),
+(57, 'Jessore', 'যশোর', 1, NULL, NULL),
+(58, 'Jhenaidah', 'ঝিনাইদহ', 1, NULL, NULL),
+(59, 'Khulna', 'খুলনা', 1, NULL, NULL),
+(60, 'Kushtia', 'কুষ্টিয়া', 1, NULL, NULL),
+(61, 'Magura', 'মাগুরা', 1, NULL, NULL),
+(62, 'Meherpur', 'মেহেরপুর', 1, NULL, NULL),
+(63, 'Narail', 'নড়াইল', 1, NULL, NULL),
+(64, 'Satkhira', 'সাতক্ষীরা', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -839,9 +956,11 @@ INSERT INTO `tbl_invoice` (`id`, `invoice_date`, `invoice_no`, `collection_type`
 
 CREATE TABLE `tbl_liftings` (
   `id` int(10) UNSIGNED NOT NULL,
-  `serial_no` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `vaouchar_no` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `vendor_id` int(11) NOT NULL,
+  `serial_no` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `vaouchar_no` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `vendor_id` int(11) DEFAULT NULL,
+  `store_or_showroom_type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `store_or_showroom_id` int(11) DEFAULT NULL,
   `purchase_by` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `submission_date` date DEFAULT NULL,
   `vouchar_date` date DEFAULT NULL,
@@ -860,20 +979,20 @@ CREATE TABLE `tbl_liftings` (
 -- Dumping data for table `tbl_liftings`
 --
 
-INSERT INTO `tbl_liftings` (`id`, `serial_no`, `vaouchar_no`, `vendor_id`, `purchase_by`, `submission_date`, `vouchar_date`, `total_qty`, `total_price`, `total_mrp_price`, `total_haire_price`, `discount`, `vat`, `net_amount`, `created_at`, `updated_at`) VALUES
-(2, '1000001', '56789546', 1, 'Admin', '2019-11-01', '2019-12-01', '3', '135000.00', '145800.00', '163296.00', NULL, NULL, NULL, '2019-12-02 03:43:11', '2019-12-05 12:29:59'),
-(3, '1000003', '01273', 2, 'Admin', '2019-11-15', '2019-12-03', '3', '95000.00', '102600.00', '114912.00', NULL, NULL, NULL, '2019-12-02 03:56:03', '2019-12-14 04:09:12'),
-(4, '1000004', 'vou-001', 5, 'Admin', '2019-12-16', '2014-01-01', '3', '149700.00', '161676.00', '181077.00', NULL, NULL, NULL, '2019-12-16 01:12:40', '2019-12-16 01:12:40'),
-(6, '1000005', 'VOU-004', 6, 'Admin', '2019-12-16', '2019-12-16', '2', '70000.00', '75600.00', '84672.00', NULL, NULL, NULL, '2019-12-16 01:20:19', '2019-12-16 01:20:19'),
-(7, '1000007', '768867', 5, 'Admin', '2019-12-16', '2019-12-07', '3', '106500.00', '115020.00', '128823.00', NULL, NULL, NULL, '2019-12-16 01:27:48', '2019-12-16 01:27:48'),
-(8, '1000008', 'vou-006', 5, 'Admin', '2019-12-16', '2014-01-03', '2', '29190.00', '31525.00', '35309.00', NULL, NULL, NULL, '2019-12-16 02:23:19', '2019-12-16 02:23:19'),
-(9, '1000009', 'hhdhd', 5, 'Admin', '2019-12-16', '2019-12-16', '1', '10990.00', '11869.00', '13294.00', NULL, NULL, NULL, '2019-12-16 02:43:19', '2019-12-16 02:43:19'),
-(10, '1000010', 'fasd', 5, 'Admin', '2019-12-16', '2019-12-16', '1', '49900.00', '53892.00', '60359.00', NULL, NULL, NULL, '2019-12-16 02:46:03', '2019-12-16 02:46:03'),
-(11, '1000011', 'vou-978654', 5, 'Admin', '2019-12-16', '2019-12-16', '1', '59900.00', '64692.00', '72455.00', NULL, NULL, NULL, '2019-12-16 03:41:51', '2019-12-16 03:41:51'),
-(12, '1000012', '245467i8outg', 5, 'Admin', '2019-12-17', '2019-12-17', '3', '106500.00', '115020.00', '128823.00', NULL, NULL, NULL, '2019-12-16 22:48:24', '2019-12-16 22:48:24'),
-(13, '1000013', '67984gdfghcvt58', 5, 'Admin', '2019-12-17', '2019-12-17', '4', '43960.00', '47476.00', '53176.00', NULL, NULL, NULL, '2019-12-17 01:53:48', '2019-12-17 01:53:48'),
-(14, '1000014', '0970igiyufcted', 5, 'Admin', '2019-12-17', '2019-12-17', '4', '239600.00', '258768.00', '289820.00', NULL, NULL, NULL, '2019-12-17 01:56:03', '2019-12-17 01:56:03'),
-(15, '1000015', '56789546', 5, 'Admin', '2019-12-18', '2019-12-18', '4', '420', '454', '507', NULL, NULL, NULL, '2019-12-18 02:11:45', '2019-12-18 02:40:08');
+INSERT INTO `tbl_liftings` (`id`, `serial_no`, `vaouchar_no`, `vendor_id`, `store_or_showroom_type`, `store_or_showroom_id`, `purchase_by`, `submission_date`, `vouchar_date`, `total_qty`, `total_price`, `total_mrp_price`, `total_haire_price`, `discount`, `vat`, `net_amount`, `created_at`, `updated_at`) VALUES
+(2, '1000001', '56789546', 6, 'store', 4, 'Admin', '2019-11-01', '2019-12-01', '3', '135000.00', '145800.00', '163296.00', NULL, NULL, NULL, '2019-12-01 03:43:11', '2019-12-22 06:07:51'),
+(3, '1000003', '01273', 6, 'showroom', 3, 'Admin', '2019-11-15', '2019-12-03', '3', '95000.00', '102600.00', '114912.00', NULL, NULL, NULL, '2019-12-01 03:56:03', '2019-12-22 06:07:42'),
+(4, '1000004', 'vou-001', 5, 'showroom', 1, 'Admin', '2019-12-16', '2014-01-01', '3', '149700.00', '161676.00', '181077.00', NULL, NULL, NULL, '2019-12-15 01:12:40', '2019-12-22 06:07:30'),
+(6, '1000005', 'VOU-004', 6, 'store', 5, 'Admin', '2019-12-16', '2019-12-16', '2', '70000.00', '75600.00', '84672.00', NULL, NULL, NULL, '2019-12-15 01:20:19', '2019-12-22 06:07:20'),
+(7, '1000007', '768867', 5, 'store', 6, 'Admin', '2019-12-16', '2019-12-07', '3', '106500.00', '115020.00', '128823.00', NULL, NULL, NULL, '2019-12-15 01:27:48', '2019-12-22 06:07:13'),
+(8, '1000008', 'vou-006', 5, 'store', 7, 'Admin', '2019-12-16', '2014-01-03', '2', '29190.00', '31525.00', '35309.00', NULL, NULL, NULL, '2019-12-15 02:23:19', '2019-12-22 06:07:05'),
+(9, '1000009', 'hhdhd', 5, 'store', 4, 'Admin', '2019-12-16', '2019-12-16', '1', '10990.00', '11869.00', '13294.00', NULL, NULL, NULL, '2019-12-15 02:43:19', '2019-12-22 06:06:58'),
+(10, '1000010', 'fasd', 5, 'showroom', 3, 'Admin', '2019-12-16', '2019-12-16', '1', '49900.00', '53892.00', '60359.00', NULL, NULL, NULL, '2019-12-15 02:46:03', '2019-12-22 06:06:40'),
+(11, '1000011', 'vou-978654', 5, 'showroom', 1, 'Admin', '2019-12-16', '2019-12-16', '1', '59900.00', '64692.00', '72455.00', NULL, NULL, NULL, '2019-12-15 03:41:51', '2019-12-22 06:06:31'),
+(12, '1000012', '245467i8outg', 5, 'store', 7, 'Admin', '2019-12-17', '2019-12-17', '3', '106500.00', '115020.00', '128823.00', NULL, NULL, NULL, '2019-12-15 22:48:24', '2019-12-22 05:56:35'),
+(13, '1000013', '67984gdfghcvt58', 5, 'store', 6, 'Admin', '2019-12-17', '2019-12-17', '4', '43960.00', '47476.00', '53176.00', NULL, NULL, NULL, '2019-12-16 01:53:48', '2019-12-22 05:56:04'),
+(14, '1000014', '0970igiyufcted', 5, 'store', 5, 'Admin', '2019-12-17', '2019-12-17', '4', '239600.00', '258768.00', '289820.00', NULL, NULL, NULL, '2019-12-16 01:56:03', '2019-12-22 05:55:51'),
+(15, '1000015', '56789546', 5, 'store', 4, 'Admin', '2019-12-18', '2019-12-18', '4', '420', '454', '507', NULL, NULL, NULL, '2019-12-17 02:11:45', '2019-12-22 05:55:10');
 
 -- --------------------------------------------------------
 
@@ -883,10 +1002,13 @@ INSERT INTO `tbl_liftings` (`id`, `serial_no`, `vaouchar_no`, `vendor_id`, `purc
 
 CREATE TABLE `tbl_lifting_products` (
   `id` int(10) UNSIGNED NOT NULL,
-  `lifting_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `model_no` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `serial_no` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lifting_id` int(11) DEFAULT NULL,
+  `vendor_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `store_or_showroom_type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `store_or_showroom_id` int(11) DEFAULT NULL,
+  `model_no` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `serial_no` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `color` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `qty` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -901,41 +1023,92 @@ CREATE TABLE `tbl_lifting_products` (
 -- Dumping data for table `tbl_lifting_products`
 --
 
-INSERT INTO `tbl_lifting_products` (`id`, `lifting_id`, `product_id`, `model_no`, `serial_no`, `color`, `qty`, `price`, `mrp_price`, `haire_price`, `status`, `created_at`, `updated_at`) VALUES
-(16, 2, 3, 'wal890', 'poiuytrty', 'Black', '1', '45000', '48600', '54432', 0, NULL, '2019-12-17 01:56:31'),
-(17, 2, 6, 'wal8126', 'fsdafa', 'White', '1', '25000', '27000', '30240', 0, NULL, '2019-12-17 01:15:02'),
-(18, 2, 7, 'Wal119', 'sdgfasdgasd', 'Red', '1', '65000', '70200', '78624', 0, NULL, '2019-12-14 05:22:08'),
-(21, 3, 5, 'wal1234', '09373848', 'Silver', '1', '35000', '37800', '42336', 0, NULL, '2019-12-17 01:09:59'),
-(22, 3, 6, 'wal8126', '09364573', 'White', '1', '25000', '27000', '30240', 0, NULL, '2019-12-17 01:15:11'),
-(23, 3, 5, 'wal1234', 'u7gfrth0987', 'Silver', '1', '35000', '37800', '42336', 0, NULL, '2019-12-14 05:12:03'),
-(24, 4, 11, 'MSD49FD-1.245 m (49\'\')', 'mar3423412412', 'White', '1', '49900', '53892', '60359', 0, NULL, '2019-12-16 02:20:56'),
-(25, 4, 11, 'MSD49FD-1.245 m (49\'\')', 'mar123557456845', 'White', '1', '49900', '53892', '60359', 0, NULL, '2019-12-17 01:15:31'),
-(26, 4, 11, 'MSD49FD-1.245 m (49\'\')', 'mar0990756', 'White', '1', '49900', '53892', '60359', 1, NULL, NULL),
-(30, 6, 6, 'wal8126', 'SDADAER3434', 'White', '1', '25000', '27000', '30240', 1, NULL, NULL),
-(31, 6, 3, 'wal890', 'FSEDF456456', 'Black', '1', '45000', '48600', '54432', 1, NULL, NULL),
-(32, 7, 12, 'MSN-12K-ECXXA', 'fgdgdgsdf', 'White', '1', '35500', '38340', '42941', 0, NULL, '2019-12-16 02:19:19'),
-(33, 7, 12, 'MSN-12K-ECXXA', 'esefef', 'White', '1', '35500', '38340', '42941', 0, NULL, '2019-12-17 01:54:29'),
-(34, 7, 12, 'MSN-12K-ECXXA', 'sssdfd', 'White', '1', '35500', '38340', '42941', 0, NULL, '2019-12-17 01:56:36'),
-(35, 8, 9, 'MFD-1B6-RXXX-XX', 'mar345678', 'Silver', '1', '18200', '19656', '22015', 1, NULL, NULL),
-(36, 8, 8, 'MFO-JET-RXXX-XX', 'mar123408', 'Black', '1', '10990', '11869', '13294', 0, NULL, '2019-12-17 01:15:18'),
-(37, 9, 8, 'MFO-JET-RXXX-XX', 'mmmm', 'Black', '1', '10990', '11869', '13294', 0, NULL, '2019-12-17 01:15:25'),
-(38, 10, 11, 'MSD49FD-1.245 m (49\'\')', 'eeee', 'White', '1', '49900', '53892', '60359', 1, NULL, NULL),
-(39, 11, 10, 'MSD55FD-1.397 m (55\'\')', '234567890', 'Black', '1', '59900', '64692', '72455', 0, NULL, '2019-12-16 03:42:09'),
-(40, 12, 12, 'MSN-12K-ECXXA', '34536577i', 'White', '1', '35500', '38340', '42941', 0, NULL, '2019-12-17 01:56:45'),
-(41, 12, 12, 'MSN-12K-ECXXA', '35657iore', 'White', '1', '35500', '38340', '42941', 1, NULL, NULL),
-(42, 12, 12, 'MSN-12K-ECXXA', 'nmg7zsnbn vd', 'White', '1', '35500', '38340', '42941', 1, NULL, NULL),
-(43, 13, 8, 'MFO-JET-RXXX-XX', '4567gibjjkuygf', 'Black', '1', '10990', '11869', '13294', 0, NULL, '2019-12-17 01:54:22'),
-(44, 13, 8, 'MFO-JET-RXXX-XX', '09uy6ygkhs', 'Black', '1', '10990', '11869', '13294', 1, NULL, NULL),
-(45, 13, 8, 'MFO-JET-RXXX-XX', '0gh0oivhjknbr', 'Black', '1', '10990', '11869', '13294', 1, NULL, NULL),
-(46, 13, 8, 'MFO-JET-RXXX-XX', '098hjkr5rfedfgh', 'Black', '1', '10990', '11869', '13294', 1, NULL, NULL),
-(47, 14, 10, 'MSD55FD-1.397 m (55\'\')', '09huiy546ets4', 'Black', '1', '59900', '64692', '72455', 0, NULL, '2019-12-17 01:56:22'),
-(48, 14, 10, 'MSD55FD-1.397 m (55\'\')', '095f53drjfyjh', 'Black', '1', '59900', '64692', '72455', 1, NULL, NULL),
-(49, 14, 10, 'MSD55FD-1.397 m (55\'\')', '907hutt65546f', 'Black', '1', '59900', '64692', '72455', 1, NULL, NULL),
-(50, 14, 10, 'MSD55FD-1.397 m (55\'\')', '090787576rufy', 'Black', '1', '59900', '64692', '72455', 1, NULL, NULL),
-(54, 15, 14, 'MSN-21K-0101-RXXXB', 'asfasdf', 'Red', '1', '100', '108', '121', 1, NULL, NULL),
-(55, 15, 14, 'MSN-21K-0101-RXXXB', 'asfasdf', 'Red', '1', '150', '162', '181', 1, NULL, NULL),
-(56, 15, 14, 'MSN-21K-0101-RXXXB', 'asfasdf', 'Red', '1', '50', '54', '60', 1, NULL, NULL),
-(57, 15, 14, 'MSN-21K-0101-RXXXB', 'asfasdf', 'Red', '1', '120', '130', '145', 1, NULL, NULL);
+INSERT INTO `tbl_lifting_products` (`id`, `lifting_id`, `vendor_id`, `product_id`, `store_or_showroom_type`, `store_or_showroom_id`, `model_no`, `serial_no`, `color`, `qty`, `price`, `mrp_price`, `haire_price`, `status`, `created_at`, `updated_at`) VALUES
+(160, 15, 5, 14, 'store', 4, 'MSN-21K-0101-RXXXB', 'asfasdf', 'Red', '1', '100', '108', '121', 1, NULL, NULL),
+(161, 15, 5, 14, 'store', 4, 'MSN-21K-0101-RXXXB', 'asfasdf', 'Red', '1', '150', '162', '181', 1, NULL, NULL),
+(162, 15, 5, 14, 'store', 4, 'MSN-21K-0101-RXXXB', 'asfasdf', 'Red', '1', '50', '54', '60', 1, NULL, NULL),
+(163, 15, 5, 14, 'store', 4, 'MSN-21K-0101-RXXXB', 'asfasdf', 'Red', '1', '120', '130', '145', 1, NULL, NULL),
+(164, 14, 5, 10, 'store', 5, 'MSD55FD-1.397 m (55\'\')', '09huiy546ets4', 'Black', '1', '59900', '64692', '72455', 1, NULL, NULL),
+(165, 14, 5, 10, 'store', 5, 'MSD55FD-1.397 m (55\'\')', '095f53drjfyjh', 'Black', '1', '59900', '64692', '72455', 1, NULL, NULL),
+(166, 14, 5, 10, 'store', 5, 'MSD55FD-1.397 m (55\'\')', '907hutt65546f', 'Black', '1', '59900', '64692', '72455', 1, NULL, NULL),
+(167, 14, 5, 10, 'store', 5, 'MSD55FD-1.397 m (55\'\')', '090787576rufy', 'Black', '1', '59900', '64692', '72455', 1, NULL, NULL),
+(168, 13, 5, 8, 'store', 6, 'MFO-JET-RXXX-XX', '4567gibjjkuygf', 'Black', '1', '10990', '11869', '13294', 1, NULL, NULL),
+(169, 13, 5, 8, 'store', 6, 'MFO-JET-RXXX-XX', '09uy6ygkhs', 'Black', '1', '10990', '11869', '13294', 1, NULL, NULL),
+(170, 13, 5, 8, 'store', 6, 'MFO-JET-RXXX-XX', '0gh0oivhjknbr', 'Black', '1', '10990', '11869', '13294', 1, NULL, NULL),
+(171, 13, 5, 8, 'store', 6, 'MFO-JET-RXXX-XX', '098hjkr5rfedfgh', 'Black', '1', '10990', '11869', '13294', 1, NULL, NULL),
+(172, 12, 5, 12, 'store', 7, 'MSN-12K-ECXXA', '34536577i', 'White', '1', '35500', '38340', '42941', 1, NULL, NULL),
+(173, 12, 5, 12, 'store', 7, 'MSN-12K-ECXXA', '35657iore', 'White', '1', '35500', '38340', '42941', 1, NULL, NULL),
+(174, 12, 5, 12, 'store', 7, 'MSN-12K-ECXXA', 'nmg7zsnbn vd', 'White', '1', '35500', '38340', '42941', 1, NULL, NULL),
+(175, 11, 5, 10, 'showroom', 1, 'MSD55FD-1.397 m (55\'\')', '234567890', 'Black', '1', '59900', '64692', '72455', 1, NULL, NULL),
+(176, 10, 5, 11, 'showroom', 3, 'MSD49FD-1.245 m (49\'\')', 'eeee', 'White', '1', '49900', '53892', '60359', 1, NULL, NULL),
+(177, 9, 5, 8, 'store', 4, 'MFO-JET-RXXX-XX', 'mmmm', 'Black', '1', '10990', '11869', '13294', 1, NULL, NULL),
+(178, 8, 5, 9, 'store', 7, 'MFD-1B6-RXXX-XX', 'mar345678', 'Silver', '1', '18200', '19656', '22015', 1, NULL, NULL),
+(179, 8, 5, 8, 'store', 7, 'MFO-JET-RXXX-XX', 'mar123408', 'Black', '1', '10990', '11869', '13294', 1, NULL, NULL),
+(180, 7, 5, 12, 'store', 6, 'MSN-12K-ECXXA', 'fgdgdgsdf', 'White', '1', '35500', '38340', '42941', 1, NULL, NULL),
+(181, 7, 5, 12, 'store', 6, 'MSN-12K-ECXXA', 'esefef', 'White', '1', '35500', '38340', '42941', 1, NULL, NULL),
+(182, 7, 5, 12, 'store', 6, 'MSN-12K-ECXXA', 'sssdfd', 'White', '1', '35500', '38340', '42941', 1, NULL, NULL),
+(183, 6, 6, 6, 'store', 5, 'wal8126', 'SDADAER3434', 'White', '1', '25000', '27000', '30240', 1, NULL, NULL),
+(184, 6, 6, 3, 'store', 5, 'wal890', 'FSEDF456456', 'Black', '1', '45000', '48600', '54432', 1, NULL, NULL),
+(185, 4, 5, 11, 'showroom', 1, 'MSD49FD-1.245 m (49\'\')', 'mar3423412412', 'White', '1', '49900', '53892', '60359', 1, NULL, NULL),
+(186, 4, 5, 11, 'showroom', 1, 'MSD49FD-1.245 m (49\'\')', 'mar123557456845', 'White', '1', '49900', '53892', '60359', 1, NULL, NULL),
+(187, 4, 5, 11, 'showroom', 1, 'MSD49FD-1.245 m (49\'\')', 'mar0990756', 'White', '1', '49900', '53892', '60359', 1, NULL, NULL),
+(188, 3, 6, 5, 'showroom', 3, 'wal1234', '09373848', 'Silver', '1', '35000', '37800', '42336', 1, NULL, NULL),
+(189, 3, 6, 6, 'showroom', 3, 'wal8126', '09364573', 'White', '1', '25000', '27000', '30240', 1, NULL, NULL),
+(190, 3, 6, 5, 'showroom', 3, 'wal1234', 'u7gfrth0987', 'Silver', '1', '35000', '37800', '42336', 1, NULL, NULL),
+(191, 2, 6, 3, 'store', 4, 'wal890', 'poiuytrty', 'Black', '1', '45000', '48600', '54432', 1, NULL, NULL),
+(192, 2, 6, 6, 'store', 4, 'wal8126', 'fsdafa', 'White', '1', '25000', '27000', '30240', 1, NULL, NULL),
+(193, 2, 6, 7, 'store', 4, 'Wal119', 'sdgfasdgasd', 'Red', '1', '65000', '70200', '78624', 1, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_lifting_returns`
+--
+
+CREATE TABLE `tbl_lifting_returns` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `lifting_id` int(11) DEFAULT NULL,
+  `vendor_id` int(11) DEFAULT NULL,
+  `store_or_showroom_type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `store_or_showroom_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `serial_no` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `date` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `total_qty` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `total_mrp_price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `total_haire_price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remarks` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_lifting_return_products`
+--
+
+CREATE TABLE `tbl_lifting_return_products` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `lifting_return_id` int(11) DEFAULT NULL,
+  `lifting_id` int(11) DEFAULT NULL,
+  `lifting_product_id` int(11) DEFAULT NULL,
+  `vendor_id` int(11) DEFAULT NULL,
+  `store_or_showroom_type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `store_or_showroom_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `model_no` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `serial_no` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `color` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `qty` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mrp_price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `haire_price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1160,7 +1333,9 @@ CREATE TABLE `tbl_stores` (
 
 INSERT INTO `tbl_stores` (`id`, `code`, `type`, `name`, `address`, `remarks`, `status`, `created_at`, `updated_at`) VALUES
 (4, 'cas', 'Finish Stock (Warehouse)', 'College Avenue Store', 'Barisal', 'College Avenue Store', 1, '2019-12-16 01:09:24', '2019-12-16 01:09:24'),
-(5, 'fdf', 'Finish Stock (Warehouse)', 'sdfsfdf', 'dfsdfsdf', 'dfsdfsdf', 1, '2019-12-16 22:43:44', '2019-12-16 22:43:44');
+(5, 'st-0001', 'Finish Stock (Warehouse)', 'Store 1', 'Barisal', 'Store 1', 1, '2019-12-16 22:43:44', '2019-12-21 03:22:13'),
+(6, 'st-0002', 'Finish Stock (Warehouse)', 'Store 2', 'Barisal', 'Store - 2', 1, '2019-12-21 03:22:43', '2019-12-21 03:22:43'),
+(7, 'st-0003', 'Finish Stock (Warehouse)', 'Store 3', 'Barisal', 'Store - 3', 1, '2019-12-21 03:23:04', '2019-12-21 03:23:04');
 
 -- --------------------------------------------------------
 
@@ -1186,7 +1361,587 @@ CREATE TABLE `tbl_territories` (
 --
 
 INSERT INTO `tbl_territories` (`id`, `area_id`, `code`, `name`, `incharge_name`, `address`, `contact`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 'm00', 'Mirpur Territory', 'Dew Hunt', 'Mirpur', '01317243494', 0, '2019-11-30 05:36:54', '2019-11-30 14:27:43');
+(1, 1, 'm00', 'Mirpur Territory', 'Dew Hunt', 'Mirpur', '01317243494', 1, '2019-11-30 05:36:54', '2019-12-20 02:13:43'),
+(4, 5, 'bar-terr-000', 'Barisal Sadar Territory', 'Salman', 'Barisal', '01724394735', 1, '2019-12-20 02:39:48', '2019-12-20 02:39:54');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_transfers`
+--
+
+CREATE TABLE `tbl_transfers` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `vendor_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `transfer_no` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `date` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `host_type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `host_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `destination_type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `destination_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `total_qty` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_transfers`
+--
+
+INSERT INTO `tbl_transfers` (`id`, `vendor_id`, `product_id`, `transfer_no`, `date`, `host_type`, `host_id`, `destination_type`, `destination_id`, `total_qty`, `status`, `created_at`, `updated_at`) VALUES
+(4, 5, 14, '1000001', '2019-12-22', 'store', '4', 'showroom', '1', '2', 1, '2019-12-22 23:17:32', '2019-12-22 23:20:28'),
+(5, 5, 10, '1000005', '2019-12-22', 'store', '5', 'showroom', '3', '2', 1, '2019-12-22 23:18:07', '2019-12-22 23:22:37'),
+(6, 6, 7, '1000006', '2019-12-23', 'store', '4', 'store', '7', '1', 1, '2019-12-22 23:23:28', '2019-12-22 23:23:28'),
+(7, 5, 11, '1000007', '2019-12-23', 'showroom', '3', 'showroom', '1', '1', 1, '2019-12-22 23:25:01', '2019-12-22 23:25:01');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_transfer_products`
+--
+
+CREATE TABLE `tbl_transfer_products` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `transfer_id` int(11) DEFAULT NULL,
+  `vendor_id` int(11) DEFAULT NULL,
+  `lifting_product_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `model_no` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `serial_no` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `color` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `qty` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_transfer_products`
+--
+
+INSERT INTO `tbl_transfer_products` (`id`, `transfer_id`, `vendor_id`, `lifting_product_id`, `product_id`, `name`, `model_no`, `serial_no`, `color`, `qty`, `status`, `created_at`, `updated_at`) VALUES
+(18, 4, 5, 160, 14, 'AIr conditioner', 'MSN-21K-0101-RXXXB', 'asfasdf', 'Red', '1', 1, NULL, NULL),
+(19, 4, 5, 161, 14, 'AIr conditioner', 'MSN-21K-0101-RXXXB', 'asfasdf', 'Red', '1', 1, NULL, NULL),
+(20, 5, 5, 164, 10, 'Marcel LED TV', 'MSD55FD-1.397 m (55\'\')', '09huiy546ets4', 'Black', '1', 1, NULL, NULL),
+(21, 5, 5, 165, 10, 'Marcel LED TV', 'MSD55FD-1.397 m (55\'\')', '095f53drjfyjh', 'Black', '1', 1, NULL, NULL),
+(22, 6, 6, 193, 7, 'Walton Side by Side Intelligent Inverter Refrigerator', 'Wal119', 'sdgfasdgasd', 'Red', '1', 1, NULL, NULL),
+(23, 7, 5, 176, 11, 'Marcel LED TV', 'MSD49FD-1.245 m (49\'\')', 'eeee', 'White', '1', 1, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_upazilas`
+--
+
+CREATE TABLE `tbl_upazilas` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `district_id` int(11) UNSIGNED DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `bangla_name` varchar(255) DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_upazilas`
+--
+
+INSERT INTO `tbl_upazilas` (`id`, `district_id`, `name`, `bangla_name`, `status`, `created_at`, `updated_at`) VALUES
+(1, 34, 'Amtali Upazila', 'আমতলী', 1, NULL, NULL),
+(2, 34, 'Bamna Upazila', 'বামনা', 1, NULL, NULL),
+(3, 34, 'Barguna Sadar Upazila', 'বরগুনা সদর', 1, NULL, NULL),
+(4, 34, 'Betagi Upazila', 'বেতাগি', 1, NULL, NULL),
+(5, 34, 'Patharghata Upazila', 'পাথরঘাটা', 1, NULL, NULL),
+(6, 34, 'Taltali Upazila', 'তালতলী', 1, NULL, NULL),
+(7, 35, 'Muladi Upazila', 'মুলাদি', 1, NULL, NULL),
+(8, 35, 'Babuganj Upazila', 'বাবুগঞ্জ', 1, NULL, NULL),
+(9, 35, 'Agailjhara Upazila', 'আগাইলঝরা', 1, NULL, NULL),
+(10, 35, 'Barisal Sadar Upazila', 'বরিশাল সদর', 1, NULL, NULL),
+(11, 35, 'Bakerganj Upazila', 'বাকেরগঞ্জ', 1, NULL, NULL),
+(12, 35, 'Banaripara Upazila', 'বানাড়িপারা', 1, NULL, NULL),
+(13, 35, 'Gaurnadi Upazila', 'গৌরনদী', 1, NULL, NULL),
+(14, 35, 'Hizla Upazila', 'হিজলা', 1, NULL, NULL),
+(15, 35, 'Mehendiganj Upazila', 'মেহেদিগঞ্জ ', 1, NULL, NULL),
+(16, 35, 'Wazirpur Upazila', 'ওয়াজিরপুর', 1, NULL, NULL),
+(17, 36, 'Bhola Sadar Upazila', 'ভোলা সদর', 1, NULL, NULL),
+(18, 36, 'Burhanuddin Upazila', 'বুরহানউদ্দিন', 1, NULL, NULL),
+(19, 36, 'Char Fasson Upazila', 'চর ফ্যাশন', 1, NULL, NULL),
+(20, 36, 'Daulatkhan Upazila', 'দৌলতখান', 1, NULL, NULL),
+(21, 36, 'Lalmohan Upazila', 'লালমোহন', 1, NULL, NULL),
+(22, 36, 'Manpura Upazila', 'মনপুরা', 1, NULL, NULL),
+(23, 36, 'Tazumuddin Upazila', 'তাজুমুদ্দিন', 1, NULL, NULL),
+(24, 37, 'Jhalokati Sadar Upazila', 'ঝালকাঠি সদর', 1, NULL, NULL),
+(25, 37, 'Kathalia Upazila', 'কাঁঠালিয়া', 1, NULL, NULL),
+(26, 37, 'Nalchity Upazila', 'নালচিতি', 1, NULL, NULL),
+(27, 37, 'Rajapur Upazila', 'রাজাপুর', 1, NULL, NULL),
+(28, 38, 'Bauphal Upazila', 'বাউফল', 1, NULL, NULL),
+(29, 38, 'Dashmina Upazila', 'দশমিনা', 1, NULL, NULL),
+(30, 38, 'Galachipa Upazila', 'গলাচিপা', 1, NULL, NULL),
+(31, 38, 'Kalapara Upazila', 'কালাপারা', 1, NULL, NULL),
+(32, 38, 'Mirzaganj Upazila', 'মির্জাগঞ্জ ', 1, NULL, NULL),
+(33, 38, 'Patuakhali Sadar Upazila', 'পটুয়াখালী সদর', 1, NULL, NULL),
+(34, 38, 'Dumki Upazila', 'ডুমকি', 1, NULL, NULL),
+(35, 38, 'Rangabali Upazila', 'রাঙ্গাবালি', 1, NULL, NULL),
+(36, 39, 'Bhandaria', 'ভ্যান্ডারিয়া', 1, NULL, NULL),
+(37, 39, 'Kaukhali', 'কাউখালি', 1, NULL, NULL),
+(38, 39, 'Mathbaria', 'মাঠবাড়িয়া', 1, NULL, NULL),
+(39, 39, 'Nazirpur', 'নাজিরপুর', 1, NULL, NULL),
+(40, 39, 'Nesarabad', 'নেসারাবাদ', 1, NULL, NULL),
+(41, 39, 'Pirojpur Sadar', 'পিরোজপুর সদর', 1, NULL, NULL),
+(42, 39, 'Zianagar', 'জিয়ানগর', 1, NULL, NULL),
+(43, 40, 'Bandarban Sadar', 'বান্দরবন সদর', 1, NULL, NULL),
+(44, 40, 'Thanchi', 'থানচি', 1, NULL, NULL),
+(45, 40, 'Lama', 'লামা', 1, NULL, NULL),
+(46, 40, 'Naikhongchhari', 'নাইখংছড়ি ', 1, NULL, NULL),
+(47, 40, 'Ali kadam', 'আলী কদম', 1, NULL, NULL),
+(48, 40, 'Rowangchhari', 'রউয়াংছড়ি ', 1, NULL, NULL),
+(49, 40, 'Ruma', 'রুমা', 1, NULL, NULL),
+(50, 41, 'Brahmanbaria Sadar Upazila', 'ব্রাহ্মণবাড়িয়া সদর', 1, NULL, NULL),
+(51, 41, 'Ashuganj Upazila', 'আশুগঞ্জ', 1, NULL, NULL),
+(52, 41, 'Nasirnagar Upazila', 'নাসির নগর', 1, NULL, NULL),
+(53, 41, 'Nabinagar Upazila', 'নবীনগর', 1, NULL, NULL),
+(54, 41, 'Sarail Upazila', 'সরাইল', 1, NULL, NULL),
+(55, 41, 'Shahbazpur Town', 'শাহবাজপুর টাউন', 1, NULL, NULL),
+(56, 41, 'Kasba Upazila', 'কসবা', 1, NULL, NULL),
+(57, 41, 'Akhaura Upazila', 'আখাউরা', 1, NULL, NULL),
+(58, 41, 'Bancharampur Upazila', 'বাঞ্ছারামপুর', 1, NULL, NULL),
+(59, 41, 'Bijoynagar Upazila', 'বিজয় নগর', 1, NULL, NULL),
+(60, 42, 'Chandpur Sadar', 'চাঁদপুর সদর', 1, NULL, NULL),
+(61, 42, 'Faridganj', 'ফরিদগঞ্জ', 1, NULL, NULL),
+(62, 42, 'Haimchar', 'হাইমচর', 1, NULL, NULL),
+(63, 42, 'Haziganj', 'হাজীগঞ্জ', 1, NULL, NULL),
+(64, 42, 'Kachua', 'কচুয়া', 1, NULL, NULL),
+(65, 42, 'Matlab Uttar', 'মতলব উত্তর', 1, NULL, NULL),
+(66, 42, 'Matlab Dakkhin', 'মতলব দক্ষিণ', 1, NULL, NULL),
+(67, 42, 'Shahrasti', 'শাহরাস্তি', 1, NULL, NULL),
+(68, 43, 'Anwara Upazila', 'আনোয়ারা', 1, NULL, NULL),
+(69, 43, 'Banshkhali Upazila', 'বাশখালি', 1, NULL, NULL),
+(70, 43, 'Boalkhali Upazila', 'বোয়ালখালি', 1, NULL, NULL),
+(71, 43, 'Chandanaish Upazila', 'চন্দনাইশ', 1, NULL, NULL),
+(72, 43, 'Fatikchhari Upazila', 'ফটিকছড়ি', 1, NULL, NULL),
+(73, 43, 'Hathazari Upazila', 'হাঠহাজারী', 1, NULL, NULL),
+(74, 43, 'Lohagara Upazila', 'লোহাগারা', 1, NULL, NULL),
+(75, 43, 'Mirsharai Upazila', 'মিরসরাই', 1, NULL, NULL),
+(76, 43, 'Patiya Upazila', 'পটিয়া', 1, NULL, NULL),
+(77, 43, 'Rangunia Upazila', 'রাঙ্গুনিয়া', 1, NULL, NULL),
+(78, 43, 'Raozan Upazila', 'রাউজান', 1, NULL, NULL),
+(79, 43, 'Sandwip Upazila', 'সন্দ্বীপ', 1, NULL, NULL),
+(80, 43, 'Satkania Upazila', 'সাতকানিয়া', 1, NULL, NULL),
+(81, 43, 'Sitakunda Upazila', 'সীতাকুণ্ড', 1, NULL, NULL),
+(82, 44, 'Barura Upazila', 'বড়ুরা', 1, NULL, NULL),
+(83, 44, 'Brahmanpara Upazila', 'ব্রাহ্মণপাড়া', 1, NULL, NULL),
+(84, 44, 'Burichong Upazila', 'বুড়িচং', 1, NULL, NULL),
+(85, 44, 'Chandina Upazila', 'চান্দিনা', 1, NULL, NULL),
+(86, 44, 'Chauddagram Upazila', 'চৌদ্দগ্রাম', 1, NULL, NULL),
+(87, 44, 'Daudkandi Upazila', 'দাউদকান্দি', 1, NULL, NULL),
+(88, 44, 'Debidwar Upazila', 'দেবীদ্বার', 1, NULL, NULL),
+(89, 44, 'Homna Upazila', 'হোমনা', 1, NULL, NULL),
+(90, 44, 'Comilla Sadar Upazila', 'কুমিল্লা সদর', 1, NULL, NULL),
+(91, 44, 'Laksam Upazila', 'লাকসাম', 1, NULL, NULL),
+(92, 44, 'Monohorgonj Upazila', 'মনোহরগঞ্জ', 1, NULL, NULL),
+(93, 44, 'Meghna Upazila', 'মেঘনা', 1, NULL, NULL),
+(94, 44, 'Muradnagar Upazila', 'মুরাদনগর', 1, NULL, NULL),
+(95, 44, 'Nangalkot Upazila', 'নাঙ্গালকোট', 1, NULL, NULL),
+(96, 44, 'Comilla Sadar South Upazila', 'কুমিল্লা সদর দক্ষিণ', 1, NULL, NULL),
+(97, 44, 'Titas Upazila', 'তিতাস', 1, NULL, NULL),
+(98, 45, 'Chakaria Upazila', 'চকরিয়া', 1, NULL, NULL),
+(100, 45, 'Cox\'s Bazar Sadar Upazila', 'কক্স বাজার সদর', 1, NULL, NULL),
+(101, 45, 'Kutubdia Upazila', 'কুতুবদিয়া', 1, NULL, NULL),
+(102, 45, 'Maheshkhali Upazila', 'মহেশখালী', 1, NULL, NULL),
+(103, 45, 'Ramu Upazila', 'রামু', 1, NULL, NULL),
+(104, 45, 'Teknaf Upazila', 'টেকনাফ', 1, NULL, NULL),
+(105, 45, 'Ukhia Upazila', 'উখিয়া', 1, NULL, NULL),
+(106, 45, 'Pekua Upazila', 'পেকুয়া', 1, NULL, NULL),
+(107, 46, 'Feni Sadar', 'ফেনী সদর', 1, NULL, NULL),
+(108, 46, 'Chagalnaiya', 'ছাগল নাইয়া', 1, NULL, NULL),
+(109, 46, 'Daganbhyan', 'দাগানভিয়া', 1, NULL, NULL),
+(110, 46, 'Parshuram', 'পরশুরাম', 1, NULL, NULL),
+(111, 46, 'Fhulgazi', 'ফুলগাজি', 1, NULL, NULL),
+(112, 46, 'Sonagazi', 'সোনাগাজি', 1, NULL, NULL),
+(113, 47, 'Dighinala Upazila', 'দিঘিনালা ', 1, NULL, NULL),
+(114, 47, 'Khagrachhari Upazila', 'খাগড়াছড়ি', 1, NULL, NULL),
+(115, 47, 'Lakshmichhari Upazila', 'লক্ষ্মীছড়ি', 1, NULL, NULL),
+(116, 47, 'Mahalchhari Upazila', 'মহলছড়ি', 1, NULL, NULL),
+(117, 47, 'Manikchhari Upazila', 'মানিকছড়ি', 1, NULL, NULL),
+(118, 47, 'Matiranga Upazila', 'মাটিরাঙ্গা', 1, NULL, NULL),
+(119, 47, 'Panchhari Upazila', 'পানছড়ি', 1, NULL, NULL),
+(120, 47, 'Ramgarh Upazila', 'রামগড়', 1, NULL, NULL),
+(121, 48, 'Lakshmipur Sadar Upazila', 'লক্ষ্মীপুর সদর', 1, NULL, NULL),
+(122, 48, 'Raipur Upazila', 'রায়পুর', 1, NULL, NULL),
+(123, 48, 'Ramganj Upazila', 'রামগঞ্জ', 1, NULL, NULL),
+(124, 48, 'Ramgati Upazila', 'রামগতি', 1, NULL, NULL),
+(125, 48, 'Komol Nagar Upazila', 'কমল নগর', 1, NULL, NULL),
+(126, 49, 'Noakhali Sadar Upazila', 'নোয়াখালী সদর', 1, NULL, NULL),
+(127, 49, 'Begumganj Upazila', 'বেগমগঞ্জ', 1, NULL, NULL),
+(128, 49, 'Chatkhil Upazila', 'চাটখিল', 1, NULL, NULL),
+(129, 49, 'Companyganj Upazila', 'কোম্পানীগঞ্জ', 1, NULL, NULL),
+(130, 49, 'Shenbag Upazila', 'শেনবাগ', 1, NULL, NULL),
+(131, 49, 'Hatia Upazila', 'হাতিয়া', 1, NULL, NULL),
+(132, 49, 'Kobirhat Upazila', 'কবিরহাট ', 1, NULL, NULL),
+(133, 49, 'Sonaimuri Upazila', 'সোনাইমুরি', 1, NULL, NULL),
+(134, 49, 'Suborno Char Upazila', 'সুবর্ণ চর ', 1, NULL, NULL),
+(135, 50, 'Rangamati Sadar Upazila', 'রাঙ্গামাটি সদর', 1, NULL, NULL),
+(136, 50, 'Belaichhari Upazila', 'বেলাইছড়ি', 1, NULL, NULL),
+(137, 50, 'Bagaichhari Upazila', 'বাঘাইছড়ি', 1, NULL, NULL),
+(138, 50, 'Barkal Upazila', 'বরকল', 1, NULL, NULL),
+(139, 50, 'Juraichhari Upazila', 'জুরাইছড়ি', 1, NULL, NULL),
+(140, 50, 'Rajasthali Upazila', 'রাজাস্থলি', 1, NULL, NULL),
+(141, 50, 'Kaptai Upazila', 'কাপ্তাই', 1, NULL, NULL),
+(142, 50, 'Langadu Upazila', 'লাঙ্গাডু', 1, NULL, NULL),
+(143, 50, 'Nannerchar Upazila', 'নান্নেরচর ', 1, NULL, NULL),
+(144, 50, 'Kaukhali Upazila', 'কাউখালি', 1, NULL, NULL),
+(145, 1, 'Dhamrai Upazila', 'ধামরাই', 1, NULL, NULL),
+(146, 1, 'Dohar Upazila', 'দোহার', 1, NULL, NULL),
+(147, 1, 'Keraniganj Upazila', 'কেরানীগঞ্জ', 1, NULL, NULL),
+(148, 1, 'Nawabganj Upazila', 'নবাবগঞ্জ', 1, NULL, NULL),
+(149, 1, 'Savar Upazila', 'সাভার', 1, NULL, NULL),
+(150, 2, 'Faridpur Sadar Upazila', 'ফরিদপুর সদর', 1, NULL, NULL),
+(151, 2, 'Boalmari Upazila', 'বোয়ালমারী', 1, NULL, NULL),
+(152, 2, 'Alfadanga Upazila', 'আলফাডাঙ্গা', 1, NULL, NULL),
+(153, 2, 'Madhukhali Upazila', 'মধুখালি', 1, NULL, NULL),
+(154, 2, 'Bhanga Upazila', 'ভাঙ্গা', 1, NULL, NULL),
+(155, 2, 'Nagarkanda Upazila', 'নগরকান্ড', 1, NULL, NULL),
+(156, 2, 'Charbhadrasan Upazila', 'চরভদ্রাসন ', 1, NULL, NULL),
+(157, 2, 'Sadarpur Upazila', 'সদরপুর', 1, NULL, NULL),
+(158, 2, 'Shaltha Upazila', 'শালথা', 1, NULL, NULL),
+(159, 3, 'Gazipur Sadar-Joydebpur', 'গাজীপুর সদর', 1, NULL, NULL),
+(160, 3, 'Kaliakior', 'কালিয়াকৈর', 1, NULL, NULL),
+(161, 3, 'Kapasia', 'কাপাসিয়া', 1, NULL, NULL),
+(162, 3, 'Sripur', 'শ্রীপুর', 1, NULL, NULL),
+(163, 3, 'Kaliganj', 'কালীগঞ্জ', 1, NULL, NULL),
+(164, 3, 'Tongi', 'টঙ্গি', 1, NULL, NULL),
+(165, 4, 'Gopalganj Sadar Upazila', 'গোপালগঞ্জ সদর', 1, NULL, NULL),
+(166, 4, 'Kashiani Upazila', 'কাশিয়ানি', 1, NULL, NULL),
+(167, 4, 'Kotalipara Upazila', 'কোটালিপাড়া', 1, NULL, NULL),
+(168, 4, 'Muksudpur Upazila', 'মুকসুদপুর', 1, NULL, NULL),
+(169, 4, 'Tungipara Upazila', 'টুঙ্গিপাড়া', 1, NULL, NULL),
+(170, 5, 'Dewanganj Upazila', 'দেওয়ানগঞ্জ', 1, NULL, NULL),
+(171, 5, 'Baksiganj Upazila', 'বকসিগঞ্জ', 1, NULL, NULL),
+(172, 5, 'Islampur Upazila', 'ইসলামপুর', 1, NULL, NULL),
+(173, 5, 'Jamalpur Sadar Upazila', 'জামালপুর সদর', 1, NULL, NULL),
+(174, 5, 'Madarganj Upazila', 'মাদারগঞ্জ', 1, NULL, NULL),
+(175, 5, 'Melandaha Upazila', 'মেলানদাহা', 1, NULL, NULL),
+(176, 5, 'Sarishabari Upazila', 'সরিষাবাড়ি ', 1, NULL, NULL),
+(177, 5, 'Narundi Police I.C', 'নারুন্দি', 1, NULL, NULL),
+(178, 6, 'Astagram Upazila', 'অষ্টগ্রাম', 1, NULL, NULL),
+(179, 6, 'Bajitpur Upazila', 'বাজিতপুর', 1, NULL, NULL),
+(180, 6, 'Bhairab Upazila', 'ভৈরব', 1, NULL, NULL),
+(181, 6, 'Hossainpur Upazila', 'হোসেনপুর ', 1, NULL, NULL),
+(182, 6, 'Itna Upazila', 'ইটনা', 1, NULL, NULL),
+(183, 6, 'Karimganj Upazila', 'করিমগঞ্জ', 1, NULL, NULL),
+(184, 6, 'Katiadi Upazila', 'কতিয়াদি', 1, NULL, NULL),
+(185, 6, 'Kishoreganj Sadar Upazila', 'কিশোরগঞ্জ সদর', 1, NULL, NULL),
+(186, 6, 'Kuliarchar Upazila', 'কুলিয়ারচর', 1, NULL, NULL),
+(187, 6, 'Mithamain Upazila', 'মিঠামাইন', 1, NULL, NULL),
+(188, 6, 'Nikli Upazila', 'নিকলি', 1, NULL, NULL),
+(189, 6, 'Pakundia Upazila', 'পাকুন্ডা', 1, NULL, NULL),
+(190, 6, 'Tarail Upazila', 'তাড়াইল', 1, NULL, NULL),
+(191, 7, 'Madaripur Sadar', 'মাদারীপুর সদর', 1, NULL, NULL),
+(192, 7, 'Kalkini', 'কালকিনি', 1, NULL, NULL),
+(193, 7, 'Rajoir', 'রাজইর', 1, NULL, NULL),
+(194, 7, 'Shibchar', 'শিবচর', 1, NULL, NULL),
+(195, 8, 'Manikganj Sadar Upazila', 'মানিকগঞ্জ সদর', 1, NULL, NULL),
+(196, 8, 'Singair Upazila', 'সিঙ্গাইর', 1, NULL, NULL),
+(197, 8, 'Shibalaya Upazila', 'শিবালয়', 1, NULL, NULL),
+(198, 8, 'Saturia Upazila', 'সাঠুরিয়া', 1, NULL, NULL),
+(199, 8, 'Harirampur Upazila', 'হরিরামপুর', 1, NULL, NULL),
+(200, 8, 'Ghior Upazila', 'ঘিওর', 1, NULL, NULL),
+(201, 8, 'Daulatpur Upazila', 'দৌলতপুর', 1, NULL, NULL),
+(202, 9, 'Lohajang Upazila', 'লোহাজং', 1, NULL, NULL),
+(203, 9, 'Sreenagar Upazila', 'শ্রীনগর', 1, NULL, NULL),
+(204, 9, 'Munshiganj Sadar Upazila', 'মুন্সিগঞ্জ সদর', 1, NULL, NULL),
+(205, 9, 'Sirajdikhan Upazila', 'সিরাজদিখান', 1, NULL, NULL),
+(206, 9, 'Tongibari Upazila', 'টঙ্গিবাড়ি', 1, NULL, NULL),
+(207, 9, 'Gazaria Upazila', 'গজারিয়া', 1, NULL, NULL),
+(208, 10, 'Bhaluka', 'ভালুকা', 1, NULL, NULL),
+(209, 10, 'Trishal', 'ত্রিশাল', 1, NULL, NULL),
+(210, 10, 'Haluaghat', 'হালুয়াঘাট', 1, NULL, NULL),
+(211, 10, 'Muktagachha', 'মুক্তাগাছা', 1, NULL, NULL),
+(212, 10, 'Dhobaura', 'ধবারুয়া', 1, NULL, NULL),
+(213, 10, 'Fulbaria', 'ফুলবাড়িয়া', 1, NULL, NULL),
+(214, 10, 'Gaffargaon', 'গফরগাঁও', 1, NULL, NULL),
+(215, 10, 'Gauripur', 'গৌরিপুর', 1, NULL, NULL),
+(216, 10, 'Ishwarganj', 'ঈশ্বরগঞ্জ', 1, NULL, NULL),
+(217, 10, 'Mymensingh Sadar', 'ময়মনসিং সদর', 1, NULL, NULL),
+(218, 10, 'Nandail', 'নন্দাইল', 1, NULL, NULL),
+(219, 10, 'Phulpur', 'ফুলপুর', 1, NULL, NULL),
+(220, 11, 'Araihazar Upazila', 'আড়াইহাজার', 1, NULL, NULL),
+(221, 11, 'Sonargaon Upazila', 'সোনারগাঁও', 1, NULL, NULL),
+(222, 11, 'Bandar', 'বান্দার', 1, NULL, NULL),
+(223, 11, 'Naryanganj Sadar Upazila', 'নারায়ানগঞ্জ সদর', 1, NULL, NULL),
+(224, 11, 'Rupganj Upazila', 'রূপগঞ্জ', 1, NULL, NULL),
+(225, 11, 'Siddirgonj Upazila', 'সিদ্ধিরগঞ্জ', 1, NULL, NULL),
+(226, 12, 'Belabo Upazila', 'বেলাবো', 1, NULL, NULL),
+(227, 12, 'Monohardi Upazila', 'মনোহরদি', 1, NULL, NULL),
+(228, 12, 'Narsingdi Sadar Upazila', 'নরসিংদী সদর', 1, NULL, NULL),
+(229, 12, 'Palash Upazila', 'পলাশ', 1, NULL, NULL),
+(230, 12, 'Raipura Upazila, Narsingdi', 'রায়পুর', 1, NULL, NULL),
+(231, 12, 'Shibpur Upazila', 'শিবপুর', 1, NULL, NULL),
+(232, 13, 'Kendua Upazilla', 'কেন্দুয়া', 1, NULL, NULL),
+(233, 13, 'Atpara Upazilla', 'আটপাড়া', 1, NULL, NULL),
+(234, 13, 'Barhatta Upazilla', 'বরহাট্টা', 1, NULL, NULL),
+(235, 13, 'Durgapur Upazilla', 'দুর্গাপুর', 1, NULL, NULL),
+(236, 13, 'Kalmakanda Upazilla', 'কলমাকান্দা', 1, NULL, NULL),
+(237, 13, 'Madan Upazilla', 'মদন', 1, NULL, NULL),
+(238, 13, 'Mohanganj Upazilla', 'মোহনগঞ্জ', 1, NULL, NULL),
+(239, 13, 'Netrakona-S Upazilla', 'নেত্রকোনা সদর', 1, NULL, NULL),
+(240, 13, 'Purbadhala Upazilla', 'পূর্বধলা', 1, NULL, NULL),
+(241, 13, 'Khaliajuri Upazilla', 'খালিয়াজুরি', 1, NULL, NULL),
+(242, 14, 'Baliakandi Upazila', 'বালিয়াকান্দি', 1, NULL, NULL),
+(243, 14, 'Goalandaghat Upazila', 'গোয়ালন্দ ঘাট', 1, NULL, NULL),
+(244, 14, 'Pangsha Upazila', 'পাংশা', 1, NULL, NULL),
+(245, 14, 'Kalukhali Upazila', 'কালুখালি', 1, NULL, NULL),
+(246, 14, 'Rajbari Sadar Upazila', 'রাজবাড়ি সদর', 1, NULL, NULL),
+(247, 15, 'Shariatpur Sadar -Palong', 'শরীয়তপুর সদর ', 1, NULL, NULL),
+(248, 15, 'Damudya Upazila', 'দামুদিয়া', 1, NULL, NULL),
+(249, 15, 'Naria Upazila', 'নড়িয়া', 1, NULL, NULL),
+(250, 15, 'Jajira Upazila', 'জাজিরা', 1, NULL, NULL),
+(251, 15, 'Bhedarganj Upazila', 'ভেদারগঞ্জ', 1, NULL, NULL),
+(252, 15, 'Gosairhat Upazila', 'গোসাইর হাট ', 1, NULL, NULL),
+(253, 16, 'Jhenaigati Upazila', 'ঝিনাইগাতি', 1, NULL, NULL),
+(254, 16, 'Nakla Upazila', 'নাকলা', 1, NULL, NULL),
+(255, 16, 'Nalitabari Upazila', 'নালিতাবাড়ি', 1, NULL, NULL),
+(256, 16, 'Sherpur Sadar Upazila', 'শেরপুর সদর', 1, NULL, NULL),
+(257, 16, 'Sreebardi Upazila', 'শ্রীবরদি', 1, NULL, NULL),
+(258, 17, 'Tangail Sadar Upazila', 'টাঙ্গাইল সদর', 1, NULL, NULL),
+(259, 17, 'Sakhipur Upazila', 'সখিপুর', 1, NULL, NULL),
+(260, 17, 'Basail Upazila', 'বসাইল', 1, NULL, NULL),
+(261, 17, 'Madhupur Upazila', 'মধুপুর', 1, NULL, NULL),
+(262, 17, 'Ghatail Upazila', 'ঘাটাইল', 1, NULL, NULL),
+(263, 17, 'Kalihati Upazila', 'কালিহাতি', 1, NULL, NULL),
+(264, 17, 'Nagarpur Upazila', 'নগরপুর', 1, NULL, NULL),
+(265, 17, 'Mirzapur Upazila', 'মির্জাপুর', 1, NULL, NULL),
+(266, 17, 'Gopalpur Upazila', 'গোপালপুর', 1, NULL, NULL),
+(267, 17, 'Delduar Upazila', 'দেলদুয়ার', 1, NULL, NULL),
+(268, 17, 'Bhuapur Upazila', 'ভুয়াপুর', 1, NULL, NULL),
+(269, 17, 'Dhanbari Upazila', 'ধানবাড়ি', 1, NULL, NULL),
+(270, 55, 'Bagerhat Sadar Upazila', 'বাগেরহাট সদর', 1, NULL, NULL),
+(271, 55, 'Chitalmari Upazila', 'চিতলমাড়ি', 1, NULL, NULL),
+(272, 55, 'Fakirhat Upazila', 'ফকিরহাট', 1, NULL, NULL),
+(273, 55, 'Kachua Upazila', 'কচুয়া', 1, NULL, NULL),
+(274, 55, 'Mollahat Upazila', 'মোল্লাহাট ', 1, NULL, NULL),
+(275, 55, 'Mongla Upazila', 'মংলা', 1, NULL, NULL),
+(276, 55, 'Morrelganj Upazila', 'মরেলগঞ্জ', 1, NULL, NULL),
+(277, 55, 'Rampal Upazila', 'রামপাল', 1, NULL, NULL),
+(278, 55, 'Sarankhola Upazila', 'স্মরণখোলা', 1, NULL, NULL),
+(279, 56, 'Damurhuda Upazila', 'দামুরহুদা', 1, NULL, NULL),
+(280, 56, 'Chuadanga-S Upazila', 'চুয়াডাঙ্গা সদর', 1, NULL, NULL),
+(281, 56, 'Jibannagar Upazila', 'জীবন নগর ', 1, NULL, NULL),
+(282, 56, 'Alamdanga Upazila', 'আলমডাঙ্গা', 1, NULL, NULL),
+(283, 57, 'Abhaynagar Upazila', 'অভয়নগর', 1, NULL, NULL),
+(284, 57, 'Keshabpur Upazila', 'কেশবপুর', 1, NULL, NULL),
+(285, 57, 'Bagherpara Upazila', 'বাঘের পাড়া ', 1, NULL, NULL),
+(286, 57, 'Jessore Sadar Upazila', 'যশোর সদর', 1, NULL, NULL),
+(287, 57, 'Chaugachha Upazila', 'চৌগাছা', 1, NULL, NULL),
+(288, 57, 'Manirampur Upazila', 'মনিরামপুর ', 1, NULL, NULL),
+(289, 57, 'Jhikargachha Upazila', 'ঝিকরগাছা', 1, NULL, NULL),
+(290, 57, 'Sharsha Upazila', 'সারশা', 1, NULL, NULL),
+(291, 58, 'Jhenaidah Sadar Upazila', 'ঝিনাইদহ সদর', 1, NULL, NULL),
+(292, 58, 'Maheshpur Upazila', 'মহেশপুর', 1, NULL, NULL),
+(293, 58, 'Kaliganj Upazila', 'কালীগঞ্জ', 1, NULL, NULL),
+(294, 58, 'Kotchandpur Upazila', 'কোট চাঁদপুর ', 1, NULL, NULL),
+(295, 58, 'Shailkupa Upazila', 'শৈলকুপা', 1, NULL, NULL),
+(296, 58, 'Harinakunda Upazila', 'হাড়িনাকুন্দা', 1, NULL, NULL),
+(297, 59, 'Terokhada Upazila', 'তেরোখাদা', 1, NULL, NULL),
+(298, 59, 'Batiaghata Upazila', 'বাটিয়াঘাটা ', 1, NULL, NULL),
+(299, 59, 'Dacope Upazila', 'ডাকপে', 1, NULL, NULL),
+(300, 59, 'Dumuria Upazila', 'ডুমুরিয়া', 1, NULL, NULL),
+(301, 59, 'Dighalia Upazila', 'দিঘলিয়া', 1, NULL, NULL),
+(302, 59, 'Koyra Upazila', 'কয়ড়া', 1, NULL, NULL),
+(303, 59, 'Paikgachha Upazila', 'পাইকগাছা', 1, NULL, NULL),
+(304, 59, 'Phultala Upazila', 'ফুলতলা', 1, NULL, NULL),
+(305, 59, 'Rupsa Upazila', 'রূপসা', 1, NULL, NULL),
+(306, 60, 'Kushtia Sadar', 'কুষ্টিয়া সদর', 1, NULL, NULL),
+(307, 60, 'Kumarkhali', 'কুমারখালি', 1, NULL, NULL),
+(308, 60, 'Daulatpur', 'দৌলতপুর', 1, NULL, NULL),
+(309, 60, 'Mirpur', 'মিরপুর', 1, NULL, NULL),
+(310, 60, 'Bheramara', 'ভেরামারা', 1, NULL, NULL),
+(311, 60, 'Khoksa', 'খোকসা', 1, NULL, NULL),
+(312, 61, 'Magura Sadar Upazila', 'মাগুরা সদর', 1, NULL, NULL),
+(313, 61, 'Mohammadpur Upazila', 'মোহাম্মাদপুর', 1, NULL, NULL),
+(314, 61, 'Shalikha Upazila', 'শালিখা', 1, NULL, NULL),
+(315, 61, 'Sreepur Upazila', 'শ্রীপুর', 1, NULL, NULL),
+(316, 62, 'angni Upazila', 'আংনি', 1, NULL, NULL),
+(317, 62, 'Mujib Nagar Upazila', 'মুজিব নগর', 1, NULL, NULL),
+(318, 62, 'Meherpur-S Upazila', 'মেহেরপুর সদর', 1, NULL, NULL),
+(319, 63, 'Narail-S Upazilla', 'নড়াইল সদর', 1, NULL, NULL),
+(320, 63, 'Lohagara Upazilla', 'লোহাগাড়া', 1, NULL, NULL),
+(321, 63, 'Kalia Upazilla', 'কালিয়া', 1, NULL, NULL),
+(322, 64, 'Satkhira Sadar Upazila', 'সাতক্ষীরা সদর', 1, NULL, NULL),
+(323, 64, 'Assasuni Upazila', 'আসসাশুনি ', 1, NULL, NULL),
+(324, 64, 'Debhata Upazila', 'দেভাটা', 1, NULL, NULL),
+(325, 64, 'Tala Upazila', 'তালা', 1, NULL, NULL),
+(326, 64, 'Kalaroa Upazila', 'কলরোয়া', 1, NULL, NULL),
+(327, 64, 'Kaliganj Upazila', 'কালীগঞ্জ', 1, NULL, NULL),
+(328, 64, 'Shyamnagar Upazila', 'শ্যামনগর', 1, NULL, NULL),
+(329, 18, 'Adamdighi', 'আদমদিঘী', 1, NULL, NULL),
+(330, 18, 'Bogra Sadar', 'বগুড়া সদর', 1, NULL, NULL),
+(331, 18, 'Sherpur', 'শেরপুর', 1, NULL, NULL),
+(332, 18, 'Dhunat', 'ধুনট', 1, NULL, NULL),
+(333, 18, 'Dhupchanchia', 'দুপচাচিয়া', 1, NULL, NULL),
+(334, 18, 'Gabtali', 'গাবতলি', 1, NULL, NULL),
+(335, 18, 'Kahaloo', 'কাহালু', 1, NULL, NULL),
+(336, 18, 'Nandigram', 'নন্দিগ্রাম', 1, NULL, NULL),
+(337, 18, 'Sahajanpur', 'শাহজাহানপুর', 1, NULL, NULL),
+(338, 18, 'Sariakandi', 'সারিয়াকান্দি', 1, NULL, NULL),
+(339, 18, 'Shibganj', 'শিবগঞ্জ', 1, NULL, NULL),
+(340, 18, 'Sonatala', 'সোনাতলা', 1, NULL, NULL),
+(341, 19, 'Joypurhat S', 'জয়পুরহাট সদর', 1, NULL, NULL),
+(342, 19, 'Akkelpur', 'আক্কেলপুর', 1, NULL, NULL),
+(343, 19, 'Kalai', 'কালাই', 1, NULL, NULL),
+(344, 19, 'Khetlal', 'খেতলাল', 1, NULL, NULL),
+(345, 19, 'Panchbibi', 'পাঁচবিবি', 1, NULL, NULL),
+(346, 20, 'Naogaon Sadar Upazila', 'নওগাঁ সদর', 1, NULL, NULL),
+(347, 20, 'Mohadevpur Upazila', 'মহাদেবপুর', 1, NULL, NULL),
+(348, 20, 'Manda Upazila', 'মান্দা', 1, NULL, NULL),
+(349, 20, 'Niamatpur Upazila', 'নিয়ামতপুর', 1, NULL, NULL),
+(350, 20, 'Atrai Upazila', 'আত্রাই', 1, NULL, NULL),
+(351, 20, 'Raninagar Upazila', 'রাণীনগর', 1, NULL, NULL),
+(352, 20, 'Patnitala Upazila', 'পত্নীতলা', 1, NULL, NULL),
+(353, 20, 'Dhamoirhat Upazila', 'ধামইরহাট ', 1, NULL, NULL),
+(354, 20, 'Sapahar Upazila', 'সাপাহার', 1, NULL, NULL),
+(355, 20, 'Porsha Upazila', 'পোরশা', 1, NULL, NULL),
+(356, 20, 'Badalgachhi Upazila', 'বদলগাছি', 1, NULL, NULL),
+(357, 21, 'Natore Sadar Upazila', 'নাটোর সদর', 1, NULL, NULL),
+(358, 21, 'Baraigram Upazila', 'বড়াইগ্রাম', 1, NULL, NULL),
+(359, 21, 'Bagatipara Upazila', 'বাগাতিপাড়া', 1, NULL, NULL),
+(360, 21, 'Lalpur Upazila', 'লালপুর', 1, NULL, NULL),
+(361, 21, 'Natore Sadar Upazila', 'নাটোর সদর', 1, NULL, NULL),
+(362, 21, 'Baraigram Upazila', 'বড়াই গ্রাম', 1, NULL, NULL),
+(363, 22, 'Bholahat Upazila', 'ভোলাহাট', 1, NULL, NULL),
+(364, 22, 'Gomastapur Upazila', 'গোমস্তাপুর', 1, NULL, NULL),
+(365, 22, 'Nachole Upazila', 'নাচোল', 1, NULL, NULL),
+(366, 22, 'Nawabganj Sadar Upazila', 'নবাবগঞ্জ সদর', 1, NULL, NULL),
+(367, 22, 'Shibganj Upazila', 'শিবগঞ্জ', 1, NULL, NULL),
+(368, 23, 'Atgharia Upazila', 'আটঘরিয়া', 1, NULL, NULL),
+(369, 23, 'Bera Upazila', 'বেড়া', 1, NULL, NULL),
+(370, 23, 'Bhangura Upazila', 'ভাঙ্গুরা', 1, NULL, NULL),
+(371, 23, 'Chatmohar Upazila', 'চাটমোহর', 1, NULL, NULL),
+(372, 23, 'Faridpur Upazila', 'ফরিদপুর', 1, NULL, NULL),
+(373, 23, 'Ishwardi Upazila', 'ঈশ্বরদী', 1, NULL, NULL),
+(374, 23, 'Pabna Sadar Upazila', 'পাবনা সদর', 1, NULL, NULL),
+(375, 23, 'Santhia Upazila', 'সাথিয়া', 1, NULL, NULL),
+(376, 23, 'Sujanagar Upazila', 'সুজানগর', 1, NULL, NULL),
+(377, 24, 'Bagha', 'বাঘা', 1, NULL, NULL),
+(378, 24, 'Bagmara', 'বাগমারা', 1, NULL, NULL),
+(379, 24, 'Charghat', 'চারঘাট', 1, NULL, NULL),
+(380, 24, 'Durgapur', 'দুর্গাপুর', 1, NULL, NULL),
+(381, 24, 'Godagari', 'গোদাগারি', 1, NULL, NULL),
+(382, 24, 'Mohanpur', 'মোহনপুর', 1, NULL, NULL),
+(383, 24, 'Paba', 'পবা', 1, NULL, NULL),
+(384, 24, 'Puthia', 'পুঠিয়া', 1, NULL, NULL),
+(385, 24, 'Tanore', 'তানোর', 1, NULL, NULL),
+(386, 25, 'Sirajganj Sadar Upazila', 'সিরাজগঞ্জ সদর', 1, NULL, NULL),
+(387, 25, 'Belkuchi Upazila', 'বেলকুচি', 1, NULL, NULL),
+(388, 25, 'Chauhali Upazila', 'চৌহালি', 1, NULL, NULL),
+(389, 25, 'Kamarkhanda Upazila', 'কামারখান্দা', 1, NULL, NULL),
+(390, 25, 'Kazipur Upazila', 'কাজীপুর', 1, NULL, NULL),
+(391, 25, 'Raiganj Upazila', 'রায়গঞ্জ', 1, NULL, NULL),
+(392, 25, 'Shahjadpur Upazila', 'শাহজাদপুর', 1, NULL, NULL),
+(393, 25, 'Tarash Upazila', 'তারাশ', 1, NULL, NULL),
+(394, 25, 'Ullahpara Upazila', 'উল্লাপাড়া', 1, NULL, NULL),
+(395, 26, 'Birampur Upazila', 'বিরামপুর', 1, NULL, NULL),
+(396, 26, 'Birganj', 'বীরগঞ্জ', 1, NULL, NULL),
+(397, 26, 'Biral Upazila', 'বিড়াল', 1, NULL, NULL),
+(398, 26, 'Bochaganj Upazila', 'বোচাগঞ্জ', 1, NULL, NULL),
+(399, 26, 'Chirirbandar Upazila', 'চিরিরবন্দর', 1, NULL, NULL),
+(400, 26, 'Phulbari Upazila', 'ফুলবাড়ি', 1, NULL, NULL),
+(401, 26, 'Ghoraghat Upazila', 'ঘোড়াঘাট', 1, NULL, NULL),
+(402, 26, 'Hakimpur Upazila', 'হাকিমপুর', 1, NULL, NULL),
+(403, 26, 'Kaharole Upazila', 'কাহারোল', 1, NULL, NULL),
+(404, 26, 'Khansama Upazila', 'খানসামা', 1, NULL, NULL),
+(405, 26, 'Dinajpur Sadar Upazila', 'দিনাজপুর সদর', 1, NULL, NULL),
+(406, 26, 'Nawabganj', 'নবাবগঞ্জ', 1, NULL, NULL),
+(407, 26, 'Parbatipur Upazila', 'পার্বতীপুর', 1, NULL, NULL),
+(408, 27, 'Fulchhari', 'ফুলছড়ি', 1, NULL, NULL),
+(409, 27, 'Gaibandha sadar', 'গাইবান্ধা সদর', 1, NULL, NULL),
+(410, 27, 'Gobindaganj', 'গোবিন্দগঞ্জ', 1, NULL, NULL),
+(411, 27, 'Palashbari', 'পলাশবাড়ী', 1, NULL, NULL),
+(412, 27, 'Sadullapur', 'সাদুল্যাপুর', 1, NULL, NULL),
+(413, 27, 'Saghata', 'সাঘাটা', 1, NULL, NULL),
+(414, 27, 'Sundarganj', 'সুন্দরগঞ্জ', 1, NULL, NULL),
+(415, 28, 'Kurigram Sadar', 'কুড়িগ্রাম সদর', 1, NULL, NULL),
+(416, 28, 'Nageshwari', 'নাগেশ্বরী', 1, NULL, NULL),
+(417, 28, 'Bhurungamari', 'ভুরুঙ্গামারি', 1, NULL, NULL),
+(418, 28, 'Phulbari', 'ফুলবাড়ি', 1, NULL, NULL),
+(419, 28, 'Rajarhat', 'রাজারহাট', 1, NULL, NULL),
+(420, 28, 'Ulipur', 'উলিপুর', 1, NULL, NULL),
+(421, 28, 'Chilmari', 'চিলমারি', 1, NULL, NULL),
+(422, 28, 'Rowmari', 'রউমারি', 1, NULL, NULL),
+(423, 28, 'Char Rajibpur', 'চর রাজিবপুর', 1, NULL, NULL),
+(424, 29, 'Lalmanirhat Sadar', 'লালমনিরহাট সদর', 1, NULL, NULL),
+(425, 29, 'Aditmari', 'আদিতমারি', 1, NULL, NULL),
+(426, 29, 'Kaliganj', 'কালীগঞ্জ', 1, NULL, NULL),
+(427, 29, 'Hatibandha', 'হাতিবান্ধা', 1, NULL, NULL),
+(428, 29, 'Patgram', 'পাটগ্রাম', 1, NULL, NULL),
+(429, 30, 'Nilphamari Sadar', 'নীলফামারী সদর', 1, NULL, NULL),
+(430, 30, 'Saidpur', 'সৈয়দপুর', 1, NULL, NULL),
+(431, 30, 'Jaldhaka', 'জলঢাকা', 1, NULL, NULL),
+(432, 30, 'Kishoreganj', 'কিশোরগঞ্জ', 1, NULL, NULL),
+(433, 30, 'Domar', 'ডোমার', 1, NULL, NULL),
+(434, 30, 'Dimla', 'ডিমলা', 1, NULL, NULL),
+(435, 31, 'Panchagarh Sadar', 'পঞ্চগড় সদর', 1, NULL, NULL),
+(436, 31, 'Debiganj', 'দেবীগঞ্জ', 1, NULL, NULL),
+(437, 31, 'Boda', 'বোদা', 1, NULL, NULL),
+(438, 31, 'Atwari', 'আটোয়ারি', 1, NULL, NULL),
+(439, 31, 'Tetulia', 'তেতুলিয়া', 1, NULL, NULL),
+(440, 32, 'Badarganj', 'বদরগঞ্জ', 1, NULL, NULL),
+(441, 32, 'Mithapukur', 'মিঠাপুকুর', 1, NULL, NULL),
+(442, 32, 'Gangachara', 'গঙ্গাচরা', 1, NULL, NULL),
+(443, 32, 'Kaunia', 'কাউনিয়া', 1, NULL, NULL),
+(444, 32, 'Rangpur Sadar', 'রংপুর সদর', 1, NULL, NULL),
+(445, 32, 'Pirgachha', 'পীরগাছা', 1, NULL, NULL),
+(446, 32, 'Pirganj', 'পীরগঞ্জ', 1, NULL, NULL),
+(447, 32, 'Taraganj', 'তারাগঞ্জ', 1, NULL, NULL),
+(448, 33, 'Thakurgaon Sadar Upazila', 'ঠাকুরগাঁও সদর', 1, NULL, NULL),
+(449, 33, 'Pirganj Upazila', 'পীরগঞ্জ', 1, NULL, NULL),
+(450, 33, 'Baliadangi Upazila', 'বালিয়াডাঙ্গি', 1, NULL, NULL),
+(451, 33, 'Haripur Upazila', 'হরিপুর', 1, NULL, NULL),
+(452, 33, 'Ranisankail Upazila', 'রাণীসংকইল', 1, NULL, NULL),
+(453, 51, 'Ajmiriganj', 'আজমিরিগঞ্জ', 1, NULL, NULL),
+(454, 51, 'Baniachang', 'বানিয়াচং', 1, NULL, NULL),
+(455, 51, 'Bahubal', 'বাহুবল', 1, NULL, NULL),
+(456, 51, 'Chunarughat', 'চুনারুঘাট', 1, NULL, NULL),
+(457, 51, 'Habiganj Sadar', 'হবিগঞ্জ সদর', 1, NULL, NULL),
+(458, 51, 'Lakhai', 'লাক্ষাই', 1, NULL, NULL),
+(459, 51, 'Madhabpur', 'মাধবপুর', 1, NULL, NULL),
+(460, 51, 'Nabiganj', 'নবীগঞ্জ', 1, NULL, NULL),
+(461, 51, 'Shaistagonj Upazila', 'শায়েস্তাগঞ্জ', 1, NULL, NULL),
+(462, 52, 'Moulvibazar Sadar', 'মৌলভীবাজার', 1, NULL, NULL),
+(463, 52, 'Barlekha', 'বড়লেখা', 1, NULL, NULL),
+(464, 52, 'Juri', 'জুড়ি', 1, NULL, NULL),
+(465, 52, 'Kamalganj', 'কামালগঞ্জ', 1, NULL, NULL),
+(466, 52, 'Kulaura', 'কুলাউরা', 1, NULL, NULL),
+(467, 52, 'Rajnagar', 'রাজনগর', 1, NULL, NULL),
+(468, 52, 'Sreemangal', 'শ্রীমঙ্গল', 1, NULL, NULL),
+(469, 53, 'Bishwamvarpur', 'বিসশম্ভারপুর', 1, NULL, NULL),
+(470, 53, 'Chhatak', 'ছাতক', 1, NULL, NULL),
+(471, 53, 'Derai', 'দেড়াই', 1, NULL, NULL),
+(472, 53, 'Dharampasha', 'ধরমপাশা', 1, NULL, NULL),
+(473, 53, 'Dowarabazar', 'দোয়ারাবাজার', 1, NULL, NULL),
+(474, 53, 'Jagannathpur', 'জগন্নাথপুর', 1, NULL, NULL),
+(475, 53, 'Jamalganj', 'জামালগঞ্জ', 1, NULL, NULL),
+(476, 53, 'Sulla', 'সুল্লা', 1, NULL, NULL),
+(477, 53, 'Sunamganj Sadar', 'সুনামগঞ্জ সদর', 1, NULL, NULL),
+(478, 53, 'Shanthiganj', 'শান্তিগঞ্জ', 1, NULL, NULL),
+(479, 53, 'Tahirpur', 'তাহিরপুর', 1, NULL, NULL),
+(480, 54, 'Sylhet Sadar', 'সিলেট সদর', 1, NULL, NULL),
+(481, 54, 'Beanibazar', 'বেয়ানিবাজার', 1, NULL, NULL),
+(482, 54, 'Bishwanath', 'বিশ্বনাথ', 1, NULL, NULL),
+(483, 54, 'Dakshin Surma Upazila', 'দক্ষিণ সুরমা', 1, NULL, NULL),
+(484, 54, 'Balaganj', 'বালাগঞ্জ', 1, NULL, NULL),
+(485, 54, 'Companiganj', 'কোম্পানিগঞ্জ', 1, NULL, NULL),
+(486, 54, 'Fenchuganj', 'ফেঞ্চুগঞ্জ', 1, NULL, NULL),
+(487, 54, 'Golapganj', 'গোলাপগঞ্জ', 1, NULL, NULL),
+(488, 54, 'Gowainghat', 'গোয়াইনঘাট', 1, NULL, NULL),
+(489, 54, 'Jaintiapur', 'জয়ন্তপুর', 1, NULL, NULL),
+(490, 54, 'Kanaighat', 'কানাইঘাট', 1, NULL, NULL),
+(491, 54, 'Zakiganj', 'জাকিগঞ্জ', 1, NULL, NULL),
+(492, 54, 'Nobigonj', 'নবীগঞ্জ', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1304,7 +2059,9 @@ INSERT INTO `user_menus` (`id`, `parentMenu`, `menuName`, `menuLink`, `menuIcon`
 (40, NULL, 'Installment Management', 'admin.index', 'fa fa-bars', 33, '1', '2019-12-14 14:43:55', '2019-12-14 14:43:55'),
 (41, '40', 'Installment Schedule', 'installmentSchedule.index', 'fa fa-caret', 34, '1', '2019-12-14 14:45:08', '2019-12-14 14:45:08'),
 (42, '40', 'Installment Collection', 'installmentCollection.index', 'fa fa-caret', 35, '1', '2019-12-14 14:47:55', '2019-12-14 14:47:55'),
-(43, '6', 'Dealer Setup', 'dealerSetup.index', 'fa fa-bars', 36, '1', '2019-12-18 03:37:33', '2019-12-18 03:37:33');
+(43, '6', 'Dealer Setup', 'dealerSetup.index', 'fa fa-bars', 36, '1', '2019-12-18 03:37:33', '2019-12-18 03:37:33'),
+(44, '29', 'Product Transfer', 'transferProduct.index', 'fa fa-bars', 37, '1', '2019-12-21 02:24:10', '2019-12-21 02:24:10'),
+(45, '19', 'Lifting Return', 'liftingReturn.index', 'fa fa-bars', 14, '1', '2019-12-22 23:51:07', '2019-12-22 23:57:52');
 
 -- --------------------------------------------------------
 
@@ -1438,7 +2195,15 @@ INSERT INTO `user_menu_actions` (`id`, `parentmenuId`, `menuType`, `actionName`,
 (113, 43, 1, 'Add', 'dealerSetup.add', 110, 1, '2019-12-18 03:47:21', '2019-12-18 03:47:21'),
 (114, 43, 2, 'Edit', 'dealerSetup.edit', 111, 1, '2019-12-18 03:47:48', '2019-12-18 03:47:48'),
 (115, 43, 4, 'Delete', 'dealerSetup.delete', 112, 1, '2019-12-18 03:48:17', '2019-12-18 03:48:17'),
-(116, 43, 3, 'Status', 'dealerSetup.status', 113, 1, '2019-12-18 03:48:30', '2019-12-18 03:48:30');
+(116, 43, 3, 'Status', 'dealerSetup.status', 113, 1, '2019-12-18 03:48:30', '2019-12-18 03:48:30'),
+(117, 44, 1, 'Add', 'transferProduct.add', 114, 1, '2019-12-21 02:24:34', '2019-12-21 02:24:34'),
+(118, 44, 2, 'Edit', 'transferProduct.edit', 115, 1, '2019-12-21 02:24:47', '2019-12-21 02:24:47'),
+(119, 44, 4, 'Delete', 'transferProduct.delete', 116, 1, '2019-12-21 02:24:59', '2019-12-21 02:24:59'),
+(120, 44, 11, 'Print Product Transfer', 'transferProduct.print', 117, 1, '2019-12-21 02:25:31', '2019-12-21 02:25:31'),
+(121, 45, 1, 'Add', 'liftingReturn.add', 118, 1, '2019-12-22 23:51:46', '2019-12-22 23:51:46'),
+(122, 45, 2, 'Edit', 'liftingReturn.edit', 119, 1, '2019-12-22 23:52:06', '2019-12-22 23:52:06'),
+(123, 45, 4, 'Delete', 'liftingReturn.delete', 121, 1, '2019-12-22 23:52:24', '2019-12-22 23:53:57'),
+(124, 45, 11, 'Print Lifting Return', 'liftingReturn.print', 120, 1, '2019-12-22 23:53:35', '2019-12-22 23:54:08');
 
 -- --------------------------------------------------------
 
@@ -1461,7 +2226,7 @@ CREATE TABLE `user_roles` (
 --
 
 INSERT INTO `user_roles` (`id`, `name`, `status`, `permission`, `actionPermission`, `created_at`, `updated_at`) VALUES
-(1, 'Super Admin', 1, '1,2,3,4,5,6,7,8,10,11,12,13,14,15,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,20,18,19,17,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,57,58,59,60,61,62,63,64,65,66,81,67,69,70,71,72,73,74,75,76,77,78,79,80,82,83,84,85,86,88,89,90,91,94,95,93,96,97,98,105,99,100,101,102,104,103,106,107,108,109,110,111,112,113,114,115,116', '2019-11-20 22:48:03', '2019-12-18 03:49:51'),
+(1, 'Super Admin', 1, '1,2,3,4,5,6,7,8,10,11,12,13,14,15,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,20,18,19,17,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,57,58,59,60,61,62,63,64,65,66,81,67,69,70,71,72,73,74,75,76,77,78,79,80,82,83,84,85,86,88,89,90,91,94,95,93,96,97,98,105,99,100,101,102,104,103,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,124,123', '2019-11-20 22:48:03', '2019-12-22 23:54:30'),
 (5, 'Admin', 0, '1,2,5,22', '16,20,18,19,17', '2019-11-29 03:26:52', '2019-12-15 06:09:43');
 
 -- --------------------------------------------------------
@@ -1568,6 +2333,19 @@ CREATE TABLE `view_stock_valuation` (
 -- --------------------------------------------------------
 
 --
+-- Stand-in structure for view `view_store_and_showroom`
+-- (See below for the actual view)
+--
+CREATE TABLE `view_store_and_showroom` (
+`id` int(10) unsigned
+,`type` varchar(8)
+,`storeType` varchar(191)
+,`name` varchar(191)
+);
+
+-- --------------------------------------------------------
+
+--
 -- Stand-in structure for view `view_vendor_statement_report`
 -- (See below for the actual view)
 --
@@ -1623,6 +2401,15 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 DROP TABLE IF EXISTS `view_stock_valuation`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_stock_valuation`  AS  select `tbl_liftings`.`vouchar_date` AS `date`,`tbl_liftings`.`vendor_id` AS `vendorId`,`tbl_vendors`.`name` AS `vendorName`,`tbl_products`.`category_id` AS `categoryId`,`tbl_categories`.`parent` AS `categoryParent`,`tbl_categories`.`name` AS `categoryName`,`tbl_lifting_products`.`product_id` AS `productId`,`tbl_products`.`name` AS `productName`,`tbl_lifting_products`.`serial_no` AS `serialNo`,`tbl_products`.`model_no` AS `modelNo`,`tbl_products`.`color` AS `color`,`tbl_products`.`reorder_level_qty` AS `reorderQty`,`tbl_lifting_products`.`qty` AS `liftingQty`,`tbl_lifting_products`.`price` AS `liftingAmount`,0 AS `liftingReturnQty`,0 AS `liftingReturnAmount`,0 AS `salesQty`,0 AS `salesAmount`,0 AS `salesReturnQty`,0 AS `salesReturnAmount` from ((((`tbl_liftings` join `tbl_vendors` on(`tbl_vendors`.`id` = `tbl_liftings`.`vendor_id`)) join `tbl_lifting_products` on(`tbl_lifting_products`.`lifting_id` = `tbl_liftings`.`id`)) join `tbl_products` on(`tbl_products`.`id` = `tbl_lifting_products`.`product_id`)) join `tbl_categories` on(`tbl_categories`.`id` = `tbl_products`.`category_id`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_store_and_showroom`
+--
+DROP TABLE IF EXISTS `view_store_and_showroom`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_store_and_showroom`  AS  select `tbl_stores`.`id` AS `id`,'store' AS `type`,`tbl_stores`.`type` AS `storeType`,`tbl_stores`.`name` AS `name` from `tbl_stores` where `tbl_stores`.`status` = '1' union select `tbl_showroom`.`id` AS `id`,'showroom' AS `type`,'' AS `storeType`,`tbl_showroom`.`name` AS `name` from `tbl_showroom` where `tbl_showroom`.`status` = '1' ;
 
 -- --------------------------------------------------------
 
@@ -1801,6 +2588,18 @@ ALTER TABLE `tbl_lifting_products`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tbl_lifting_returns`
+--
+ALTER TABLE `tbl_lifting_returns`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_lifting_return_products`
+--
+ALTER TABLE `tbl_lifting_return_products`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tbl_payment_to_company`
 --
 ALTER TABLE `tbl_payment_to_company`
@@ -1846,6 +2645,18 @@ ALTER TABLE `tbl_stores`
 -- Indexes for table `tbl_territories`
 --
 ALTER TABLE `tbl_territories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_transfers`
+--
+ALTER TABLE `tbl_transfers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_transfer_products`
+--
+ALTER TABLE `tbl_transfer_products`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1904,7 +2715,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -1916,7 +2727,7 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT for table `tbl_area`
 --
 ALTER TABLE `tbl_area`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbl_bank`
@@ -1976,7 +2787,7 @@ ALTER TABLE `tbl_customer_products`
 -- AUTO_INCREMENT for table `tbl_dealers`
 --
 ALTER TABLE `tbl_dealers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tbl_groups`
@@ -2036,7 +2847,19 @@ ALTER TABLE `tbl_liftings`
 -- AUTO_INCREMENT for table `tbl_lifting_products`
 --
 ALTER TABLE `tbl_lifting_products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=194;
+
+--
+-- AUTO_INCREMENT for table `tbl_lifting_returns`
+--
+ALTER TABLE `tbl_lifting_returns`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_lifting_return_products`
+--
+ALTER TABLE `tbl_lifting_return_products`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tbl_payment_to_company`
@@ -2078,13 +2901,25 @@ ALTER TABLE `tbl_staffs`
 -- AUTO_INCREMENT for table `tbl_stores`
 --
 ALTER TABLE `tbl_stores`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tbl_territories`
 --
 ALTER TABLE `tbl_territories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `tbl_transfers`
+--
+ALTER TABLE `tbl_transfers`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `tbl_transfer_products`
+--
+ALTER TABLE `tbl_transfer_products`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `tbl_vehicles`
@@ -2102,13 +2937,13 @@ ALTER TABLE `tbl_vendors`
 -- AUTO_INCREMENT for table `user_menus`
 --
 ALTER TABLE `user_menus`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `user_menu_actions`
 --
 ALTER TABLE `user_menu_actions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
 
 --
 -- AUTO_INCREMENT for table `user_roles`

@@ -7,17 +7,18 @@
                 $sl = 0;
             @endphp
 
-            <table id="dataTable" class="table table-bordered table-striped"  name="territoryTable">
+            <table id="dataTable" class="table table-bordered table-striped"  name="dealerTable">
                 <thead>
                     <tr>
                         <th width="20px">SL</th>
                         <th>Dealer Name</th>
-                        <th>Code</th>
-                        <th>District</th>
-                        <th>Territory Name</th>
-                        <th>Type</th>
-                        <th>Mobile</th>
-                        <th>Address</th>
+                        <th width="70px">Code</th>
+                        <th width="100px">District</th>
+                        <th width="120px">Upazila</th>
+                        <th width="110px">Territory Name</th>
+                        <th width="90px">Type</th>
+                        <th width="80px">Mobile</th>
+                        <th width="110px">Address</th>
                         <th width="20px">Status</th>
                         <th width="20px">Action</th>
                     </tr>
@@ -31,8 +32,9 @@
                             <td>{{ $sl++ }}</td>
                             <td>{{ $dealer->name }}</td>
                             <td>{{ $dealer->code }}</td>
-                            <td>{{ $dealer->district_id }}</td>
-                            <td>{{ $dealer->territory_id }}</td>
+                            <td>{{ $dealer->districtName }} / {{ $dealer->districtBanglaName }}</td>
+                            <td>{{ $dealer->upazilaName }} / {{ $dealer->upazilaBanglaName }}</td>
+                            <td>{{ $dealer->territoryName }}</td>
                             <td>{{ $dealer->type }}</td>
                             <td>{{ $dealer->mobile }}</td>
                             <td>{{ $dealer->address }}</td>

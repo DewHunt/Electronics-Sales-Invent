@@ -7,17 +7,15 @@
                 $sl = 0;
             @endphp
 
-            <table id="dataTable" class="table table-bordered table-striped"  name="liftingTable">
+            <table id="dataTable" class="table table-bordered table-striped"  name="transferTable">
                 <thead>
                     <tr>
                         <th width="20px">SL</th>
-                        <th>Voucher No.</th>
-                        <th>Voucher Date.</th>
-                        <th>Supplier</th>
-                        <th>Store Or Showroom</th>
-                        <th>Purchase By</th>
+                        <th>Transfer No.</th>
+                        <th>Transfer Date.</th>
+                        <th>Host</th>
+                        <th>Destination</th>
                         <th>Quanty</th>
-                        <th>Amount</th>
                         <th width="20px">Action</th>
                     </tr>
                 </thead>
@@ -25,26 +23,29 @@
                 	@php
                 		$sl = 0;
                 	@endphp
-                	@foreach ($liftings as $lifting)
+                	@foreach ($transfers as $transfer)
                         @php
-                            $storeOrShowroom = DB::table('view_store_and_showroom')
-                                ->select('name as storeOrShowroomName')
-                                ->where('type',$lifting->store_or_showroom_type)
-                                ->where('id',$lifting->store_or_showroom_id)
+                            $host = DB::table('view_store_and_showroom')
+                                ->select('name as hostName')
+                                ->where('type',$transfer->host_type)
+                                ->where('id',$transfer->host_id)
+                                ->first();
+                            $destination = DB::table('view_store_and_showroom')
+                                ->select('name as destinationName')
+                                ->where('type',$transfer->destination_type)
+                                ->where('id',$transfer->destination_id)
                                 ->first();
                         @endphp
-                		<tr class="row_{{ $lifting->id }}">
+                		<tr class="row_{{ $transfer->id }}">
 	                		<td>{{ $sl++ }}</td>
-	                		<td>{{ $lifting->vaouchar_no }}</td>
-	                		<td>{{ $lifting->vouchar_date }}</td>
-	                		<td>{{ $lifting->vendorName }}</td>
-                            <td>{{ @$storeOrShowroom->storeOrShowroomName }}</td>
-	                		<td>{{ $lifting->purchase_by }}</td>
-	                		<td>{{ $lifting->total_qty }}</td>
-	                		<td>{{ $lifting->total_price }}</td>
+	                		<td>{{ $transfer->transfer_no }}</td>
+	                		<td>{{ $transfer->date }}</td>
+	                		<td>{{ @$host->hostName }}</td>
+                            <td>{{ @$destination->destinationName }}</td>
+	                		<td>{{ $transfer->total_qty }}</td>
 	                		<td>
 	                			@php
-	                				echo \App\Link::action($lifting->id);
+	                				echo \App\Link::action($transfer->id);
 	                			@endphp 
 	                		</td>
                 		</tr>
@@ -68,7 +69,7 @@
                   }
                 });
 
-                liftingId = $(this).parent().data('id');
+                transferId = $(this).parent().data('id');
                 // console.log(liftingId);
                 var tableRow = this;
                 swal({   
@@ -86,18 +87,18 @@
                     if (isConfirm) {
                         $.ajax({
                             type: "POST",
-                            url : "{{ route('lifting.delete') }}",
-                            data : {liftingId:liftingId},
+                            url : "{{ route('transferProduct.delete') }}",
+                            data : {transferId:transferId},
                            
                             success: function(response) {
                                 swal({
                                     title: "<small class='text-success'>Success!</small>", 
                                     type: "success",
-                                    text: "Vendor Deleted Successfully!",
+                                    text: "Transfer Deleted Successfully!",
                                     timer: 1000,
                                     html: true,
                                 });
-                                $('.row_'+liftingId).remove();
+                                $('.row_'+transferId).remove();
                             },
                             error: function(response) {
                                 error = "Failed.";
@@ -116,7 +117,7 @@
                         swal({
                             title: "Cancelled", 
                             type: "error",
-                            text: "Your Lifting Is Safe :)",
+                            text: "This Transfer Is Safe :)",
                             timer: 1000,
                             html: true,
                         });    

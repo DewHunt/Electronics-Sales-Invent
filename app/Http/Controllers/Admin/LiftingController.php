@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\VendorSetup;
+use App\StoreSetup;
 use App\Product;
 use App\Lifting;
 use App\LiftingProduct;
@@ -21,7 +22,7 @@ class LiftingController extends Controller
     	$title = "Product Lifting";
 
     	$liftings = Lifting::select('tbl_liftings.*','tbl_vendors.name as vendorName')
-    		->join('tbl_vendors','tbl_vendors.id','=','tbl_liftings.vendor_id')
+    		->leftJoin('tbl_vendors','tbl_vendors.id','=','tbl_liftings.vendor_id')
     		->orderBy('tbl_liftings.id','dsc')
             // ->orderBy('tbl_liftings.purchase_by','asc')
     		// ->orderBy('tbl_vendors.name','asc')
@@ -37,9 +38,13 @@ class LiftingController extends Controller
     	$buttonName = "Save";
 
     	$vendors = VendorSetup::where('status','1')->orderBy('name','asc')->get();
+        $storesAndShowrooms = DB::table('view_store_and_showroom')
+            ->orderBy('type','asc')
+            ->orderBy('name','asc')
+            ->get();
     	$products = Product::where('status','1')->orderBy('name','asc')->get();
 
-    	return view('admin.lifting.add')->with(compact('title','formLink','buttonName','vendors','products'));
+    	return view('admin.lifting.add')->with(compact('title','formLink','buttonName','vendors','storesAndShowrooms','products'));
     }
 
     public function save(Request $request)
@@ -49,10 +54,16 @@ class LiftingController extends Controller
         $submissionDate = date('Y-m-d', strtotime($request->submissionDate));
         $voucherDate = date('Y-m-d', strtotime($request->voucherDate));
 
+        $storesOrShowrooms = explode(',',$request->storeOrShowroom);
+        $storeOrShowroomId = $storesOrShowrooms[0];
+        $storeOrShowroomType = $storesOrShowrooms[1];
+
         $lifting = Lifting::create( [
         	'serial_no' => $request->serialNo,
             'vaouchar_no' => $request->voucharNo,
             'vendor_id' => $request->vendorId,
+            'store_or_showroom_type' => $storeOrShowroomType,
+            'store_or_showroom_id' => $storeOrShowroomId,
             'purchase_by' => $request->purchaseBy,           
             'submission_date' => $submissionDate,
             'vouchar_date' => $voucherDate,          
@@ -68,7 +79,10 @@ class LiftingController extends Controller
         	for ($i=0; $i <$countProduct ; $i++) { 
         		$postData[] = [
         			'lifting_id'=> $lifting->id,
+                    'vendor_id' => $request->vendorId,
         			'product_id' => $request->productId[$i],
+                    'store_or_showroom_type' => $storeOrShowroomType,
+                    'store_or_showroom_id' => $storeOrShowroomId,
         			'model_no' => $request->productModel[$i],
         			'serial_no' => $request->productSerialNo[$i],
         			'color' => $request->productColor[$i],
@@ -91,6 +105,12 @@ class LiftingController extends Controller
     	$buttonName = "Update";
 
     	$vendors = VendorSetup::where('status','1')->orderBy('name','asc')->get();
+
+        $vendors = VendorSetup::where('status','1')->orderBy('name','asc')->get();
+        $storesAndShowrooms = DB::table('view_store_and_showroom')
+            ->orderBy('type','asc')
+            ->orderBy('name','asc')
+            ->get();
     	$products = Product::where('status','1')->orderBy('name','asc')->get();
     	$lifting = Lifting::where('id',$liftingId)->first();
     	$liftingProducts = LiftingProduct::select('tbl_lifting_products.*','tbl_products.name as productName')
@@ -98,7 +118,7 @@ class LiftingController extends Controller
     		->where('.tbl_lifting_products.lifting_id',$liftingId)
     		->get();
 
-    	return view('admin.lifting.edit')->with(compact('title','formLink','buttonName','vendors','products','lifting','liftingProducts'));
+    	return view('admin.lifting.edit')->with(compact('title','formLink','buttonName','vendors','storesAndShowrooms','products','lifting','liftingProducts'));
     }
 
     public function update(Request $request)
@@ -108,6 +128,11 @@ class LiftingController extends Controller
 
         $submissionDate = date('Y-m-d', strtotime($request->submissionDate));
         $voucherDate = date('Y-m-d', strtotime($request->voucherDate));
+
+        $storesOrShowrooms = explode(',',$request->storeOrShowroom);
+        $storeOrShowroomId = $storesOrShowrooms[0];
+        $storeOrShowroomType = $storesOrShowrooms[1];
+
         $liftingId = $request->liftingId;
 
         $lifting = Lifting::find($liftingId);
@@ -116,6 +141,8 @@ class LiftingController extends Controller
         	'serial_no' => $request->serialNo,
             'vaouchar_no' => $request->voucharNo,
             'vendor_id' => $request->vendorId,
+            'store_or_showroom_type' => $storeOrShowroomType,
+            'store_or_showroom_id' => $storeOrShowroomId,
             'purchase_by' => $request->purchaseBy,           
             'submission_date' => $submissionDate,
             'vouchar_date' => $voucherDate,          
@@ -133,7 +160,10 @@ class LiftingController extends Controller
         	for ($i=0; $i <$countProduct ; $i++) { 
         		$postData[] = [
         			'lifting_id'=> $lifting->id,
+                    'vendor_id' => $request->vendorId,
         			'product_id' => $request->productId[$i],
+                    'store_or_showroom_type' => $storeOrShowroomType,
+                    'store_or_showroom_id' => $storeOrShowroomId,
         			'model_no' => $request->productModel[$i],
         			'serial_no' => $request->productSerialNo[$i],
         			'color' => $request->productColor[$i],

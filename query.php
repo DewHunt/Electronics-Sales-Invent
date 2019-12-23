@@ -83,6 +83,20 @@
     LEFT JOIN `tbl_products` ON `tbl_products`.`id` = `tbl_invoice`.`product_id`
     ";
 
+    $storeAndShowroom = 
+    "
+    CREATE OR REPLACE VIEW view_store_and_showroom AS
+    SELECT `tbl_stores`.`id` as `id`,'store' as `type`,`tbl_stores`.`type` as `storeType`,`tbl_stores`.`name` as `name`
+    FROM `tbl_stores`
+    WHERE `tbl_stores`.`status` = '1'
+
+    UNION
+
+    SELECT `tbl_showroom`.`id` as `id`,'showroom' as `type`,'' as `storeType`,`tbl_showroom`.`name` as `name`
+    FROM `tbl_showroom`
+    WHERE `tbl_showroom`.`status` = '1'
+    "
+
     
 
     

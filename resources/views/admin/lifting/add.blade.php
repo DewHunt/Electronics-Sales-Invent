@@ -73,11 +73,17 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label for="vaouchar-date">Vouchar Date</label>
-                        <div class="form-group {{ $errors->has('voucherDate') ? ' has-danger' : '' }}">
-                            <input type="text" class="form-control add_datepicker" name="voucherDate" value="{{ old('voucherDate') }}" readonly>
-                            @if ($errors->has('voucherDate'))
-                                @foreach($errors->get('voucherDate') as $error)
+                        <label for="store-showroom">Store & Showrooms</label>
+                        <div class="form-group {{ $errors->has('storeOrShowroom') ? ' has-danger' : '' }}">
+                            <select class="form-control chosen-select" name="storeOrShowroom">
+                                <option value=" ">Select Store</option>
+                                @foreach ($storesAndShowrooms as $storeAndShowroom)
+                                    <option value="{{ $storeAndShowroom->id }},{{ $storeAndShowroom->type }}">{{ $storeAndShowroom->name }}</option>
+                                @endforeach
+                            </select>
+
+                            @if ($errors->has('storeOrShowroom'))
+                                @foreach($errors->get('storeOrShowroom') as $error)
                                     <div class="form-control-feedback">{{ $error }}</div>
                                 @endforeach
                             @endif
@@ -99,14 +105,29 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label for="submission-date">Submission Date</label>
-                        <div class="form-group {{ $errors->has('submissionDate') ? ' has-danger' : '' }}">
-                            <input type="text" class="form-control add_datepicker" name="submissionDate" value="{{ old('submissionDate') }}" readonly>
-                            @if ($errors->has('submissionDate'))
-                                @foreach($errors->get('submissionDate') as $error)
-                                    <div class="form-control-feedback">{{ $error }}</div>
-                                @endforeach
-                            @endif
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="vaouchar-date">Vouchar Date</label>
+                                <div class="form-group {{ $errors->has('voucherDate') ? ' has-danger' : '' }}">
+                                    <input type="text" class="form-control add_datepicker" name="voucherDate" value="{{ old('voucherDate') }}" readonly>
+                                    @if ($errors->has('voucherDate'))
+                                        @foreach($errors->get('voucherDate') as $error)
+                                            <div class="form-control-feedback">{{ $error }}</div>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="submission-date">Submission Date</label>
+                                <div class="form-group {{ $errors->has('submissionDate') ? ' has-danger' : '' }}">
+                                    <input type="text" class="form-control add_datepicker" name="submissionDate" value="{{ old('submissionDate') }}" readonly>
+                                    @if ($errors->has('submissionDate'))
+                                        @foreach($errors->get('submissionDate') as $error)
+                                            <div class="form-control-feedback">{{ $error }}</div>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -16,14 +16,6 @@
 	</style>
 @endsection
 
-@php    
-    $storeOrShowroom = DB::table('view_store_and_showroom')
-        ->select('name as storeOrShowroomName')
-        ->where('type',$lifting->store_or_showroom_type)
-        ->where('id',$lifting->store_or_showroom_id)
-        ->first();
-@endphp
-
 @section('content')
     <table id="report-header">
         <tr>
@@ -34,31 +26,31 @@
     <table id="lifting-info">
         <tbody>
         	<tr>
-        		<td width="140px">Vouchar No.</td>
+        		<td width="110px">Vouchar No.</td>
         		<td width="15px">:</td>
         		<td>{{ $lifting->vaouchar_no }}</td>
         	</tr>
 
         	<tr>
-        		<td width="140px">Vouchar Date</td>
+        		<td width="110px">Vouchar Date</td>
         		<td width="15px">:</td>
         		<td>{{ $lifting->vouchar_date }}</td>
         	</tr>
 
         	<tr>
-        		<td width="140px">Supplier</td>
+        		<td width="110px">Supplier</td>
         		<td width="15px">:</td>
         		<td>{{ $lifting->vendorName }}</td>
         	</tr>
 
             <tr>
-                <td width="140px">Store / Showrooms</td>
+                <td width="110px">Store</td>
                 <td width="15px">:</td>
-                <td>{{ $storeOrShowroom->storeOrShowroomName }}</td>
+                <td>{{ $lifting->storeName }}</td>
             </tr>
 
         	<tr>
-        		<td width="140px">Purchase By</td>
+        		<td width="110px">Purchase By</td>
         		<td width="15px">:</td>
         		<td>{{ $lifting->purchase_by }}</td>
         	</tr>

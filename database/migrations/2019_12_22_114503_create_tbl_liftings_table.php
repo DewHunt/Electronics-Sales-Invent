@@ -15,9 +15,11 @@ class CreateTblLiftingsTable extends Migration
     {
         Schema::create('tbl_liftings', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial_no');
-            $table->string('vaouchar_no');
-            $table->integer('vendor_id');
+            $table->string('serial_no')->nullable();
+            $table->string('vaouchar_no')->nullable();
+            $table->integer('vendor_id')->nullable();
+            $table->string('store_or_showroom_type')->nullable();
+            $table->integer('store_or_showroom_id')->nullable();
             $table->string('purchase_by')->nullable();
             $table->date('submission_date')->nullable();
             $table->date('vouchar_date')->nullable();

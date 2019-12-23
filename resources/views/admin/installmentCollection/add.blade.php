@@ -252,27 +252,37 @@
                         $('.installmentQty').val(installment.installment_qty);
 
 
-                        for (var row of installmentScheduleList) {
+                        for (var row of installmentScheduleList)
+                        {
+                            if (row.id != $('.collectedSchedule_'+row.id).val())
+                            {
                             var installment_schedule_date = ScheduleDate(row.installment_schedule_date);
 
-                            $(".installmentScheduleTable tbody").append('<tr class="instalmentScheduleRow" id="instalmentScheduleRow_' + row.id + '">' +
+                            $(".installmentScheduleTable tbody").append(
+                                '<tr class="instalmentScheduleRow" id="instalmentScheduleRow_' + row.id + '">' +
                                 '<td><input class="form-control" style="text-align: center;" type="text" value="'+row.invoice_no+'" readonly></td>'+
                                 '<td><input class="form-control installmentScheduleDate_'+row.id+'" style="text-align: center;" type="text" value="'+installment_schedule_date+'" required readonly></td>'+
                                 '<td><input class="form-control installmentScheduleAmount_'+row.id+'" style="text-align: center;" type="text" value="'+row.installment_schedule_amount+'" readonly></td>'+
                                 '<td align="center"><span class="btn btn-success item_remove" style="text-align: center;width:100%;padding:7px;" onclick="InstallmentScheduleCollect(' + row.id + ')">Collect</span></td>'+
-                                '</tr>');
+                                '</tr>'
+                            );
+                                
                             }
+                        }
 
-                    for (var row of installmentCollectionList) {
+                        for (var row of installmentCollectionList)
+                        {
                             var installment_schedule_date = ScheduleDate(row.installment_schedule_date);
 
-                            $(".collectionTable tbody").append('<tr class="collectionListRow" id="collectionListRow">' +
+                            $(".collectionTable tbody").append(
+                                '<tr class="collectionListRow" id="collectionListRow">'+
                                 '<td><input class="form-control" style="text-align: center;" type="text" value="'+row.invoice_no+'" readonly></td>'+
                                 '<td><input class="form-control installmentScheduleDate_'+row.id+'" style="text-align: center;" type="text" value="'+installment_schedule_date+'" required readonly></td>'+
                                 '<td><input class="form-control installmentScheduleAmount_'+row.id+'" style="text-align: center;width:100%;padding:7px;" type="text" value="'+row.installment_schedule_amount+'" readonly></td>'+
                                 '<td><span class="btn btn-info">Collected</span></td>'+
-                                '</tr>');
-                            }
+                                '</tr>'
+                            );
+                        }
                     }
                 });
             }
@@ -286,14 +296,13 @@
         var installmentScheduleDate = $('.installmentScheduleDate_'+installmentScheduleId).val();   
         var installmentScheduleAmount = $('.installmentScheduleAmount_'+installmentScheduleId).val();
         $(".collectionTable tbody").append('<tr id="instalmentCollectionRow_' + installmentScheduleId + '">' +
-            '<td><input type="hidden" name="installmentScheduleId[]" value="'+installmentScheduleId+'"> <input class="form-control" style="text-align: center;" type="text" value="'+invoiceNo+'" readonly></td>'+
+            '<td><input class="form-control collectedSchedule_'+installmentScheduleId+'" type="hidden" name="installmentScheduleId[]" value="'+installmentScheduleId+'"> <input class="form-control" style="text-align: center;" type="text" value="'+invoiceNo+'" readonly></td>'+
             '<td><input class="form-control installmentScheduleCollectionDate_'+installmentScheduleId+'" style="text-align: center;" type="text" name="installmentScheduleDate[]" value="'+installmentScheduleDate+'" required readonly></td>'+
             '<td><input class="form-control installmentScheduleCollectionAmount_'+installmentScheduleId+'" style="text-align: center;" type="text" name="installmentScheduleAmount[]" value="'+installmentScheduleAmount+'" readonly></td>'+
             '<td align="center"><span class="btn btn-danger item_remove" style="text-align: center;width:100%;padding:7px;" onclick="InstallmentCollectionRemove(' + installmentScheduleId + ')">Remove</span></td>'+
             '</tr>');
 
          $('#instalmentScheduleRow_'+installmentScheduleId).remove();
-
     }
 
     /*code for remove installment collection which are collected*/

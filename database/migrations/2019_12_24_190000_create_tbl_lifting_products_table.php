@@ -18,6 +18,7 @@ class CreateTblLiftingProductsTable extends Migration
             $table->integer('lifting_id')->nullable();
             $table->integer('vendor_id')->nullable();
             $table->integer('product_id')->nullable();
+            $table->string('product_name')->nullable();
             $table->string('store_or_showroom_type')->nullable();
             $table->integer('store_or_showroom_id')->nullable();
             $table->string('model_no')->nullable();

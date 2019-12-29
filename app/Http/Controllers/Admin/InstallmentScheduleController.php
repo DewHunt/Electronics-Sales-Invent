@@ -5,12 +5,15 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
+use PDF;
 use App\Product;
 use App\CustomerProduct;
 use App\CustomerRegistrationSetup;
 use App\Installment;
 use App\InstallmentSchedule;
 use App\InvoiceSetup;
+use App\StaffSetup;
+
 
 class InstallmentScheduleController extends Controller
 {
@@ -24,19 +27,23 @@ class InstallmentScheduleController extends Controller
     	$title = "Prepare Installment Schedule";
         $formLink = "installmentSchedule.save";
         $buttonName = "Save";
+        $collectorList = StaffSetup::orderBy('name','asc')->get();
         $customerProducts = InvoiceSetup::where('collection_type','!=','Cash')
             ->where('status','1')
             ->get();
-    	return view('admin.installmentSchedule.add')->with(compact('title','formLink','buttonName','customerProducts'));
+    	return view('admin.installmentSchedule.add')->with(compact('title','formLink','buttonName','customerProducts','collectorList'));
     }
 
     public function save(Request $request){
         $getCustomerProduct = CustomerProduct::where('id',$request->customerProductId)->first();
+        $collector = StaffSetup::where('id',$request->installmentCollectorId)->first();
         $installment = Installment::create([
             'customer_product_id' => $request->customerProductId,       
             'customer_id' => $getCustomerProduct->customer_id,       
             'product_id' => $getCustomerProduct->product_id,       
             'invoice_no' => $request->invoiceNo,       
+            'installment_collector_id' => $request->installmentCollectorId,       
+            'installment_collector_name' => $collector->name,       
             'customer_name' => $request->customerName,
             'installment_price' => $request->productAmount,       
             'booking_amount' => $request->bookingAmount,       
@@ -110,6 +117,19 @@ class InstallmentScheduleController extends Controller
 
         Installment::where('id',$request->installmentId)->delete();
         InstallmentSchedule::where('installment_id',$request->installmentId)->delete();
+    }
+
+    public function print($id)
+    {
+        $title = "Installment Schedule Details";
+        $installment = Installment::where('id',$id)->first();
+        $customer = CustomerRegistrationSetup::where('id',$installment->customer_id)->first();
+        $product = Product::where('id',$installment->product_id)->first();
+        $installmentScheduleList = InstallmentSchedule::where('installment_id',$id)->orderBy('installment_schedule_date','ASC')->get();
+        
+        $pdf = PDF::loadView('admin.installmentSchedule.print',['title'=>$title,'installment'=>$installment,'installmentScheduleList'=>$installmentScheduleList,'customer'=>$customer,'product'=>$product]);
+
+        return $pdf->stream('installment_schedule_list.pdf');
     }
 
     public function getCustomerProductInfo(Request $request)

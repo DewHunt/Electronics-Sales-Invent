@@ -62,6 +62,7 @@ class InstallmentCollectionController extends Controller
         for ($i=0; $i <$countInstallmentCollection ; $i++)
         { 
             $installmentScheduleDate = date('Y-m-d',strtotime($request->installmentScheduleDate[$i]));
+            $installmentCollectionDate = date('Y-m-d');
 
             $installment_collection_list = InstallmentCollectionList::create( [
                 'installment_id'=> $installment->id,
@@ -69,6 +70,7 @@ class InstallmentCollectionController extends Controller
                 'installment_collection_id'=> $installmentCollectionId,
                 'invoice_no' => $request->invoiceNo,
                 'installment_schedule_date' => $installmentScheduleDate, 
+                'installment_collection_date' => $installmentCollectionDate, 
                 'installment_schedule_amount' => $request->installmentScheduleAmount[$i],       
             ]);
 
@@ -123,12 +125,14 @@ class InstallmentCollectionController extends Controller
 
                 for ($i=0; $i <$countInstallmentCollection ; $i++) { 
                     $installmentScheduleDate = date('Y-m-d',strtotime($request->installmentScheduleDate[$i]));
+                    $installmentCollectionDate = date('Y-m-d');
                     $installment_collection_list = InstallmentCollectionList::create( [
 			             'installment_id'=> $installmentId,
 			             'installment_schedule_id'=> $request->installmentScheduleId[$i],
                         'installment_collection_id'=> $installmentCollectionId,
                         'invoice_no' => $request->invoiceNo,
                         'installment_schedule_date' => $installmentScheduleDate, 
+                        'installment_collection_date' => $installmentCollectionDate, 
                         'installment_schedule_amount' => $request->installmentScheduleAmount[$i],       
 			        ]);
 

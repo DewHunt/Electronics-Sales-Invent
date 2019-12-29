@@ -55,7 +55,7 @@
             <div class="card-body">
                 <input type="hidden" value="print" name="print">
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-7">
                         <label for="customerProductId">Customer & Product Name</label>
                         <div class="form-group {{ $errors->has('customerProductId') ? ' has-danger' : '' }}">
                             <select class="form-control chosen-select product" name="customerProductId" data-placeholder="Select One" required="">
@@ -82,13 +82,30 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                         <label>Invoice No</label>
                         <div class="form-group {{ $errors->has('invoiceNo') ? ' has-danger' : '' }}">
-                             <input type="hidden" name="customerName" readonly="" class="form-control customerName">
+                            <input type="hidden" name="customerName" readonly="" class="form-control customerName">
                             <input type="text" name="invoiceNo" readonly="" class="form-control invoiceNo">
                             @if ($errors->has('invoiceNo'))
                                 @foreach($errors->get('invoiceNo') as $error)
+                                    <div class="form-control-feedback">{{ $error }}</div>
+                                @endforeach
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>Collector</label>
+                        <div class="form-group {{ $errors->has('installmentCollectorId') ? ' has-danger' : '' }}">
+                            <select class="form-control chosen-select" name="installmentCollectorId" required="">
+                                <option value="">Select Collector</option>
+                                @foreach ($collectorList as $collector)
+                                    <option value="{{$collector->id}}">{{$collector->name}}</option>
+                                @endforeach
+                            </select>
+                            @if ($errors->has('installmentCollectorId'))
+                                @foreach($errors->get('installmentCollectorId') as $error)
                                     <div class="form-control-feedback">{{ $error }}</div>
                                 @endforeach
                             @endif
@@ -189,6 +206,7 @@
                             <table class="table table-striped gridTable">
                                 <thead>
                                     <tr>
+                                        <th class="text-center" width="30px">SL</th>
                                         <th class="text-center">Invoice No</th>
                                         <th class="text-center">Schedule Date</th>
                                         <th class="text-center">Installment Amount</th>
@@ -274,6 +292,7 @@
                 }
 
                 $(".gridTable tbody").append('<tr id="itemRow_' + total + '">' +
+                    '<td><input type="text" class="text-center" value="'+total+'" readonly></td>'+
                     '<td><input style="text-align: center;" type="text" value="'+invoiceNo+'" readonly></td>'+
                     '<td><input style="text-align: center;" type="text" name="installmentScheduleDate[]" class="installmentScheduleDate_'+total+'" value="'+scheduleDate+'" required readonly></td>'+
                     '<td><input style="text-align: center;" type="text" name="installmentScheduleAmount[]" value="'+installmentAmount+'" readonly></td>'+
@@ -312,6 +331,7 @@
         function TotalInstallmetnQty(total)
         {
             var installmentQty = parseInt($('.installmentQty').val())+parseInt(1);
+            var finalTotal = parseInt(total)+parseInt(1);
             if(total == installmentQty)
             {
                 $('.createSchedule').hide();

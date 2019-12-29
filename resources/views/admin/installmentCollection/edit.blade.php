@@ -175,7 +175,7 @@
                                    @foreach($installmentScheduleList as $schedule)
                                        @php
                                             $i++;
-                                            $scheduleDate = date('d-m-Y',strtotime($schedule->installment_schedule_date));
+                                            $scheduleDate = date('d-M-Y',strtotime($schedule->installment_schedule_date));
                                        @endphp
                                         <tr id="instalmentScheduleRow_{{$schedule->id}}">
                                             <td><input class="form-control" style="text-align: center;" type="text" value="{{$schedule->invoice_no}}" readonly></td>

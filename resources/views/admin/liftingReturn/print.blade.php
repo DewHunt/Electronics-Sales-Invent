@@ -1,63 +1,61 @@
 @extends('admin.layouts.masterPrint')
 
 @section('custome-css')
-	<style type="text/css">
-		#lifting-info{
-			font-family: Times, "Times New Roman", serif;
-			width: 100%;
-			border-collapse: collapse;
-			border-style: dotted;
-		}
+    <style type="text/css">
+        #lifting-return-info{
+            font-family: Times, "Times New Roman", serif;
+            width: 100%;
+            border-collapse: collapse;
+            border-style: dotted;
+        }
 
-		#lifting-info td{
-			padding: 5px;
-			border-bottom: 1px solid #ddd;
-		}
-	</style>
+        #lifting-return-info td{
+            padding: 5px;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
 @endsection
+
+@php    
+    $storeOrShowroom = DB::table('view_store_and_showroom')
+        ->select('name as storeOrShowroomName')
+        ->where('type',$liftingReturn->store_or_showroom_type)
+        ->where('id',$liftingReturn->store_or_showroom_id)
+        ->first();
+@endphp
 
 @section('content')
     <table id="report-header">
         <tr>
-            <td>Product Lifting Chalan</td>
+            <td>Lifting Return Vouchar</td>
         </tr>
     </table>
 
-    <table id="lifting-info">
+    <div id="pad-bottom"></div>
+
+    <table id="lifting-return-info">
         <tbody>
-        	<tr>
-        		<td width="110px">Vouchar No.</td>
-        		<td width="15px">:</td>
-        		<td>{{ $lifting->vaouchar_no }}</td>
-        	</tr>
-
-        	<tr>
-        		<td width="110px">Vouchar Date</td>
-        		<td width="15px">:</td>
-        		<td>{{ $lifting->vouchar_date }}</td>
-        	</tr>
-
-        	<tr>
-        		<td width="110px">Supplier</td>
-        		<td width="15px">:</td>
-        		<td>{{ $lifting->vendorName }}</td>
-        	</tr>
-
             <tr>
-                <td width="110px">Store</td>
-                <td width="15px">:</td>
-                <td>{{ $lifting->storeName }}</td>
+                <td width="115px"><b>Vouchar No.</b></td>
+                <td width="5px">:</td>
+                <td>{{ $liftingReturn->serial_no }}</td>
+                <td width="150px"><b>Supplier</b></td>
+                <td width="5px">:</td>
+                <td>{{ $liftingReturn->vendorName }}</td>
             </tr>
 
-        	<tr>
-        		<td width="110px">Purchase By</td>
-        		<td width="15px">:</td>
-        		<td>{{ $lifting->purchase_by }}</td>
-        	</tr>
+            <tr>
+                <td width="115px"><b>Vouchar Date</b></td>
+                <td width="15px">:</td>
+                <td>{{ $liftingReturn->date }}</td>
+                <td width="150px"><b>Store / Showrooms</b></td>
+                <td width="15px">:</td>
+                <td>{{ $storeOrShowroom->storeOrShowroomName }}</td>
+            </tr>
         </tbody>
     </table>
 
-    <div style="padding-bottom: 10px;"></div>
+    <div id="pad-bottom"></div>
 
     <table  id="report-table">
         <thead class="thead-light">
@@ -73,21 +71,29 @@
 
         <tbody>
             @php
-                $sl = 0;
+                $sl = 1;
+                $totalQty = 0;
             @endphp
-            @foreach ($liftingProducts as $liftingProduct)
+            @foreach ($liftingReturnProducts as $liftingReturnProduct)
                 @php
-                    $sl++;                                       
+                    $totalQty = $totalQty + $liftingReturnProduct->qty;                                       
                 @endphp
                 <tr>
                     <td>{{ $sl++ }}</td>
-                    <td>{{ $liftingProduct->productName }} ( {{ $liftingProduct->productCode }} )</td>
-                    <td>{{ $liftingProduct->model_no }}</td>
-                    <td>{{ $liftingProduct->color }}</td>
-                    <td>{{ $liftingProduct->serial_no }}</td>
-                    <td>{{ $liftingProduct->qty }}</td>
+                    <td>{{ $liftingReturnProduct->product_name }} ( {{ $liftingReturnProduct->productCode }} )</td>
+                    <td>{{ $liftingReturnProduct->model_no }}</td>
+                    <td>{{ $liftingReturnProduct->color }}</td>
+                    <td>{{ $liftingReturnProduct->serial_no }}</td>
+                    <td style="text-align: right;">{{ $liftingReturnProduct->qty }}</td>
                 </tr>
             @endforeach
         </tbody>
+
+        <tfoot>
+            <tr>
+                <th colspan="5">Total Quantity</th>
+                <td style="text-align: right;"><b>{{ $totalQty }}</b></td>
+            </tr>
+        </tfoot>
     </table>
 @endsection

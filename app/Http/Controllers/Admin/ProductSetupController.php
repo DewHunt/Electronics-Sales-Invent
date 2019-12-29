@@ -17,7 +17,7 @@ class ProductSetupController extends Controller
     	$title = "Product Setup";
 
         $products = Product::select('tbl_products.*','tbl_categories.name as catName')
-            ->join('tbl_categories','tbl_categories.id','=','tbl_products.category_id')
+            ->leftJoin('tbl_categories','tbl_categories.id','=','tbl_products.category_id')
             ->orderBy('tbl_products.id','dsc')
             // ->orderBy('tbl_categories.name','asc')
             // ->orderBy('tbl_products.name','asc')
@@ -45,9 +45,9 @@ class ProductSetupController extends Controller
     	$buttonName = "Save";
     	$productId = "";
 
-    	$categories = CategorySetup::where('status',1)
-    		->orderBy('name','asc')
-    		->get();
+        $categories = CategorySetup::where('status',1)
+            ->orderBy('name','asc')
+            ->get();
 
     	$relatedProducts = Product::where('status',1)
     		->orderBy('name','asc')
@@ -92,7 +92,7 @@ class ProductSetupController extends Controller
     public function saveProductBasicInfo(Request $request)
     {
         $product = Product::create( [
-        	'category_id' => $request->category,
+            'category_id' => $request->category,
         	'name' => $request->productName,
         	'code' => $request->productCode,
         	'model_no' => $request->productModelNo,

@@ -140,12 +140,24 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-8">
+                            <div class="col-md-4">
                                 <label>Installment Amount</label>
                                 <div class="form-group {{ $errors->has('installmentAmount') ? ' has-danger' : '' }}">
                                     <input type="text" name="installmentAmount" readonly="" class="form-control installmentAmount">
                                     @if ($errors->has('installmentAmount'))
                                         @foreach($errors->get('installmentAmount') as $error)
+                                            <div class="form-control-feedback">{{ $error }}</div>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label>Collection Date</label>
+                                <div class="form-group {{ $errors->has('installmentCollectionDate') ? ' has-danger' : '' }}">
+                                    <input type="text" name="installmentCollectionDate" readonly="" class="form-control installmentCollectionDate" value="{{date('d-M-Y')}}">
+                                    @if ($errors->has('installmentCollectionDate'))
+                                        @foreach($errors->get('installmentCollectionDate') as $error)
                                             <div class="form-control-feedback">{{ $error }}</div>
                                         @endforeach
                                     @endif

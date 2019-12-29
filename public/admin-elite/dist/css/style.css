@@ -4255,6 +4255,13 @@ button.close {
   .modal-lg {
     max-width: 800px; } }*/
 
+@media (min-width: 768px) {
+  .modal-xl {
+    width: 90%;
+    max-width:1200px;
+  }
+}
+
 .tooltip {
   position: absolute;
   z-index: 1070;
@@ -9724,6 +9731,9 @@ Card
     position: relative;
     font-weight: 600; 
     font-family: sans-serif;
+    margin-bottom: 0;
+    height: 45px;
+    line-height: 45px;
   }
   .card .card-actions {
     float: right; }

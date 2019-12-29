@@ -28,17 +28,66 @@
             </div>  
         </div>
 
+        <div class="col-md-3 form-group">
+            <label for="from-date">From Date</label>
+            <input  type="text" class="form-control datepicker" id="{{ $print == "print" ? "" : "from_date" }}" name="fromDate" placeholder="Select Date From" value="{{ date('d-m-Y',strtotime($fromDate)) }}" readonly>
+        </div>
+        <div class="col-md-3 form-group">
+            <label for="to-date">To Date</label>
+            <input  type="text" class="form-control datepicker" id="{{ $print == "print" ? "" : "to_date" }}" name="toDate" placeholder="Select Date To" value="{{ date('d-m-Y',strtotime($toDate)) }}" readonly>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-md-6">
-            <div class="row">
-                <div class="col-md-6 form-group">
-                    <label for="from-date">From Date</label>
-                    <input  type="text" class="form-control datepicker" id="{{ $print == "print" ? "" : "from_date" }}" name="fromDate" placeholder="Select Date From" value="{{ date('d-m-Y',strtotime($fromDate)) }}" readonly>
-                </div>
-                <div class="col-md-6 form-group">
-                    <label for="to-date">To Date</label>
-                    <input  type="text" class="form-control datepicker" id="{{ $print == "print" ? "" : "to_date" }}" name="toDate" placeholder="Select Date To" value="{{ date('d-m-Y',strtotime($toDate)) }}" readonly>
-                </div>
-            </div>                                  
+            <label for="type">Type</label>
+            <div class="form-group">
+                @php
+                    $types = array('store'=>'Store','showroom'=>'Showroom');
+                @endphp
+                <select class="form-control chosen-select" id="type" name="type">
+                    <option value="">Select Types</option>
+                    @foreach ($types as $key => $value)
+                        @php
+                            $select = "";
+                            if ($type)
+                            {
+                                if ($key == $type)
+                                {
+                                    $select = "selected";
+                                }
+                                else
+                                {
+                                    $select = "";
+                                }
+                            }
+                        @endphp
+                        <option value="{{ $key }}" {{ $select }}>{{ $value }}</option>
+                    @endforeach
+                </select>
+            </div>  
+        </div>
+
+        <div class="col-md-6">
+            <label for="store-or-showroom">Stores Or Showrooms</label>
+            <div class="form-group">
+                <select class="form-control chosen-select" name="storeOrShowroom">
+                    <option value=" ">Select Stores Or Showrooms</option>
+                    @foreach ($storesAndShowrooms as $storeAndShowroom)
+                        @php
+                            if ($storeAndShowroom->type == $storeOrShowroomType AND $storeAndShowroom->id == $storeOrShowroomId)
+                            {
+                                $select = "selected";
+                            }
+                            else
+                            {
+                                $select = "";
+                            }                                        
+                        @endphp
+                        <option value="{{ $storeAndShowroom->id }},{{ $storeAndShowroom->type }}" {{ $select }}>{{ $storeAndShowroom->name }}</option>
+                    @endforeach
+                </select>
+            </div>  
         </div>
     </div>
 
@@ -116,6 +165,10 @@
 
     <input type="hidden" name="fromDate" value="{{ $fromDate }}">
     <input type="hidden" name="toDate" value="{{ $toDate }}">
+
+    <input type="hidden" name="type" value="{{ $type }}">
+    <input type="hidden" name="storeOrShowroomType" value="{{ $storeOrShowroomType }}">
+    <input type="hidden" name="storeOrShowroomId" value="{{ $storeOrShowroomId }}">
     <input type="hidden" id="print_value" name="print" value="{{ $print }}">
 @endsection
 
@@ -127,6 +180,7 @@
 				<th>Date</th>
 				<th>Lifting No</th>
 				<th>Vendor</th>
+                <th>Store/Showroom Name</th>
                 <th>Category</th>
                 <th>Product</th>
                 <th>Serial</th>
@@ -147,6 +201,7 @@
                     <td>{{ $liftingRecord->liftingDate }}</td>
                     <td>{{ $liftingRecord->liftingNo }}</td>
                     <td>{{ $liftingRecord->vendorName }}</td>
+                    <td>{{ $liftingRecord->storeOrShowroomName }}</td>
                     <td>{{ $liftingRecord->categoryName }}</td>
                     <td>{{ $liftingRecord->productName }}</td>
                     <td>{{ $liftingRecord->productSerialNo }}</td>

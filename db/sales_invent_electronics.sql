@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 23, 2019 at 08:23 AM
+-- Generation Time: Dec 29, 2019 at 02:13 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -195,7 +195,20 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (79, '2019_12_22_114628_create_tbl_lifting_products_table', 51),
 (80, '2019_12_23_062450_create_tbl_lifting_returns_table', 52),
 (81, '2019_12_23_062907_create_tbl_lifting_return_products_table', 53),
-(82, '2019_12_23_071031_create_tbl_lifting_returns_table', 54);
+(82, '2019_12_23_071031_create_tbl_lifting_returns_table', 54),
+(83, '2019_12_23_102537_create_tbl_lifting_returns_table', 55),
+(84, '2019_12_23_113646_create_tbl_lifting_returns_table', 56),
+(85, '2019_12_23_123236_create_tbl_lifting_return_products_table', 57),
+(86, '2019_12_23_125212_create_tbl_lifting_returns_table', 58),
+(87, '2019_12_24_190000_create_tbl_lifting_products_table', 59),
+(88, '2019_12_28_112451_create_tbl_dealer_requisitions_table', 60),
+(89, '2019_12_28_112647_create_tbl_dealer_requisition_products_table', 60),
+(90, '2019_12_28_122019_create_tbl_dealer_requisitions_table', 61),
+(91, '2019_12_28_133338_create_tbl_products_table', 62),
+(92, '2019_12_29_043017_create_tbl_products_table', 63),
+(93, '2019_12_29_060327_create_tbl_dealer_requisitions_table', 64),
+(94, '2019_12_29_060914_create_tbl_dealer_requisition_products_table', 64),
+(95, '2019_12_29_062557_create_tbl_dealer_requisitions_table', 65);
 
 -- --------------------------------------------------------
 
@@ -366,7 +379,7 @@ INSERT INTO `tbl_categories` (`id`, `name`, `cover_image`, `image`, `status`, `p
 (9, 'Refrigerator & Freezer', '', '', 1, NULL, NULL, NULL, NULL, NULL, 2, '2019-12-16 00:19:15', '2019-12-16 00:23:49'),
 (10, 'Air Conditioner', NULL, NULL, 1, NULL, 'No', NULL, NULL, NULL, 2, '2019-12-16 00:43:26', '2019-12-16 00:46:37'),
 (11, 'Home Applince', '', '', 1, NULL, NULL, NULL, NULL, NULL, 4, '2019-12-16 00:45:24', '2019-12-16 00:45:30'),
-(12, 'LED TV', '', '', 1, NULL, NULL, NULL, NULL, NULL, 6, '2019-12-16 22:32:14', '2019-12-16 22:33:02'),
+(12, 'LED TV', '', '', 1, '8', NULL, NULL, NULL, NULL, 6, '2019-12-16 22:32:14', '2019-12-16 22:33:02'),
 (13, 'Fridge (Beverage Cooler)', '', '', 1, '9', NULL, NULL, NULL, NULL, 2, '2019-12-17 01:40:25', '2019-12-17 01:40:25');
 
 -- --------------------------------------------------------
@@ -599,7 +612,71 @@ CREATE TABLE `tbl_dealers` (
 --
 
 INSERT INTO `tbl_dealers` (`id`, `district_id`, `upazila_id`, `territory_id`, `type`, `code`, `name`, `contact_person`, `mobile`, `email`, `address`, `credit_limit`, `status`, `created_at`, `updated_at`) VALUES
-(1, 35, 9, 4, 'Non-Executive', 'es-000', 'Electronics Shop', 'Dew Hunt', '01317243494', 'dew@gmail.com', 'Barisal', '50000', 1, '2019-12-20 02:40:34', '2019-12-20 13:28:02');
+(1, 35, 9, 4, 'Non-Executive', 'es-000', 'Dealer - 01', 'Dew Hunt', '01317243494', 'dew@gmail.com', 'Barisal', '50000', 1, '2019-12-20 02:40:34', '2019-12-27 13:34:34'),
+(3, 35, 7, 4, 'Non-Executive', 'deal-002', 'Dealer - 02', 'Simon', '01317243480', 'dealero2@gmail.com', 'Barishal', '100000', 1, '2019-12-27 13:35:56', '2019-12-27 13:35:56');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_dealer_requisitions`
+--
+
+CREATE TABLE `tbl_dealer_requisitions` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `dealer_id` int(11) DEFAULT NULL,
+  `requisition_no` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `date` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `total_qty` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `total_amount` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_dealer_requisitions`
+--
+
+INSERT INTO `tbl_dealer_requisitions` (`id`, `dealer_id`, `requisition_no`, `date`, `product_id`, `total_qty`, `total_amount`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, '100000001', '2019-12-29', 8, '36', '736680', 1, '2019-12-29 00:37:06', '2019-12-29 00:39:03'),
+(2, 3, '100000002', '2019-12-29', 7, '30', '1350000', 1, '2019-12-29 00:37:49', '2019-12-29 00:37:49');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_dealer_requisition_products`
+--
+
+CREATE TABLE `tbl_dealer_requisition_products` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `requisition_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `product_name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `model_no` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `price` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `qty` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `amount` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `approved_by` int(11) DEFAULT NULL,
+  `approved_qty` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `approved_amount` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_dealer_requisition_products`
+--
+
+INSERT INTO `tbl_dealer_requisition_products` (`id`, `requisition_id`, `product_id`, `product_name`, `model_no`, `price`, `qty`, `amount`, `approved_by`, `approved_qty`, `approved_amount`, `status`, `created_at`, `updated_at`) VALUES
+(4, 2, 3, 'Walton ANDROID  ATV', 'wal890', '45000', '12', '540000', NULL, NULL, NULL, 1, NULL, NULL),
+(5, 2, 5, 'Walton LED TV', 'wal1234', '35000', '12', '420000', NULL, NULL, NULL, 1, NULL, NULL),
+(6, 2, 7, 'Walton Side by Side Intelligent Inverter Refrigerator', 'Wal119', '65000', '6', '390000', NULL, NULL, NULL, 1, NULL, NULL),
+(7, 1, 12, 'Marcel Air Conditioner', 'MSN-12K-ECXXA', '35500', '6', '213000', NULL, NULL, NULL, 1, NULL, NULL),
+(8, 1, 10, 'Marcel LED TV', 'MSD55FD-1.397 m (55\'\')', '59900', '6', '359400', NULL, NULL, NULL, 1, NULL, NULL),
+(9, 1, 13, 'Marcel FAN', 'MCF5601 WR', '2700', '12', '32400', NULL, NULL, NULL, 1, NULL, NULL),
+(10, 1, 8, 'Marcel Refrigerator', 'MFO-JET-RXXX-XX', '10990', '12', '131880', NULL, NULL, NULL, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -992,7 +1069,8 @@ INSERT INTO `tbl_liftings` (`id`, `serial_no`, `vaouchar_no`, `vendor_id`, `stor
 (12, '1000012', '245467i8outg', 5, 'store', 7, 'Admin', '2019-12-17', '2019-12-17', '3', '106500.00', '115020.00', '128823.00', NULL, NULL, NULL, '2019-12-15 22:48:24', '2019-12-22 05:56:35'),
 (13, '1000013', '67984gdfghcvt58', 5, 'store', 6, 'Admin', '2019-12-17', '2019-12-17', '4', '43960.00', '47476.00', '53176.00', NULL, NULL, NULL, '2019-12-16 01:53:48', '2019-12-22 05:56:04'),
 (14, '1000014', '0970igiyufcted', 5, 'store', 5, 'Admin', '2019-12-17', '2019-12-17', '4', '239600.00', '258768.00', '289820.00', NULL, NULL, NULL, '2019-12-16 01:56:03', '2019-12-22 05:55:51'),
-(15, '1000015', '56789546', 5, 'store', 4, 'Admin', '2019-12-18', '2019-12-18', '4', '420', '454', '507', NULL, NULL, NULL, '2019-12-17 02:11:45', '2019-12-22 05:55:10');
+(15, '1000015', '56789546', 5, 'store', 4, 'Admin', '2019-12-18', '2019-12-18', '4', '420', '454', '507', NULL, NULL, NULL, '2019-12-17 02:11:45', '2019-12-22 05:55:10'),
+(16, '1000016', '6804876545', 5, 'showroom', 1, 'Admin', '2019-12-29', '2019-12-29', '3', '4000', '4320', '4839', NULL, NULL, NULL, '2019-12-28 12:29:34', '2019-12-28 12:53:45');
 
 -- --------------------------------------------------------
 
@@ -1005,6 +1083,7 @@ CREATE TABLE `tbl_lifting_products` (
   `lifting_id` int(11) DEFAULT NULL,
   `vendor_id` int(11) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,
+  `product_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `store_or_showroom_type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `store_or_showroom_id` int(11) DEFAULT NULL,
   `model_no` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1023,41 +1102,44 @@ CREATE TABLE `tbl_lifting_products` (
 -- Dumping data for table `tbl_lifting_products`
 --
 
-INSERT INTO `tbl_lifting_products` (`id`, `lifting_id`, `vendor_id`, `product_id`, `store_or_showroom_type`, `store_or_showroom_id`, `model_no`, `serial_no`, `color`, `qty`, `price`, `mrp_price`, `haire_price`, `status`, `created_at`, `updated_at`) VALUES
-(160, 15, 5, 14, 'store', 4, 'MSN-21K-0101-RXXXB', 'asfasdf', 'Red', '1', '100', '108', '121', 1, NULL, NULL),
-(161, 15, 5, 14, 'store', 4, 'MSN-21K-0101-RXXXB', 'asfasdf', 'Red', '1', '150', '162', '181', 1, NULL, NULL),
-(162, 15, 5, 14, 'store', 4, 'MSN-21K-0101-RXXXB', 'asfasdf', 'Red', '1', '50', '54', '60', 1, NULL, NULL),
-(163, 15, 5, 14, 'store', 4, 'MSN-21K-0101-RXXXB', 'asfasdf', 'Red', '1', '120', '130', '145', 1, NULL, NULL),
-(164, 14, 5, 10, 'store', 5, 'MSD55FD-1.397 m (55\'\')', '09huiy546ets4', 'Black', '1', '59900', '64692', '72455', 1, NULL, NULL),
-(165, 14, 5, 10, 'store', 5, 'MSD55FD-1.397 m (55\'\')', '095f53drjfyjh', 'Black', '1', '59900', '64692', '72455', 1, NULL, NULL),
-(166, 14, 5, 10, 'store', 5, 'MSD55FD-1.397 m (55\'\')', '907hutt65546f', 'Black', '1', '59900', '64692', '72455', 1, NULL, NULL),
-(167, 14, 5, 10, 'store', 5, 'MSD55FD-1.397 m (55\'\')', '090787576rufy', 'Black', '1', '59900', '64692', '72455', 1, NULL, NULL),
-(168, 13, 5, 8, 'store', 6, 'MFO-JET-RXXX-XX', '4567gibjjkuygf', 'Black', '1', '10990', '11869', '13294', 1, NULL, NULL),
-(169, 13, 5, 8, 'store', 6, 'MFO-JET-RXXX-XX', '09uy6ygkhs', 'Black', '1', '10990', '11869', '13294', 1, NULL, NULL),
-(170, 13, 5, 8, 'store', 6, 'MFO-JET-RXXX-XX', '0gh0oivhjknbr', 'Black', '1', '10990', '11869', '13294', 1, NULL, NULL),
-(171, 13, 5, 8, 'store', 6, 'MFO-JET-RXXX-XX', '098hjkr5rfedfgh', 'Black', '1', '10990', '11869', '13294', 1, NULL, NULL),
-(172, 12, 5, 12, 'store', 7, 'MSN-12K-ECXXA', '34536577i', 'White', '1', '35500', '38340', '42941', 1, NULL, NULL),
-(173, 12, 5, 12, 'store', 7, 'MSN-12K-ECXXA', '35657iore', 'White', '1', '35500', '38340', '42941', 1, NULL, NULL),
-(174, 12, 5, 12, 'store', 7, 'MSN-12K-ECXXA', 'nmg7zsnbn vd', 'White', '1', '35500', '38340', '42941', 1, NULL, NULL),
-(175, 11, 5, 10, 'showroom', 1, 'MSD55FD-1.397 m (55\'\')', '234567890', 'Black', '1', '59900', '64692', '72455', 1, NULL, NULL),
-(176, 10, 5, 11, 'showroom', 3, 'MSD49FD-1.245 m (49\'\')', 'eeee', 'White', '1', '49900', '53892', '60359', 1, NULL, NULL),
-(177, 9, 5, 8, 'store', 4, 'MFO-JET-RXXX-XX', 'mmmm', 'Black', '1', '10990', '11869', '13294', 1, NULL, NULL),
-(178, 8, 5, 9, 'store', 7, 'MFD-1B6-RXXX-XX', 'mar345678', 'Silver', '1', '18200', '19656', '22015', 1, NULL, NULL),
-(179, 8, 5, 8, 'store', 7, 'MFO-JET-RXXX-XX', 'mar123408', 'Black', '1', '10990', '11869', '13294', 1, NULL, NULL),
-(180, 7, 5, 12, 'store', 6, 'MSN-12K-ECXXA', 'fgdgdgsdf', 'White', '1', '35500', '38340', '42941', 1, NULL, NULL),
-(181, 7, 5, 12, 'store', 6, 'MSN-12K-ECXXA', 'esefef', 'White', '1', '35500', '38340', '42941', 1, NULL, NULL),
-(182, 7, 5, 12, 'store', 6, 'MSN-12K-ECXXA', 'sssdfd', 'White', '1', '35500', '38340', '42941', 1, NULL, NULL),
-(183, 6, 6, 6, 'store', 5, 'wal8126', 'SDADAER3434', 'White', '1', '25000', '27000', '30240', 1, NULL, NULL),
-(184, 6, 6, 3, 'store', 5, 'wal890', 'FSEDF456456', 'Black', '1', '45000', '48600', '54432', 1, NULL, NULL),
-(185, 4, 5, 11, 'showroom', 1, 'MSD49FD-1.245 m (49\'\')', 'mar3423412412', 'White', '1', '49900', '53892', '60359', 1, NULL, NULL),
-(186, 4, 5, 11, 'showroom', 1, 'MSD49FD-1.245 m (49\'\')', 'mar123557456845', 'White', '1', '49900', '53892', '60359', 1, NULL, NULL),
-(187, 4, 5, 11, 'showroom', 1, 'MSD49FD-1.245 m (49\'\')', 'mar0990756', 'White', '1', '49900', '53892', '60359', 1, NULL, NULL),
-(188, 3, 6, 5, 'showroom', 3, 'wal1234', '09373848', 'Silver', '1', '35000', '37800', '42336', 1, NULL, NULL),
-(189, 3, 6, 6, 'showroom', 3, 'wal8126', '09364573', 'White', '1', '25000', '27000', '30240', 1, NULL, NULL),
-(190, 3, 6, 5, 'showroom', 3, 'wal1234', 'u7gfrth0987', 'Silver', '1', '35000', '37800', '42336', 1, NULL, NULL),
-(191, 2, 6, 3, 'store', 4, 'wal890', 'poiuytrty', 'Black', '1', '45000', '48600', '54432', 1, NULL, NULL),
-(192, 2, 6, 6, 'store', 4, 'wal8126', 'fsdafa', 'White', '1', '25000', '27000', '30240', 1, NULL, NULL),
-(193, 2, 6, 7, 'store', 4, 'Wal119', 'sdgfasdgasd', 'Red', '1', '65000', '70200', '78624', 1, NULL, NULL);
+INSERT INTO `tbl_lifting_products` (`id`, `lifting_id`, `vendor_id`, `product_id`, `product_name`, `store_or_showroom_type`, `store_or_showroom_id`, `model_no`, `serial_no`, `color`, `qty`, `price`, `mrp_price`, `haire_price`, `status`, `created_at`, `updated_at`) VALUES
+(194, 15, 5, 14, 'Jamuna Air conditioner', 'store', 4, 'MSN-21K-0101-RXXXB', 'asfasdf', 'Red', '1', '100', '108', '121', 1, NULL, NULL),
+(195, 15, 5, 14, 'Jamuna Air conditioner', 'store', 4, 'MSN-21K-0101-RXXXB', 'asfasdf', 'Red', '1', '150', '162', '181', 1, NULL, NULL),
+(196, 15, 5, 14, 'Jamuna Air conditioner', 'store', 4, 'MSN-21K-0101-RXXXB', 'asfasdf', 'Red', '1', '50', '54', '60', 1, NULL, NULL),
+(197, 15, 5, 14, 'Jamuna Air conditioner', 'store', 4, 'MSN-21K-0101-RXXXB', 'asfasdf', 'Red', '1', '120', '130', '145', 1, NULL, NULL),
+(198, 14, 5, 10, 'Marcel LED TV', 'store', 5, 'MSD55FD-1.397 m (55\'\')', '09huiy546ets4', 'Black', '1', '59900', '64692', '72455', 1, NULL, NULL),
+(199, 14, 5, 10, 'Marcel LED TV', 'store', 5, 'MSD55FD-1.397 m (55\'\')', '095f53drjfyjh', 'Black', '1', '59900', '64692', '72455', 1, NULL, NULL),
+(200, 14, 5, 10, 'Marcel LED TV', 'store', 5, 'MSD55FD-1.397 m (55\'\')', '907hutt65546f', 'Black', '1', '59900', '64692', '72455', 1, NULL, NULL),
+(201, 14, 5, 10, 'Marcel LED TV', 'store', 5, 'MSD55FD-1.397 m (55\'\')', '090787576rufy', 'Black', '1', '59900', '64692', '72455', 1, NULL, NULL),
+(202, 13, 5, 8, 'Marcel Refrigerator', 'store', 6, 'MFO-JET-RXXX-XX', '4567gibjjkuygf', 'Black', '1', '10990', '11869', '13294', 1, NULL, NULL),
+(203, 13, 5, 8, 'Marcel Refrigerator', 'store', 6, 'MFO-JET-RXXX-XX', '09uy6ygkhs', 'Black', '1', '10990', '11869', '13294', 1, NULL, NULL),
+(204, 13, 5, 8, 'Marcel Refrigerator', 'store', 6, 'MFO-JET-RXXX-XX', '0gh0oivhjknbr', 'Black', '1', '10990', '11869', '13294', 1, NULL, NULL),
+(205, 13, 5, 8, 'Marcel Refrigerator', 'store', 6, 'MFO-JET-RXXX-XX', '098hjkr5rfedfgh', 'Black', '1', '10990', '11869', '13294', 1, NULL, NULL),
+(206, 12, 5, 12, 'Marcel Air Conditioner', 'store', 7, 'MSN-12K-ECXXA', '34536577i', 'White', '1', '35500', '38340', '42941', 1, NULL, NULL),
+(207, 12, 5, 12, 'Marcel Air Conditioner', 'store', 7, 'MSN-12K-ECXXA', '35657iore', 'White', '1', '35500', '38340', '42941', 1, NULL, NULL),
+(208, 12, 5, 12, 'Marcel Air Conditioner', 'store', 7, 'MSN-12K-ECXXA', 'nmg7zsnbn vd', 'White', '1', '35500', '38340', '42941', 1, NULL, NULL),
+(209, 11, 5, 10, 'Marcel LED TV', 'showroom', 1, 'MSD55FD-1.397 m (55\'\')', '234567890', 'Black', '1', '59900', '64692', '72455', 1, NULL, NULL),
+(210, 10, 5, 11, 'Marcel LED TV', 'showroom', 3, 'MSD49FD-1.245 m (49\'\')', 'eeee', 'White', '1', '49900', '53892', '60359', 1, NULL, NULL),
+(211, 9, 5, 8, 'Marcel Refrigerator', 'store', 4, 'MFO-JET-RXXX-XX', 'mmmm', 'Black', '1', '10990', '11869', '13294', 1, NULL, NULL),
+(212, 8, 5, 9, 'Marcel Refrigerator', 'store', 7, 'MFD-1B6-RXXX-XX', 'mar345678', 'Silver', '1', '18200', '19656', '22015', 1, NULL, NULL),
+(213, 8, 5, 8, 'Marcel Refrigerator', 'store', 7, 'MFO-JET-RXXX-XX', 'mar123408', 'Black', '1', '10990', '11869', '13294', 1, NULL, NULL),
+(214, 7, 5, 12, 'Marcel Air Conditioner', 'store', 6, 'MSN-12K-ECXXA', 'fgdgdgsdf', 'White', '1', '35500', '38340', '42941', 1, NULL, NULL),
+(215, 7, 5, 12, 'Marcel Air Conditioner', 'store', 6, 'MSN-12K-ECXXA', 'esefef', 'White', '1', '35500', '38340', '42941', 1, NULL, NULL),
+(216, 7, 5, 12, 'Marcel Air Conditioner', 'store', 6, 'MSN-12K-ECXXA', 'sssdfd', 'White', '1', '35500', '38340', '42941', 1, NULL, NULL),
+(217, 6, 6, 6, 'Walton Freezer', 'store', 5, 'wal8126', 'SDADAER3434', 'White', '1', '25000', '27000', '30240', 1, NULL, NULL),
+(218, 6, 6, 3, 'Walton ANDROID  ATV', 'store', 5, 'wal890', 'FSEDF456456', 'Black', '1', '45000', '48600', '54432', 1, NULL, NULL),
+(219, 4, 5, 11, 'Marcel LED TV', 'showroom', 1, 'MSD49FD-1.245 m (49\'\')', 'mar3423412412', 'White', '1', '49900', '53892', '60359', 1, NULL, NULL),
+(220, 4, 5, 11, 'Marcel LED TV', 'showroom', 1, 'MSD49FD-1.245 m (49\'\')', 'mar123557456845', 'White', '1', '49900', '53892', '60359', 1, NULL, NULL),
+(221, 4, 5, 11, 'Marcel LED TV', 'showroom', 1, 'MSD49FD-1.245 m (49\'\')', 'mar0990756', 'White', '1', '49900', '53892', '60359', 1, NULL, NULL),
+(222, 3, 6, 5, 'Walton LED TV', 'showroom', 3, 'wal1234', '09373848', 'Silver', '1', '35000', '37800', '42336', 1, NULL, NULL),
+(223, 3, 6, 6, 'Walton Freezer', 'showroom', 3, 'wal8126', '09364573', 'White', '1', '25000', '27000', '30240', 1, NULL, NULL),
+(224, 3, 6, 5, 'Walton LED TV', 'showroom', 3, 'wal1234', 'u7gfrth0987', 'Silver', '1', '35000', '37800', '42336', 1, NULL, NULL),
+(225, 2, 6, 3, 'Walton ANDROID  ATV', 'store', 4, 'wal890', 'poiuytrty', 'Black', '1', '45000', '48600', '54432', 1, NULL, NULL),
+(226, 2, 6, 6, 'Walton Freezer', 'store', 4, 'wal8126', 'fsdafa', 'White', '1', '25000', '27000', '30240', 1, NULL, NULL),
+(227, 2, 6, 7, 'Walton Side by Side Intelligent Inverter Refrigerator', 'store', 4, 'Wal119', 'sdgfasdgasd', 'Red', '1', '65000', '70200', '78624', 1, NULL, NULL),
+(230, 16, 5, 12, 'Marcel Air Conditioner', 'showroom', 1, 'MSN-12K-ECXXA', '10000000000230', 'White', '1', '1000', '1080', '1210', 1, NULL, NULL),
+(231, 16, 5, 13, 'Marcel FAN', 'showroom', 1, 'MCF5601 WR', '10000000000231', 'White', '1', '1000', '1080', '1210', 1, NULL, NULL),
+(232, 16, 5, 10, 'Marcel LED TV', 'showroom', 1, 'MSD55FD-1.397 m (55\'\')', '10000000000230', 'Black', '1', '2000', '2160', '2419', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1067,7 +1149,6 @@ INSERT INTO `tbl_lifting_products` (`id`, `lifting_id`, `vendor_id`, `product_id
 
 CREATE TABLE `tbl_lifting_returns` (
   `id` int(10) UNSIGNED NOT NULL,
-  `lifting_id` int(11) DEFAULT NULL,
   `vendor_id` int(11) DEFAULT NULL,
   `store_or_showroom_type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `store_or_showroom_id` int(11) DEFAULT NULL,
@@ -1075,6 +1156,7 @@ CREATE TABLE `tbl_lifting_returns` (
   `serial_no` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `total_qty` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `total_price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `total_mrp_price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `total_haire_price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `remarks` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1082,6 +1164,15 @@ CREATE TABLE `tbl_lifting_returns` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_lifting_returns`
+--
+
+INSERT INTO `tbl_lifting_returns` (`id`, `vendor_id`, `store_or_showroom_type`, `store_or_showroom_id`, `product_id`, `serial_no`, `date`, `total_qty`, `total_price`, `total_mrp_price`, `total_haire_price`, `remarks`, `status`, `created_at`, `updated_at`) VALUES
+(1, 5, 'store', 4, 8, '1000001', '2019-12-23', '3', '11240', '12139', '13596', 'Lifting Returns', 1, '2019-12-23 06:58:00', '2019-12-23 06:59:07'),
+(2, 6, 'store', 5, 6, '1000002', '2019-12-23', '1', '25000', '27000', '30240', 'Lifting Returns', 1, '2019-12-23 06:58:34', '2019-12-23 06:58:34'),
+(3, 5, 'showroom', 1, 10, '1000003', '2019-12-24', '1', '59900', '64692', '72455', NULL, 1, '2019-12-24 05:10:13', '2019-12-24 05:10:13');
 
 -- --------------------------------------------------------
 
@@ -1098,6 +1189,7 @@ CREATE TABLE `tbl_lifting_return_products` (
   `store_or_showroom_type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `store_or_showroom_id` int(11) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,
+  `product_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `model_no` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `serial_no` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `color` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1109,6 +1201,17 @@ CREATE TABLE `tbl_lifting_return_products` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_lifting_return_products`
+--
+
+INSERT INTO `tbl_lifting_return_products` (`id`, `lifting_return_id`, `lifting_id`, `lifting_product_id`, `vendor_id`, `store_or_showroom_type`, `store_or_showroom_id`, `product_id`, `product_name`, `model_no`, `serial_no`, `color`, `qty`, `price`, `mrp_price`, `haire_price`, `status`, `created_at`, `updated_at`) VALUES
+(6, 2, 6, 183, 6, 'store', 5, 6, 'Walton Freezer', 'wal8126', 'SDADAER3434', 'White', '1', '25000', '27000', '3', 1, NULL, NULL),
+(7, 1, 15, 1, 5, 'store', 4, 14, 'AIr conditioner', 'MSN-21K-0101-RXXXB', 'asfasdf', 'Red', '1', '100', '108', '1', 1, NULL, NULL),
+(8, 1, 15, 1, 5, 'store', 4, 14, 'AIr conditioner', 'MSN-21K-0101-RXXXB', 'asfasdf', 'Red', '1', '150', '162', '3', 1, NULL, NULL),
+(9, 1, 9, 177, 5, 'store', 4, 8, 'Marcel Refrigerator', 'MFO-JET-RXXX-XX', 'mmmm', 'Black', '1', '10990', '11869', '2', 1, NULL, NULL),
+(10, 3, 11, 175, 5, 'showroom', 1, 10, 'Marcel LED TV', 'MSD55FD-1.397 m (55\'\')', '234567890', 'Black', '1', '59900', '64692', '7', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1177,18 +1280,18 @@ CREATE TABLE `tbl_products` (
 --
 
 INSERT INTO `tbl_products` (`id`, `category_id`, `name`, `code`, `model_no`, `color`, `uom`, `price`, `mrp_price`, `haire_price`, `discount`, `warranty`, `reorder_level_qty`, `order_by`, `transport_point`, `status`, `youtube_link`, `tag_line`, `short_description`, `long_description`, `meta_title`, `meta_keyword`, `meta_description`, `created_at`, `updated_at`) VALUES
-(3, '1', 'Walton ANDROID  ATV', 'wal123', 'wal890', 'Black', 'Pcs', 45000, 48600, 54432, '1000', 5, 5, 2, 3, 1, NULL, 'Smart TV', 'rogif;f;ehflk;lfjds;fanfkrengahglkan', ';jglangfarngfarnvafngabrflbFBDLB', 'Smart Tv', 'Smart Tv', 'Smart Tv', '2019-11-27 19:04:54', '2019-12-08 03:17:55'),
-(5, '3', 'Walton LED TV', 'wal009', 'wal1234', 'Silver', 'Pcs', 35000, 37800, 42336, '1000', 5, 5, 2, 5, 1, NULL, 'LED TV', 'LED Tv', 'LED TV', 'LED Tv', 'LED Tv', 'LED Tv', '2019-12-01 04:31:48', '2019-12-01 04:33:04'),
-(6, '5', 'Walton Freezer', 'wal567', 'wal8126', 'White', 'Pcs', 25000, 27000, 30240, '2500', 10, 5, 9, 5, 1, NULL, 'freezer', 'Walton Freezer', 'Walton Freezer', 'Walton Freezer', 'Walton Freezer', 'Walton Freezer', '2019-12-01 04:37:18', '2019-12-01 04:45:31'),
-(7, '6', 'Walton Side by Side Intelligent Inverter Refrigerator', 'wal009', 'Wal119', 'Red', 'Pcs', 65000, 70200, 78624, '4998', 10, 5, 7, 8, 1, NULL, 'Walton Non Frost Freez', 'Walton Non Frost Freez', 'Walton Non Frost Freez', 'Walton Freezer', 'Walton Freezer', 'Walton Freezer', '2019-12-01 04:48:04', '2019-12-01 04:50:28'),
-(8, '9', 'Marcel Refrigerator', 'mar-001', 'MFO-JET-RXXX-XX', 'Black', 'Pcs', 10990, 11869, 13294, NULL, 12, NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 00:27:51', '2019-12-16 00:34:18'),
-(9, '9', 'Marcel Refrigerator', 'Mar-002', 'MFD-1B6-RXXX-XX', 'Silver', 'Pcs', 18200, 19656, 22015, NULL, 12, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 00:31:13', '2019-12-16 00:37:29'),
-(10, '8', 'Marcel LED TV', 'Mar-tv-001', 'MSD55FD-1.397 m (55\'\')', 'Black', 'Pcs', 59900, 64692, 72455, NULL, 5, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 00:37:12', '2019-12-16 00:37:21'),
-(11, '8', 'Marcel LED TV', 'Mar-tv-002', 'MSD49FD-1.245 m (49\'\')', 'White', 'Pcs', 49900, 53892, 60359, NULL, 5, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 00:38:43', '2019-12-16 00:40:02'),
-(12, '10', 'Marcel Air Conditioner', 'mar-ac-001', 'MSN-12K-ECXXA', 'White', 'Kg', 35500, 38340, 42941, NULL, 10, 5, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 00:49:32', '2019-12-16 00:52:05'),
-(13, '11', 'Marcel FAN', 'mar-fan-001', 'MCF5601 WR', 'White', 'Pcs', 2700, 2916, 3266, NULL, 5, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 00:56:30', '2019-12-16 00:56:30'),
-(14, '10', 'AIr conditioner', 'ac-002', 'MSN-21K-0101-RXXXB', 'Red', 'Kg', 52900, 57132, 63988, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 01:00:08', '2019-12-16 22:42:40'),
-(15, '12', 'Walton LED TV', 'sam123', 'sam890', 'Black', NULL, 12000, 12960, 14515, NULL, 5, 5, -2, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 22:41:43', '2019-12-16 22:42:37');
+(3, '8', 'Walton ANDROID  ATV', 'wal123', 'wal890', 'Black', 'Pcs', 45000, 48600, 54432, '1000', 5, 5, 2, 3, 1, NULL, 'Smart TV', 'rogif;f;ehflk;lfjds;fanfkrengahglkan', ';jglangfarngfarnvafngabrflbFBDLB', 'Smart Tv', 'Smart Tv', 'Smart Tv', '2019-11-27 07:04:54', '2019-12-28 01:56:20'),
+(5, '12', 'Walton LED TV', 'wal009', 'wal1234', 'Silver', 'Pcs', 35000, 37800, 42336, '1000', 5, 5, 2, 5, 1, NULL, 'LED TV', 'LED Tv', 'LED TV', 'LED Tv', 'LED Tv', 'LED Tv', '2019-11-30 16:31:48', '2019-12-28 01:56:03'),
+(6, '9', 'Walton Freezer', 'wal567', 'wal8126', 'White', 'Pcs', 25000, 27000, 30240, '2500', 10, 5, 9, 5, 1, NULL, 'freezer', 'Walton Freezer', 'Walton Freezer', 'Walton Freezer', 'Walton Freezer', 'Walton Freezer', '2019-11-30 16:37:18', '2019-12-28 01:55:51'),
+(7, '9', 'Walton Side by Side Intelligent Inverter Refrigerator', 'wal009', 'Wal119', 'Red', 'Pcs', 65000, 70200, 78624, '4998', 10, 5, 7, 8, 1, NULL, 'Walton Non Frost Freez', 'Walton Non Frost Freez', 'Walton Non Frost Freez', 'Walton Freezer', 'Walton Freezer', 'Walton Freezer', '2019-11-30 16:48:04', '2019-12-28 01:55:39'),
+(8, '9', 'Marcel Refrigerator', 'mar-001', 'MFO-JET-RXXX-XX', 'Black', 'Pcs', 10990, 11869, 13294, NULL, 12, NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-15 12:27:51', '2019-12-28 01:55:15'),
+(9, '9', 'Marcel Refrigerator', 'Mar-002', 'MFD-1B6-RXXX-XX', 'Silver', 'Pcs', 18200, 19656, 22015, NULL, 12, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-15 12:31:13', '2019-12-28 01:55:04'),
+(10, '8', 'Marcel LED TV', 'Mar-tv-001', 'MSD55FD-1.397 m (55\'\')', 'Black', 'Pcs', 59900, 64692, 72455, NULL, 5, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-15 12:37:12', '2019-12-28 01:54:48'),
+(11, '8', 'Marcel LED TV', 'Mar-tv-002', 'MSD49FD-1.245 m (49\'\')', 'White', 'Pcs', 49900, 53892, 60359, NULL, 5, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-15 12:38:43', '2019-12-28 01:54:33'),
+(12, '10', 'Marcel Air Conditioner', 'mar-ac-001', 'MSN-12K-ECXXA', 'White', 'Kg', 35500, 38340, 42941, NULL, 10, 5, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-15 12:49:32', '2019-12-28 01:54:20'),
+(13, '11', 'Marcel FAN', 'mar-fan-001', 'MCF5601 WR', 'White', 'Pcs', 2700, 2916, 3266, NULL, 5, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-15 12:56:30', '2019-12-28 01:54:08'),
+(14, '10', 'Jamuna Air conditioner', 'ac-002', 'MSN-21K-0101-RXXXB', 'Red', 'Kg', 52900, 57132, 63988, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-15 13:00:08', '2019-12-28 01:53:55'),
+(15, '12', 'Walton LED TV', 'sam123', 'sam890', 'Black', NULL, 12000, 12960, 14515, NULL, 5, 5, -2, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 10:41:43', '2019-12-28 01:53:23');
 
 -- --------------------------------------------------------
 
@@ -2043,7 +2146,7 @@ INSERT INTO `user_menus` (`id`, `parentMenu`, `menuName`, `menuLink`, `menuIcon`
 (24, '19', 'Payment Record', 'paymentRecord.index', NULL, 17, '1', '2019-12-05 05:26:06', '2019-12-05 05:28:09'),
 (25, '19', 'Vendor Statement', 'vendorStatement.index', 'fa fa-caret', 18, '1', '2019-12-05 06:30:54', '2019-12-05 06:30:54'),
 (26, '6', 'Group Setup', 'groupSetup.index', 'fa fa-caret', 19, '1', '2019-12-07 00:56:48', '2019-12-07 23:18:33'),
-(27, '19', 'Lifting Record', 'liftingRecord.index', 'fa fa-caret', 20, '1', '2019-12-07 23:18:06', '2019-12-07 23:18:06'),
+(27, '19', 'Lifting History', 'liftingRecord.index', 'fa fa-caret', 14, '1', '2019-12-07 23:18:06', '2019-12-24 13:52:45'),
 (28, '19', 'Payment Summery', 'liftingPaymentSummary.index', 'fa fa-caret', 21, '1', '2019-12-08 05:24:21', '2019-12-18 03:49:21'),
 (29, NULL, 'Inventory Management', 'admin.index', 'fa fa-bars', 22, '1', '2019-12-08 22:20:50', '2019-12-08 22:20:50'),
 (30, '29', 'Out Of Stock', 'outOfStock.index', 'fa fa-caret', 23, '1', '2019-12-08 22:21:38', '2019-12-08 22:21:38'),
@@ -2059,9 +2162,17 @@ INSERT INTO `user_menus` (`id`, `parentMenu`, `menuName`, `menuLink`, `menuIcon`
 (40, NULL, 'Installment Management', 'admin.index', 'fa fa-bars', 33, '1', '2019-12-14 14:43:55', '2019-12-14 14:43:55'),
 (41, '40', 'Installment Schedule', 'installmentSchedule.index', 'fa fa-caret', 34, '1', '2019-12-14 14:45:08', '2019-12-14 14:45:08'),
 (42, '40', 'Installment Collection', 'installmentCollection.index', 'fa fa-caret', 35, '1', '2019-12-14 14:47:55', '2019-12-14 14:47:55'),
-(43, '6', 'Dealer Setup', 'dealerSetup.index', 'fa fa-bars', 36, '1', '2019-12-18 03:37:33', '2019-12-18 03:37:33'),
+(43, '49', 'Dealer Setup', 'dealerSetup.index', 'fa fa-bars', 36, '1', '2019-12-18 03:37:33', '2019-12-27 13:06:11'),
 (44, '29', 'Product Transfer', 'transferProduct.index', 'fa fa-bars', 37, '1', '2019-12-21 02:24:10', '2019-12-21 02:24:10'),
-(45, '19', 'Lifting Return', 'liftingReturn.index', 'fa fa-bars', 14, '1', '2019-12-22 23:51:07', '2019-12-22 23:57:52');
+(45, '19', 'Lifting Return', 'liftingReturn.index', 'fa fa-bars', 14, '1', '2019-12-22 23:51:07', '2019-12-22 23:57:52'),
+(46, '19', 'Lifting Return History', 'liftingReturnRecord.index', 'fa fa-caret', 15, '1', '2019-12-24 00:13:46', '2019-12-24 13:53:07'),
+(47, '29', 'Transfer History', 'transferReport.index', 'fa fa-caret', 38, '1', '2019-12-24 12:30:08', '2019-12-24 12:30:08'),
+(48, '29', 'Product Statement', 'productStatement.index', 'fa fa-caret', 39, '1', '2019-12-25 12:33:56', '2019-12-25 12:33:56'),
+(49, NULL, 'Dealer Management', 'admin.index', 'fa fa-bars', 40, '1', '2019-12-27 13:05:32', '2019-12-27 13:05:32'),
+(50, '49', 'Dealer Requisition', 'dealerRequisition.index', 'fa fa-caret', 41, '1', '2019-12-27 13:14:25', '2019-12-27 13:33:10'),
+(51, '40', 'Drop Collection', 'dropCollection.index', 'fa fa-caret', 42, '1', '2019-12-29 01:35:59', '2019-12-29 01:40:43'),
+(52, '40', 'Prospective Collection', 'prospectiveCollection.index', 'fa fa-caret', 43, '1', '2019-12-29 01:39:35', '2019-12-29 01:39:35'),
+(53, '49', 'Requisition Approval', 'dealerRequisitionApproval.index', 'fa fa-caret', 44, '1', '2019-12-29 02:13:21', '2019-12-29 02:14:18');
 
 -- --------------------------------------------------------
 
@@ -2188,7 +2299,7 @@ INSERT INTO `user_menu_actions` (`id`, `parentmenuId`, `menuType`, `actionName`,
 (106, 39, 11, 'Print Customer Statement', 'customerStatement.print', 103, 1, '2019-12-12 07:15:30', '2019-12-12 07:15:30'),
 (107, 41, 1, 'Add', 'installmentSchedule.add', 104, 1, '2019-12-14 14:45:48', '2019-12-14 14:45:48'),
 (108, 41, 2, 'Edit', 'installmentSchedule.edit', 105, 1, '2019-12-14 14:46:06', '2019-12-14 14:46:06'),
-(109, 41, 4, 'Delete', 'installmentSchedule.delete', 106, 1, '2019-12-14 14:46:42', '2019-12-14 14:46:42'),
+(109, 41, 4, 'Delete', 'installmentSchedule.delete', 129, 1, '2019-12-14 14:46:42', '2019-12-29 01:25:28'),
 (110, 42, 1, 'Add', 'installmentCollection.add', 107, 1, '2019-12-14 14:48:38', '2019-12-14 14:48:38'),
 (111, 42, 2, 'Edit', 'installmentCollection.edit', 108, 1, '2019-12-14 14:48:55', '2019-12-14 14:48:55'),
 (112, 42, 4, 'Delete', 'installmentCollection.delete', 109, 1, '2019-12-14 14:49:14', '2019-12-14 14:49:14'),
@@ -2198,12 +2309,22 @@ INSERT INTO `user_menu_actions` (`id`, `parentmenuId`, `menuType`, `actionName`,
 (116, 43, 3, 'Status', 'dealerSetup.status', 113, 1, '2019-12-18 03:48:30', '2019-12-18 03:48:30'),
 (117, 44, 1, 'Add', 'transferProduct.add', 114, 1, '2019-12-21 02:24:34', '2019-12-21 02:24:34'),
 (118, 44, 2, 'Edit', 'transferProduct.edit', 115, 1, '2019-12-21 02:24:47', '2019-12-21 02:24:47'),
-(119, 44, 4, 'Delete', 'transferProduct.delete', 116, 1, '2019-12-21 02:24:59', '2019-12-21 02:24:59'),
-(120, 44, 11, 'Print Product Transfer', 'transferProduct.print', 117, 1, '2019-12-21 02:25:31', '2019-12-21 02:25:31'),
+(119, 44, 4, 'Delete', 'transferProduct.delete', 117, 1, '2019-12-21 02:24:59', '2019-12-23 22:51:00'),
+(120, 44, 11, 'Print Product Transfer', 'transferProduct.print', 116, 1, '2019-12-21 02:25:31', '2019-12-23 22:50:51'),
 (121, 45, 1, 'Add', 'liftingReturn.add', 118, 1, '2019-12-22 23:51:46', '2019-12-22 23:51:46'),
 (122, 45, 2, 'Edit', 'liftingReturn.edit', 119, 1, '2019-12-22 23:52:06', '2019-12-22 23:52:06'),
 (123, 45, 4, 'Delete', 'liftingReturn.delete', 121, 1, '2019-12-22 23:52:24', '2019-12-22 23:53:57'),
-(124, 45, 11, 'Print Lifting Return', 'liftingReturn.print', 120, 1, '2019-12-22 23:53:35', '2019-12-22 23:54:08');
+(124, 45, 11, 'Print Lifting Return', 'liftingReturn.print', 120, 1, '2019-12-22 23:53:35', '2019-12-22 23:54:08'),
+(125, 46, 11, 'Print Lifting Return', 'liftingReturnRecord.print', 122, 1, '2019-12-24 00:15:00', '2019-12-24 00:15:00'),
+(126, 47, 11, 'Print Transfer History', 'transferReport.print', 123, 1, '2019-12-24 12:30:49', '2019-12-24 12:30:49'),
+(127, 48, 11, 'Print Product Statement', 'productStatement.print', 124, 1, '2019-12-25 12:34:51', '2019-12-25 12:34:51'),
+(128, 50, 1, 'Add', 'dealerRequisition.add', 125, 1, '2019-12-27 13:15:57', '2019-12-27 13:30:18'),
+(129, 50, 2, 'Edit', 'dealerRequisition.edit', 126, 1, '2019-12-27 13:16:08', '2019-12-27 13:30:30'),
+(130, 50, 4, 'Delete', 'dealerRequisition.delete', 127, 1, '2019-12-27 13:16:28', '2019-12-27 13:30:40'),
+(131, 50, 3, 'Status', 'dealerRequisition.status', 128, 1, '2019-12-27 13:16:43', '2019-12-27 13:30:54'),
+(132, 41, 11, 'Print Installment Schedule', 'installmentSchedule.print', 106, 1, '2019-12-29 01:23:07', '2019-12-29 01:25:19'),
+(133, 51, 11, 'Print Drop Collection List', 'dropCollection.print', 130, 1, '2019-12-29 01:37:15', '2019-12-29 01:37:15'),
+(134, 52, 11, 'Print Prospective Collection', 'prospectiveCollection.print', 131, 1, '2019-12-29 01:40:09', '2019-12-29 01:40:09');
 
 -- --------------------------------------------------------
 
@@ -2226,7 +2347,7 @@ CREATE TABLE `user_roles` (
 --
 
 INSERT INTO `user_roles` (`id`, `name`, `status`, `permission`, `actionPermission`, `created_at`, `updated_at`) VALUES
-(1, 'Super Admin', 1, '1,2,3,4,5,6,7,8,10,11,12,13,14,15,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,20,18,19,17,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,57,58,59,60,61,62,63,64,65,66,81,67,69,70,71,72,73,74,75,76,77,78,79,80,82,83,84,85,86,88,89,90,91,94,95,93,96,97,98,105,99,100,101,102,104,103,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,124,123', '2019-11-20 22:48:03', '2019-12-22 23:54:30'),
+(1, 'Super Admin', 1, '1,2,3,4,5,6,7,8,10,11,12,13,14,15,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,20,18,19,17,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,57,58,59,60,61,62,63,64,65,66,81,67,69,70,71,72,73,74,75,76,77,78,79,80,82,83,84,85,86,88,89,90,91,94,95,93,96,97,98,105,99,100,101,102,104,103,106,107,108,132,109,110,111,112,113,114,115,116,117,118,120,119,121,122,124,123,125,126,127,128,129,130,131,133,134', '2019-11-20 22:48:03', '2019-12-29 02:13:31'),
 (5, 'Admin', 0, '1,2,5,22', '16,20,18,19,17', '2019-11-29 03:26:52', '2019-12-15 06:09:43');
 
 -- --------------------------------------------------------
@@ -2289,6 +2410,9 @@ CREATE TABLE `view_lifting_record` (
 ,`liftingNo` varchar(191)
 ,`vendorId` int(11)
 ,`vendorName` varchar(191)
+,`storeOrShowroomType` varchar(191)
+,`storeOrShowroomId` int(11)
+,`storeOrShowroomName` varchar(191)
 ,`categoryId` varchar(191)
 ,`parentId` text
 ,`categoryName` varchar(191)
@@ -2299,6 +2423,52 @@ CREATE TABLE `view_lifting_record` (
 ,`productSerialNo` varchar(191)
 ,`productQty` varchar(191)
 ,`price` varchar(191)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_lifting_return_record`
+-- (See below for the actual view)
+--
+CREATE TABLE `view_lifting_return_record` (
+`liftingReturnDate` varchar(191)
+,`liftingReturnNo` varchar(191)
+,`vendorId` int(11)
+,`vendorName` varchar(191)
+,`storeOrShowroomType` varchar(191)
+,`storeOrShowroomId` int(11)
+,`storeOrShowroomName` varchar(191)
+,`categoryId` varchar(191)
+,`parentId` text
+,`categoryName` varchar(191)
+,`productId` int(11)
+,`productCode` varchar(191)
+,`productName` varchar(191)
+,`productModelNo` varchar(191)
+,`productColor` varchar(191)
+,`productSerialNo` varchar(191)
+,`productQty` varchar(191)
+,`price` varchar(191)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_product_statement`
+-- (See below for the actual view)
+--
+CREATE TABLE `view_product_statement` (
+`date` varchar(191)
+,`productId` int(11)
+,`productName` varchar(191)
+,`liftingQty` varchar(191)
+,`liftingPrice` varchar(191)
+,`liftingReturnPrice` varchar(191)
+,`productIssuePrice` int(1)
+,`productReturnPrice` int(1)
+,`salesPrice` int(1)
+,`slaesReturnPrice` int(1)
 );
 
 -- --------------------------------------------------------
@@ -2341,6 +2511,26 @@ CREATE TABLE `view_store_and_showroom` (
 ,`type` varchar(8)
 ,`storeType` varchar(191)
 ,`name` varchar(191)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_transport_record`
+-- (See below for the actual view)
+--
+CREATE TABLE `view_transport_record` (
+`date` varchar(191)
+,`hostType` varchar(191)
+,`hostId` varchar(191)
+,`destinationType` varchar(191)
+,`destinationId` varchar(191)
+,`productId` int(11)
+,`productName` varchar(191)
+,`productModelNo` varchar(191)
+,`productSerialNo` varchar(191)
+,`productColor` varchar(191)
+,`productQty` varchar(191)
 );
 
 -- --------------------------------------------------------
@@ -2391,7 +2581,25 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `view_lifting_record`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_lifting_record`  AS  select `tbl_liftings`.`vouchar_date` AS `liftingDate`,`tbl_liftings`.`vaouchar_no` AS `liftingNo`,`tbl_liftings`.`vendor_id` AS `vendorId`,`tbl_vendors`.`name` AS `vendorName`,`tbl_products`.`category_id` AS `categoryId`,`tbl_categories`.`parent` AS `parentId`,`tbl_categories`.`name` AS `categoryName`,`tbl_lifting_products`.`product_id` AS `productId`,`tbl_products`.`name` AS `productName`,`tbl_products`.`model_no` AS `productModelNo`,`tbl_products`.`color` AS `productColor`,`tbl_lifting_products`.`serial_no` AS `productSerialNo`,`tbl_lifting_products`.`qty` AS `productQty`,`tbl_lifting_products`.`price` AS `price` from ((((`tbl_liftings` join `tbl_vendors` on(`tbl_vendors`.`id` = `tbl_liftings`.`vendor_id`)) join `tbl_lifting_products` on(`tbl_lifting_products`.`lifting_id` = `tbl_liftings`.`id`)) join `tbl_products` on(`tbl_products`.`id` = `tbl_lifting_products`.`product_id`)) join `tbl_categories` on(`tbl_categories`.`id` = `tbl_products`.`category_id`)) order by `tbl_lifting_products`.`product_id` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_lifting_record`  AS  select `tbl_liftings`.`vouchar_date` AS `liftingDate`,`tbl_liftings`.`vaouchar_no` AS `liftingNo`,`tbl_liftings`.`vendor_id` AS `vendorId`,`tbl_vendors`.`name` AS `vendorName`,`tbl_liftings`.`store_or_showroom_type` AS `storeOrShowroomType`,`tbl_liftings`.`store_or_showroom_id` AS `storeOrShowroomId`,`view_store_and_showroom`.`name` AS `storeOrShowroomName`,`tbl_products`.`category_id` AS `categoryId`,`tbl_categories`.`parent` AS `parentId`,`tbl_categories`.`name` AS `categoryName`,`tbl_lifting_products`.`product_id` AS `productId`,`tbl_lifting_products`.`product_name` AS `productName`,`tbl_products`.`model_no` AS `productModelNo`,`tbl_products`.`color` AS `productColor`,`tbl_lifting_products`.`serial_no` AS `productSerialNo`,`tbl_lifting_products`.`qty` AS `productQty`,`tbl_lifting_products`.`price` AS `price` from (((((`tbl_liftings` left join `tbl_vendors` on(`tbl_vendors`.`id` = `tbl_liftings`.`vendor_id`)) left join `tbl_lifting_products` on(`tbl_lifting_products`.`lifting_id` = `tbl_liftings`.`id`)) left join `tbl_products` on(`tbl_products`.`id` = `tbl_lifting_products`.`product_id`)) left join `tbl_categories` on(`tbl_categories`.`id` = `tbl_products`.`category_id`)) left join `view_store_and_showroom` on(`view_store_and_showroom`.`type` = `tbl_liftings`.`store_or_showroom_type` and `view_store_and_showroom`.`id` = `tbl_liftings`.`store_or_showroom_id`)) order by `tbl_lifting_products`.`product_id` ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_lifting_return_record`
+--
+DROP TABLE IF EXISTS `view_lifting_return_record`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_lifting_return_record`  AS  select `tbl_lifting_returns`.`date` AS `liftingReturnDate`,`tbl_lifting_returns`.`serial_no` AS `liftingReturnNo`,`tbl_lifting_returns`.`vendor_id` AS `vendorId`,`tbl_vendors`.`name` AS `vendorName`,`tbl_lifting_returns`.`store_or_showroom_type` AS `storeOrShowroomType`,`tbl_lifting_returns`.`store_or_showroom_id` AS `storeOrShowroomId`,`view_store_and_showroom`.`name` AS `storeOrShowroomName`,`tbl_products`.`category_id` AS `categoryId`,`tbl_categories`.`parent` AS `parentId`,`tbl_categories`.`name` AS `categoryName`,`tbl_lifting_return_products`.`product_id` AS `productId`,`tbl_products`.`code` AS `productCode`,`tbl_lifting_return_products`.`product_name` AS `productName`,`tbl_lifting_return_products`.`model_no` AS `productModelNo`,`tbl_lifting_return_products`.`color` AS `productColor`,`tbl_lifting_return_products`.`serial_no` AS `productSerialNo`,`tbl_lifting_return_products`.`qty` AS `productQty`,`tbl_lifting_return_products`.`price` AS `price` from (((((`tbl_lifting_returns` left join `tbl_vendors` on(`tbl_vendors`.`id` = `tbl_lifting_returns`.`vendor_id`)) left join `tbl_lifting_return_products` on(`tbl_lifting_return_products`.`lifting_return_id` = `tbl_lifting_returns`.`id`)) left join `tbl_products` on(`tbl_products`.`id` = `tbl_lifting_return_products`.`product_id`)) left join `tbl_categories` on(`tbl_categories`.`id` = `tbl_products`.`category_id`)) left join `view_store_and_showroom` on(`view_store_and_showroom`.`type` = `tbl_lifting_returns`.`store_or_showroom_type` and `view_store_and_showroom`.`id` = `tbl_lifting_returns`.`store_or_showroom_id`)) order by `tbl_lifting_return_products`.`product_id` ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_product_statement`
+--
+DROP TABLE IF EXISTS `view_product_statement`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_product_statement`  AS  select `tbl_liftings`.`vouchar_date` AS `date`,`tbl_lifting_products`.`product_id` AS `productId`,`tbl_lifting_products`.`product_name` AS `productName`,`tbl_lifting_products`.`qty` AS `liftingQty`,`tbl_lifting_products`.`price` AS `liftingPrice`,0 AS `liftingReturnPrice`,0 AS `productIssuePrice`,0 AS `productReturnPrice`,0 AS `salesPrice`,0 AS `slaesReturnPrice` from (`tbl_liftings` join `tbl_lifting_products` on(`tbl_lifting_products`.`lifting_id` = `tbl_liftings`.`id`)) union all select `tbl_lifting_returns`.`date` AS `date`,`tbl_lifting_return_products`.`product_id` AS `productId`,`tbl_lifting_return_products`.`product_name` AS `productName`,`tbl_lifting_return_products`.`qty` AS `productQty`,0 AS `liftingPrice`,`tbl_lifting_return_products`.`price` AS `liftingReturnPrice`,0 AS `productIssuePrice`,0 AS `productReturnPrice`,0 AS `salesPrice`,0 AS `slaesReturnPrice` from (`tbl_lifting_returns` join `tbl_lifting_return_products` on(`tbl_lifting_return_products`.`lifting_return_id` = `tbl_lifting_returns`.`id`)) ;
 
 -- --------------------------------------------------------
 
@@ -2410,6 +2618,15 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 DROP TABLE IF EXISTS `view_store_and_showroom`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_store_and_showroom`  AS  select `tbl_stores`.`id` AS `id`,'store' AS `type`,`tbl_stores`.`type` AS `storeType`,`tbl_stores`.`name` AS `name` from `tbl_stores` where `tbl_stores`.`status` = '1' union select `tbl_showroom`.`id` AS `id`,'showroom' AS `type`,'' AS `storeType`,`tbl_showroom`.`name` AS `name` from `tbl_showroom` where `tbl_showroom`.`status` = '1' ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_transport_record`
+--
+DROP TABLE IF EXISTS `view_transport_record`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_transport_record`  AS  select `tbl_transfers`.`date` AS `date`,`tbl_transfers`.`host_type` AS `hostType`,`tbl_transfers`.`host_id` AS `hostId`,`tbl_transfers`.`destination_type` AS `destinationType`,`tbl_transfers`.`destination_id` AS `destinationId`,`tbl_transfer_products`.`product_id` AS `productId`,`tbl_transfer_products`.`name` AS `productName`,`tbl_transfer_products`.`model_no` AS `productModelNo`,`tbl_transfer_products`.`serial_no` AS `productSerialNo`,`tbl_transfer_products`.`color` AS `productColor`,`tbl_transfer_products`.`qty` AS `productQty` from (`tbl_transfer_products` left join `tbl_transfers` on(`tbl_transfer_products`.`transfer_id` = `tbl_transfers`.`id`)) ;
 
 -- --------------------------------------------------------
 
@@ -2525,6 +2742,18 @@ ALTER TABLE `tbl_customer_products`
 -- Indexes for table `tbl_dealers`
 --
 ALTER TABLE `tbl_dealers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_dealer_requisitions`
+--
+ALTER TABLE `tbl_dealer_requisitions`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_dealer_requisition_products`
+--
+ALTER TABLE `tbl_dealer_requisition_products`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -2715,7 +2944,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -2787,7 +3016,19 @@ ALTER TABLE `tbl_customer_products`
 -- AUTO_INCREMENT for table `tbl_dealers`
 --
 ALTER TABLE `tbl_dealers`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `tbl_dealer_requisitions`
+--
+ALTER TABLE `tbl_dealer_requisitions`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `tbl_dealer_requisition_products`
+--
+ALTER TABLE `tbl_dealer_requisition_products`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `tbl_groups`
@@ -2841,25 +3082,25 @@ ALTER TABLE `tbl_invoice`
 -- AUTO_INCREMENT for table `tbl_liftings`
 --
 ALTER TABLE `tbl_liftings`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `tbl_lifting_products`
 --
 ALTER TABLE `tbl_lifting_products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=194;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=233;
 
 --
 -- AUTO_INCREMENT for table `tbl_lifting_returns`
 --
 ALTER TABLE `tbl_lifting_returns`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_lifting_return_products`
 --
 ALTER TABLE `tbl_lifting_return_products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `tbl_payment_to_company`
@@ -2937,13 +3178,13 @@ ALTER TABLE `tbl_vendors`
 -- AUTO_INCREMENT for table `user_menus`
 --
 ALTER TABLE `user_menus`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `user_menu_actions`
 --
 ALTER TABLE `user_menu_actions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
 
 --
 -- AUTO_INCREMENT for table `user_roles`

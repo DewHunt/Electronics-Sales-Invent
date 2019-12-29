@@ -23,7 +23,7 @@
 	                    <select class="form-control chosen-select" id="category" name="category" required>
 	                    	<option value="">Select Category</option>
 	                        @foreach($categories as $categoryInfo)
-	                            <option value="{{$categoryInfo->id}}">{{$categoryInfo->name}}</option>
+	                            <option value="{{ $categoryInfo->id }}">{{ $categoryInfo->name }}</option>
 	                        @endforeach
 	                    </select>
 	                    @if ($errors->has('category'))
@@ -33,6 +33,7 @@
 	                    @endif
 	                </div>
 	    		</div>
+
 	    		<div class="col-md-6">                 
 	                <div class="form-group {{ $errors->has('productName') ? ' has-danger' : '' }}">
 	                    <label for="product-name">Product Name</label>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="icon" type="image/png" sizes="20x20" href="{{asset('/')}}public/uploads/admin_logo/logo_small.png">
         <title>{{ $title }}</title>
         <style>
             #report-table {
@@ -50,6 +51,7 @@
 
             #report-table tfoot th{
                 background-color: #778899;
+                color: black;
             }
 
             #report-table tr:nth-child(even){background-color: #f2f2f2;}

@@ -209,6 +209,37 @@ class TransferProductController extends Controller
         }
     }
 
+    public function print($transferId)
+    {
+        $title = "Product Transfer Chalan";
+
+        $transfer = Transfer::select('tbl_transfers.*','tbl_vendors.name as vendorName')
+            ->join('tbl_vendors','tbl_vendors.id','=','tbl_transfers.vendor_id')
+            ->where('tbl_transfers.id',$transferId)
+            ->first();
+
+        $host = DB::table('view_store_and_showroom')
+            ->select('name as hostName')
+            ->where('type',$transfer->host_type)
+            ->where('id',$transfer->host_id)
+            ->first();
+
+        $destination = DB::table('view_store_and_showroom')
+            ->select('name as destinationName')
+            ->where('type',$transfer->destination_type)
+            ->where('id',$transfer->destination_id)
+            ->first();
+
+        $transferProducts = TransferProduct::select('tbl_transfer_products.*','tbl_products.code as productCode')
+            ->join('tbl_products','tbl_products.id','=','tbl_transfer_products.product_id')
+            ->where('tbl_transfer_products.transfer_id',$transferId)
+            ->get();
+
+        $pdf = PDF::loadView('admin.transferProduct.print',['title'=>$title,'transfer'=>$transfer,'host'=>$host,'destination'=>$destination,'transferProducts'=>$transferProducts,]);
+
+        return $pdf->stream('product_transfer_chalan.pdf');
+    }
+
     public function delete(Request $request)
     {
         Transfer::where('id',$request->transferId)->delete();    	

@@ -71,7 +71,7 @@
                         <label for="supplier">Supplier</label>
                         <div class="form-group">
                             <select class="form-control chosen-select destination" id="supplier" name="supplier">
-                                <option value="">Select Destination</option>
+                                <option value="">Select Supplier</option>
                                 @foreach ($vendors as $vendor)
                                     <option value="{{ $vendor->id }}">{{ $vendor->name }}</option>
                                 @endforeach
@@ -96,7 +96,7 @@
                     <div class="col-md-6">
                         <label for="transfer-date">Transfer Date</label>
                         <div class="form-group {{ $errors->has('transferDate') ? ' has-danger' : '' }}">
-                            <input type="text" class="form-control datepicker" name="transferDate" value="" placeholder="Select Transfer Date" readonly>
+                            <input type="text" class="form-control add_datepicker" name="transferDate" id="" value="" readonly>
                             @if ($errors->has('transferDate'))
                                 @foreach($errors->get('transferDate') as $error)
                                     <div class="form-control-feedback">{{ $error }}</div>
@@ -306,6 +306,7 @@
 
         function transferProductRemove(liftingProductId)
         {
+            var productId = $('.transferedProductId_'+liftingProductId).val();
             var productName = $('.transferedProductName_'+liftingProductId).val();
             var modelNo = $('.transferedProductModelNo_'+liftingProductId).val();
             var serialNo = $('.transferedProductSerialNo_'+liftingProductId).val();
@@ -315,6 +316,7 @@
             $(".availableProductTable tbody").append(
                 '<tr class="availableProductRow" id="availableProductRow_'+liftingProductId+'">' +
                     '<td>'+
+                        '<input class="form-control availableProductId_'+liftingProductId+'" type="hidden" value="'+productId+'" readonly>'+
                         '<input class="form-control availableProductName_'+liftingProductId+'" type="text" value="'+productName+'" data-toggle="tooltip" title="'+productName+'" readonly>'+
                     '</td>'+
                     '<td>'+

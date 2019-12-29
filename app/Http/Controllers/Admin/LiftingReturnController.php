@@ -47,26 +47,25 @@ class LiftingReturnController extends Controller
 
     public function save(Request $request)
     {
-    	$host = explode(',',$request->host);
-    	$hostId = $host[0];
-    	$hostType = $host[1];
+    	// dd($request->all());
+    	$storeOrShowrooms = explode(',',$request->storeOrShowroom);
+    	$storeOrShowroomId = $storeOrShowrooms[0];
+    	$storeOrShowroomType = $storeOrShowrooms[1];
 
-    	$destination = explode(',',$request->destination);
-    	$destinationId = $destination[0];
-    	$destinationType = $destination[1];
+    	$date = date('Y-m-d', strtotime($request->liftingReturnDate));
 
-    	$date = date('Y-m-d', strtotime($request->transferDate));
-
-    	$transfer = Transfer::create([
+    	$liftingReturn = LiftingReturn::create([
     		'vendor_id' => $request->supplier,
+    		'store_or_showroom_type' => $storeOrShowroomType,
+    		'store_or_showroom_id' => $storeOrShowroomId,
     		'product_id' => $request->product,
-    		'transfer_no' => $request->transferNo,
+    		'serial_no' => $request->serialNo,
     		'date' => $date,
-    		'host_type' => $hostType,
-    		'host_id' => $hostId,
-    		'destination_type' => $destinationType,
-    		'destination_id' => $destinationId,
-    		'total_qty' => $request->totalQty
+    		'total_qty' => $request->totalQty,
+    		'total_price' => $request->totalPrice,
+    		'total_mrp_price' => $request->totalMrpPrice,
+    		'total_haire_price' => $request->totalHigherPrice,
+    		'remarks' => $request->remarks,
     	]);
 
         $countProduct = count($request->productId);
@@ -77,20 +76,142 @@ class LiftingReturnController extends Controller
         	for ($i=0; $i <$countProduct ; $i++)
         	{ 
         		$postData[] = [
-        			'transfer_id'=> $transfer->id,
-                    'vendor_id' => $request->supplier,
+        			'lifting_return_id'=> $liftingReturn->id,
+        			'lifting_id'=> $request->liftingId[$i],
                     'lifting_product_id' => $request->liftingProductId[$i],
+        			'vendor_id' => $request->supplier,
+                    'store_or_showroom_type' => $storeOrShowroomType,
+        			'store_or_showroom_id' => $storeOrShowroomId,
         			'product_id' => $request->productId[$i],
-                    'name' => $request->productName[$i],
+        			'product_name' => $request->productName[$i],
         			'model_no' => $request->productModelNo[$i],
         			'serial_no' => $request->productSerialNo[$i],
         			'color' => $request->productColor[$i],
-        			'qty' => $request->productQty[$i]
+        			'qty' => $request->productQty[$i],
+        			'price' => $request->productPrice[$i],
+        			'mrp_price' => $request->productMrpPrice[$i],
+        			'haire_price' => $request->productHigherPrice[$i],
         		];
         	}                
-        	TransferProduct::insert($postData);
+        	LiftingReturnProduct::insert($postData);
         }
 
         return redirect(route('liftingReturn.index'))->with('msg','Lifitng Return Added Successfully');
+    }
+
+    public function edit($liftingReturnId)
+    {
+    	$title = "Add Lifting Returns";
+    	$formLink = "liftingReturn.update";
+    	$buttonName = "Update";
+
+    	$liftingReturn = LiftingReturn::where('id',$liftingReturnId)->first();
+    	$liftingReturnProducts = LiftingReturnProduct::where('lifting_return_id',$liftingReturnId)->get();
+
+    	$storeAndShowrooms = DB::table('view_store_and_showroom')->get();
+    	$vendors = VendorSetup::orderBy('name','asc')->get();
+    	$products = Product::orderBy('name','asc')->get();
+
+    	return view('admin.liftingReturn.edit')->with(compact('title','formLink','buttonName','storeAndShowrooms','vendors','products','liftingReturn','liftingReturnProducts'));
+    }
+
+    public function update(Request $request)
+    {
+    	// dd($request->all());
+    	$storeOrShowrooms = explode(',',$request->storeOrShowroom);
+    	$storeOrShowroomId = $storeOrShowrooms[0];
+    	$storeOrShowroomType = $storeOrShowrooms[1];
+
+    	$date = date('Y-m-d', strtotime($request->liftingReturnDate));
+
+    	$liftingReturn = LiftingReturn::find($request->liftingReturnId);
+
+    	$liftingReturn->update([
+    		'vendor_id' => $request->supplier,
+    		'store_or_showroom_type' => $storeOrShowroomType,
+    		'store_or_showroom_id' => $storeOrShowroomId,
+    		'product_id' => $request->product,
+    		'serial_no' => $request->serialNo,
+    		'date' => $date,
+    		'total_qty' => $request->totalQty,
+    		'total_price' => $request->totalPrice,
+    		'total_mrp_price' => $request->totalMrpPrice,
+    		'total_haire_price' => $request->totalHigherPrice,
+    		'remarks' => $request->remarks,
+    	]);
+
+    	LiftingReturnProduct::where('lifting_return_id',$request->liftingReturnId)->delete();
+
+        $countProduct = count($request->productId);
+
+        if($request->productId)
+        {
+        	$postData = [];
+        	for ($i=0; $i <$countProduct ; $i++)
+        	{ 
+        		$postData[] = [
+        			'lifting_return_id'=> $liftingReturn->id,
+        			'lifting_id'=> $request->liftingId[$i],
+                    'lifting_product_id' => $request->liftingProductId[$i],
+        			'vendor_id' => $request->supplier,
+                    'store_or_showroom_type' => $storeOrShowroomType,
+        			'store_or_showroom_id' => $storeOrShowroomId,
+        			'product_id' => $request->productId[$i],
+        			'product_name' => $request->productName[$i],
+        			'model_no' => $request->productModelNo[$i],
+        			'serial_no' => $request->productSerialNo[$i],
+        			'color' => $request->productColor[$i],
+        			'qty' => $request->productQty[$i],
+        			'price' => $request->productPrice[$i],
+        			'mrp_price' => $request->productMrpPrice[$i],
+        			'haire_price' => $request->productHigherPrice[$i],
+        		];
+        	}                
+        	LiftingReturnProduct::insert($postData);
+        }
+
+        return redirect(route('liftingReturn.index'))->with('msg','Lifitng Return Updated Successfully');
+    }
+
+    public function liftingProductInfo(Request $request)
+    {
+    	$liftingProducts = LiftingProduct::select('tbl_lifting_products.*','tbl_products.name as productName')
+    		->join('tbl_products','tbl_products.id','=','tbl_lifting_products.product_id')
+    		->where('tbl_lifting_products.product_id',$request->productId)
+    		->where('tbl_lifting_products.vendor_id',$request->vendorId)
+    		->where('tbl_lifting_products.store_or_showroom_type',$request->storeOrShowroomType)
+    		->where('tbl_lifting_products.store_or_showroom_id',$request->storeOrShowroomId)
+    		->get();
+
+        if($request->ajax())
+        {
+            return response()->json([
+                'liftingProducts'=>$liftingProducts,
+            ]);
+        }
+    }
+
+    public function print($liftingReturnId)
+    {
+        $title = "Product Lifting Return Chalan";
+
+        $liftingReturn = LiftingReturn::select('tbl_lifting_returns.*','tbl_vendors.name as vendorName')
+            ->join('tbl_vendors','tbl_vendors.id','=','tbl_lifting_returns.vendor_id')
+            ->where('tbl_lifting_returns.id',$liftingReturnId)
+            ->first();
+        $liftingReturnProducts = LiftingReturnProduct::select('tbl_lifting_return_products.*','tbl_products.code as productCode')
+            ->join('tbl_products','tbl_products.id','=','tbl_lifting_return_products.product_id')
+            ->where('tbl_lifting_return_products.lifting_return_id',$liftingReturnId)
+            ->get();
+
+        $pdf = PDF::loadView('admin.liftingReturn.print',['title'=>$title,'liftingReturn'=>$liftingReturn,'liftingReturnProducts'=>$liftingReturnProducts]);
+
+        return $pdf->stream('product_lifting_return_chalan.pdf');
+    }
+
+    public function delete(Request $request)
+    {
+        LiftingReturn::where('id',$request->liftingReturnId)->delete();    	
+        LiftingReturnProduct::where('lifting_return_id',$request->liftingReturnId)->delete();    	
     }
 }

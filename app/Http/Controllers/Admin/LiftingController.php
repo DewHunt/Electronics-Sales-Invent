@@ -81,6 +81,7 @@ class LiftingController extends Controller
         			'lifting_id'=> $lifting->id,
                     'vendor_id' => $request->vendorId,
         			'product_id' => $request->productId[$i],
+                    'product_name' => $request->productName[$i],
                     'store_or_showroom_type' => $storeOrShowroomType,
                     'store_or_showroom_id' => $storeOrShowroomId,
         			'model_no' => $request->productModel[$i],
@@ -162,6 +163,7 @@ class LiftingController extends Controller
         			'lifting_id'=> $lifting->id,
                     'vendor_id' => $request->vendorId,
         			'product_id' => $request->productId[$i],
+                    'product_name' => $request->productName[$i],
                     'store_or_showroom_type' => $storeOrShowroomType,
                     'store_or_showroom_id' => $storeOrShowroomId,
         			'model_no' => $request->productModel[$i],
@@ -203,7 +205,7 @@ class LiftingController extends Controller
             ->first();
         $liftingProducts = LiftingProduct::select('tbl_lifting_products.*','tbl_products.name as productName','tbl_products.code as productCode')
             ->join('tbl_products','tbl_products.id','=','tbl_lifting_products.product_id')
-            ->where('.tbl_lifting_products.lifting_id',$liftingId)
+            ->where('tbl_lifting_products.lifting_id',$liftingId)
             ->get();
 
         $pdf = PDF::loadView('admin.lifting.print',['title'=>$title,'lifting'=>$lifting,'liftingProducts'=>$liftingProducts]);

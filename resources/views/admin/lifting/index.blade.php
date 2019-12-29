@@ -12,7 +12,7 @@
                     <tr>
                         <th width="20px">SL</th>
                         <th>Voucher No.</th>
-                        <th>Voucher Date.</th>
+                        <th>Voucher Date</th>
                         <th>Supplier</th>
                         <th>Store Or Showroom</th>
                         <th>Purchase By</th>

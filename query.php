@@ -16,13 +16,27 @@
     $liftingRecord = 
     "
     CREATE OR REPLACE VIEW view_lifting_record AS    
-    SELECT `tbl_liftings`.`vouchar_date` as `liftingDate`, `tbl_liftings`.`vaouchar_no` as `liftingNo`,`tbl_liftings`.`vendor_id` as `vendorId`,`tbl_vendors`.`name` as `vendorName`,`tbl_products`.`category_id` as `categoryId`,`tbl_categories`.`parent` as `parentId`,`tbl_categories`.`name` as `categoryName`,`tbl_lifting_products`.`product_id` as `productId`,`tbl_products`.`name` as `productName`,`tbl_products`.`model_no` as `productModelNo`,`tbl_products`.`color` as `productColor`,`tbl_lifting_products`.`serial_no` as `productSerialNo`,`tbl_lifting_products`.`qty` as `productQty`,`tbl_lifting_products`.`price`
+    SELECT `tbl_liftings`.`vouchar_date` as `liftingDate`, `tbl_liftings`.`vaouchar_no` as `liftingNo`,`tbl_liftings`.`vendor_id` as `vendorId`,`tbl_vendors`.`name` as `vendorName`,`tbl_liftings`.`store_or_showroom_type` AS `storeOrShowroomType`,`tbl_liftings`.`store_or_showroom_id` AS `storeOrShowroomId`,`view_store_and_showroom`.`name` AS `storeOrShowroomName`,`tbl_products`.`category_id` as `categoryId`,`tbl_categories`.`parent` as `parentId`,`tbl_categories`.`name` as `categoryName`,`tbl_lifting_products`.`product_id` as `productId`,`tbl_lifting_products`.`product_name` as `productName`,`tbl_products`.`model_no` as `productModelNo`,`tbl_products`.`color` as `productColor`,`tbl_lifting_products`.`serial_no` as `productSerialNo`,`tbl_lifting_products`.`qty` as `productQty`,`tbl_lifting_products`.`price`
     FROM `tbl_liftings`
-    INNER JOIN `tbl_vendors` ON `tbl_vendors`.id = `tbl_liftings`.`vendor_id`
-    INNER JOIN `tbl_lifting_products` ON `tbl_lifting_products`.`lifting_id` = `tbl_liftings`.`id`
-    INNER JOIN `tbl_products` ON `tbl_products`.`id` = `tbl_lifting_products`.`product_id`
-    INNER JOIN `tbl_categories` ON `tbl_categories`.`id` = `tbl_products`.`category_id`
+    LEFT JOIN `tbl_vendors` ON `tbl_vendors`.id = `tbl_liftings`.`vendor_id`
+    LEFT JOIN `tbl_lifting_products` ON `tbl_lifting_products`.`lifting_id` = `tbl_liftings`.`id`
+    LEFT JOIN `tbl_products` ON `tbl_products`.`id` = `tbl_lifting_products`.`product_id`
+    LEFT JOIN `tbl_categories` ON `tbl_categories`.`id` = `tbl_products`.`category_id`
+    LEFT JOIN `view_store_and_showroom` ON `view_store_and_showroom`.`type` = `tbl_liftings`.`store_or_showroom_type` AND `view_store_and_showroom`.`id` = `tbl_liftings`.`store_or_showroom_id`
     ORDER BY `tbl_lifting_products`.`product_id`
+    "
+
+    $liftingReturnRecord = 
+    "
+    CREATE OR REPLACE VIEW view_lifting_return_record AS    
+    SELECT `tbl_lifting_returns`.`date` as `liftingReturnDate`, `tbl_lifting_returns`.`serial_no` as `liftingReturnNo`,`tbl_lifting_returns`.`vendor_id` as `vendorId`,`tbl_vendors`.`name` as `vendorName`,`tbl_lifting_returns`.`store_or_showroom_type` AS `storeOrShowroomType`,`tbl_lifting_returns`.`store_or_showroom_id` AS `storeOrShowroomId`,`view_store_and_showroom`.`name` AS `storeOrShowroomName`,`tbl_products`.`category_id` as `categoryId`,`tbl_categories`.`parent` as `parentId`,`tbl_categories`.`name` as `categoryName`,`tbl_lifting_return_products`.`product_id` as `productId`,`tbl_products`.`code` AS `productCode`,`tbl_lifting_return_products`.`product_name` as `productName`,`tbl_lifting_return_products`.`model_no` as `productModelNo`,`tbl_lifting_return_products`.`color` as `productColor`,`tbl_lifting_return_products`.`serial_no` as `productSerialNo`,`tbl_lifting_return_products`.`qty` as `productQty`,`tbl_lifting_return_products`.`price`
+    FROM `tbl_lifting_returns`
+    LEFT JOIN `tbl_vendors` ON `tbl_vendors`.id = `tbl_lifting_returns`.`vendor_id`
+    LEFT JOIN `tbl_lifting_return_products` ON `tbl_lifting_return_products`.`lifting_return_id` = `tbl_lifting_returns`.`id`
+    LEFT JOIN `tbl_products` ON `tbl_products`.`id` = `tbl_lifting_return_products`.`product_id`
+    LEFT JOIN `tbl_categories` ON `tbl_categories`.`id` = `tbl_products`.`category_id`
+    LEFT JOIN `view_store_and_showroom` ON `view_store_and_showroom`.`type` = `tbl_lifting_returns`.`store_or_showroom_type` AND `view_store_and_showroom`.`id` = `tbl_lifting_returns`.`store_or_showroom_id`
+    ORDER BY `tbl_lifting_return_products`.`product_id`
     "
 
     $liftingPaymentSummary = 
@@ -95,6 +109,29 @@
     SELECT `tbl_showroom`.`id` as `id`,'showroom' as `type`,'' as `storeType`,`tbl_showroom`.`name` as `name`
     FROM `tbl_showroom`
     WHERE `tbl_showroom`.`status` = '1'
+    "
+
+    $transportRecord = 
+    "
+    CREATE OR REPLACE VIEW view_transport_record AS
+    SELECT `tbl_transfers`.`date` AS `date`,`tbl_transfers`.`host_type` AS `hostType`,`tbl_transfers`.`host_id` AS `hostId`,`tbl_transfers`.`destination_type` AS `destinationType`,`tbl_transfers`.`destination_id` AS `destinationId`,`tbl_transfer_products`.`product_id` AS `productId`,`tbl_transfer_products`.`name` AS
+    `productName`,`tbl_transfer_products`.`model_no` AS `productModelNo`,`tbl_transfer_products`.`serial_no` AS `productSerialNo`,`tbl_transfer_products`.`color` AS `productColor`,`tbl_transfer_products`.`qty` AS `productQty`
+    FROM `tbl_transfers`
+    RIGHT JOIN `tbl_transfer_products` ON `tbl_transfer_products`.`transfer_id` = `tbl_transfers`.`id`
+    "
+
+    $productStatement = 
+    "
+    CREATE OR REPLACE VIEW view_product_statement AS
+    SELECT `tbl_liftings`.`vouchar_date` as `date`,`tbl_lifting_products`.`product_id` AS `productId`,`tbl_lifting_products`.`product_name` AS `productName`,`tbl_lifting_products`.`qty` AS `liftingQty`,`tbl_lifting_products`.`price` AS `liftingPrice`,0 AS `liftingReturnPrice`,0 AS `productIssuePrice`,0 AS `productReturnPrice`,0 AS `salesPrice`,0 AS `slaesReturnPrice`
+    FROM `tbl_liftings`
+    INNER JOIN `tbl_lifting_products` ON `tbl_lifting_products`.`lifting_id` = `tbl_liftings`.`id`
+
+    UNION ALL
+
+    SELECT `tbl_lifting_returns`.`date` AS `date`,`tbl_lifting_return_products`.`product_id` AS `productId`,`tbl_lifting_return_products`.`product_name` AS `productName`,`tbl_lifting_return_products`.`qty` AS `productQty`,0  AS `liftingPrice`,`tbl_lifting_return_products`.`price` AS `liftingReturnPrice`,0 AS `productIssuePrice`,0 AS `productReturnPrice`,0 AS `salesPrice`,0 AS `slaesReturnPrice`
+    FROM `tbl_lifting_returns`
+    INNER JOIN `tbl_lifting_return_products` ON `tbl_lifting_return_products`.`lifting_return_id` = `tbl_lifting_returns`.`id`
     "
 
     

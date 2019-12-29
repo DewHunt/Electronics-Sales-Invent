@@ -6,26 +6,34 @@
             height: 35px !important;
         }
     </style>
-    @php
-    	$serialNo = "";    	
-        use App\Lifting;
+    @php   
+        $productSerialNo = "";
+        use App\LiftingProduct;
 
-        $purchaseBy = Auth::user()->name;
+        $maxLiftingProduct = LiftingProduct::max('id');
 
-        $maxLifting = Lifting::max('id');
-
-        if (@$maxLifting)
+        if (@$maxLiftingProduct)
         {
-            $serialNo = 1000000 + $maxLifting + 1;
+            $productSerialNo = 10000000000000 + $maxLiftingProduct;
         }
         else
         {
-            $serialNo = 1000000 + 1;
+            $productSerialNo = 10000000000000 + 1;
         }
     @endphp
 
     <div class="card-body">
-    	<input type="hidden" name="liftingId" value="{{ $lifting->id }}">
+        <div class="row">
+            <div class="col-md-12">
+                <input class="form-control" type="hidden" name="liftingId" value="{{ $lifting->id }}">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <input class="form-control" type="hidden" id="productSerialNo" name="productSerialNo" value="{{ $productSerialNo }}">
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="row">
@@ -87,10 +95,10 @@
                         <label for="store-showroom">Store & Showrooms</label>
                         <div class="form-group {{ $errors->has('storeOrShowroom') ? ' has-danger' : '' }}">
                             <select class="form-control chosen-select" name="storeOrShowroom">
-                                <option value=" ">Select Store</option>
+                                <option value=" ">Select Stores Or Showrooms</option>
                                 @foreach ($storesAndShowrooms as $storeAndShowroom)
                                     @php
-                                        if ($storeAndShowroom->storeType == $lifting->store_or_showroom_type AND $storeAndShowroom->id == $lifting->store_or_showroom_id)
+                                        if ($storeAndShowroom->type == $lifting->store_or_showroom_type AND $storeAndShowroom->id == $lifting->store_or_showroom_id)
                                         {
                                             $select = "selected";
                                         }
@@ -211,7 +219,7 @@
                                         <th width="80px">Price</th>
                                         <th width="90px">MRP Price</th>
                                         <th width="110px">Higher Price</th>
-                                        <th width="80px">Action</th>
+                                        <th width="10px"><i class="fa fa-trash" style="color: white;"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody">
@@ -240,18 +248,17 @@
 							                <td>
 							                    <input class="productQty productQty_{{ $i }}" type="hidden" name="productQty[]" value="{{ $liftingProduct->qty }}" required>
 							                    <input style="text-align: right;" class="productPrice productPrice_{{ $i }}" type="number" name="productPrice[]" value="{{ $liftingProduct->price }}" oninput="findMrpHairePrice({{ $i }})" required>
-                                                <input class="price_{{ $i }}" type="hidden" name="price[]" value="{{ $liftingProduct->price }}">
                                             </td>
 
                                             <td>
-						                        <input style="text-align: right;" class="productMrpPrice_{{ $i }}" type="number" name="productMrpPrice[]" value="{{ $liftingProduct->mrp_price }}" readonly>
+						                        <input style="text-align: right;" class="productMrpPrice productMrpPrice_{{ $i }}" type="number" name="productMrpPrice[]" value="{{ $liftingProduct->mrp_price }}" readonly>
 
                                             <td>
-						                        <input style="text-align: right;" class="productHairePrice_{{ $i }}" type="number" name="productHairePrice[]" value="{{ $liftingProduct->haire_price }}" readonly>
+						                        <input style="text-align: right;" class="productHairePrice productHairePrice_{{ $i }}" type="number" name="productHairePrice[]" value="{{ $liftingProduct->haire_price }}" readonly>
 							                </td>
 							                <td align="center">
 							                	<span class="btn btn-outline-danger btn-sm item_remove" onclick="itemRemove({{ $i }})" style="width: 100%;">
-							                		<i class="fa fa-trash"></i> Remove
+							                		<i class="fa fa-trash"></i>
 							                	</span>
 							                </td>
                                 		</tr>
@@ -300,12 +307,23 @@
             var productId = $("#product :selected").val();
             var serialNo = $("#product_serial_no").val();
 
-        	if (productId == "" || serialNo == "")
+        	if (productId == "")
         	{
-                swal("Please! Select A Product And Enter Serial Number", "", "warning");
+                swal("Please! Select A Product", "", "warning");
         	}
         	else
         	{
+                if ($("#product_serial_no").val() == "")
+                {
+                    var productSerialNo = parseInt($('#productSerialNo').val()) + 1;
+                    var serialNo = productSerialNo;
+                    $('#productSerialNo').val(productSerialNo);
+                }
+                else
+                {
+                    var serialNo = $("#product_serial_no").val();
+                }
+
 	        	var row_count = $('.row_count').val();
 	            var total = parseInt(row_count) + 1; 
 	            $(".gridTable tbody").append(
@@ -327,19 +345,18 @@
                         '<td>'+
                             '<input class="productQty_'+total+'" type="hidden" name="productQty[]" value="1">'+
                             '<input style="text-align: right;" class="productPrice productPrice_'+total+'" type="number" name="productPrice[]" value="" oninput="findMrpHairePrice('+total+')" required>'+
-                            '<input class="price_'+total+'" type="hidden" name="price[]" value="">'+
                         '</td>'+
 
                         '<td>'+
-                            '<input style="text-align: right;" class="productMrpPrice_'+total+'" type="number" name="productMrpPrice[]" value="" readonly>'+
+                            '<input style="text-align: right;" class="productMrpPrice productMrpPrice_'+total+'" type="number" name="productMrpPrice[]" value="" readonly>'+
                         '</td>'+
 
                         '<td>'+
-                            '<input style="text-align: right;" class="productHairePrice_'+total+'" type="number" name="productHairePrice[]" value="" readonly>'+
+                            '<input style="text-align: right;" class="productHairePrice productHairePrice_'+total+'" type="number" name="productHairePrice[]" value="" readonly>'+
                         '</td>'+
 		                '<td align="center">'+
 		                	'<span class="btn btn-outline-danger btn-sm item_remove" onclick="itemRemove('+total+')" style="width: 100%;">'+
-		                		'<i class="fa fa-trash"></i> Remove'+
+		                		'<i class="fa fa-trash"></i>'+
 		                	'</span>'+
 		                '</td>'+
 	                '</tr>'
@@ -386,10 +403,6 @@
 
         function findMrpHairePrice(i)
         {
-            var totalPrice = parseFloat($('.totalPrice').val()) - parseFloat($('.price_'+i).val());
-            var totalMrpPrice = parseFloat($('.totalMrpPrice').val()) - parseFloat($('.productMrpPrice_'+i).val());
-            var totalHairePrice = parseFloat($('.totalHairePrice').val()) - parseFloat($('.productHairePrice_'+i).val());
-
             if ($(".productPrice_"+i).val() == "")
             {
                 var price = 0
@@ -404,15 +417,32 @@
             $(".productMrpPrice_"+i).val(Math.round(mrpPrice));
             $(".productHairePrice_"+i).val(Math.round(hairePrice));
 
-            totalPrice = totalPrice + price;
-            // alert(totalPrice);
-            totalMrpPrice = totalMrpPrice + parseFloat($('.productMrpPrice_'+i).val());
-            totalHairePrice = totalHairePrice + parseFloat($('.productHairePrice_'+i).val());
+            rowSum();
+        }
 
-            $('.totalPrice').val(Math.round(totalPrice));
+        function rowSum()
+        {
+            var totalPrice = 0;            
+            var totalMrpPrice = 0;            
+            var totalHairePrice = 0;            
+            $(".productPrice").each(function () {
+                var price = parseFloat($(this).val());
+                totalPrice += isNaN(price) ? 0 : price;
+            });
+
+            $(".productMrpPrice").each(function () {
+                var mrpPrice = parseFloat($(this).val());
+                totalMrpPrice += isNaN(mrpPrice) ? 0 : mrpPrice;
+            });
+
+            $(".productHairePrice").each(function () {
+                var hairePrice = parseFloat($(this).val());
+                totalHairePrice += isNaN(hairePrice) ? 0 : hairePrice;
+            });
+
+            $('.totalPrice').val(totalPrice);
             $('.totalMrpPrice').val(Math.round(totalMrpPrice));
             $('.totalHairePrice').val(Math.round(totalHairePrice));
-            $('.price_'+i).val(Math.round(price));
         }
 
         function itemRemove(i) {

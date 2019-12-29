@@ -6,23 +6,6 @@
             height: 35px !important;
         }
     </style>
-    @php
-        $transferNo = "";       
-        use App\Transfer;
-
-        $maxTransfer = Transfer::max('id');
-
-        if (@$maxTransfer)
-        {
-            $transferNo = 1000000 + $maxTransfer + 1;
-        }
-        else
-        {
-            $transferNo = 1000000 + 1;
-        }
-
-        $type = array('store'=>'Warehouse Transfer','showrooms'=>'Showroom');
-    @endphp
 
     <div class="card-body">
         <div class="row">
@@ -107,7 +90,7 @@
                         <label for="supplier">Supplier</label>
                         <div class="form-group">
                             <select class="form-control chosen-select destination" id="supplier" name="supplier">
-                                <option value="">Select Destination</option>
+                                <option value="">Select Supplier</option>
                                 @foreach ($vendors as $vendor)
                                     @php
                                         if ($vendor->id == $transfer->vendor_id)

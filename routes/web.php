@@ -216,16 +216,6 @@ Route::prefix('admin')->group(function()
 			Route::post('/product-list','Admin\ProductListController@index')->name('productList.index');
 			Route::post('/product-list/print','Admin\ProductListController@print')->name('productList.print');
 
-			// Dealer Setup
-			Route::get('/dealer-setup','Admin\DealerSetupController@index')->name('dealerSetup.index');
-			Route::get('/dealer-setup-add','Admin\DealerSetupController@add')->name('dealerSetup.add');
-			Route::post('/dealer-setup-save','Admin\DealerSetupController@save')->name('dealerSetup.save');
-			Route::get('/dealer-setup-edit/{id}','Admin\DealerSetupController@edit')->name('dealerSetup.edit');
-			Route::post('/dealer-setup-update','Admin\DealerSetupController@update')->name('dealerSetup.update');
-			Route::post('/dealer-setup-delete','Admin\DealerSetupController@delete')->name('dealerSetup.delete');
-			Route::post('/dealer-setup-status','Admin\DealerSetupController@changeStatus')->name('dealerSetup.status');
-			Route::post('/dealer-setup-status/upazila-list','Admin\DealerSetupController@getAllUpazilaByDistrict')->name('dealerSetup.getAllUpazilaByDistrict');
-
 		// Business Settings End
 
 		// Product Lifting Start
@@ -247,7 +237,7 @@ Route::prefix('admin')->group(function()
 			Route::get('/lifting-return-edit/{id}','Admin\LiftingReturnController@edit')->name('liftingReturn.edit');
 			Route::post('/lifting-return-update','Admin\LiftingReturnController@update')->name('liftingReturn.update');
 			Route::post('/lifting-return-delete','Admin\LiftingReturnController@delete')->name('liftingReturn.delete');
-			Route::post('/lifting-return-product-info','Admin\LiftingReturnController@liftingProductInfo')->name('liftingReturn.productInfo');
+			Route::post('/lifting-return-product-info','Admin\LiftingReturnController@liftingProductInfo')->name('liftingReturn.liftingProductInfo');
 			Route::get('/lifting-return-print/{id}','Admin\LiftingReturnController@print')->name('liftingReturn.print');
 
 			// Payment to Company
@@ -269,6 +259,11 @@ Route::prefix('admin')->group(function()
 			Route::post('/lifting-record','Admin\LiftingRecordController@index')->name('liftingRecord.index');
 			Route::post('/lifting-record/print','Admin\LiftingRecordController@print')->name('liftingRecord.print');
 
+			// Lifting Return Record
+			Route::get('/lifting-return-record','Admin\LiftingReturnRecordController@index')->name('liftingReturnRecord.index');
+			Route::post('/lifting-return-record','Admin\LiftingReturnRecordController@index')->name('liftingReturnRecord.index');
+			Route::post('/lifting-return-record/print','Admin\LiftingReturnRecordController@print')->name('liftingReturnRecord.print');
+
 			//Lifting & payment Summery
 			Route::get('/lifting-payment-summary','Admin\LiftingPaymentSummaryController@index')->name('liftingPaymentSummary.index');
 			Route::post('/lifting-payment-summary','Admin\LiftingPaymentSummaryController@index')->name('liftingPaymentSummary.index');
@@ -278,17 +273,6 @@ Route::prefix('admin')->group(function()
 			Route::get('/vendor-statement','Admin\VendorStatementController@index')->name('vendorStatement.index');
 			Route::post('/vendor-statement','Admin\VendorStatementController@index')->name('vendorStatement.index');
 			Route::post('/vendor-statement/print', 'Admin\VendorStatementController@print')->name('vendorStatement.print');
-
-			// Product Transfer
-			Route::get('/transfer-product','Admin\TransferProductController@index')->name('transferProduct.index');
-			Route::get('/transfer-product-add','Admin\TransferProductController@add')->name('transferProduct.add');
-			Route::post('/transfer-product-save','Admin\TransferProductController@save')->name('transferProduct.save');
-			Route::get('/transfer-product-edit/{id}','Admin\TransferProductController@edit')->name('transferProduct.edit');
-			Route::post('-transfer-product-update','Admin\TransferProductController@update')->name('transferProduct.update');
-			Route::post('/transfer-product-delete','Admin\TransferProductController@delete')->name('transferProduct.delete');
-			Route::post('/transfer-product/store-showroom-list','Admin\TransferProductController@storeAndShowroomInfo')->name('transferProduct.storeAndShowroomInfo');
-			Route::post('/transfer-product/product-info','Admin\TransferProductController@liftingProductInfo')->name('transferProduct.liftingProductInfo');
-			Route::get('/transfer-product-print/{id}','Admin\TransferProductController@print')->name('transferProduct.print');
 
 		// Product Lifting End
 
@@ -308,6 +292,27 @@ Route::prefix('admin')->group(function()
 			Route::get('/stock-status','Admin\StockStatusController@index')->name('stockStatus.index');
 			Route::post('/stock-status','Admin\StockStatusController@index')->name('stockStatus.index');
 			Route::post('/stock-status/print','Admin\StockStatusController@print')->name('stockStatus.print');
+
+			// Product Transfer
+			Route::get('/transfer-product','Admin\TransferProductController@index')->name('transferProduct.index');
+			Route::get('/transfer-product-add','Admin\TransferProductController@add')->name('transferProduct.add');
+			Route::post('/transfer-product-save','Admin\TransferProductController@save')->name('transferProduct.save');
+			Route::get('/transfer-product-edit/{id}','Admin\TransferProductController@edit')->name('transferProduct.edit');
+			Route::post('-transfer-product-update','Admin\TransferProductController@update')->name('transferProduct.update');
+			Route::post('/transfer-product-delete','Admin\TransferProductController@delete')->name('transferProduct.delete');
+			Route::post('/transfer-product/store-showroom-list','Admin\TransferProductController@storeAndShowroomInfo')->name('transferProduct.storeAndShowroomInfo');
+			Route::post('/transfer-product/product-info','Admin\TransferProductController@liftingProductInfo')->name('transferProduct.liftingProductInfo');
+			Route::get('/transfer-product-print/{id}','Admin\TransferProductController@print')->name('transferProduct.print');
+
+			// Transfer Report
+			Route::get('/transport-report','Admin\TransferReportController@index')->name('transferReport.index');
+			Route::post('/transport-report','Admin\TransferReportController@index')->name('transferReport.index');
+			Route::post('/transport-report/print','Admin\TransferReportController@print')->name('transferReport.print');
+
+			//Product Statement
+			Route::get('/product-statement','Admin\ProductStatementController@index')->name('productStatement.index');
+			Route::post('/product-statement','Admin\ProductStatementController@index')->name('productStatement.index');
+			Route::post('/product-statement/print','Admin\ProductStatementController@print')->name('productStatement.print');
 
 		// End Inventory Management
 
@@ -400,6 +405,8 @@ Route::prefix('admin')->group(function()
 
 			Route::post('/installment-schedule-get-customerproduct-info','Admin\InstallmentScheduleController@getCustomerProductInfo')->name('installmentSchedule.getCustomerProductInfo');
 
+			Route::get('/installment-schedule-print/{id}','Admin\InstallmentScheduleController@print')->name('installmentSchedule.print');
+
 			//End Installment Module
 
 			/*Installment  collection*/
@@ -414,8 +421,46 @@ Route::prefix('admin')->group(function()
 			Route::post('/installment-collection-delete','Admin\InstallmentCollectionController@delete')->name('installmentCollection.delete');
 
 			Route::post('/installment-collection-get-installment-info','Admin\InstallmentCollectionController@getInstallmentInfo')->name('installmentCollection.getInstallmentInfo');
+
+			//Drop Collection List
+			Route::get('/drop-collection-list','Admin\DropCollectionController@index')->name('dropCollection.index');
+			Route::post('/drop-collection-list','Admin\DropCollectionController@index')->name('dropCollection.index');
+			Route::post('/drop-collection-list-print','Admin\DropCollectionController@print')->name('dropCollection.print');
+
+			//Prospective Collection List
+			Route::get('/prospective-collection-list','Admin\ProspectiveCollectionController@index')->name('prospectiveCollection.index');
+			Route::post('/prospective-collection-list','Admin\ProspectiveCollectionController@index')->name('prospectiveCollection.index');
+			Route::post('/prospective-collection-list-print','Admin\ProspectiveCollectionController@print')->name('prospectiveCollection.print');
 			
 		// End Installment Management
+
+		// Start Dealer Management
+
+			// Dealer Setup
+			Route::get('/dealer-setup','Admin\DealerSetupController@index')->name('dealerSetup.index');
+			Route::get('/dealer-setup-add','Admin\DealerSetupController@add')->name('dealerSetup.add');
+			Route::post('/dealer-setup-save','Admin\DealerSetupController@save')->name('dealerSetup.save');
+			Route::get('/dealer-setup-edit/{id}','Admin\DealerSetupController@edit')->name('dealerSetup.edit');
+			Route::post('/dealer-setup-update','Admin\DealerSetupController@update')->name('dealerSetup.update');
+			Route::post('/dealer-setup-delete','Admin\DealerSetupController@delete')->name('dealerSetup.delete');
+			Route::post('/dealer-setup-status','Admin\DealerSetupController@changeStatus')->name('dealerSetup.status');
+			Route::post('/dealer-setup/upazila-list','Admin\DealerSetupController@getAllUpazilaByDistrict')->name('dealerSetup.getAllUpazilaByDistrict');
+
+			// Dealer Product Requisition
+			Route::get('/dealer-requisition','Admin\DealerRequisitionController@index')->name('dealerRequisition.index');
+			Route::get('/dealer-requisition-add','Admin\DealerRequisitionController@add')->name('dealerRequisition.add');
+			Route::post('/dealer-requisition-save','Admin\DealerRequisitionController@save')->name('dealerRequisition.save');
+			Route::get('/dealer-requisition-edit/{id}','Admin\DealerRequisitionController@edit')->name('dealerRequisition.edit');
+			Route::post('/dealer-requisition-update','Admin\DealerRequisitionController@update')->name('dealerRequisition.update');
+			Route::post('/dealer-requisition-delete','Admin\DealerRequisitionController@delete')->name('dealerRequisition.delete');
+			Route::post('/dealer-requisition-status','Admin\DealerRequisitionController@changeStatus')->name('dealerRequisition.status');
+			Route::post('/dealer-requisition/product-info','Admin\DealerRequisitionController@productInfo')->name('dealerRequisition.productInfo');
+
+			// Dealer Requisition Approval
+			Route::get('/dealer-requisition-approval','Admin\DealerRequisitionApprovalController@index')->name('dealerRequisitionApproval.index');
+			Route::post('/dealer-requisition-approval-save','Admin\DealerRequisitionApprovalController@save')->name('dealerRequisitionApproval.save');
+			Route::post('/dealer-requisition-approval/dealer-requisition-info','Admin\DealerRequisitionApprovalController@dealerRequisitionInfo')->name('dealerRequisitionApproval.dealerRequisitionInfo');
+		// End Dealer Management
 		});
 	});
 

@@ -73,7 +73,7 @@
     				        <div class="card-footer">
     				            <div class="row">
     				                <div class="col-md-12 text-right">
-    				                	<button type="submit" class="btn btn-outline-info btn-lg waves-effect"><i class="fa fa-search"></i> Search</button>
+    				                	<button type="submit" id="search" class="btn btn-outline-info btn-lg waves-effect"><i class="fa fa-search"></i> Search</button>
     				                </div>
     				            </div>	        	
     				        </div>

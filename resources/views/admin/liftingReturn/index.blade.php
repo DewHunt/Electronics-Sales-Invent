@@ -12,7 +12,7 @@
                     <tr>
                         <th width="20px">SL</th>
                         <th>Serial No.</th>
-                        <th>Date.</th>
+                        <th>Date</th>
                         <th>Supplier</th>
                         <th>Store Or Showroom</th>
                         <th>Quanty</th>
@@ -28,8 +28,8 @@
                         @php
                             $storeOrShowroom = DB::table('view_store_and_showroom')
                                 ->select('name as storeOrShowroomName')
-                                ->where('type',$liftingReturn->host_type)
-                                ->where('id',$transfer->host_id)
+                                ->where('type',$liftingReturn->store_or_showroom_type)
+                                ->where('id',$liftingReturn->store_or_showroom_id)
                                 ->first();
                         @endphp
                 		<tr class="row_{{ $liftingReturn->id }}">
@@ -66,7 +66,7 @@
                   }
                 });
 
-                transferId = $(this).parent().data('id');
+                liftingReturnId = $(this).parent().data('id');
                 // console.log(liftingId);
                 var tableRow = this;
                 swal({   
@@ -84,18 +84,18 @@
                     if (isConfirm) {
                         $.ajax({
                             type: "POST",
-                            url : "{{ route('transferProduct.delete') }}",
-                            data : {transferId:transferId},
+                            url : "{{ route('liftingReturn.delete') }}",
+                            data : {liftingReturnId:liftingReturnId},
                            
                             success: function(response) {
                                 swal({
                                     title: "<small class='text-success'>Success!</small>", 
                                     type: "success",
-                                    text: "Transfer Deleted Successfully!",
+                                    text: "Lifting Return Deleted Successfully!",
                                     timer: 1000,
                                     html: true,
                                 });
-                                $('.row_'+transferId).remove();
+                                $('.row_'+liftingReturnId).remove();
                             },
                             error: function(response) {
                                 error = "Failed.";
@@ -114,7 +114,7 @@
                         swal({
                             title: "Cancelled", 
                             type: "error",
-                            text: "This Transfer Is Safe :)",
+                            text: "This Lifting Return Is Safe :)",
                             timer: 1000,
                             html: true,
                         });    

@@ -1,63 +1,53 @@
 @extends('admin.layouts.masterPrint')
 
 @section('custome-css')
-	<style type="text/css">
-		#lifting-info{
-			font-family: Times, "Times New Roman", serif;
-			width: 100%;
-			border-collapse: collapse;
-			border-style: dotted;
-		}
+    <style type="text/css">
+        #lifting-return-info{
+            font-family: Times, "Times New Roman", serif;
+            width: 100%;
+            border-collapse: collapse;
+            border-style: dotted;
+        }
 
-		#lifting-info td{
-			padding: 5px;
-			border-bottom: 1px solid #ddd;
-		}
-	</style>
+        #lifting-return-info td{
+            padding: 5px;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
 @endsection
 
 @section('content')
     <table id="report-header">
         <tr>
-            <td>Product Lifting Chalan</td>
+            <td>Transfer Challan</td>
         </tr>
     </table>
 
-    <table id="lifting-info">
+    <div id="pad-bottom"></div>
+
+    <table id="lifting-return-info">
         <tbody>
-        	<tr>
-        		<td width="110px">Vouchar No.</td>
-        		<td width="15px">:</td>
-        		<td>{{ $lifting->vaouchar_no }}</td>
-        	</tr>
-
-        	<tr>
-        		<td width="110px">Vouchar Date</td>
-        		<td width="15px">:</td>
-        		<td>{{ $lifting->vouchar_date }}</td>
-        	</tr>
-
-        	<tr>
-        		<td width="110px">Supplier</td>
-        		<td width="15px">:</td>
-        		<td>{{ $lifting->vendorName }}</td>
-        	</tr>
-
             <tr>
-                <td width="110px">Store</td>
-                <td width="15px">:</td>
-                <td>{{ $lifting->storeName }}</td>
+                <td width="90px"><b>Issue No.</b></td>
+                <td width="5px">:</td>
+                <td>{{ $transfer->transfer_no }}</td>
+                <td width="60px"><b>From</b></td>
+                <td width="5px">:</td>
+                <td>{{ $host->hostName }}</td>
             </tr>
 
-        	<tr>
-        		<td width="110px">Purchase By</td>
-        		<td width="15px">:</td>
-        		<td>{{ $lifting->purchase_by }}</td>
-        	</tr>
+            <tr>
+                <td width="90px"><b>Issue Date</b></td>
+                <td width="15px">:</td>
+                <td>{{ $transfer->date }}</td>
+                <td width="60px"><b>To</b></td>
+                <td width="15px">:</td>
+                <td>{{ $destination->destinationName }}</td>
+            </tr>
         </tbody>
     </table>
 
-    <div style="padding-bottom: 10px;"></div>
+    <div id="pad-bottom"></div>
 
     <table  id="report-table">
         <thead class="thead-light">
@@ -73,21 +63,29 @@
 
         <tbody>
             @php
-                $sl = 0;
+                $sl = 1;
+                $totalQty = 0;
             @endphp
-            @foreach ($liftingProducts as $liftingProduct)
+            @foreach ($transferProducts as $transferProduct)
                 @php
-                    $sl++;                                       
+                    $totalQty = $totalQty + $transferProduct->qty;                                       
                 @endphp
                 <tr>
                     <td>{{ $sl++ }}</td>
-                    <td>{{ $liftingProduct->productName }} ( {{ $liftingProduct->productCode }} )</td>
-                    <td>{{ $liftingProduct->model_no }}</td>
-                    <td>{{ $liftingProduct->color }}</td>
-                    <td>{{ $liftingProduct->serial_no }}</td>
-                    <td>{{ $liftingProduct->qty }}</td>
+                    <td>{{ $transferProduct->name }} ( {{ $transferProduct->productCode }} )</td>
+                    <td>{{ $transferProduct->model_no }}</td>
+                    <td>{{ $transferProduct->color }}</td>
+                    <td>{{ $transferProduct->serial_no }}</td>
+                    <td style="text-align: right;">{{ $transferProduct->qty }}</td>
                 </tr>
             @endforeach
         </tbody>
+
+        <tfoot>
+            <tr>
+                <th colspan="5">Total Quantity</th>
+                <td style="text-align: right;"><b>{{ $totalQty }}</b></td>
+            </tr>
+        </tfoot>
     </table>
 @endsection

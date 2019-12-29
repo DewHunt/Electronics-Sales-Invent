@@ -27,45 +27,35 @@
 @section('content')
     <table id="report-header">
         <tr>
-            <td>Product Lifting Chalan</td>
+            <td>Lifting Vouchar</td>
         </tr>
     </table>
+
+    <div id="pad-bottom"></div>
 
     <table id="lifting-info">
         <tbody>
         	<tr>
-        		<td width="140px">Vouchar No.</td>
-        		<td width="15px">:</td>
+        		<td width="115px"><b>Vouchar No.</b></td>
+        		<td width="5px">:</td>
         		<td>{{ $lifting->vaouchar_no }}</td>
+                <td width="150px"><b>Supplier</b></td>
+                <td width="5px">:</td>
+                <td>{{ $lifting->vendorName }}</td>
         	</tr>
 
         	<tr>
-        		<td width="140px">Vouchar Date</td>
-        		<td width="15px">:</td>
-        		<td>{{ $lifting->vouchar_date }}</td>
-        	</tr>
-
-        	<tr>
-        		<td width="140px">Supplier</td>
-        		<td width="15px">:</td>
-        		<td>{{ $lifting->vendorName }}</td>
-        	</tr>
-
-            <tr>
-                <td width="140px">Store / Showrooms</td>
+                <td width="115px"><b>Vouchar Date</b></td>
+                <td width="15px">:</td>
+                <td>{{ $lifting->vouchar_date }}</td>
+                <td width="150px"><b>Store / Showrooms</b></td>
                 <td width="15px">:</td>
                 <td>{{ $storeOrShowroom->storeOrShowroomName }}</td>
             </tr>
-
-        	<tr>
-        		<td width="140px">Purchase By</td>
-        		<td width="15px">:</td>
-        		<td>{{ $lifting->purchase_by }}</td>
-        	</tr>
         </tbody>
     </table>
 
-    <div style="padding-bottom: 10px;"></div>
+    <div id="pad-bottom"></div>
 
     <table  id="report-table">
         <thead class="thead-light">
@@ -81,11 +71,12 @@
 
         <tbody>
             @php
-                $sl = 0;
+                $sl = 1;
+                $totalQty = 0;
             @endphp
             @foreach ($liftingProducts as $liftingProduct)
                 @php
-                    $sl++;                                       
+                    $totalQty = $totalQty + $liftingProduct->qty;                                       
                 @endphp
                 <tr>
                     <td>{{ $sl++ }}</td>
@@ -93,9 +84,16 @@
                     <td>{{ $liftingProduct->model_no }}</td>
                     <td>{{ $liftingProduct->color }}</td>
                     <td>{{ $liftingProduct->serial_no }}</td>
-                    <td>{{ $liftingProduct->qty }}</td>
+                    <td style="text-align: right;">{{ $liftingProduct->qty }}</td>
                 </tr>
             @endforeach
         </tbody>
+
+        <tfoot>
+            <tr>
+                <th colspan="5">Total Quantity</th>
+                <td style="text-align: right;"><b>{{ $totalQty }}</b></td>
+            </tr>
+        </tfoot>
     </table>
 @endsection

@@ -53,7 +53,7 @@
             <div class="card-body">
                 <input type="hidden" value="print" name="print">
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-7">
                         <label for="customerProductId">Customer & Product Name</label>
                         <div class="form-group {{ $errors->has('customerProductId') ? ' has-danger' : '' }}">
                             @php
@@ -68,12 +68,24 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                         <label>Invoice No</label>
                         <div class="form-group {{ $errors->has('invoiceNo') ? ' has-danger' : '' }}">
                             <input type="text" name="invoiceNo" value="{{$installment->invoice_no}}" class="form-control invoiceNo" readonly="">
                             @if ($errors->has('invoiceNo'))
                                 @foreach($errors->get('invoiceNo') as $error)
+                                    <div class="form-control-feedback">{{ $error }}</div>
+                                @endforeach
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>Collector</label>
+                        <div class="form-group {{ $errors->has('installmentCollector') ? ' has-danger' : '' }}">
+                            <input type="text" name="installmentCollector" value="{{$installment->installment_collector_name    }}" class="form-control installmentCollector" readonly="">
+                            @if ($errors->has('installmentCollector'))
+                                @foreach($errors->get('installmentCollector') as $error)
                                     <div class="form-control-feedback">{{ $error }}</div>
                                 @endforeach
                             @endif
@@ -173,6 +185,7 @@
                             <table class="table table-striped gridTable">
                                 <thead>
                                     <tr>
+                                        <th class="text-center" width="30px">SL</th>
                                         <th class="text-center">Invoice No</th>
                                         <th class="text-center">Schedule Date</th>
                                         <th class="text-center">Installment Amount</th>
@@ -190,6 +203,7 @@
                                         $scheduleDate = date('d-M-Y',strtotime($schedule->installment_schedule_date));
                                    @endphp
                                     <tr id="itemRow_{{$i}}">
+                                        <td><input  class="text-center" type="text" value="{{$i}}" readonly></td>
                                         <td><input style="text-align: center;" type="text" value="{{$schedule->invoice_no}}" readonly></td>
                                         <td><input style="text-align: center;" type="text" value="{{$scheduleDate}}" name="installmentScheduleDate[]" required readonly></td>
                                         <td><input style="text-align: center;" type="text" name="installmentScheduleAmount[]"  value="{{$schedule->installment_schedule_amount}}" readonly></td>
@@ -233,8 +247,8 @@
                 var invoiceNo = $('.invoiceNo').val();
                 var installmentQty = $('.installmentQty').val();
                 var installmentAmount = $('.installmentAmount').val();
-
                 $(".gridTable tbody").append('<tr id="itemRow_' + total + '">' +
+                    '<td><input type="text" class="text-center" value="'+total+'" readonly></td>'+
                     '<td><input style="text-align: center;" type="text" value="'+invoiceNo+'" readonly></td>'+
                     '<td><input style="text-align: center;" class="installmentScheduleDate_'+total+'"  type="text" name="installmentScheduleDate[]" value="'+scheduleDate+'" required readonly></td>'+
                     '<td><input style="text-align: center;" type="text" name="installmentScheduleAmount[]" value="'+installmentAmount+'" readonly></td>'+

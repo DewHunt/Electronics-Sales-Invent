@@ -7,8 +7,10 @@
         }
     </style>
     @php
-    	$serialNo = "";    	
+    	$serialNo = "";   	
+        $productSerialNo = "";     
         use App\Lifting;
+        use App\LiftingProduct;
 
         $purchaseBy = Auth::user()->name;
 
@@ -22,9 +24,25 @@
         {
             $serialNo = 1000000 + 1;
         }
+
+        $maxLiftingProduct = LiftingProduct::max('id');
+
+        if (@$maxLiftingProduct)
+        {
+            $productSerialNo = 10000000000000 + $maxLiftingProduct;
+        }
+        else
+        {
+            $productSerialNo = 10000000000000 + 1;
+        }
     @endphp
 
     <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <input class="form-control" type="hidden" id="productSerialNo" name="productSerialNo" value="{{ $productSerialNo }}">
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="row">
@@ -190,7 +208,7 @@
                                         <th width="80px">Price</th>
                                         <th width="90px">MRP Price</th>
                                         <th width="110px">Higher Price</th>
-                                        <th width="80px">Action</th>
+                                        <th width="10px"><i class="fa fa-trash" style="color: white;"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody">
@@ -236,16 +254,27 @@
     <script type="text/javascript">
         $(".add_item").click(function () {
             var productId = $("#product option:selected").val();
-            var serialNo = $("#product_serial_no").val();
 
-        	if (productId == "" || serialNo == "")
+        	if (productId == "")
         	{
-                swal("Please! Select A Product And Enter Serial Number", "", "warning");
+                swal("Please! Select A Product", "", "warning");
         	}
         	else
         	{
-	        	var row_count = $('.row_count').val();
-	            var total = parseInt(row_count) + 1; 
+                if ($("#product_serial_no").val() == "")
+                {
+                    var productSerialNo = parseInt($('#productSerialNo').val()) + 1;
+                    var serialNo = productSerialNo;
+                    $('#productSerialNo').val(productSerialNo);
+                }
+                else
+                {
+                    var serialNo = $("#product_serial_no").val();
+                }
+
+                var row_count = $('.row_count').val();
+                var total = parseInt(row_count) + 1;
+
 	            $(".gridTable tbody").append(
 	            	'<tr id="itemRow_' + total + '">' +                
 		                '<td>'+
@@ -256,7 +285,7 @@
 		                	'<input class="productModel_'+total+'" type="text" name="productModel[]" value="" readonly>'+
 		                '</td>'+
 		                '<td>'+
-		                	'<input class="productColor_'+total+'" type="text" name="productColor[]" value="" readonly>'+
+		                	'<input class="productColor_'+total+'" type="text" name="productColor[]" value="">'+
 		                '</td>'+
 		                '<td>'+
 		                	'<input class="productSerialNo_'+total+'" type="text" name="productSerialNo[]" value="" required>'+
@@ -265,19 +294,18 @@
 		                '<td>'+
 		                    '<input class="productQty_'+total+'" type="hidden" name="productQty[]" value="1">'+
 		                    '<input style="text-align: right;" class="productPrice productPrice_'+total+'" type="number" name="productPrice[]" value="" oninput="findMrpHairePrice('+total+')" required>'+
-                            '<input class="price_'+total+'" type="hidden" name="price[]" value="">'+
                         '</td>'+
 
                         '<td>'+
-	                        '<input style="text-align: right;" class="productMrpPrice_'+total+'" type="number" name="productMrpPrice[]" value="" readonly>'+
+	                        '<input style="text-align: right;" class="productMrpPrice productMrpPrice_'+total+'" type="number" name="productMrpPrice[]" value="" readonly>'+
                         '</td>'+
 
                         '<td>'+
-	                        '<input style="text-align: right;" class="productHairePrice_'+total+'" type="number" name="productHairePrice[]" value="" readonly>'+
+	                        '<input style="text-align: right;" class="productHairePrice productHairePrice_'+total+'" type="number" name="productHairePrice[]" value="" readonly>'+
 		                '</td>'+
 		                '<td align="center">'+
 		                	'<span class="btn btn-outline-danger btn-sm item_remove" onclick="itemRemove('+total+')" style="width: 100%;">'+
-		                		'<i class="fa fa-trash"></i> Remove'+
+		                		'<i class="fa fa-trash"></i>'+
 		                	'</span>'+
 		                '</td>'+
 	                '</tr>'
@@ -324,10 +352,6 @@
 
         function findMrpHairePrice(i)
         {
-            var totalPrice = parseFloat($('.totalPrice').val()) - parseFloat($('.price_'+i).val());
-            var totalMrpPrice = parseFloat($('.totalMrpPrice').val()) - parseFloat($('.productMrpPrice_'+i).val());
-            var totalHairePrice = parseFloat($('.totalHairePrice').val()) - parseFloat($('.productHairePrice_'+i).val());
-
             if ($(".productPrice_"+i).val() == "")
             {
                 var price = 0
@@ -342,15 +366,32 @@
             $(".productMrpPrice_"+i).val(Math.round(mrpPrice));
             $(".productHairePrice_"+i).val(Math.round(hairePrice));
 
-            totalPrice = totalPrice + price;
-            // alert(totalPrice);
-            totalMrpPrice = totalMrpPrice + parseFloat($('.productMrpPrice_'+i).val());
-            totalHairePrice = totalHairePrice + parseFloat($('.productHairePrice_'+i).val());
+            rowSum();
+        }
 
-            $('.totalPrice').val(Math.round(totalPrice));
+        function rowSum()
+        {
+            var totalPrice = 0;            
+            var totalMrpPrice = 0;            
+            var totalHairePrice = 0;            
+            $(".productPrice").each(function () {
+                var price = parseFloat($(this).val());
+                totalPrice += isNaN(price) ? 0 : price;
+            });
+
+            $(".productMrpPrice").each(function () {
+                var mrpPrice = parseFloat($(this).val());
+                totalMrpPrice += isNaN(mrpPrice) ? 0 : mrpPrice;
+            });
+
+            $(".productHairePrice").each(function () {
+                var hairePrice = parseFloat($(this).val());
+                totalHairePrice += isNaN(hairePrice) ? 0 : hairePrice;
+            });
+
+            $('.totalPrice').val(totalPrice);
             $('.totalMrpPrice').val(Math.round(totalMrpPrice));
             $('.totalHairePrice').val(Math.round(totalHairePrice));
-            $('.price_'+i).val(Math.round(price));
         }
 
         function itemRemove(i) {

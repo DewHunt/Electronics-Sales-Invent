@@ -43,6 +43,7 @@
 	                    @endif
 	                </div>
 	    		</div>
+
 	    		<div class="col-md-6">                 
 	                <div class="form-group {{ $errors->has('productName') ? ' has-danger' : '' }}">
 	                    <label for="product-name">Product Name</label>

@@ -11,7 +11,7 @@
             </span>
 
             <span class="logo-lg">
-                <img src="{{ asset('/').@$information->adminLogo }}" class="light-logo large-logo" alt="large" />
+                <img src="{{asset('/')}}public/uploads/images/2019_10_22/2019_10_22_13_06_15_000000-uNX0NHMGHBSRk08I9Bke.jpg" class="light-logo large-logo" alt="large" />
             </span>
         </a>
     </div>

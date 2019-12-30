@@ -22,7 +22,6 @@ class CreateTblDealerRequisitionProductsTable extends Migration
             $table->text('price')->nullable();
             $table->text('qty')->nullable();
             $table->text('amount')->nullable();
-            $table->integer('approved_by')->nullable();
             $table->text('approved_qty')->nullable();
             $table->text('approved_amount')->nullable();
             $table->tinyInteger('status')->default('1');

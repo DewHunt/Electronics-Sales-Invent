@@ -62,7 +62,35 @@
             <div id="approveSection">
                 <div class="row">
                     <div class="col-md-12">
-                        <h4>Approve Section</h4>
+                        <table class="table table-bordered table-sm">
+                            <thead>
+                                <tr>
+                                    <th width="20px">SL</th>
+                                    <th width="50px">Date</th>
+                                    <th width="50px">Requisition No.</th>
+                                    <th width="350px">Dealer Name</th>
+                                    <th width="50px">Total Qty</th>
+                                    <th width="70px">Total Amount</th>
+                                    <th width="20px">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $sl = 1;
+                                @endphp
+                                @foreach ($approveDealerRequisitions as $approveDealerRequisition)
+                                    <tr class="row_{{ $approveDealerRequisition->id }}">
+                                        <td>{{ $sl++ }}</td>
+                                        <td>{{ date('d-m-Y', strtotime($approveDealerRequisition->date)) }}</td>
+                                        <td>{{ $approveDealerRequisition->requisition_no }}</td>
+                                        <td>{{ $approveDealerRequisition->dealerName }}</td>
+                                        <td align="right">{{ $approveDealerRequisition->total_qty }}</td>
+                                        <td align="right">{{ $approveDealerRequisition->total_amount }}</td>
+                                        <td align="center"><button class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#detailRequisitionModal" onclick="showDetailRequisition({{ $approveDealerRequisition->id }})">Details</button></td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>           
@@ -79,7 +107,7 @@
 
                     {{-- Modal Header --}}
                     <div class="modal-header">
-                        <h3 class="modal-title" id="dealerName"></h3>
+                        <h3 class="modal-title dealerName" id="dealerName"></h3>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
 
@@ -104,14 +132,15 @@
                             <tfoot>
                                 <tr>
                                     <td colspan="3" align="right" style="vertical-align: middle;"><h3>Total</h3></td>
-                                    <td><input style="text-align: right;" class="form-control" id="totalQty" type="text" name="totalQty" value=""></td>
-                                    <td><input style="text-align: right;" class="form-control" id="totalAmount" type="text" name="totalAmount" value=""></td>
-                                    <td><input style="text-align: right;" class="form-control" id="totalApproveQty" type="number" name="totalApproveQty" value="0" readonly></td>
-                                    <td><input style="text-align: right;" class="form-control" id="totalApproveAmount" type="number" name="totalApproveAmount" value="0" readonly></td>
+                                    <td><input style="text-align: right;" class="form-control totalQty" id="totalQty" type="text" name="totalQty" value=""></td>
+                                    <td><input style="text-align: right;" class="form-control totalAmount" id="totalAmount" type="text" name="totalAmount" value=""></td>
+                                    <td><input style="text-align: right;" class="form-control totalApproveQty" id="totalApproveQty" type="number" name="totalApproveQty" value="0" readonly></td>
+                                    <td><input style="text-align: right;" class="form-control totalApproveAmount" id="totalApproveAmount" type="number" name="totalApproveAmount" value="0" readonly></td>
                                 </tr>
 
                                 <tr>
-                                    <td colspan="7"><input class="form-control" type="text" name="dealerRequisitionId" id="dealerRequisitionId" value=""></td>
+                                    <td colspan="3"><input class="form-control dealerRequisitionId" type="text" name="dealerRequisitionId" id="dealerRequisitionId" value=""></td>
+                                    <td colspan="4"><input class="form-control" type="text" name="approveBy" id="approveBy" value="{{ Auth::user()->id }}"></td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -165,10 +194,10 @@
                     var dealerRequisition = response.dealerRequisition;
                     var dealerRequisitionProducts = response.dealerRequisitionProducts;
 
-                    $('#dealerName').html(dealerRequisition.dealerName);
-                    $('#totalQty').val(dealerRequisition.total_qty);
-                    $('#totalAmount').val(dealerRequisition.total_amount);
-                    $('#dealerRequisitionId').val(dealerRequisition.id);
+                    $('.dealerName').html(dealerRequisition.dealerName);
+                    $('.totalQty').val(dealerRequisition.total_qty);
+                    $('.totalAmount').val(dealerRequisition.total_amount);
+                    $('.dealerRequisitionId').val(dealerRequisition.id);
 
                     for (var dealerRequisitionProduct of dealerRequisitionProducts)
                     {
@@ -176,6 +205,7 @@
                             '<tr class="requisitionProductRow" id="requisitionProductRow_'+dealerRequisitionProduct.id+'">' +
                                 '<td>'+
                                     '<input class="form-control requisitionProductName_'+dealerRequisitionProduct.id+'" type="text" value="'+dealerRequisitionProduct.productName+'" readonly>'+
+                                    '<input class="form-control requisitionProductName_'+dealerRequisitionProduct.id+'" type="text" name="dealerRequisitionProductId[]" value="'+dealerRequisitionProduct.id+'" readonly>'+
                                 '</td>'+
                                 '<td>'+
                                     '<input class="form-control requisitionProductModelNo_'+dealerRequisitionProduct.id+'" type="text" value="'+dealerRequisitionProduct.model_no+'" readonly>'+
@@ -190,10 +220,10 @@
                                     '<input style="text-align: right;" class="form-control requisitionAmount_'+dealerRequisitionProduct.id+'" type="text" value="'+dealerRequisitionProduct.amount+'" readonly>'+
                                 '</td>'+
                                 '<td>'+
-                                    '<input style="text-align: right;" class="form-control approveQty approveQty_'+dealerRequisitionProduct.id+'" oninput="findTotalApproveAmount('+dealerRequisitionProduct.id+')" type="number" value="0">'+
+                                    '<input style="text-align: right;" class="form-control approveQty approveQty_'+dealerRequisitionProduct.id+'" oninput="findTotalApproveAmount('+dealerRequisitionProduct.id+')" type="number" name="approveQty[]" value="0">'+
                                 '</td>'+
                                 '<td>'+
-                                    '<input style="text-align: right;" class="form-control approveAmount approveAmount_'+dealerRequisitionProduct.id+'" type="number" value="0" readonly>'+
+                                    '<input style="text-align: right;" class="form-control approveAmount approveAmount_'+dealerRequisitionProduct.id+'" type="number" name="approveAmount[]" value="0" readonly>'+
                                 '</td>'+
                             '</tr>'
                         );

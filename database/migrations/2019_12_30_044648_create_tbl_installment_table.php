@@ -19,6 +19,8 @@ class CreateTblInstallmentTable extends Migration
             $table->integer('customer_id');
             $table->integer('product_id');
             $table->string('invoice_no',255)->nullable();
+            $table->string('installment_collector_id',255)->nullable();
+            $table->string('installment_collector_name',255)->nullable();
             $table->string('customer_name',255)->nullable();
             $table->string('installment_price',255)->nullable();
             $table->string('booking_amount',255)->nullable();

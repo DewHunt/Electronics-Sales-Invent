@@ -21,6 +21,9 @@ class CreateTblDealerRequisitionsTable extends Migration
             $table->integer('product_id')->nullable();
             $table->text('total_qty')->nullable();
             $table->text('total_amount')->nullable();
+            $table->integer('approved_by')->nullable();
+            $table->text('total_approve_qty')->nullable();
+            $table->text('total_approve_amount')->nullable();
             $table->tinyInteger('status')->default('1');
             $table->timestamps();
         });

@@ -17,7 +17,7 @@ class LiftingRecordController extends Controller
 {
     public function index(Request $request)
     {
-    	$title = "Lifting Record";
+    	$title = "Lifting Report";
     	$searchFormLink = "liftingRecord.index";
     	$printFormLink = "liftingRecord.print";
 
@@ -40,6 +40,8 @@ class LiftingRecordController extends Controller
     	$fromDate = date('Y-m-d',strtotime($request->fromDate));
     	$toDate = date('Y-m-d',strtotime($request->toDate));
         $print = $request->print;
+        $btnSummary = $request->btnSummary;
+        $btnRecord = $request->btnRecord;
 
     	$vendors = VendorSetup::where('status','1')
     		->orderBy('name','asc')
@@ -58,48 +60,106 @@ class LiftingRecordController extends Controller
             ->orderBy('name','asc')
             ->get();
 
-        $liftingRecords = DB::table('view_lifting_record')
-            ->select('view_lifting_record.*')
-            ->orWhere(function($query) use($fromDate,$toDate,$vendor,$category,$product,$type,$storeOrShowroomType,$storeOrShowroomId){
-                if (!empty($fromDate))
-                {
-                    $query->whereBetween('view_lifting_record.liftingDate', array($fromDate,$toDate));
-                }
+        if ($request->btnSummary == "Summary")
+        {
+            $liftingSummaries = DB::table('view_lifting_record')
+                ->select('view_lifting_record.productName','view_lifting_record.productModelNo',DB::raw('SUM(view_lifting_record.productQty) as totalLifting'),DB::raw('SUM(view_lifting_record.price) as totalLiftingPrice'))
+                ->orWhere(function($query) use($fromDate,$toDate,$vendor,$category,$product,$type,$storeOrShowroomType,$storeOrShowroomId){
+                    if (!empty($fromDate))
+                    {
+                        $query->whereBetween('view_lifting_record.liftingDate', array($fromDate,$toDate));
+                    }
 
-                if ($vendor)
-                {
-                    $query->whereIn('view_lifting_record.vendorId',$vendor);
-                }
+                    if ($vendor)
+                    {
+                        $query->whereIn('view_lifting_record.vendorId',$vendor);
+                    }
 
-                if ($category)
-                {
-                    $query->whereIn('view_lifting_record.categoryId',$category);
-                }
+                    if ($category)
+                    {
+                        $query->whereIn('view_lifting_record.categoryId',$category);
+                    }
 
-                if ($category)
-                {
-                    $query->orWhereIn('view_lifting_record.parentId',$category);
-                }
+                    if ($category)
+                    {
+                        $query->orWhereIn('view_lifting_record.parentId',$category);
+                    }
 
-                if ($product)
-                {
-                    $query->whereIn('view_lifting_record.productId',$product);
-                }
+                    if ($product)
+                    {
+                        $query->whereIn('view_lifting_record.productId',$product);
+                    }
 
-                if ($type)
-                {
-                    $query->where('view_lifting_record.storeOrShowroomType',$type);
-                }
+                    if ($type)
+                    {
+                        $query->where('view_lifting_record.storeOrShowroomType',$type);
+                    }
 
-                if ($storeOrShowroomType && $storeOrShowroomId)
-                {
-                    $query->where('view_lifting_record.storeOrShowroomType',$storeOrShowroomType)
-                        ->where('view_lifting_record.storeOrShowroomId',$storeOrShowroomId);
-                }
-            })
-            ->get();
+                    if ($storeOrShowroomType && $storeOrShowroomId)
+                    {
+                        $query->where('view_lifting_record.storeOrShowroomType',$storeOrShowroomType)
+                            ->where('view_lifting_record.storeOrShowroomId',$storeOrShowroomId);
+                    }
+                })
+                ->groupBy('view_lifting_record.productId')
+                ->orderBy('view_lifting_record.productName','asc')
+                ->get();
+        }
+        else
+        {
+            $liftingSummaries = "";
+        }
 
-    	return view('admin.liftingRecord.index')->with(compact('title','searchFormLink','printFormLink','print','vendors','categories','products','storesAndShowrooms','vendor','category','product','type','storeOrShowroomId','storeOrShowroomType','fromDate','toDate','liftingRecords'));
+        if ($request->btnRecord == "Record")
+        {
+            $liftingRecords = DB::table('view_lifting_record')
+                ->select('view_lifting_record.*')
+                ->orWhere(function($query) use($fromDate,$toDate,$vendor,$category,$product,$type,$storeOrShowroomType,$storeOrShowroomId){
+                    if (!empty($fromDate))
+                    {
+                        $query->whereBetween('view_lifting_record.liftingDate', array($fromDate,$toDate));
+                    }
+
+                    if ($vendor)
+                    {
+                        $query->whereIn('view_lifting_record.vendorId',$vendor);
+                    }
+
+                    if ($category)
+                    {
+                        $query->whereIn('view_lifting_record.categoryId',$category);
+                    }
+
+                    if ($category)
+                    {
+                        $query->orWhereIn('view_lifting_record.parentId',$category);
+                    }
+
+                    if ($product)
+                    {
+                        $query->whereIn('view_lifting_record.productId',$product);
+                    }
+
+                    if ($type)
+                    {
+                        $query->where('view_lifting_record.storeOrShowroomType',$type);
+                    }
+
+                    if ($storeOrShowroomType && $storeOrShowroomId)
+                    {
+                        $query->where('view_lifting_record.storeOrShowroomType',$storeOrShowroomType)
+                            ->where('view_lifting_record.storeOrShowroomId',$storeOrShowroomId);
+                    }
+                })
+                ->orderBy('view_lifting_record.vendorName','asc')
+                ->get();
+        }
+        else
+        {
+            $liftingRecords = "";
+        }
+
+    	return view('admin.liftingRecord.index')->with(compact('title','searchFormLink','printFormLink','print','btnSummary','btnRecord','vendors','categories','products','storesAndShowrooms','vendor','category','product','type','storeOrShowroomId','storeOrShowroomType','fromDate','toDate','liftingRecords','liftingSummaries'));
     }
 
     public function print(Request $request)
@@ -115,51 +175,111 @@ class LiftingRecordController extends Controller
         $type = $request->type;
     	$fromDate = date('Y-m-d',strtotime($request->fromDate));
     	$toDate = date('Y-m-d',strtotime($request->toDate));
+        $btnPrintSummary = $request->btnPrintSummary;
+        $btnPrintRecord = $request->btnPrintRecord;
 
-        $liftingRecords = DB::table('view_lifting_record')
-            ->select('view_lifting_record.*')
-            ->orWhere(function($query) use($fromDate,$toDate,$vendor,$category,$product,$type,$storeOrShowroomType,$storeOrShowroomId){
-                if (!empty($fromDate))
-                {
-                    $query->whereBetween('view_lifting_record.liftingDate', array($fromDate,$toDate));
-                }
+        $vendorName = VendorSetup::where('id',$vendor)->first();
 
-                if ($vendor)
-                {
-                    $query->whereIn('view_lifting_record.vendorId',$vendor);
-                }
+        if ($request->btnPrintSummary == "Print Summary")
+        {
+            $liftingSummaries = DB::table('view_lifting_record')
+                ->select('view_lifting_record.productName','view_lifting_record.productModelNo',DB::raw('SUM(view_lifting_record.productQty) as totalLifting'),DB::raw('SUM(view_lifting_record.price) as totalLiftingPrice'))
+                ->orWhere(function($query) use($fromDate,$toDate,$vendor,$category,$product,$type,$storeOrShowroomType,$storeOrShowroomId){
+                    if (!empty($fromDate))
+                    {
+                        $query->whereBetween('view_lifting_record.liftingDate', array($fromDate,$toDate));
+                    }
 
-                if ($category)
-                {
-                    $query->whereIn('view_lifting_record.categoryId',$category);
-                }
+                    if ($vendor)
+                    {
+                        $query->whereIn('view_lifting_record.vendorId',$vendor);
+                    }
 
-                if ($category)
-                {
-                    $query->orWhereIn('view_lifting_record.parentId',$category);
-                }
+                    if ($category)
+                    {
+                        $query->whereIn('view_lifting_record.categoryId',$category);
+                    }
 
-                if ($product)
-                {
-                    $query->whereIn('view_lifting_record.productId',$product);
-                }
+                    if ($category)
+                    {
+                        $query->orWhereIn('view_lifting_record.parentId',$category);
+                    }
 
-                if ($type)
-                {
-                    $query->where('view_lifting_record.storeOrShowroomType',$type);
-                }
+                    if ($product)
+                    {
+                        $query->whereIn('view_lifting_record.productId',$product);
+                    }
 
-                if ($storeOrShowroomType && $storeOrShowroomId)
-                {
-                    $query->where('view_lifting_record.storeOrShowroomType',$storeOrShowroomType)
-                        ->where('view_lifting_record.storeOrShowroomId',$storeOrShowroomId);
-                }
-            })
-            ->orderBy('view_lifting_record.liftingDate','asc')
-            ->orderBy('view_lifting_record.vendorName','asc')
-            ->get();
+                    if ($type)
+                    {
+                        $query->where('view_lifting_record.storeOrShowroomType',$type);
+                    }
 
-        $pdf = PDF::loadView('admin.liftingRecord.print',['title'=>$title,'fromDate'=>$fromDate,'toDate'=>$toDate,'liftingRecords'=>$liftingRecords]);
+                    if ($storeOrShowroomType && $storeOrShowroomId)
+                    {
+                        $query->where('view_lifting_record.storeOrShowroomType',$storeOrShowroomType)
+                            ->where('view_lifting_record.storeOrShowroomId',$storeOrShowroomId);
+                    }
+                })
+                ->groupBy('view_lifting_record.productId')
+                ->orderBy('view_lifting_record.productName','asc')
+                ->get();
+        }
+        else
+        {
+            $liftingSummaries = "";
+        }
+
+        if ($request->btnPrintRecord == "Print Record")
+        {
+            $liftingRecords = DB::table('view_lifting_record')
+                ->select('view_lifting_record.*')
+                ->orWhere(function($query) use($fromDate,$toDate,$vendor,$category,$product,$type,$storeOrShowroomType,$storeOrShowroomId){
+                    if (!empty($fromDate))
+                    {
+                        $query->whereBetween('view_lifting_record.liftingDate', array($fromDate,$toDate));
+                    }
+
+                    if ($vendor)
+                    {
+                        $query->whereIn('view_lifting_record.vendorId',$vendor);
+                    }
+
+                    if ($category)
+                    {
+                        $query->whereIn('view_lifting_record.categoryId',$category);
+                    }
+
+                    if ($category)
+                    {
+                        $query->orWhereIn('view_lifting_record.parentId',$category);
+                    }
+
+                    if ($product)
+                    {
+                        $query->whereIn('view_lifting_record.productId',$product);
+                    }
+
+                    if ($type)
+                    {
+                        $query->where('view_lifting_record.storeOrShowroomType',$type);
+                    }
+
+                    if ($storeOrShowroomType && $storeOrShowroomId)
+                    {
+                        $query->where('view_lifting_record.storeOrShowroomType',$storeOrShowroomType)
+                            ->where('view_lifting_record.storeOrShowroomId',$storeOrShowroomId);
+                    }
+                })
+                ->orderBy('view_lifting_record.vendorName','asc')
+                ->get();
+        }
+        else
+        {
+            $liftingRecords = "";
+        }
+
+        $pdf = PDF::loadView('admin.liftingRecord.print',['title'=>$title,'fromDate'=>$fromDate,'toDate'=>$toDate,'btnPrintSummary'=>$btnPrintSummary,'btnPrintRecord'=>$btnPrintRecord,'vendorName'=>$vendorName,'liftingRecords'=>$liftingRecords,'liftingSummaries'=>$liftingSummaries]);
 
         return $pdf->stream('lifting_record_'.$fromDate.'_to_'.$toDate.'.pdf');
     }

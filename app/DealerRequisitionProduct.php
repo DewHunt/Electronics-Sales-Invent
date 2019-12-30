@@ -9,7 +9,7 @@ class DealerRequisitionProduct extends Model
     protected $table = "tbl_dealer_requisition_products";
 
     protected $fillable = [
-        'requisition_id','product_id','product_name','model_no','price','qty','amount','approved_by','approved_qty','approved_amount','status'
+        'requisition_id','product_id','product_name','model_no','price','qty','amount','approved_qty','approved_amount','status'
 	];
 
 	protected $hidden = [

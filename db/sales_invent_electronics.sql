@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 29, 2019 at 02:13 PM
+-- Generation Time: Dec 30, 2019 at 01:41 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -208,7 +208,11 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (92, '2019_12_29_043017_create_tbl_products_table', 63),
 (93, '2019_12_29_060327_create_tbl_dealer_requisitions_table', 64),
 (94, '2019_12_29_060914_create_tbl_dealer_requisition_products_table', 64),
-(95, '2019_12_29_062557_create_tbl_dealer_requisitions_table', 65);
+(95, '2019_12_29_062557_create_tbl_dealer_requisitions_table', 65),
+(96, '2019_12_30_044648_create_tbl_installment_table', 66),
+(97, '2019_12_30_111918_create_tbl_dealer_requisitions_table', 67),
+(98, '2019_12_30_113935_create_tbl_dealer_requisitions_table', 68),
+(99, '2019_12_30_114020_create_tbl_dealer_requisition_products_table', 68);
 
 -- --------------------------------------------------------
 
@@ -629,6 +633,9 @@ CREATE TABLE `tbl_dealer_requisitions` (
   `product_id` int(11) DEFAULT NULL,
   `total_qty` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `total_amount` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `approved_by` int(11) DEFAULT NULL,
+  `total_approve_qty` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `total_approve_amount` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -638,9 +645,9 @@ CREATE TABLE `tbl_dealer_requisitions` (
 -- Dumping data for table `tbl_dealer_requisitions`
 --
 
-INSERT INTO `tbl_dealer_requisitions` (`id`, `dealer_id`, `requisition_no`, `date`, `product_id`, `total_qty`, `total_amount`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, '100000001', '2019-12-29', 8, '36', '736680', 1, '2019-12-29 00:37:06', '2019-12-29 00:39:03'),
-(2, 3, '100000002', '2019-12-29', 7, '30', '1350000', 1, '2019-12-29 00:37:49', '2019-12-29 00:37:49');
+INSERT INTO `tbl_dealer_requisitions` (`id`, `dealer_id`, `requisition_no`, `date`, `product_id`, `total_qty`, `total_amount`, `approved_by`, `total_approve_qty`, `total_approve_amount`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, '100000001', '2019-12-29', 8, '36', '736680', 1, '6', '196200', 0, '2019-12-28 12:37:06', '2019-12-30 06:20:18'),
+(2, 3, '100000002', '2019-12-29', 7, '30', '1350000', NULL, NULL, NULL, 1, '2019-12-28 12:37:49', '2019-12-28 12:37:49');
 
 -- --------------------------------------------------------
 
@@ -657,7 +664,6 @@ CREATE TABLE `tbl_dealer_requisition_products` (
   `price` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `qty` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `amount` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `approved_by` int(11) DEFAULT NULL,
   `approved_qty` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `approved_amount` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 1,
@@ -669,14 +675,14 @@ CREATE TABLE `tbl_dealer_requisition_products` (
 -- Dumping data for table `tbl_dealer_requisition_products`
 --
 
-INSERT INTO `tbl_dealer_requisition_products` (`id`, `requisition_id`, `product_id`, `product_name`, `model_no`, `price`, `qty`, `amount`, `approved_by`, `approved_qty`, `approved_amount`, `status`, `created_at`, `updated_at`) VALUES
-(4, 2, 3, 'Walton ANDROID  ATV', 'wal890', '45000', '12', '540000', NULL, NULL, NULL, 1, NULL, NULL),
-(5, 2, 5, 'Walton LED TV', 'wal1234', '35000', '12', '420000', NULL, NULL, NULL, 1, NULL, NULL),
-(6, 2, 7, 'Walton Side by Side Intelligent Inverter Refrigerator', 'Wal119', '65000', '6', '390000', NULL, NULL, NULL, 1, NULL, NULL),
-(7, 1, 12, 'Marcel Air Conditioner', 'MSN-12K-ECXXA', '35500', '6', '213000', NULL, NULL, NULL, 1, NULL, NULL),
-(8, 1, 10, 'Marcel LED TV', 'MSD55FD-1.397 m (55\'\')', '59900', '6', '359400', NULL, NULL, NULL, 1, NULL, NULL),
-(9, 1, 13, 'Marcel FAN', 'MCF5601 WR', '2700', '12', '32400', NULL, NULL, NULL, 1, NULL, NULL),
-(10, 1, 8, 'Marcel Refrigerator', 'MFO-JET-RXXX-XX', '10990', '12', '131880', NULL, NULL, NULL, 1, NULL, NULL);
+INSERT INTO `tbl_dealer_requisition_products` (`id`, `requisition_id`, `product_id`, `product_name`, `model_no`, `price`, `qty`, `amount`, `approved_qty`, `approved_amount`, `status`, `created_at`, `updated_at`) VALUES
+(4, 2, 3, 'Walton ANDROID  ATV', 'wal890', '45000', '12', '540000', NULL, NULL, 1, NULL, NULL),
+(5, 2, 5, 'Walton LED TV', 'wal1234', '35000', '12', '420000', NULL, NULL, 1, NULL, NULL),
+(6, 2, 7, 'Walton Side by Side Intelligent Inverter Refrigerator', 'Wal119', '65000', '6', '390000', NULL, NULL, 1, NULL, NULL),
+(7, 1, 12, 'Marcel Air Conditioner', 'MSN-12K-ECXXA', '35500', '6', '213000', '2', '71000', 0, NULL, '2019-12-30 06:20:18'),
+(8, 1, 10, 'Marcel LED TV', 'MSD55FD-1.397 m (55\'\')', '59900', '6', '359400', '2', '119800', 0, NULL, '2019-12-30 06:20:19'),
+(9, 1, 13, 'Marcel FAN', 'MCF5601 WR', '2700', '12', '32400', '2', '5400', 0, NULL, '2019-12-30 06:20:19'),
+(10, 1, 8, 'Marcel Refrigerator', 'MFO-JET-RXXX-XX', '10990', '12', '131880', '0', '0', 0, NULL, '2019-12-30 06:20:19');
 
 -- --------------------------------------------------------
 
@@ -848,6 +854,8 @@ CREATE TABLE `tbl_installment` (
   `customer_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `invoice_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `installment_collector_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `installment_collector_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `customer_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `installment_price` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `booking_amount` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -857,14 +865,6 @@ CREATE TABLE `tbl_installment` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `tbl_installment`
---
-
-INSERT INTO `tbl_installment` (`id`, `customer_product_id`, `customer_id`, `product_id`, `invoice_no`, `customer_name`, `installment_price`, `booking_amount`, `installment_qty`, `installment_amount`, `status`, `created_at`, `updated_at`) VALUES
-(11, 15, 9, 8, 'inv-32-19-10032', 'Md. Nasir', '11869', '1869', '10', '1000', 0, '2019-12-17 05:51:05', '2019-12-17 07:04:35'),
-(12, 19, 10, 12, 'inv-33-19-10033', 'gfsdfsfgdsfg', '38340', '1232', '12', '3092', 1, '2019-12-17 05:51:46', '2019-12-17 22:06:25');
 
 -- --------------------------------------------------------
 
@@ -948,36 +948,6 @@ CREATE TABLE `tbl_installment_schedule` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `tbl_installment_schedule`
---
-
-INSERT INTO `tbl_installment_schedule` (`id`, `installment_id`, `invoice_no`, `installment_schedule_date`, `installment_schedule_amount`, `status`, `created_at`, `updated_at`) VALUES
-(132, 11, 'inv-32-19-10032', '2019-12-17', '1869', 0, NULL, '2019-12-17 07:04:34'),
-(133, 11, 'inv-32-19-10032', '2020-01-17', '1000', 0, NULL, '2019-12-17 07:04:34'),
-(134, 11, 'inv-32-19-10032', '2020-02-17', '1000', 0, NULL, '2019-12-17 07:04:34'),
-(135, 11, 'inv-32-19-10032', '2020-03-17', '1000', 0, NULL, '2019-12-17 07:04:34'),
-(136, 11, 'inv-32-19-10032', '2020-04-17', '1000', 0, NULL, '2019-12-17 07:04:35'),
-(137, 11, 'inv-32-19-10032', '2020-05-17', '1000', 0, NULL, '2019-12-17 07:04:35'),
-(138, 11, 'inv-32-19-10032', '2020-06-17', '1000', 0, NULL, '2019-12-17 07:04:35'),
-(139, 11, 'inv-32-19-10032', '2020-07-17', '1000', 0, NULL, '2019-12-17 07:04:35'),
-(140, 11, 'inv-32-19-10032', '2020-08-17', '1000', 0, NULL, '2019-12-17 07:04:35'),
-(141, 11, 'inv-32-19-10032', '2020-09-17', '1000', 0, NULL, '2019-12-17 07:04:35'),
-(142, 11, 'inv-32-19-10032', '2020-10-17', '1000', 0, NULL, '2019-12-17 07:04:35'),
-(143, 12, 'inv-33-19-10033', '2019-12-17', '1232', 1, NULL, '2019-12-17 22:06:25'),
-(144, 12, 'inv-33-19-10033', '2020-01-17', '3092', 1, NULL, '2019-12-17 22:06:25'),
-(145, 12, 'inv-33-19-10033', '2020-02-17', '3092', 1, NULL, '2019-12-17 22:06:25'),
-(146, 12, 'inv-33-19-10033', '2020-03-17', '3092', 1, NULL, '2019-12-17 22:06:25'),
-(147, 12, 'inv-33-19-10033', '2020-04-17', '3092', 1, NULL, '2019-12-17 22:06:25'),
-(148, 12, 'inv-33-19-10033', '2020-05-17', '3092', 1, NULL, '2019-12-17 22:06:25'),
-(149, 12, 'inv-33-19-10033', '2020-06-17', '3092', 1, NULL, '2019-12-17 22:06:25'),
-(150, 12, 'inv-33-19-10033', '2020-07-17', '3092', 1, NULL, '2019-12-17 22:06:25'),
-(151, 12, 'inv-33-19-10033', '2020-08-17', '3092', 1, NULL, '2019-12-17 22:06:25'),
-(152, 12, 'inv-33-19-10033', '2020-09-17', '3092', 1, NULL, '2019-12-17 22:06:25'),
-(153, 12, 'inv-33-19-10033', '2020-10-17', '3092', 1, NULL, '2019-12-17 22:06:25'),
-(154, 12, 'inv-33-19-10033', '2020-11-17', '3092', 1, NULL, '2019-12-17 22:06:25'),
-(155, 12, 'inv-33-19-10033', '2020-12-17', '3092', 1, NULL, '2019-12-17 22:06:25');
 
 -- --------------------------------------------------------
 
@@ -2944,7 +2914,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -3052,7 +3022,7 @@ ALTER TABLE `tbl_groups_sales_target_category`
 -- AUTO_INCREMENT for table `tbl_installment`
 --
 ALTER TABLE `tbl_installment`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tbl_installment_collection`
@@ -3070,7 +3040,7 @@ ALTER TABLE `tbl_installment_collection_list`
 -- AUTO_INCREMENT for table `tbl_installment_schedule`
 --
 ALTER TABLE `tbl_installment_schedule`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tbl_invoice`

@@ -47,7 +47,9 @@ class ProductIssueController extends Controller
     public function dealerRequisitionInfo(Request $request)
     {
     	$dealerRequisition = DealerRequisition::where('id',$request->dealerRequisitionId)->first();
-    	$dealerRequisitionProducts = DealerRequisitionProduct::where('requisition_id',$request->dealerRequisitionId)->get();
+    	$dealerRequisitionProducts = DealerRequisitionProduct::select('tbl_dealer_requisition_products.*','tbl_products.name as productName','tbl_products.code as productCode')
+            ->leftJoin('tbl_products','tbl_products.id','=','tbl_dealer_requisition_products.product_id')
+            ->where('requisition_id',$request->dealerRequisitionId)->get();
     	$dealer = DealerSetup::where('id',$dealerRequisition->dealer_id)->first();
 
     	// dd($dealer);

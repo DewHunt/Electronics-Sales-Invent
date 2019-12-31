@@ -1,5 +1,14 @@
 @extends('admin.layouts.masterAddEdit')
 
+@section('custom_css')
+    <style type="text/css">
+        .table th{
+            background: #00c292;
+            text-align: center;
+        }
+    </style>
+@endsection
+
 @section('card_body')
     <style type="text/css">
         .chosen-single{
@@ -68,10 +77,10 @@
         <div id="withAprrovalSection">
             <div class="row">
                 <div class="col-md-3">
-                    <label for="dealer">Approved Requisitions No</label>
+                    <label for="dealer">Requisitions No</label>
                     <div class="form-group">
                         <select class="form-control chosen-select" id="dealerRequisitionId" name="dealerRequisitionId" required="">
-                            <option value=" ">Select Approve Reuisition Number</option>
+                            <option value=" ">Select Reuisition Number</option>
                             @foreach ($dealerRequisitions as $dealerRequisition)
                                 <option value="{{$dealerRequisition->id}}">{{ $dealerRequisition->requisition_no }}</option>
                             @endforeach
@@ -100,6 +109,24 @@
                     <div class="form-group">
                         <textarea class="form-control" id="dealerAddress" name="dealerAddress" rows="5"></textarea>
                     </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-bordered table-sm approveProducts">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th width="200px">Model</th>
+                                <th width="100px">Qty</th>
+                                <th width="60px">Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tbody">
+                        </tbody>
+                    </table>
                 </div>
             </div>            
         </div>
@@ -148,11 +175,13 @@
                     <table class="table table-bordered table-striped gridTable" >
                         <thead>
                             <tr>
-                                <th>Product Name & Code</th>
+                                <th>Product Name</th>
                                 <th width="200px">Model</th>
-                                <th width="150px">Rate</th>
+                                <th width="200px">Model</th>
+                                <th width="150px">Serial</th>
+                                <th width="80px">Rate</th>
                                 <th width="80px">Qty</th>
-                                <th width="150px">Amount</th>
+                                <th width="80px">Amount</th>
                                 <th width="10px"><i class="fa fa-trash" style="color: white;"></i></th>
                             </tr>
                         </thead>
@@ -213,6 +242,7 @@
                 url: "{{ route('productIssue.dealerRequisitionInfo') }}",
                 data:{dealerRequisitionId:dealerRequisitionId},
                 success: function(response) {
+                    $('.approveProductRow').remove();
                     var product = response.dealerRequisition;
                     var dealer = response.dealer;
                     var dealerRequisitionProducts = response.dealerRequisitionProducts;
@@ -220,6 +250,30 @@
                     $('#dealerCode').val(dealer.code);
                     $('#dealerName').val(dealer.name);
                     $('#dealerAddress').val(dealer.address);
+
+                    for (var dealerRequisitionProduct of dealerRequisitionProducts)
+                    {
+
+                        $(".approveProducts tbody").append(
+                            '<tr class="approveProductRow" id="approveProductRow_'+dealerRequisitionProduct.id+'">' +
+                                '<td>'+
+                                    '<input class="form-control requisitionProductName_'+dealerRequisitionProduct.id+'" type="text" value="'+dealerRequisitionProduct.productName+'" readonly>'+
+                                    '<input class="form-control requisitionProductName_'+dealerRequisitionProduct.id+'" type="hidden" name="dealerRequisitionProductId[]" value="'+dealerRequisitionProduct.id+'" readonly>'+
+                                '</td>'+
+                                '<td>'+
+                                    '<input class="form-control requisitionProductModelNo_'+dealerRequisitionProduct.id+'" type="text" value="'+dealerRequisitionProduct.model_no+'" readonly>'+
+                                '</td>'+
+                                '<td>'+
+                                    '<input style="text-align: right;" class="form-control approveQty approveQty_'+dealerRequisitionProduct.id+'" oninput="findTotalApproveAmount('+dealerRequisitionProduct.id+')" type="number" name="approveQty[]" value="'+dealerRequisitionProduct.approved_qty+'">'+
+                                '</td>'+
+                                '<td align="center">'+
+                                    '<span class="btn btn-info btn-sm item_remove" onclick="itemRemove('+dealerRequisitionProduct.id+')" style="width: 100%;">'+
+                                        '<i class="fa fa-plus"> Issue</i>'+
+                                    '</span>'+
+                                '</td>'+
+                            '</tr>'
+                        );
+                    }
                 },
                 error: function(response) {
 

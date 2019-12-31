@@ -18,7 +18,7 @@ class DealerRequisitionController extends Controller
 
     	$dealerRequisitions = DealerRequisition::select('tbl_dealer_requisitions.*','tbl_dealers.name as dealerName')
     		->leftJoin('tbl_dealers','tbl_dealers.id','=','tbl_dealer_requisitions.dealer_id')
-    		->where('tbl_dealer_requisitions.status','1')
+    		// ->where('tbl_dealer_requisitions.status','1')
     		->orderBy('tbl_dealer_requisitions.date','dsc')
     		->get();
 
@@ -132,6 +132,27 @@ class DealerRequisitionController extends Controller
         {
             return response()->json([
                 'product'=>$product
+            ]);
+        }
+    }
+
+    public function requisitionProductInfo(Request $request)
+    {
+    	$dealerRequisition = DealerRequisition::select('tbl_dealer_requisitions.*','tbl_dealers.name as dealerName')
+    		->leftJoin('tbl_dealers','tbl_dealers.id','=','tbl_dealer_requisitions.dealer_id')
+    		->where('tbl_dealer_requisitions.id',$request->dealerRequisitionId)
+    		->first();
+
+    	$dealerRequisitionProducts = DealerRequisitionProduct::select('tbl_dealer_requisition_products.*','tbl_products.name as productName','tbl_products.model_no as modelNo')
+    		->leftJoin('tbl_products','tbl_products.id','=','tbl_dealer_requisition_products.product_id')
+    		->where('tbl_dealer_requisition_products.requisition_id',$request->dealerRequisitionId)
+    		->get();
+    	
+        if($request->ajax())
+        {
+            return response()->json([
+                'dealerRequisition'=>$dealerRequisition,
+                'dealerRequisitionProducts'=>$dealerRequisitionProducts
             ]);
         }
     }

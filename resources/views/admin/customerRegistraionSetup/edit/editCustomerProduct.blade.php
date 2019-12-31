@@ -146,7 +146,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <label for="purchase-type">Purchase Type</label>
                          <div class="form-group {{ $errors->has('purchaseType') ? ' has-danger' : '' }}">
                              <div class="form-check-inline">
@@ -174,7 +174,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4 installmentType">
+                    <div class="col-md-3 installmentType">
                         <div class="form-group {{ $errors->has('installmentType') ? ' has-danger' : '' }}">
                             <label for="installment-type">Installment Type</label>
                             @php

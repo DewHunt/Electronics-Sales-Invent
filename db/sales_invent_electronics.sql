@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 30, 2019 at 01:41 PM
+-- Generation Time: Dec 31, 2019 at 01:35 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -616,8 +616,10 @@ CREATE TABLE `tbl_dealers` (
 --
 
 INSERT INTO `tbl_dealers` (`id`, `district_id`, `upazila_id`, `territory_id`, `type`, `code`, `name`, `contact_person`, `mobile`, `email`, `address`, `credit_limit`, `status`, `created_at`, `updated_at`) VALUES
-(1, 35, 9, 4, 'Non-Executive', 'es-000', 'Dealer - 01', 'Dew Hunt', '01317243494', 'dew@gmail.com', 'Barisal', '50000', 1, '2019-12-20 02:40:34', '2019-12-27 13:34:34'),
-(3, 35, 7, 4, 'Non-Executive', 'deal-002', 'Dealer - 02', 'Simon', '01317243480', 'dealero2@gmail.com', 'Barishal', '100000', 1, '2019-12-27 13:35:56', '2019-12-27 13:35:56');
+(1, 35, 9, 4, 'Non-Executive', 'deal-000', 'Dealer - 01', 'Dew Hunt', '01317243494', 'dew@gmail.com', 'Barisal', '50000', 1, '2019-12-20 02:40:34', '2019-12-31 04:41:47'),
+(3, 35, 7, 4, 'Non-Executive', 'deal-002', 'Dealer - 02', 'Simon', '01317243480', 'dealero2@gmail.com', 'Barishal', '100000', 1, '2019-12-27 13:35:56', '2019-12-27 13:35:56'),
+(4, 35, 14, 4, 'Non-Executive', 'deal-003', 'Dealer - 03', 'Jisan', '01317243494', 'dealer03@gmail.com', NULL, '100000', 1, '2019-12-31 02:00:42', '2019-12-31 02:00:42'),
+(5, 35, 11, 4, 'Non-Executive', 'deal-004', 'Dealer - 04', 'Ritu', '01317243480', 'dealer04@gmail.com', NULL, '100000', 1, '2019-12-31 02:02:09', '2019-12-31 02:02:09');
 
 -- --------------------------------------------------------
 
@@ -646,8 +648,10 @@ CREATE TABLE `tbl_dealer_requisitions` (
 --
 
 INSERT INTO `tbl_dealer_requisitions` (`id`, `dealer_id`, `requisition_no`, `date`, `product_id`, `total_qty`, `total_amount`, `approved_by`, `total_approve_qty`, `total_approve_amount`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, '100000001', '2019-12-29', 8, '36', '736680', 1, '6', '196200', 0, '2019-12-28 12:37:06', '2019-12-30 06:20:18'),
-(2, 3, '100000002', '2019-12-29', 7, '30', '1350000', NULL, NULL, NULL, 1, '2019-12-28 12:37:49', '2019-12-28 12:37:49');
+(1, 1, '100000001', '2019-12-29', 8, '36', '736680', 1, '10', '280890', 0, '2019-12-28 12:37:06', '2019-12-30 23:33:51'),
+(2, 3, '100000002', '2019-12-29', 7, '30', '1350000', NULL, NULL, NULL, 1, '2019-12-28 12:37:49', '2019-12-28 12:37:49'),
+(3, 4, '100000003', '2019-12-31', 8, '18', '695340', NULL, NULL, NULL, 1, '2019-12-31 02:03:17', '2019-12-31 02:03:17'),
+(4, 5, '100000004', '2019-12-31', 13, '18', '349800', 1, '13', '185700', 0, '2019-12-31 02:03:56', '2019-12-31 02:04:35');
 
 -- --------------------------------------------------------
 
@@ -679,10 +683,15 @@ INSERT INTO `tbl_dealer_requisition_products` (`id`, `requisition_id`, `product_
 (4, 2, 3, 'Walton ANDROID  ATV', 'wal890', '45000', '12', '540000', NULL, NULL, 1, NULL, NULL),
 (5, 2, 5, 'Walton LED TV', 'wal1234', '35000', '12', '420000', NULL, NULL, 1, NULL, NULL),
 (6, 2, 7, 'Walton Side by Side Intelligent Inverter Refrigerator', 'Wal119', '65000', '6', '390000', NULL, NULL, 1, NULL, NULL),
-(7, 1, 12, 'Marcel Air Conditioner', 'MSN-12K-ECXXA', '35500', '6', '213000', '2', '71000', 0, NULL, '2019-12-30 06:20:18'),
+(7, 1, 12, 'Marcel Air Conditioner', 'MSN-12K-ECXXA', '35500', '6', '213000', '4', '142000', 0, NULL, '2019-12-30 23:31:27'),
 (8, 1, 10, 'Marcel LED TV', 'MSD55FD-1.397 m (55\'\')', '59900', '6', '359400', '2', '119800', 0, NULL, '2019-12-30 06:20:19'),
-(9, 1, 13, 'Marcel FAN', 'MCF5601 WR', '2700', '12', '32400', '2', '5400', 0, NULL, '2019-12-30 06:20:19'),
-(10, 1, 8, 'Marcel Refrigerator', 'MFO-JET-RXXX-XX', '10990', '12', '131880', '0', '0', 0, NULL, '2019-12-30 06:20:19');
+(9, 1, 13, 'Marcel FAN', 'MCF5601 WR', '2700', '12', '32400', '3', '8100', 0, NULL, '2019-12-30 23:31:27'),
+(10, 1, 8, 'Marcel Refrigerator', 'MFO-JET-RXXX-XX', '10990', '12', '131880', '1', '10990', 0, NULL, '2019-12-30 23:33:51'),
+(11, 3, 10, 'Marcel LED TV', 'MSD55FD-1.397 m (55\'\')', '59900', '6', '359400', NULL, NULL, 1, NULL, NULL),
+(12, 3, 3, 'Walton ANDROID  ATV', 'wal890', '45000', '6', '270000', NULL, NULL, 1, NULL, NULL),
+(13, 3, 8, 'Marcel Refrigerator', 'MFO-JET-RXXX-XX', '10990', '6', '65940', NULL, NULL, 1, NULL, NULL),
+(14, 4, 14, 'Jamuna Air conditioner', 'MSN-21K-0101-RXXXB', '52900', '6', '317400', '3', '158700', 0, NULL, '2019-12-31 02:04:35'),
+(15, 4, 13, 'Marcel FAN', 'MCF5601 WR', '2700', '12', '32400', '10', '27000', 0, NULL, '2019-12-31 02:04:35');
 
 -- --------------------------------------------------------
 
@@ -2142,7 +2151,8 @@ INSERT INTO `user_menus` (`id`, `parentMenu`, `menuName`, `menuLink`, `menuIcon`
 (50, '49', 'Dealer Requisition', 'dealerRequisition.index', 'fa fa-caret', 41, '1', '2019-12-27 13:14:25', '2019-12-27 13:33:10'),
 (51, '40', 'Drop Collection', 'dropCollection.index', 'fa fa-caret', 42, '1', '2019-12-29 01:35:59', '2019-12-29 01:40:43'),
 (52, '40', 'Prospective Collection', 'prospectiveCollection.index', 'fa fa-caret', 43, '1', '2019-12-29 01:39:35', '2019-12-29 01:39:35'),
-(53, '49', 'Requisition Approval', 'dealerRequisitionApproval.index', 'fa fa-caret', 44, '1', '2019-12-29 02:13:21', '2019-12-29 02:14:18');
+(53, '49', 'Requisition Approval', 'dealerRequisitionApproval.index', 'fa fa-caret', 44, '1', '2019-12-29 02:13:21', '2019-12-29 02:14:18'),
+(54, '49', 'Product Issue', 'productIssue.index', 'fa fa-caret', 45, '1', '2019-12-31 01:06:19', '2019-12-31 01:06:19');
 
 -- --------------------------------------------------------
 
@@ -2294,7 +2304,11 @@ INSERT INTO `user_menu_actions` (`id`, `parentmenuId`, `menuType`, `actionName`,
 (131, 50, 3, 'Status', 'dealerRequisition.status', 128, 1, '2019-12-27 13:16:43', '2019-12-27 13:30:54'),
 (132, 41, 11, 'Print Installment Schedule', 'installmentSchedule.print', 106, 1, '2019-12-29 01:23:07', '2019-12-29 01:25:19'),
 (133, 51, 11, 'Print Drop Collection List', 'dropCollection.print', 130, 1, '2019-12-29 01:37:15', '2019-12-29 01:37:15'),
-(134, 52, 11, 'Print Prospective Collection', 'prospectiveCollection.print', 131, 1, '2019-12-29 01:40:09', '2019-12-29 01:40:09');
+(134, 52, 11, 'Print Prospective Collection', 'prospectiveCollection.print', 131, 1, '2019-12-29 01:40:09', '2019-12-29 01:40:09'),
+(135, 54, 1, 'Add', 'productIssue.add', 132, 1, '2019-12-31 01:08:34', '2019-12-31 01:08:34'),
+(136, 54, 2, 'Edit', 'productIssue.edit', 133, 1, '2019-12-31 01:08:47', '2019-12-31 01:08:47'),
+(137, 54, 4, 'Delete', 'productIssue.delete', 134, 1, '2019-12-31 01:09:01', '2019-12-31 01:09:01'),
+(138, 54, 3, 'Status', 'productIssue.status', 135, 1, '2019-12-31 01:09:17', '2019-12-31 01:09:17');
 
 -- --------------------------------------------------------
 
@@ -2317,7 +2331,7 @@ CREATE TABLE `user_roles` (
 --
 
 INSERT INTO `user_roles` (`id`, `name`, `status`, `permission`, `actionPermission`, `created_at`, `updated_at`) VALUES
-(1, 'Super Admin', 1, '1,2,3,4,5,6,7,8,10,11,12,13,14,15,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,20,18,19,17,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,57,58,59,60,61,62,63,64,65,66,81,67,69,70,71,72,73,74,75,76,77,78,79,80,82,83,84,85,86,88,89,90,91,94,95,93,96,97,98,105,99,100,101,102,104,103,106,107,108,132,109,110,111,112,113,114,115,116,117,118,120,119,121,122,124,123,125,126,127,128,129,130,131,133,134', '2019-11-20 22:48:03', '2019-12-29 02:13:31'),
+(1, 'Super Admin', 1, '1,2,3,4,5,6,7,8,10,11,12,13,14,15,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,20,18,19,17,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,57,58,59,60,61,62,63,64,65,66,81,67,69,70,71,72,73,74,75,76,77,78,79,80,82,83,84,85,86,88,89,90,91,94,95,93,96,97,98,105,99,100,101,102,104,103,106,107,108,132,109,110,111,112,113,114,115,116,117,118,120,119,121,122,124,123,125,126,127,128,129,130,131,133,134,135,136,137,138', '2019-11-20 22:48:03', '2019-12-31 01:09:33'),
 (5, 'Admin', 0, '1,2,5,22', '16,20,18,19,17', '2019-11-29 03:26:52', '2019-12-15 06:09:43');
 
 -- --------------------------------------------------------
@@ -2986,19 +3000,19 @@ ALTER TABLE `tbl_customer_products`
 -- AUTO_INCREMENT for table `tbl_dealers`
 --
 ALTER TABLE `tbl_dealers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbl_dealer_requisitions`
 --
 ALTER TABLE `tbl_dealer_requisitions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tbl_dealer_requisition_products`
 --
 ALTER TABLE `tbl_dealer_requisition_products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `tbl_groups`
@@ -3148,13 +3162,13 @@ ALTER TABLE `tbl_vendors`
 -- AUTO_INCREMENT for table `user_menus`
 --
 ALTER TABLE `user_menus`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT for table `user_menu_actions`
 --
 ALTER TABLE `user_menu_actions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
 
 --
 -- AUTO_INCREMENT for table `user_roles`

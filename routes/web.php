@@ -455,11 +455,23 @@ Route::prefix('admin')->group(function()
 			Route::post('/dealer-requisition-delete','Admin\DealerRequisitionController@delete')->name('dealerRequisition.delete');
 			Route::post('/dealer-requisition-status','Admin\DealerRequisitionController@changeStatus')->name('dealerRequisition.status');
 			Route::post('/dealer-requisition/product-info','Admin\DealerRequisitionController@productInfo')->name('dealerRequisition.productInfo');
+			Route::post('/dealer-requisition/requisition-product-info','Admin\DealerRequisitionController@requisitionProductInfo')->name('dealerRequisition.requisitionProductInfo');
 
 			// Dealer Requisition Approval
 			Route::get('/dealer-requisition-approval','Admin\DealerRequisitionApprovalController@index')->name('dealerRequisitionApproval.index');
-			Route::post('/dealer-requisition-approval-save','Admin\DealerRequisitionApprovalController@save')->name('dealerRequisitionApproval.save');
+			Route::post('/dealer-requisition-approval-update','Admin\DealerRequisitionApprovalController@update')->name('dealerRequisitionApproval.update');
 			Route::post('/dealer-requisition-approval/dealer-requisition-info','Admin\DealerRequisitionApprovalController@dealerRequisitionInfo')->name('dealerRequisitionApproval.dealerRequisitionInfo');
+
+			// Dealer Product Issue
+			Route::get('/product-issue','Admin\ProductIssueController@index')->name('productIssue.index');
+			Route::get('/product-issue-add','Admin\ProductIssueController@add')->name('productIssue.add');
+			Route::post('/product-issue-save','Admin\ProductrIssueController@save')->name('productIssue.save');
+			Route::get('/product-issue-edit/{id}','Admin\ProductIssueController@edit')->name('productIssue.edit');
+			Route::post('/product-issue-update','Admin\ProductIssueController@update')->name('productIssue.update');
+			Route::post('/product-issue-delete','Admin\ProductIssueController@delete')->name('productIssue.delete');
+			Route::post('/product-issue-status','Admin\ProductIssueController@changeStatus')->name('productIssue.status');
+			Route::post('/product-issue/product-info','Admin\ProductIssueController@productInfo')->name('productIssue.productInfo');
+			Route::post('/product-issue/dealer-requisition-info','Admin\ProductIssueController@dealerRequisitionInfo')->name('productIssue.dealerRequisitionInfo');
 		// End Dealer Management
 		});
 	});

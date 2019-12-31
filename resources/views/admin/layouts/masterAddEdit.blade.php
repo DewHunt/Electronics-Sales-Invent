@@ -73,7 +73,7 @@
                         </div>
     		    	@endif
 
-    			    <form class="form-horizontal" action="{{ route($formLink) }}" method="POST" enctype="multipart/form-data">
+    			    <form class="form-horizontal" action="{{ route($formLink) }}" method="POST" enctype="multipart/form-data" name="form">
     			    	{{ csrf_field() }}
 
     				    <div class="card">
@@ -84,7 +84,7 @@
     				                	<a class="btn btn-outline-info btn-lg" href="{{ route($goBackLink) }}">
     				                		<i class="fa fa-arrow-circle-left"></i> Go Back
     				                	</a>
-    				                	<button type="submit" class="btn btn-outline-info btn-lg waves-effect"><i class="fa fa-save"></i> {{ $buttonName }}</button>
+    				                	<button type="submit" class="btn btn-outline-info btn-lg waves-effect buttonName"><i class="fa fa-save"></i> {{ $buttonName }}</button>
     				                </div>
     				            </div>
     				        </div>
@@ -96,7 +96,7 @@
     				        <div class="card-footer">
     				            <div class="row">
     				                <div class="col-md-12 text-right">
-    				                	<button type="submit" class="btn btn-outline-info btn-lg waves-effect"><i class="fa fa-save"></i> {{ $buttonName }}</button>
+    				                	<button type="submit" class="btn btn-outline-info btn-lg waves-effect buttonName"><i class="fa fa-save"></i> {{ $buttonName }}</button>
     				                </div>
     				            </div>	        	
     				        </div>

@@ -17,7 +17,7 @@ class DealerRequisitionApprovalController extends Controller
     public function index()
     {
     	$title = "All Pending Requisitions";
-    	$formLink = "dealerRequisitionApproval.save";
+    	$formLink = "dealerRequisitionApproval.update";
     	$buttonName = "Save";
 
     	$dealerRequisitions = DealerRequisition::select('tbl_dealer_requisitions.*','tbl_dealers.name as dealerName')
@@ -35,7 +35,7 @@ class DealerRequisitionApprovalController extends Controller
     	return view('admin.dealerRequisitionApproval.index')->with(compact('title','formLink','buttonName','dealerRequisitions','approveDealerRequisitions'));
     }
 
-    public function save(Request $request)
+    public function update(Request $request)
     {
     	// dd($request->all());
 

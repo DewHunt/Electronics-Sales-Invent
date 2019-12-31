@@ -32,25 +32,6 @@
                     @php
                         $sl = 1;
                     @endphp
-                    @foreach ($dealerRequisitions as $dealerRequisition)
-                        <tr class="row_{{ $dealerRequisition->id }}">
-                            <td>{{ $sl++ }}</td>
-                            <td>{{ date('d-m-Y', strtotime($dealerRequisition->date)) }}</td>
-                            <td>{{ $dealerRequisition->requisition_no }}</td>
-                            <td>{{ $dealerRequisition->dealerName }}</td>
-                            <td>{{ $dealerRequisition->total_qty }}</td>
-                            <td>{{ $dealerRequisition->total_amount }}</td>
-                            <td align="center">
-                                @if ($dealerRequisition->status == 0)
-                                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#detailRequisitionModal" onclick="showDealerRequisitionDetails({{ $dealerRequisition->id }})">Approved <span class="badge badge-light">{{ $dealerRequisition->total_approve_qty }}</span></button>
-                                @else
-                                    @php
-                                        echo \App\Link::action($dealerRequisition->id);
-                                    @endphp
-                                @endif                            
-                            </td>
-                        </tr>
-                    @endforeach
                 </tbody>
             </table>
         </div>

@@ -13,9 +13,9 @@
     <div class="card">            
         <div class="card-header">
             <div class="row">
-                <div class="col-md-4"><h4 class="card-title" id="title">{{ $title }}</h4></div>
+                <div class="col-md-8"><h4 class="card-title" id="title">{{ $title }}</h4></div>
 
-                <div class="col-md-8">
+                <div class="col-md-4">
                     <button class="btn btn-outline-dark btn-lg" id="pendingButton" style="width: 100%">Click For Pending Requisition</button>
                     <button class="btn btn-outline-dark btn-lg" id="approveButton" style="width: 100%">Click For Approved Requisition</button>
                 </div>
@@ -131,16 +131,15 @@
 
                             <tfoot>
                                 <tr>
-                                    <td colspan="3" align="right" style="vertical-align: middle;"><h3>Total</h3></td>
+                                    <td colspan="3" align="right" style="vertical-align: middle;">
+                                        <h3>Total</h3>
+                                        <input class="form-control dealerRequisitionId" type="hidden" name="dealerRequisitionId" id="dealerRequisitionId" value="">
+                                        <input class="form-control" type="hidden" name="approveBy" id="approveBy" value="{{ Auth::user()->id }}">
+                                    </td>
                                     <td><input style="text-align: right;" class="form-control totalQty" id="totalQty" type="text" name="totalQty" value=""></td>
                                     <td><input style="text-align: right;" class="form-control totalAmount" id="totalAmount" type="text" name="totalAmount" value=""></td>
                                     <td><input style="text-align: right;" class="form-control totalApproveQty" id="totalApproveQty" type="number" name="totalApproveQty" value="0" readonly></td>
                                     <td><input style="text-align: right;" class="form-control totalApproveAmount" id="totalApproveAmount" type="number" name="totalApproveAmount" value="0" readonly></td>
-                                </tr>
-
-                                <tr>
-                                    <td colspan="3"><input class="form-control dealerRequisitionId" type="text" name="dealerRequisitionId" id="dealerRequisitionId" value=""></td>
-                                    <td colspan="4"><input class="form-control" type="text" name="approveBy" id="approveBy" value="{{ Auth::user()->id }}"></td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -148,7 +147,7 @@
 
                     {{-- Modal footer --}}
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-outline-info btn-lg waves-effect"><i class="fa fa-save"></i> {{ $buttonName }}</button>
+                        <button type="submit" class="btn btn-outline-info btn-lg waves-effect btnName"><i class="fa fa-save"></i> {{ $buttonName }}</button>
                         <button type="button" class="btn btn-outline-danger btn-lg waves-effect" data-dismiss="modal">Close</button>
                     </div>
 
@@ -193,19 +192,57 @@
                     $('.requisitionProductRow').remove();
                     var dealerRequisition = response.dealerRequisition;
                     var dealerRequisitionProducts = response.dealerRequisitionProducts;
+                    var approveQty;
+                    var approveAmount;
 
                     $('.dealerName').html(dealerRequisition.dealerName);
                     $('.totalQty').val(dealerRequisition.total_qty);
                     $('.totalAmount').val(dealerRequisition.total_amount);
                     $('.dealerRequisitionId').val(dealerRequisition.id);
 
+                    if (dealerRequisition.total_approve_qty != null)
+                    {
+                        $('.totalApproveQty').val(dealerRequisition.total_approve_qty);
+                    }
+
+                    if (dealerRequisition.total_approve_amount != null)
+                    {
+                        $('.totalApproveAmount').val(dealerRequisition.total_approve_amount);
+                    }
+
+                    if (dealerRequisition.status == 0)
+                    {
+                        $('.btnName').html('Update');
+                    }
+                    else
+                    {
+                        $('.btnName').html('Save');
+                    }
+
                     for (var dealerRequisitionProduct of dealerRequisitionProducts)
                     {
+                        if (dealerRequisitionProduct.approved_qty == null)
+                        {
+                            approveQty = 0;
+                        }
+                        else
+                        {
+                            approveQty = dealerRequisitionProduct.approved_qty;
+                        }
+
+                        if (dealerRequisitionProduct.approved_amount == null)
+                        {
+                            approveAmount = 0;
+                        }
+                        else
+                        {
+                            approveAmount = dealerRequisitionProduct.approved_amount;
+                        }
                         $(".detailRequisitionProduct tbody").append(
                             '<tr class="requisitionProductRow" id="requisitionProductRow_'+dealerRequisitionProduct.id+'">' +
                                 '<td>'+
                                     '<input class="form-control requisitionProductName_'+dealerRequisitionProduct.id+'" type="text" value="'+dealerRequisitionProduct.productName+'" readonly>'+
-                                    '<input class="form-control requisitionProductName_'+dealerRequisitionProduct.id+'" type="text" name="dealerRequisitionProductId[]" value="'+dealerRequisitionProduct.id+'" readonly>'+
+                                    '<input class="form-control requisitionProductName_'+dealerRequisitionProduct.id+'" type="hidden" name="dealerRequisitionProductId[]" value="'+dealerRequisitionProduct.id+'" readonly>'+
                                 '</td>'+
                                 '<td>'+
                                     '<input class="form-control requisitionProductModelNo_'+dealerRequisitionProduct.id+'" type="text" value="'+dealerRequisitionProduct.model_no+'" readonly>'+
@@ -220,10 +257,10 @@
                                     '<input style="text-align: right;" class="form-control requisitionAmount_'+dealerRequisitionProduct.id+'" type="text" value="'+dealerRequisitionProduct.amount+'" readonly>'+
                                 '</td>'+
                                 '<td>'+
-                                    '<input style="text-align: right;" class="form-control approveQty approveQty_'+dealerRequisitionProduct.id+'" oninput="findTotalApproveAmount('+dealerRequisitionProduct.id+')" type="number" name="approveQty[]" value="0">'+
+                                    '<input style="text-align: right;" class="form-control approveQty approveQty_'+dealerRequisitionProduct.id+'" oninput="findTotalApproveAmount('+dealerRequisitionProduct.id+')" type="number" name="approveQty[]" value="'+approveQty+'">'+
                                 '</td>'+
                                 '<td>'+
-                                    '<input style="text-align: right;" class="form-control approveAmount approveAmount_'+dealerRequisitionProduct.id+'" type="number" name="approveAmount[]" value="0" readonly>'+
+                                    '<input style="text-align: right;" class="form-control approveAmount approveAmount_'+dealerRequisitionProduct.id+'" type="number" name="approveAmount[]" value="'+approveAmount+'" readonly>'+
                                 '</td>'+
                             '</tr>'
                         );

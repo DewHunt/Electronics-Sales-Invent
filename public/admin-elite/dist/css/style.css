@@ -11274,7 +11274,7 @@ Table-Data Table
       transition-duration: 0.3s; }
 
 .form-check-label {
-  text-transform: capitalize;
+  text-transform: uppercase;
   line-height: 38px;
 }
 

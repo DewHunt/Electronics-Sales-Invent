@@ -465,12 +465,13 @@ Route::prefix('admin')->group(function()
 			// Dealer Product Issue
 			Route::get('/product-issue','Admin\ProductIssueController@index')->name('productIssue.index');
 			Route::get('/product-issue-add','Admin\ProductIssueController@add')->name('productIssue.add');
-			Route::post('/product-issue-save','Admin\ProductrIssueController@save')->name('productIssue.save');
+			Route::post('/product-issue-save','Admin\ProductIssueController@save')->name('productIssue.save');
 			Route::get('/product-issue-edit/{id}','Admin\ProductIssueController@edit')->name('productIssue.edit');
 			Route::post('/product-issue-update','Admin\ProductIssueController@update')->name('productIssue.update');
 			Route::post('/product-issue-delete','Admin\ProductIssueController@delete')->name('productIssue.delete');
 			Route::post('/product-issue-status','Admin\ProductIssueController@changeStatus')->name('productIssue.status');
 			Route::post('/product-issue/product-info','Admin\ProductIssueController@productInfo')->name('productIssue.productInfo');
+			Route::post('/product-issue/product-serial-info','Admin\ProductIssueController@productSerialInfo')->name('productIssue.productSerialInfo');
 			Route::post('/product-issue/dealer-requisition-info','Admin\ProductIssueController@dealerRequisitionInfo')->name('productIssue.dealerRequisitionInfo');
 		// End Dealer Management
 		});

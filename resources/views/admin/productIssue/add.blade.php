@@ -17,17 +17,17 @@
     </style>
     @php
     	$requisitionNo = "";   
-        use App\DealerRequisition;
+        use App\ProductIssue;
 
-        $maxDealerRequisitionId = DealerRequisition::max('id');
+        $maxProductIssueId = ProductIssue::max('id');
 
-        if (@$maxDealerRequisitionId)
+        if (@$maxProductIssueId)
         {
-            $requisitionNo = 100000000 + $maxDealerRequisitionId + 1;
+            $productIssueNo = 100000000 + $maxProductIssueId + 1;
         }
         else
         {
-            $requisitionNo = 100000000 + 1;
+            $productIssueNo = 100000000 + 1;
         }
     @endphp
 
@@ -51,10 +51,10 @@
 
             <div class="col-md-3">
                 <label for="issue-no">Issue No</label>
-                <div class="form-group {{ $errors->has('issueNo') ? ' has-danger' : '' }}">
-                    <input type="text" class="form-control" name="issueNo" value="{{ $requisitionNo }}" required readonly/>
-                    @if ($errors->has('issueNo'))
-                        @foreach($errors->get('issueNo') as $error)
+                <div class="form-group {{ $errors->has('productIssueNo') ? ' has-danger' : '' }}">
+                    <input type="text" class="form-control" name="productIssueNo" value="{{ $productIssueNo }}" required readonly/>
+                    @if ($errors->has('productIssueNo'))
+                        @foreach($errors->get('productIssueNo') as $error)
                             <div class="form-control-feedback">{{ $error }}</div>
                         @endforeach
                     @endif
@@ -74,6 +74,12 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-md-12">
+                <input type="text" class="form-control" id="dealerId" name="dealerId" value="" readonly>
+            </div>
+        </div>
+
         <div id="withAprrovalSection">
             <div class="row">
                 <div class="col-md-3">
@@ -82,7 +88,7 @@
                         <select class="form-control chosen-select" id="dealerRequisitionId" name="dealerRequisitionId" required="">
                             <option value=" ">Select Reuisition Number</option>
                             @foreach ($dealerRequisitions as $dealerRequisition)
-                                <option value="{{$dealerRequisition->id}}">{{ $dealerRequisition->requisition_no }}</option>
+                                <option value="{{ $dealerRequisition->id }}">{{ $dealerRequisition->requisition_no }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -119,8 +125,10 @@
                             <tr>
                                 <th>Product Name</th>
                                 <th width="200px">Model</th>
-                                <th width="100px">Qty</th>
-                                <th width="60px">Action</th>
+                                <th width="80px">Qty</th>
+                                <th width="80px">Issue Qty</th>
+                                <th width="200px">Serial No</th>
+                                <th width="10px"><i class="fa fa-plus" style="color: white;"></i></th>
                             </tr>
                         </thead>
 
@@ -133,11 +141,11 @@
 
         <div id="withoutAprrovalSection">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <label for="dealer">Dealer</label>
                     <div class="form-group">
-                        <select class="form-control chosen-select" name="dealerId" required="">
-                            <option value=" ">Select Dealer</option>
+                        <select class="form-control chosen-select dealer" id="dealer" name="dealer">
+                            <option value="">Select Dealer</option>
                             @foreach ($dealers as $dealer)
                                 <option value="{{$dealer->id}}">{{ $dealer->name }}</option>
                             @endforeach
@@ -147,7 +155,7 @@
 
                 <div class="col-md-6">
                     <label for="product">Products</label>
-                    <div class="form-group {{ $errors->has('product') ? ' has-danger' : '' }}">
+                    <div class="form-group">
                         <select class="form-control chosen-select product" id="product" name="product">
                             <option value="">Select Product</option>
                             @foreach ($products as $product)
@@ -156,12 +164,20 @@
                         </select>
                     </div>
                 </div>
+
+                <div class="col-md-3">
+                    <label for="serial-no">Serial No</label>
+                    <div class="form-group" id="serial-no-select-menu">
+                        <select class="form-control chosen-select serialNo" id="serialNo" name="serialNo">
+                            <option value="">Select Serial No</option>
+                        </select>
+                    </div>
+                </div>
             </div>
 
             <div class="row">
                 <div class="col-md-12">
-                    <input type="hidden" class="row_count" value="0">
-                    <span class="btn btn-outline-success add_item" style="width: 100%;">
+                    <span class="btn btn-outline-success addItem" style="width: 100%;">
                         <i class="fa fa-arrow-down"></i> Add Product
                     </span>
                 </div>
@@ -170,17 +186,17 @@
 
         <div class="row">
             <div class="col-md-12">
-                <label for=""></label>
+                <label></label>
                 <div class="form-group">
-                    <table class="table table-bordered table-striped gridTable" >
+                    <table class="table table-bordered table-striped table-sm gridTable issueProductList" >
                         <thead>
                             <tr>
                                 <th>Product Name</th>
                                 <th width="200px">Model</th>
-                                <th width="200px">Model</th>
                                 <th width="150px">Serial</th>
+                                <th width="110px">Commision (%)</th>
                                 <th width="80px">Rate</th>
-                                <th width="80px">Qty</th>
+                                <th width="40px">Qty</th>
                                 <th width="80px">Amount</th>
                                 <th width="10px"><i class="fa fa-trash" style="color: white;"></i></th>
                             </tr>
@@ -231,6 +247,26 @@
             }
         })
 
+        $(document).on('change', '#product', function(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            var productId = $('#product').val();
+
+            $.ajax({
+                type:'post',
+                url:'{{ route('productIssue.productSerialInfo') }}',
+                data:{productId:productId},
+                success:function(data){
+                    $('#serial-no-select-menu').html(data);
+                    $(".chosen-select").chosen();
+                }
+            });
+        });
+
         $(document).on('change','#dealerRequisitionId',function(){
             var dealerRequisitionId = $('#dealerRequisitionId').val();
 
@@ -246,29 +282,59 @@
                     var product = response.dealerRequisition;
                     var dealer = response.dealer;
                     var dealerRequisitionProducts = response.dealerRequisitionProducts;
+                    var productSerials = response.productSerials;
+                    var productIssueLists = response.productIssueLists;
 
+                    $('#dealerId').val(dealer.id);
                     $('#dealerCode').val(dealer.code);
                     $('#dealerName').val(dealer.name);
                     $('#dealerAddress').val(dealer.address);
+                        
 
                     for (var dealerRequisitionProduct of dealerRequisitionProducts)
                     {
+                        var productSerialOption = '';
+                        for (var productSerial of productSerials)
+                        {
+                            if (productSerial.product_id == dealerRequisitionProduct.product_id)
+                            {
+                                productSerialOption += '<option value="'+productSerial.serial_no+'">'+productSerial.serial_no+'</option>';
+                            }
+                        }
+
+                        var totalIssueQty = 0;
+                        for (var productIssueList of productIssueLists)
+                        {
+                            if (productIssueList.product_id == dealerRequisitionProduct.product_id)
+                            {
+                                totalIssueQty = totalIssueQty + parseInt(productIssueList.qty);
+                            }
+                        }
 
                         $(".approveProducts tbody").append(
                             '<tr class="approveProductRow" id="approveProductRow_'+dealerRequisitionProduct.id+'">' +
                                 '<td>'+
-                                    '<input class="form-control requisitionProductName_'+dealerRequisitionProduct.id+'" type="text" value="'+dealerRequisitionProduct.productName+'" readonly>'+
-                                    '<input class="form-control requisitionProductName_'+dealerRequisitionProduct.id+'" type="hidden" name="dealerRequisitionProductId[]" value="'+dealerRequisitionProduct.id+'" readonly>'+
+                                    '<input class="form-control productName_'+dealerRequisitionProduct.id+'" type="text" value="'+dealerRequisitionProduct.productName+'" readonly>'+
+                                    '<input class="form-control productId_'+dealerRequisitionProduct.id+'" type="text" value="'+dealerRequisitionProduct.product_id+'" readonly>'+
                                 '</td>'+
                                 '<td>'+
-                                    '<input class="form-control requisitionProductModelNo_'+dealerRequisitionProduct.id+'" type="text" value="'+dealerRequisitionProduct.model_no+'" readonly>'+
+                                    '<input class="form-control productModelNo_'+dealerRequisitionProduct.id+'" type="text" value="'+dealerRequisitionProduct.model_no+'" readonly>'+
                                 '</td>'+
                                 '<td>'+
-                                    '<input style="text-align: right;" class="form-control approveQty approveQty_'+dealerRequisitionProduct.id+'" oninput="findTotalApproveAmount('+dealerRequisitionProduct.id+')" type="number" name="approveQty[]" value="'+dealerRequisitionProduct.approved_qty+'">'+
+                                    '<input style="text-align: right;" class="form-control approveQty approveQty_'+dealerRequisitionProduct.id+'" type="number" value="'+dealerRequisitionProduct.approved_qty+'" readonly>'+
+                                    '<input style="text-align: right;" class="form-control price_'+dealerRequisitionProduct.id+'" type="number" value="'+dealerRequisitionProduct.price+'" readonly>'+
+                                '</td>'+
+                                '<td>'+
+                                    '<input style="text-align: right;" class="form-control issueQty issueQty_'+dealerRequisitionProduct.id+'" type="number" name="issueQty[]" value="'+totalIssueQty+'" readonly>'+
+                                '</td>'+
+                                '<td>'+
+                                    '<select class="form-control chosen-select productSerialNo_'+dealerRequisitionProduct.id+'" id="productSerialNo'+dealerRequisitionProduct.id+'" name="serialNo[]">'+
+                                        '<option value="">Select Serial No</option>'+productSerialOption+
+                                    '</select>'+
                                 '</td>'+
                                 '<td align="center">'+
-                                    '<span class="btn btn-info btn-sm item_remove" onclick="itemRemove('+dealerRequisitionProduct.id+')" style="width: 100%;">'+
-                                        '<i class="fa fa-plus"> Issue</i>'+
+                                    '<span class="btn btn-info btn-sm item_remove" onclick="issuProductAdd('+dealerRequisitionProduct.id+')" style="width: 100%;">'+
+                                        '<i class="fa fa-plus"></i>'+
                                     '</span>'+
                                 '</td>'+
                             '</tr>'
@@ -281,79 +347,181 @@
             });
         });
 
-        $(".add_item").click(function () {
-            var productId = $("#product option:selected").val();
+        function issuProductAdd(dealerRequisitionProductId)
+        {
+            var approveQty = parseInt($('.approveQty_'+dealerRequisitionProductId).val());
+            var issueQty = parseInt($('.issueQty_'+dealerRequisitionProductId).val());
 
-        	if (productId == "")
-        	{
-                swal("Please! Select A Product", "", "warning");
-        	}
-        	else
-        	{
-                var row_count = $('.row_count').val();
-                var total = parseInt(row_count) + 1;
+            if (approveQty == issueQty)
+            {
+                swal("You Can't Issue More Than Approve Quantity","","warning");
+            }
+            else
+            {
+                issueQty = issueQty + 1;
+                $('.issueQty_'+dealerRequisitionProductId).val(issueQty);
 
-	            $(".gridTable tbody").append(
-	            	'<tr id="itemRow_' + total + '">' +                
-		                '<td>'+
-		                	'<input class="productId_'+total+'" type="hidden" name="productId[]" value="">'+
-		                	'<input class="productName_'+total+'" type="text" name="productName[]" value="" readonly>'+
-		                '</td>'+
-		                '<td>'+
-		                	'<input class="productModel_'+total+'" type="text" name="productModel[]" value="" readonly>'+
-		                '</td>'+
+                var productId = $('.productId_'+dealerRequisitionProductId).val();
+                var productName = $('.productName_'+dealerRequisitionProductId).val();
+                var productModelNo = $('.productModelNo_'+dealerRequisitionProductId).val();
+                var productSerialNo = $('.productSerialNo_'+dealerRequisitionProductId).val();
+                var productPrice = $('.price_'+dealerRequisitionProductId).val();
+
+                var totalQty = parseInt($('.totalQty').val());
+                totalQty = totalQty + 1;
+                $('.totalQty').val(totalQty);
+
+                var totalAmount = parseInt($('.totalAmount').val());
+                totalAmount = totalAmount + parseFloat(productPrice);
+                $('.totalAmount').val(totalAmount);
+
+                $(".issueProductList tbody").append(
+                    '<tr id="issueProductRow_' + dealerRequisitionProductId + '">' +                
                         '<td>'+
-                            '<input style="text-align: right;" class="productPrice productPrice_'+total+'" type="text" name="productPrice[]" value="" required readonly>'+
+                            '<input class="productId_'+dealerRequisitionProductId+'" type="text" name="productId[]" value="'+productId+'">'+
+                            '<input class="productName_'+dealerRequisitionProductId+'" type="text" name="productName[]" value="'+productName+'" readonly>'+
                         '</td>'+
-		                '<td>'+
-		                	'<input style="text-align: right;" class="productQty productQty_'+total+'" type="number" name="productQty[]" value="" oninput="findTotalAmount('+total+')">'+
-		                '</td>'+
+                        '<td>'+
+                            '<input class="productModel_'+dealerRequisitionProductId+'" type="text" name="productModel[]" value="'+productModelNo+'" readonly>'+
+                        '</td>'+
+                        '<td>'+
+                            '<input class="productSerial_'+dealerRequisitionProductId+'" type="text" name="productSerial[]" value="'+productSerialNo+'" readonly>'+
+                        '</td>'+
+                            '<td>'+
+                                '<input style="text-align: right;" class="productCommision_'+productId+'" type="number" name="commission[]" value="0" readonly>'+
+                            '</td>'+
+                        '<td>'+
+                            '<input style="text-align: right;" class="productPrice productPrice_'+dealerRequisitionProductId+'" type="text" name="productPrice[]" value="'+productPrice+'" required readonly>'+
+                        '</td>'+
+                        '<td>'+
+                            '<input style="text-align: right;" class="productQty productQty_'+dealerRequisitionProductId+'" type="number" name="productQty[]" value="1" readonly>'+
+                        '</td>'+
 
                         '<td>'+
-	                        '<input style="text-align: right;" class="amount amount_'+total+'" type="number" name="amount[]" value="" readonly>'+
+                            '<input style="text-align: right;" class="amount amount_'+dealerRequisitionProductId+'" type="number" name="amount[]" value="'+productPrice+'" readonly>'+
                         '</td>'+
-		                '<td align="center">'+
-		                	'<span class="btn btn-outline-danger btn-sm item_remove" onclick="itemRemove('+total+')" style="width: 100%;">'+
-		                		'<i class="fa fa-trash"></i>'+
-		                	'</span>'+
-		                '</td>'+
-	                '</tr>'
-	            );
-	            $('.row_count').val(total);
+                        '<td align="center">'+
+                            '<span class="btn btn-outline-danger btn-sm item_remove" onclick="itemRemove('+dealerRequisitionProductId+')" style="width: 100%;">'+
+                                '<i class="fa fa-trash"></i>'+
+                            '</span>'+
+                        '</td>'+
+                    '</tr>'
+                );
+            }
+        }
 
-	            $.ajax({
-	                headers: {
-	                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	                },
-	                type: "POST",
-	                url: "{{ route('dealerRequisition.productInfo') }}",
-	                data:{productId:productId},
-	                success: function(response) {
-	                    var product = response.product;
-
-                        $('.productId_'+total).val(product.id);
-                        $('.productName_'+total).val(product.name);
-                        $('.productModel_'+total).val(product.model_no);
-                        $('.productPrice_'+total).val(product.price);
-	                },
-	                error: function(response) {
-
-	                }
-	            });
-        	}            
+        $(document).on('change', '#dealer', function(){
+            var dealerId = $("#dealer option:selected").val();
+            $("#dealerId").val(dealerId);
         });
 
-        function itemRemove(i) {
-            var qty = parseInt($('.productQty_'+i).val());
-            var amount = parseFloat($('.amount_'+i).val());
+        $(".addItem").click(function () {
+            if ($("#dealer option:selected").val() == "")
+            {
+                swal("Please! Select A Dealer", "", "warning");
+            }
+            else
+            {
+                if ($("#product option:selected").val() == "")
+                {
+                    swal("Please! Select A Product", "", "warning");
+                }
+                else
+                {
+                    if ($("#serialNo option:selected").val() == "")
+                    {
+                        swal("Please! Select A Serial", "", "warning");
+                    }
+                    else
+                    {
+                        var productId = $("#product option:selected").val();
+                        var serialNo = $("#serialNo option:selected").val();
 
-            var totalQty = parseInt($('.totalQty').val()) - qty;
-            var totalAmount = parseFloat($('.totalAmount').val()) - amount;
+                        $(".issueProductList tbody").append(
+                            '<tr id="issueProductRow_' + productId + '">' +                
+                                '<td>'+
+                                    '<input class="productId_'+productId+'" type="text" name="productId[]" value="">'+
+                                    '<input class="productName_'+productId+'" type="text" name="productName[]" value="" readonly>'+
+                                '</td>'+
+                                '<td>'+
+                                    '<input class="productModel_'+productId+'" type="text" name="productModel[]" value="" readonly>'+
+                                '</td>'+
+                                '<td>'+
+                                    '<input class="productSerial_'+productId+'" type="text" name="productSerial[]" value="" readonly>'+
+                                '</td>'+
+                                '<td>'+
+                                    '<input style="text-align: right;" class="productCommision_'+productId+'" type="number" name="commission[]" value="0" readonly>'+
+                                '</td>'+
+                                '<td>'+
+                                    '<input style="text-align: right;" class="productPrice productPrice_'+productId+'" type="number" name="productPrice[]" value="" required readonly>'+
+                                '</td>'+
+                                '<td>'+
+                                    '<input style="text-align: right;" class="productQty productQty_'+productId+'" type="number" name="productQty[]" value="1" readonly>'+
+                                '</td>'+
 
+                                '<td>'+
+                                    '<input style="text-align: right;" class="amount amount_'+productId+'" type="number" name="amount[]" value="" readonly>'+
+                                '</td>'+
+                                '<td align="center">'+
+                                    '<span class="btn btn-outline-danger btn-sm item_remove" onclick="itemRemove('+productId+')" style="width: 100%;">'+
+                                        '<i class="fa fa-trash"></i>'+
+                                    '</span>'+
+                                '</td>'+
+                            '</tr>'
+                        );
+
+                        $.ajax({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            type: "POST",
+                            url: "{{ route('productIssue.productInfo') }}",
+                            data:{productId:productId},
+                            success: function(response) {
+                                var product = response.product;
+
+                                $('.productId_'+productId).val(product.id);
+                                $('.productName_'+productId).val(product.name);
+                                $('.productModel_'+productId).val(product.model_no);
+                                $('.productSerial_'+productId).val(serialNo);
+                                $('.price_'+productId).val(product.price);
+                                $('.productPrice_'+productId).val(product.price);
+                                $('.amount_'+productId).val(product.price);
+
+                                var totalQty = parseInt($('.totalQty').val());
+                                totalQty = totalQty + 1;
+                                $('.totalQty').val(totalQty);
+
+                                var totalAmount = parseInt($('.totalAmount').val());
+                                totalAmount = totalAmount + parseFloat(product.price);
+                                $('.totalAmount').val(totalAmount);
+                            },
+                            error: function(response) {
+
+                            }
+                        });
+                    }
+                }
+            }            
+        });
+
+        function itemRemove(i)
+        {            
+            var issueQty = parseInt($('.issueQty_'+i).val());
+            issueQty = issueQty - 1;
+            $('.issueQty_'+i).val(issueQty);
+
+            var productPrice = parseFloat($('.productPrice_'+i).val());
+
+            var totalQty = parseInt($('.totalQty').val());
+            totalQty = totalQty - 1;
             $('.totalQty').val(totalQty);
-            $('.totalAmount').val(Math.round(totalAmount));
 
-            $('#itemRow_'+i).remove();
+            var totalAmount = parseInt($('.totalAmount').val());
+            totalAmount = totalAmount - productPrice;
+            $('.totalAmount').val(totalAmount);
+
+            $('#issueProductRow_'+i).remove();
         }
 
         function findTotalAmount(i)

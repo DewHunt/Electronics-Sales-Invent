@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 31, 2019 at 01:35 PM
+-- Generation Time: Jan 01, 2020 at 02:19 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -212,7 +212,13 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (96, '2019_12_30_044648_create_tbl_installment_table', 66),
 (97, '2019_12_30_111918_create_tbl_dealer_requisitions_table', 67),
 (98, '2019_12_30_113935_create_tbl_dealer_requisitions_table', 68),
-(99, '2019_12_30_114020_create_tbl_dealer_requisition_products_table', 68);
+(99, '2019_12_30_114020_create_tbl_dealer_requisition_products_table', 68),
+(100, '2020_01_01_101342_create_tbl_product_issue_table', 69),
+(101, '2020_01_01_101706_create_tbl_product_issue_lists_table', 69),
+(102, '2020_01_01_104147_create_tbl_product_issue_lists_table', 70),
+(103, '2020_01_01_104202_create_tbl_product_issue_table', 70),
+(104, '2020_01_01_110338_create_tbl_product_issue_table', 71),
+(105, '2020_01_01_122159_create_tbl_product_issue_table', 72);
 
 -- --------------------------------------------------------
 
@@ -1338,6 +1344,71 @@ INSERT INTO `tbl_product_images` (`id`, `product_id`, `image`, `created_at`, `up
 (32, 6, 'public/uploads/product_image/WCF-2T5-FHL-3-155x145_95541091669.jpg', '2019-12-01 04:45:09', '2019-12-01 04:45:09'),
 (33, 7, 'public/uploads/product_image/Front-View_91014294857.png', '2019-12-01 04:49:53', '2019-12-01 04:49:53'),
 (34, 7, 'public/uploads/product_image/Stylish-Design_46185949142.png', '2019-12-01 04:50:10', '2019-12-01 04:50:10');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_product_issue`
+--
+
+CREATE TABLE `tbl_product_issue` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `requisition_id` int(11) DEFAULT NULL,
+  `dealer_id` int(11) DEFAULT NULL,
+  `issue_no` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `date` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `total_qty` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `total_amount` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_product_issue`
+--
+
+INSERT INTO `tbl_product_issue` (`id`, `requisition_id`, `dealer_id`, `issue_no`, `date`, `total_qty`, `total_amount`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, '100000001', '2020-01-01', '4', '109090', 1, '2019-12-31 23:52:31', '2019-12-31 23:52:31'),
+(2, NULL, 1, '100000002', '2020-01-01', '3', '148300', 1, '2019-12-31 23:56:49', '2019-12-31 23:56:49'),
+(3, 1, 1, '100000003', '2020-01-01', '3', '98100', 1, '2020-01-01 06:42:50', '2020-01-01 06:42:50');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_product_issue_lists`
+--
+
+CREATE TABLE `tbl_product_issue_lists` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `issue_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `model_no` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `serial_no` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `commission_rate` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `qty` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `amount` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_product_issue_lists`
+--
+
+INSERT INTO `tbl_product_issue_lists` (`id`, `issue_id`, `product_id`, `model_no`, `serial_no`, `commission_rate`, `price`, `qty`, `amount`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 12, 'MSN-12K-ECXXA', '34536577i', '0', '35500', '1', '35500', 1, NULL, NULL),
+(2, 1, 10, 'MSD55FD-1.397 m (55\'\')', '09huiy546ets4', '0', '59900', '1', '59900', 1, NULL, NULL),
+(3, 1, 13, 'MCF5601 WR', '10000000000231', '0', '2700', '1', '2700', 1, NULL, NULL),
+(4, 1, 8, 'MFO-JET-RXXX-XX', '4567gibjjkuygf', '0', '10990', '1', '10990', 1, NULL, NULL),
+(5, 2, 14, 'MSN-21K-0101-RXXXB', 'asfasdf', '0', '52900', '1', '52900', 1, NULL, NULL),
+(6, 2, 12, 'MSN-12K-ECXXA', '35657iore', '0', '35500', '1', '35500', 1, NULL, NULL),
+(7, 2, 10, 'MSD55FD-1.397 m (55\'\')', '095f53drjfyjh', '0', '59900', '1', '59900', 1, NULL, NULL),
+(8, 3, 12, 'MSN-12K-ECXXA', '35657iore', '0', '35500', '1', '35500', 1, NULL, NULL),
+(9, 3, 10, 'MSD55FD-1.397 m (55\'\')', '095f53drjfyjh', '0', '59900', '1', '59900', 1, NULL, NULL),
+(10, 3, 13, 'MCF5601 WR', '10000000000231', '0', '2700', '1', '2700', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2837,6 +2908,18 @@ ALTER TABLE `tbl_product_images`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tbl_product_issue`
+--
+ALTER TABLE `tbl_product_issue`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_product_issue_lists`
+--
+ALTER TABLE `tbl_product_issue_lists`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tbl_showroom`
 --
 ALTER TABLE `tbl_showroom`
@@ -2928,7 +3011,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -3109,6 +3192,18 @@ ALTER TABLE `tbl_product_advance`
 --
 ALTER TABLE `tbl_product_images`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+
+--
+-- AUTO_INCREMENT for table `tbl_product_issue`
+--
+ALTER TABLE `tbl_product_issue`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `tbl_product_issue_lists`
+--
+ALTER TABLE `tbl_product_issue_lists`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `tbl_showroom`

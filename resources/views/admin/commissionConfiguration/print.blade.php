@@ -74,28 +74,26 @@
         <tbody>
             @php
                 $sl = 1;
-            @endphp
-            @foreach ($categoryList as $category)
-            @php
-                $commissionCategory = CommissionConfiguration::where('category_id',$category->id)->where('commission_type',$commission->commission_type)->first();
-                $product = Product::where('category_id',$category->id)->get();
-                if(@$product){
-            @endphp
-            <tr>
-                <td>{{ $sl++ }}</td>
-                <td>
-                    {{ $category->name }}
-                    <input type="hidden" name="categoryId[]" value="{{ $category->id }}">
-                    <input type="hidden" name="categoryName[]" value="{{ $category->name }}">
-                </td>
-                <td style="text-align: center;">
-                    {{@$commissionCategory->commission_rate}}
-                </td>
-            </tr>
-            
-            @php
+                if ($commission->dealer_id == "")
+                {
+                    $commissionRates = CommissionConfiguration::where('staff_id',$commission->staff_id)->get();
+                }
+
+                if ($commission->staff_id == "")
+                {
+                    $commissionRates = CommissionConfiguration::where('dealer_id',$commission->dealer_id)->get();
                 }
             @endphp
+            @foreach ($categoryList as $category)
+                @foreach ($commissionRates as $commissionRate)
+                    @if ($commissionRate->category_id == $category->id)
+                        <tr>
+                            <td>{{ $sl++ }}</td>
+                            <td>{{ $category->name }}</td>
+                            <td style="text-align: center;">{{ $commissionRate->commission_rate }}</td>
+                        </tr>
+                    @endif
+                @endforeach
             @endforeach
         </tbody>
     </table>

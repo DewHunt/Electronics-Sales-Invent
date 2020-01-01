@@ -66,11 +66,16 @@
                                 $i++;
                                 $dealer = DealerSetup::where('id',@$commission->dealer_id)->first();
                                 $staff = StaffSetup::where('id',@$commission->staff_id)->first();
-                                if(@$dealer){
+                                if(@$dealer)
+                                {
                                     $name = $dealer->name;
-                                }elseif(@$staff){
+                                }
+                                elseif(@$staff)
+                                {
                                     $name = $staff->name;
-                                }else{
+                                }
+                                else
+                                {
 
                                 }
                             @endphp

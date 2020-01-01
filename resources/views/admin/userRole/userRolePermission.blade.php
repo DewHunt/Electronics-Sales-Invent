@@ -3,8 +3,16 @@
 @section('card_body')
     @php    
         use App\UserRoles;
+        use App\UserMenu;
         use App\UserMenuActions;
     @endphp
+    <style type="text/css">
+        .parentMenuBlock{
+            border: 1px solid #d4c8c8;
+            padding: 17px 0px;
+            margin-bottom: 20px;
+        }
+    </style>
 
     <div class="card-body">
         <input type="hidden" name="userroleId" value="{{$userRoles->id}}">
@@ -15,7 +23,72 @@
             </div>
         </div>
 
-        <div class="row">
+        <div style="padding-bottom: 10px;"></div>
+
+        @foreach ($userMenus as $mainMenu)
+        @php
+            $rolePermission = explode(',', $userRoles->permission);
+            if (in_array($mainMenu->id, $rolePermission))
+            {
+                $checked = "checked";
+            }
+            else
+            {
+                $checked = "";
+            }
+            if($mainMenu->parentMenu == NULL){
+            $subMenus = UserMenu::where('parentMenu',$mainMenu->id)->get();                                       
+        @endphp
+            <div class="row parentMenuBlock">
+                <div class="col-md-12">
+                    <input class="parentMenu_{{$mainMenu->parentMenu}} menu" type="checkbox" name="usermenu[]" value="{{$mainMenu->id}}" {{$checked}}  data-id="{{$mainMenu->id}}">
+                    <span>{{$mainMenu->menuName}}</span>
+                  
+                    <div class="row" style="padding-left: 60px;">
+                        @foreach ($subMenus as $menu)
+                            @php
+                                $userMenuAction = UserMenuActions::where('actionStatus',1)->orderBy('orderBy','ASC')->where('parentmenuId',$menu->id)->get();
+                                $rolePermission = explode(',', $userRoles->permission);
+                                if (in_array($menu->id, $rolePermission))
+                                {
+                                    $checked = "checked";
+                                }
+                                else
+                                {
+                                    $checked = "";
+                                }                                            
+                            @endphp
+
+                            <div class="col-md-3" style="margin-bottom: 12px;">
+                                <input class="parentMenu_{{$menu->parentMenu}} menu" type="checkbox" name="usermenu[]" value="{{$menu->id}}" {{$checked}}  data-id="{{$menu->id}}">
+                                <span>{{$menu->menuName}}</span>
+                                <div style="margin-left: 26px;margin-top: 3px;">
+                                    @foreach ($userMenuAction as $action)
+                                        @php
+                                            $actionPermission = explode(',', $userRoles->actionPermission);
+                                            if (in_array($action->id, $actionPermission))
+                                            {
+                                                $actionChecked = "checked";
+                                            }
+                                            else
+                                            {
+                                                $actionChecked = "";
+                                            }                                                    
+                                        @endphp
+                                        <input class="childMenu_{{$action->parentmenuId}}" type="checkbox" name="usermenuAction[]" value="{{$action->id}}" style="margin-bottom: 8px;" {{$actionChecked}}> {{$action->actionName}} <br>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+            @php
+                }
+            @endphp
+        @endforeach
+
+        {{-- <div class="row">
             @foreach ($userMenus as $menu)
                 @php
                     $userMenuAction = UserMenuActions::where('actionStatus',1)->orderBy('orderBy','ASC')->where('parentmenuId',$menu->id)->get();
@@ -51,7 +124,7 @@
                     </div>
                 </div>
             @endforeach
-        </div>
+        </div> --}}
     </div>
 @endsection
 

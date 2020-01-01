@@ -388,6 +388,15 @@ Route::prefix('admin')->group(function()
 			Route::post('/customer-statement','Admin\CustomerStatementController@index')->name('customerStatement.index');
 			Route::post('/customer-statement/print','Admin\CustomerStatementController@print')->name('customerStatement.print');
 
+			// Start Commission Configuration
+			Route::get('/commission-configuration','Admin\CommmissionConfigurationController@index')->name('commissionConfiguration.index');
+			Route::get('/commission-configuration-add','Admin\CommmissionConfigurationController@add')->name('commissionConfiguration.add');
+			Route::post('/commission-configuration-save','Admin\CommmissionConfigurationController@save')->name('commissionConfiguration.save');
+
+			Route::get('/commission-configuration-view/{id}','Admin\CommmissionConfigurationController@view')->name('commissionConfiguration.view');
+			Route::get('/commission-configuration-print/{id}','Admin\CommmissionConfigurationController@print')->name('commissionConfiguration.print');
+			Route::post('/commission-configuration-info','Admin\CommmissionConfigurationController@getInfo')->name('commissionConfiguration.info');
+
 		// End Sales Management
 
 		// Start Installment Management
@@ -431,6 +440,11 @@ Route::prefix('admin')->group(function()
 			Route::get('/prospective-collection-list','Admin\ProspectiveCollectionController@index')->name('prospectiveCollection.index');
 			Route::post('/prospective-collection-list','Admin\ProspectiveCollectionController@index')->name('prospectiveCollection.index');
 			Route::post('/prospective-collection-list-print','Admin\ProspectiveCollectionController@print')->name('prospectiveCollection.print');
+
+			//Collection History List
+			Route::get('/collection-history','Admin\CollectionHistoryController@index')->name('collectionHistory.index');
+			Route::post('/collection-history','Admin\CollectionHistoryController@index')->name('collectionHistory.index');
+			Route::post('/collection-history-print','Admin\CollectionHistoryController@print')->name('collectionHistory.print');
 			
 		// End Installment Management
 

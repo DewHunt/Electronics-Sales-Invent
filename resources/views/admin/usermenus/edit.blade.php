@@ -87,7 +87,7 @@
                     </div>
                     <div class="form-check-inline">
                         <label class="form-check-label">
-                            <input type="radio" id="unpublished" name="menuStatus" class="form-check-input" checked="" value="0">Unpublished
+                            <input type="radio" id="unpublished" name="menuStatus" class="form-check-input" value="0">Unpublished
                         </label>
                     </div>                           
                 </div>                                        
@@ -99,6 +99,6 @@
 
 @section('custom-js')
     <script type="text/javascript">
-        document.forms['newMenu'].elements['menuStatus'].value = "{{$menuItem->menuStatus}}";
+        document.forms['form'].elements['menuStatus'].value = "{{$menuItem->menuStatus}}";
     </script>
 @endsection

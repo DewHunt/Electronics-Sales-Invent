@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 01, 2020 at 02:19 PM
--- Server version: 10.4.6-MariaDB
--- PHP Version: 7.3.9
+-- Generation Time: Jan 01, 2020 at 09:41 PM
+-- Server version: 10.1.28-MariaDB
+-- PHP Version: 7.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -32,12 +32,12 @@ CREATE TABLE `admins` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `username` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `username` text COLLATE utf8mb4_unicode_ci,
+  `image` text COLLATE utf8mb4_unicode_ci,
   `role` int(11) DEFAULT NULL,
   `showroomId` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL DEFAULT 0,
+  `status` int(11) NOT NULL DEFAULT '0',
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -62,7 +62,7 @@ INSERT INTO `admins` (`id`, `name`, `email`, `username`, `image`, `role`, `showr
 CREATE TABLE `alphabets` (
   `id` int(11) NOT NULL,
   `name` varchar(250) NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1
+  `status` tinyint(4) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -86,12 +86,12 @@ CREATE TABLE `menus` (
   `id` int(10) UNSIGNED NOT NULL,
   `menuName` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `menuTitle` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `menuContent` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `menuStatus` tinyint(1) NOT NULL DEFAULT 1,
-  `menuType` int(11) NOT NULL DEFAULT 1,
-  `metaTitle` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `metaKeyword` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `metaDescription` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `menuContent` text COLLATE utf8mb4_unicode_ci,
+  `menuStatus` tinyint(1) NOT NULL DEFAULT '1',
+  `menuType` int(11) NOT NULL DEFAULT '1',
+  `metaTitle` text COLLATE utf8mb4_unicode_ci,
+  `metaKeyword` text COLLATE utf8mb4_unicode_ci,
+  `metaDescription` text COLLATE utf8mb4_unicode_ci,
   `orderBy` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -218,7 +218,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (102, '2020_01_01_104147_create_tbl_product_issue_lists_table', 70),
 (103, '2020_01_01_104202_create_tbl_product_issue_table', 70),
 (104, '2020_01_01_110338_create_tbl_product_issue_table', 71),
-(105, '2020_01_01_122159_create_tbl_product_issue_table', 72);
+(105, '2020_01_01_122159_create_tbl_product_issue_table', 72),
+(106, '2019_12_31_102751_create_tbl_commission_configuration_table', 73);
 
 -- --------------------------------------------------------
 
@@ -240,18 +241,18 @@ CREATE TABLE `password_resets` (
 
 CREATE TABLE `settings` (
   `id` int(10) UNSIGNED NOT NULL,
-  `siteLogo` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `adminLogo` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mobile1` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mobile2` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `siteEmail1` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `siteEmail2` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `siteAddress1` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `siteAddress2` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `siteLogo` text COLLATE utf8mb4_unicode_ci,
+  `adminLogo` text COLLATE utf8mb4_unicode_ci,
+  `mobile1` text COLLATE utf8mb4_unicode_ci,
+  `mobile2` text COLLATE utf8mb4_unicode_ci,
+  `siteEmail1` text COLLATE utf8mb4_unicode_ci,
+  `siteEmail2` text COLLATE utf8mb4_unicode_ci,
+  `siteAddress1` text COLLATE utf8mb4_unicode_ci,
+  `siteAddress2` text COLLATE utf8mb4_unicode_ci,
   `sitestatus` int(11) DEFAULT NULL,
-  `metaTitle` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `metaKeyword` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `metaDescription` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `metaTitle` text COLLATE utf8mb4_unicode_ci,
+  `metaKeyword` text COLLATE utf8mb4_unicode_ci,
+  `metaDescription` text COLLATE utf8mb4_unicode_ci,
   `orderBy` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -268,10 +269,10 @@ CREATE TABLE `tbl_area` (
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `incharge_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci,
   `contact` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 0,
+  `status` tinyint(4) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -296,8 +297,8 @@ CREATE TABLE `tbl_bank` (
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `address` text COLLATE utf8mb4_unicode_ci,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -313,11 +314,11 @@ CREATE TABLE `tbl_business_staffs` (
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `contact` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `national_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `joining_date` date DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 0,
+  `status` tinyint(4) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -344,8 +345,8 @@ CREATE TABLE `tbl_cash_collection` (
   `collection_date` date DEFAULT NULL,
   `collection_amount` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `current_due` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `remarks` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `remarks` text COLLATE utf8mb4_unicode_ci,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -367,14 +368,14 @@ INSERT INTO `tbl_cash_collection` (`id`, `invoice_id`, `collection_no`, `invoice
 CREATE TABLE `tbl_categories` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cover_image` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
-  `parent` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cover_image` text COLLATE utf8mb4_unicode_ci,
+  `image` text COLLATE utf8mb4_unicode_ci,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `parent` text COLLATE utf8mb4_unicode_ci,
   `show_in_home_page` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_title` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_keyword` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_title` text COLLATE utf8mb4_unicode_ci,
+  `meta_keyword` text COLLATE utf8mb4_unicode_ci,
+  `meta_description` text COLLATE utf8mb4_unicode_ci,
   `order_by` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -395,6 +396,35 @@ INSERT INTO `tbl_categories` (`id`, `name`, `cover_image`, `image`, `status`, `p
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_commission_configuration`
+--
+
+CREATE TABLE `tbl_commission_configuration` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `commission_type` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `dealer_id` int(11) DEFAULT NULL,
+  `staff_id` int(11) DEFAULT NULL,
+  `category_id` int(11) DEFAULT NULL,
+  `category_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `commission_rate` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_commission_configuration`
+--
+
+INSERT INTO `tbl_commission_configuration` (`id`, `commission_type`, `dealer_id`, `staff_id`, `category_id`, `category_name`, `commission_rate`, `status`, `created_at`, `updated_at`) VALUES
+(5, 'Dealer Commission', 3, NULL, 13, 'Fridge (Beverage Cooler)', '9', 1, '2020-01-01 14:27:05', '2020-01-01 14:27:05'),
+(6, 'Dealer Commission', 3, NULL, 12, 'LED TV', '8', 1, '2020-01-01 14:27:05', '2020-01-01 14:27:05'),
+(7, 'Dealer Commission', 1, NULL, 13, 'Fridge (Beverage Cooler)', '12', 1, '2020-01-01 14:27:50', '2020-01-01 14:27:50'),
+(8, 'Dealer Commission', 1, NULL, 12, 'LED TV', '10', 1, '2020-01-01 14:27:50', '2020-01-01 14:27:50');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_company`
 --
 
@@ -409,7 +439,7 @@ CREATE TABLE `tbl_company` (
   `vat` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tin` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `trade_license` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -433,8 +463,8 @@ CREATE TABLE `tbl_couriers` (
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `address` text COLLATE utf8mb4_unicode_ci,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -468,7 +498,7 @@ CREATE TABLE `tbl_customers` (
   `designation` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `monthly_income` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `work_place_address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -551,7 +581,7 @@ CREATE TABLE `tbl_customer_products` (
   `customer_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `showroom_id` int(11) DEFAULT NULL,
-  `qty` int(11) NOT NULL DEFAULT 1,
+  `qty` int(11) NOT NULL DEFAULT '1',
   `warranty` int(11) DEFAULT NULL,
   `purchase_date` date DEFAULT NULL,
   `purchase_type` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -564,7 +594,7 @@ CREATE TABLE `tbl_customer_products` (
   `total_installment` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `monthly_installment_amount` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `product_usage_address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -610,9 +640,9 @@ CREATE TABLE `tbl_dealers` (
   `contact_person` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `mobile` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci,
   `credit_limit` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -636,15 +666,15 @@ INSERT INTO `tbl_dealers` (`id`, `district_id`, `upazila_id`, `territory_id`, `t
 CREATE TABLE `tbl_dealer_requisitions` (
   `id` int(10) UNSIGNED NOT NULL,
   `dealer_id` int(11) DEFAULT NULL,
-  `requisition_no` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `date` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `requisition_no` text COLLATE utf8mb4_unicode_ci,
+  `date` text COLLATE utf8mb4_unicode_ci,
   `product_id` int(11) DEFAULT NULL,
-  `total_qty` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `total_amount` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `total_qty` text COLLATE utf8mb4_unicode_ci,
+  `total_amount` text COLLATE utf8mb4_unicode_ci,
   `approved_by` int(11) DEFAULT NULL,
-  `total_approve_qty` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `total_approve_amount` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `total_approve_qty` text COLLATE utf8mb4_unicode_ci,
+  `total_approve_amount` text COLLATE utf8mb4_unicode_ci,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -669,14 +699,14 @@ CREATE TABLE `tbl_dealer_requisition_products` (
   `id` int(10) UNSIGNED NOT NULL,
   `requisition_id` int(11) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,
-  `product_name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `model_no` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `price` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `qty` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `amount` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `approved_qty` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `approved_amount` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `product_name` text COLLATE utf8mb4_unicode_ci,
+  `model_no` text COLLATE utf8mb4_unicode_ci,
+  `price` text COLLATE utf8mb4_unicode_ci,
+  `qty` text COLLATE utf8mb4_unicode_ci,
+  `amount` text COLLATE utf8mb4_unicode_ci,
+  `approved_qty` text COLLATE utf8mb4_unicode_ci,
+  `approved_amount` text COLLATE utf8mb4_unicode_ci,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -709,7 +739,7 @@ CREATE TABLE `tbl_districts` (
   `id` int(11) UNSIGNED NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `bangla_name` varchar(255) DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -876,7 +906,7 @@ CREATE TABLE `tbl_installment` (
   `booking_amount` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `installment_qty` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `installment_amount` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -899,7 +929,7 @@ CREATE TABLE `tbl_installment_collection` (
   `booking_amount` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `installment_qty` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `installment_amount` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -925,7 +955,7 @@ CREATE TABLE `tbl_installment_collection_list` (
   `invoice_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `installment_schedule_date` date DEFAULT NULL,
   `installment_schedule_amount` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -959,7 +989,7 @@ CREATE TABLE `tbl_installment_schedule` (
   `invoice_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `installment_schedule_date` date DEFAULT NULL,
   `installment_schedule_amount` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -987,7 +1017,7 @@ CREATE TABLE `tbl_invoice` (
   `qty` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `customer_product_usage_address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `customer_product_purchase_date` date DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1078,7 +1108,7 @@ CREATE TABLE `tbl_lifting_products` (
   `price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `mrp_price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `haire_price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1144,8 +1174,8 @@ CREATE TABLE `tbl_lifting_returns` (
   `total_price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `total_mrp_price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `total_haire_price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `remarks` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `remarks` text COLLATE utf8mb4_unicode_ci,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1182,7 +1212,7 @@ CREATE TABLE `tbl_lifting_return_products` (
   `price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `mrp_price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `haire_price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1214,7 +1244,7 @@ CREATE TABLE `tbl_payment_to_company` (
   `balance` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `money_receipt` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `payment_type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `remarks` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remarks` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1251,11 +1281,11 @@ CREATE TABLE `tbl_products` (
   `status` tinyint(4) DEFAULT NULL,
   `youtube_link` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tag_line` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `short_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `long_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `short_description` text COLLATE utf8mb4_unicode_ci,
+  `long_description` text COLLATE utf8mb4_unicode_ci,
   `meta_title` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `meta_keyword` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_description` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1359,7 +1389,7 @@ CREATE TABLE `tbl_product_issue` (
   `date` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `total_qty` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `total_amount` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1389,7 +1419,7 @@ CREATE TABLE `tbl_product_issue_lists` (
   `price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `qty` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `amount` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1428,8 +1458,8 @@ CREATE TABLE `tbl_showroom` (
   `vat` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tin` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `trade_license` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `address` text COLLATE utf8mb4_unicode_ci,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1453,11 +1483,11 @@ CREATE TABLE `tbl_staffs` (
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `contact` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `national_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `joining_date` date DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 0,
+  `status` tinyint(4) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1473,9 +1503,9 @@ CREATE TABLE `tbl_stores` (
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `remarks` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `address` text COLLATE utf8mb4_unicode_ci,
+  `remarks` text COLLATE utf8mb4_unicode_ci,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1502,9 +1532,9 @@ CREATE TABLE `tbl_territories` (
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `incharge_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci,
   `contact` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 0,
+  `status` tinyint(4) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1534,7 +1564,7 @@ CREATE TABLE `tbl_transfers` (
   `destination_type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `destination_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `total_qty` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1566,7 +1596,7 @@ CREATE TABLE `tbl_transfer_products` (
   `serial_no` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `color` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `qty` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1594,7 +1624,7 @@ CREATE TABLE `tbl_upazilas` (
   `district_id` int(11) UNSIGNED DEFAULT NULL,
   `name` varchar(255) NOT NULL,
   `bangla_name` varchar(255) DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -2107,7 +2137,7 @@ CREATE TABLE `tbl_vehicles` (
   `registration_no` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `capacity` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 0,
+  `status` tinyint(4) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -2134,8 +2164,8 @@ CREATE TABLE `tbl_vendors` (
   `contact_person` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `contact` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 0,
+  `address` text COLLATE utf8mb4_unicode_ci,
+  `status` tinyint(4) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -2223,7 +2253,9 @@ INSERT INTO `user_menus` (`id`, `parentMenu`, `menuName`, `menuLink`, `menuIcon`
 (51, '40', 'Drop Collection', 'dropCollection.index', 'fa fa-caret', 42, '1', '2019-12-29 01:35:59', '2019-12-29 01:40:43'),
 (52, '40', 'Prospective Collection', 'prospectiveCollection.index', 'fa fa-caret', 43, '1', '2019-12-29 01:39:35', '2019-12-29 01:39:35'),
 (53, '49', 'Requisition Approval', 'dealerRequisitionApproval.index', 'fa fa-caret', 44, '1', '2019-12-29 02:13:21', '2019-12-29 02:14:18'),
-(54, '49', 'Product Issue', 'productIssue.index', 'fa fa-caret', 45, '1', '2019-12-31 01:06:19', '2019-12-31 01:06:19');
+(54, '49', 'Product Issue', 'productIssue.index', 'fa fa-caret', 45, '1', '2019-12-31 01:06:19', '2019-12-31 01:06:19'),
+(55, '29', 'Collection History', 'collectionHistory.index', 'fa fa-caret', 46, '1', '2020-01-01 12:16:28', '2020-01-01 12:16:28'),
+(56, '33', 'Commission Setup', 'commissionConfiguration.index', 'fa fa-caret', 47, '1', '2020-01-01 12:23:10', '2020-01-01 12:23:10');
 
 -- --------------------------------------------------------
 
@@ -2379,7 +2411,11 @@ INSERT INTO `user_menu_actions` (`id`, `parentmenuId`, `menuType`, `actionName`,
 (135, 54, 1, 'Add', 'productIssue.add', 132, 1, '2019-12-31 01:08:34', '2019-12-31 01:08:34'),
 (136, 54, 2, 'Edit', 'productIssue.edit', 133, 1, '2019-12-31 01:08:47', '2019-12-31 01:08:47'),
 (137, 54, 4, 'Delete', 'productIssue.delete', 134, 1, '2019-12-31 01:09:01', '2019-12-31 01:09:01'),
-(138, 54, 3, 'Status', 'productIssue.status', 135, 1, '2019-12-31 01:09:17', '2019-12-31 01:09:17');
+(138, 54, 3, 'Status', 'productIssue.status', 135, 1, '2019-12-31 01:09:17', '2019-12-31 01:09:17'),
+(139, 55, 11, 'Print Collection History', 'collectionHistory.print', 136, 1, '2020-01-01 12:17:16', '2020-01-01 12:17:16'),
+(140, 56, 1, 'Add', 'commissionConfiguration.add', 137, 1, '2020-01-01 12:23:54', '2020-01-01 12:23:54'),
+(141, 56, 11, 'View Commission', 'commissionConfiguration.view', 138, 1, '2020-01-01 12:24:55', '2020-01-01 12:24:55'),
+(142, 56, 11, 'Print Commission', 'commissionConfiguration.print', 139, 1, '2020-01-01 12:25:33', '2020-01-01 12:25:33');
 
 -- --------------------------------------------------------
 
@@ -2389,10 +2425,10 @@ INSERT INTO `user_menu_actions` (`id`, `parentmenuId`, `menuType`, `actionName`,
 
 CREATE TABLE `user_roles` (
   `id` int(10) UNSIGNED NOT NULL,
-  `name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` text COLLATE utf8mb4_unicode_ci,
   `status` int(11) DEFAULT NULL,
-  `permission` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `actionPermission` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `permission` text COLLATE utf8mb4_unicode_ci,
+  `actionPermission` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -2402,7 +2438,7 @@ CREATE TABLE `user_roles` (
 --
 
 INSERT INTO `user_roles` (`id`, `name`, `status`, `permission`, `actionPermission`, `created_at`, `updated_at`) VALUES
-(1, 'Super Admin', 1, '1,2,3,4,5,6,7,8,10,11,12,13,14,15,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,20,18,19,17,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,57,58,59,60,61,62,63,64,65,66,81,67,69,70,71,72,73,74,75,76,77,78,79,80,82,83,84,85,86,88,89,90,91,94,95,93,96,97,98,105,99,100,101,102,104,103,106,107,108,132,109,110,111,112,113,114,115,116,117,118,120,119,121,122,124,123,125,126,127,128,129,130,131,133,134,135,136,137,138', '2019-11-20 22:48:03', '2019-12-31 01:09:33'),
+(1, 'Super Admin', 1, '2,1,3,4,5,22,6,7,8,10,11,12,13,14,15,17,18,21,26,19,20,23,24,25,27,28,45,46,29,30,31,32,44,47,48,55,33,34,35,36,37,38,39,56,40,41,42,51,52,49,43,50,53,54', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,20,18,19,17,70,71,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,57,58,59,60,61,62,63,64,69,77,78,79,80,65,66,81,67,72,73,74,75,76,82,83,121,122,124,123,125,84,85,86,117,118,120,119,126,127,139,88,89,90,91,94,95,93,96,97,98,105,99,100,101,102,104,103,106,140,141,142,107,108,132,109,110,111,112,133,134,113,114,115,116,128,129,130,131,135,136,137,138', '2019-11-20 22:48:03', '2020-01-01 12:25:56'),
 (5, 'Admin', 0, '1,2,5,22', '16,20,18,19,17', '2019-11-29 03:26:52', '2019-12-15 06:09:43');
 
 -- --------------------------------------------------------
@@ -2461,23 +2497,6 @@ CREATE TABLE `view_lifting_payment_summary` (
 -- (See below for the actual view)
 --
 CREATE TABLE `view_lifting_record` (
-`liftingDate` date
-,`liftingNo` varchar(191)
-,`vendorId` int(11)
-,`vendorName` varchar(191)
-,`storeOrShowroomType` varchar(191)
-,`storeOrShowroomId` int(11)
-,`storeOrShowroomName` varchar(191)
-,`categoryId` varchar(191)
-,`parentId` text
-,`categoryName` varchar(191)
-,`productId` int(11)
-,`productName` varchar(191)
-,`productModelNo` varchar(191)
-,`productColor` varchar(191)
-,`productSerialNo` varchar(191)
-,`productQty` varchar(191)
-,`price` varchar(191)
 );
 
 -- --------------------------------------------------------
@@ -2487,24 +2506,6 @@ CREATE TABLE `view_lifting_record` (
 -- (See below for the actual view)
 --
 CREATE TABLE `view_lifting_return_record` (
-`liftingReturnDate` varchar(191)
-,`liftingReturnNo` varchar(191)
-,`vendorId` int(11)
-,`vendorName` varchar(191)
-,`storeOrShowroomType` varchar(191)
-,`storeOrShowroomId` int(11)
-,`storeOrShowroomName` varchar(191)
-,`categoryId` varchar(191)
-,`parentId` text
-,`categoryName` varchar(191)
-,`productId` int(11)
-,`productCode` varchar(191)
-,`productName` varchar(191)
-,`productModelNo` varchar(191)
-,`productColor` varchar(191)
-,`productSerialNo` varchar(191)
-,`productQty` varchar(191)
-,`price` varchar(191)
 );
 
 -- --------------------------------------------------------
@@ -2520,10 +2521,10 @@ CREATE TABLE `view_product_statement` (
 ,`liftingQty` varchar(191)
 ,`liftingPrice` varchar(191)
 ,`liftingReturnPrice` varchar(191)
-,`productIssuePrice` int(1)
-,`productReturnPrice` int(1)
-,`salesPrice` int(1)
-,`slaesReturnPrice` int(1)
+,`productIssuePrice` bigint(20)
+,`productReturnPrice` bigint(20)
+,`salesPrice` bigint(20)
+,`slaesReturnPrice` bigint(20)
 );
 
 -- --------------------------------------------------------
@@ -2562,7 +2563,7 @@ CREATE TABLE `view_stock_valuation` (
 -- (See below for the actual view)
 --
 CREATE TABLE `view_store_and_showroom` (
-`id` int(10) unsigned
+`id` int(11) unsigned
 ,`type` varchar(8)
 ,`storeType` varchar(191)
 ,`name` varchar(191)
@@ -2599,7 +2600,7 @@ CREATE TABLE `view_vendor_statement_report` (
 ,`date` varchar(191)
 ,`lifting` double
 ,`payment` double
-,`others` int(1)
+,`others` bigint(20)
 );
 
 -- --------------------------------------------------------
@@ -2609,7 +2610,7 @@ CREATE TABLE `view_vendor_statement_report` (
 --
 DROP TABLE IF EXISTS `view_customer_outstanding`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_customer_outstanding`  AS  select `tbl_customer_products`.`customer_id` AS `customerId`,`tbl_customers`.`name` AS `customerName`,`tbl_customers`.`phone_no` AS `customerPhoneNo`,`tbl_customer_products`.`product_id` AS `productId`,`tbl_invoice`.`invoice_no` AS `invoiceNo`,`tbl_products`.`name` AS `productName`,`tbl_invoice`.`customer_product_price` AS `salesAmount`,sum(`tbl_cash_collection`.`collection_amount`) AS `collection`,`tbl_invoice`.`customer_product_price` - sum(`tbl_cash_collection`.`collection_amount`) AS `balance` from ((((`tbl_customer_products` left join `tbl_invoice` on(`tbl_invoice`.`customer_product_id` = `tbl_customer_products`.`id`)) left join `tbl_products` on(`tbl_products`.`id` = `tbl_customer_products`.`product_id`)) left join `tbl_customers` on(`tbl_customers`.`id` = `tbl_customer_products`.`customer_id`)) left join `tbl_cash_collection` on(`tbl_cash_collection`.`invoice_id` = `tbl_invoice`.`id`)) where `tbl_customer_products`.`purchase_type` = 'Cash' group by `tbl_invoice`.`invoice_no`,`tbl_cash_collection`.`invoice_id` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_customer_outstanding`  AS  select `tbl_customer_products`.`customer_id` AS `customerId`,`tbl_customers`.`name` AS `customerName`,`tbl_customers`.`phone_no` AS `customerPhoneNo`,`tbl_customer_products`.`product_id` AS `productId`,`tbl_invoice`.`invoice_no` AS `invoiceNo`,`tbl_products`.`name` AS `productName`,`tbl_invoice`.`customer_product_price` AS `salesAmount`,sum(`tbl_cash_collection`.`collection_amount`) AS `collection`,(`tbl_invoice`.`customer_product_price` - sum(`tbl_cash_collection`.`collection_amount`)) AS `balance` from ((((`tbl_customer_products` left join `tbl_invoice` on((`tbl_invoice`.`customer_product_id` = `tbl_customer_products`.`id`))) left join `tbl_products` on((`tbl_products`.`id` = `tbl_customer_products`.`product_id`))) left join `tbl_customers` on((`tbl_customers`.`id` = `tbl_customer_products`.`customer_id`))) left join `tbl_cash_collection` on((`tbl_cash_collection`.`invoice_id` = `tbl_invoice`.`id`))) where (`tbl_customer_products`.`purchase_type` = 'Cash') group by `tbl_invoice`.`invoice_no`,`tbl_cash_collection`.`invoice_id` ;
 
 -- --------------------------------------------------------
 
@@ -2618,7 +2619,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `view_customer_statement`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_customer_statement`  AS  select `tbl_customer_products`.`purchase_date` AS `date`,`tbl_customer_products`.`customer_id` AS `customerId`,`tbl_customers`.`name` AS `customerName`,`tbl_customer_products`.`product_id` AS `productId`,`tbl_invoice`.`invoice_no` AS `invoiceNo`,`tbl_products`.`name` AS `productName`,`tbl_invoice`.`customer_product_price` AS `salesAmount`,0 AS `collection` from (((`tbl_customer_products` left join `tbl_invoice` on(`tbl_invoice`.`customer_product_id` = `tbl_customer_products`.`id`)) left join `tbl_products` on(`tbl_products`.`id` = `tbl_customer_products`.`product_id`)) left join `tbl_customers` on(`tbl_customers`.`id` = `tbl_customer_products`.`customer_id`)) where `tbl_customer_products`.`purchase_type` = 'Cash' union all select `tbl_cash_collection`.`collection_date` AS `date`,`tbl_customer_products`.`customer_id` AS `customerId`,`tbl_customers`.`name` AS `customerName`,`tbl_customer_products`.`product_id` AS `productId`,`tbl_invoice`.`invoice_no` AS `invoiceNo`,`tbl_products`.`name` AS `productName`,0 AS `salesAmount`,`tbl_cash_collection`.`collection_amount` AS `collection` from ((((`tbl_cash_collection` left join `tbl_invoice` on(`tbl_invoice`.`id` = `tbl_cash_collection`.`invoice_id`)) left join `tbl_customer_products` on(`tbl_customer_products`.`id` = `tbl_invoice`.`customer_product_id`)) left join `tbl_customers` on(`tbl_customers`.`id` = `tbl_invoice`.`customer_id`)) left join `tbl_products` on(`tbl_products`.`id` = `tbl_invoice`.`product_id`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_customer_statement`  AS  select `tbl_customer_products`.`purchase_date` AS `date`,`tbl_customer_products`.`customer_id` AS `customerId`,`tbl_customers`.`name` AS `customerName`,`tbl_customer_products`.`product_id` AS `productId`,`tbl_invoice`.`invoice_no` AS `invoiceNo`,`tbl_products`.`name` AS `productName`,`tbl_invoice`.`customer_product_price` AS `salesAmount`,0 AS `collection` from (((`tbl_customer_products` left join `tbl_invoice` on((`tbl_invoice`.`customer_product_id` = `tbl_customer_products`.`id`))) left join `tbl_products` on((`tbl_products`.`id` = `tbl_customer_products`.`product_id`))) left join `tbl_customers` on((`tbl_customers`.`id` = `tbl_customer_products`.`customer_id`))) where (`tbl_customer_products`.`purchase_type` = 'Cash') union all select `tbl_cash_collection`.`collection_date` AS `date`,`tbl_customer_products`.`customer_id` AS `customerId`,`tbl_customers`.`name` AS `customerName`,`tbl_customer_products`.`product_id` AS `productId`,`tbl_invoice`.`invoice_no` AS `invoiceNo`,`tbl_products`.`name` AS `productName`,0 AS `salesAmount`,`tbl_cash_collection`.`collection_amount` AS `collection` from ((((`tbl_cash_collection` left join `tbl_invoice` on((`tbl_invoice`.`id` = `tbl_cash_collection`.`invoice_id`))) left join `tbl_customer_products` on((`tbl_customer_products`.`id` = `tbl_invoice`.`customer_product_id`))) left join `tbl_customers` on((`tbl_customers`.`id` = `tbl_invoice`.`customer_id`))) left join `tbl_products` on((`tbl_products`.`id` = `tbl_invoice`.`product_id`))) ;
 
 -- --------------------------------------------------------
 
@@ -2627,7 +2628,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `view_lifting_payment_summary`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_lifting_payment_summary`  AS  select `tbl_liftings`.`vendor_id` AS `vendorId`,`tbl_vendors`.`name` AS `vendorName`,`tbl_liftings`.`vouchar_date` AS `date`,`tbl_liftings`.`total_price` AS `lifting`,0 AS `payment` from (`tbl_liftings` join `tbl_vendors` on(`tbl_vendors`.`id` = `tbl_liftings`.`vendor_id`)) union all select `tbl_payment_to_company`.`vendor_id` AS `vendorId`,`tbl_vendors`.`name` AS `vendorName`,`tbl_payment_to_company`.`payment_date` AS `date`,0 AS `lifting`,`tbl_payment_to_company`.`payment_now` AS `payment` from (`tbl_payment_to_company` join `tbl_vendors` on(`tbl_vendors`.`id` = `tbl_payment_to_company`.`vendor_id`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_lifting_payment_summary`  AS  select `tbl_liftings`.`vendor_id` AS `vendorId`,`tbl_vendors`.`name` AS `vendorName`,`tbl_liftings`.`vouchar_date` AS `date`,`tbl_liftings`.`total_price` AS `lifting`,0 AS `payment` from (`tbl_liftings` join `tbl_vendors` on((`tbl_vendors`.`id` = `tbl_liftings`.`vendor_id`))) union all select `tbl_payment_to_company`.`vendor_id` AS `vendorId`,`tbl_vendors`.`name` AS `vendorName`,`tbl_payment_to_company`.`payment_date` AS `date`,0 AS `lifting`,`tbl_payment_to_company`.`payment_now` AS `payment` from (`tbl_payment_to_company` join `tbl_vendors` on((`tbl_vendors`.`id` = `tbl_payment_to_company`.`vendor_id`))) ;
 
 -- --------------------------------------------------------
 
@@ -2635,8 +2636,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- Structure for view `view_lifting_record`
 --
 DROP TABLE IF EXISTS `view_lifting_record`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_lifting_record`  AS  select `tbl_liftings`.`vouchar_date` AS `liftingDate`,`tbl_liftings`.`vaouchar_no` AS `liftingNo`,`tbl_liftings`.`vendor_id` AS `vendorId`,`tbl_vendors`.`name` AS `vendorName`,`tbl_liftings`.`store_or_showroom_type` AS `storeOrShowroomType`,`tbl_liftings`.`store_or_showroom_id` AS `storeOrShowroomId`,`view_store_and_showroom`.`name` AS `storeOrShowroomName`,`tbl_products`.`category_id` AS `categoryId`,`tbl_categories`.`parent` AS `parentId`,`tbl_categories`.`name` AS `categoryName`,`tbl_lifting_products`.`product_id` AS `productId`,`tbl_lifting_products`.`product_name` AS `productName`,`tbl_products`.`model_no` AS `productModelNo`,`tbl_products`.`color` AS `productColor`,`tbl_lifting_products`.`serial_no` AS `productSerialNo`,`tbl_lifting_products`.`qty` AS `productQty`,`tbl_lifting_products`.`price` AS `price` from (((((`tbl_liftings` left join `tbl_vendors` on(`tbl_vendors`.`id` = `tbl_liftings`.`vendor_id`)) left join `tbl_lifting_products` on(`tbl_lifting_products`.`lifting_id` = `tbl_liftings`.`id`)) left join `tbl_products` on(`tbl_products`.`id` = `tbl_lifting_products`.`product_id`)) left join `tbl_categories` on(`tbl_categories`.`id` = `tbl_products`.`category_id`)) left join `view_store_and_showroom` on(`view_store_and_showroom`.`type` = `tbl_liftings`.`store_or_showroom_type` and `view_store_and_showroom`.`id` = `tbl_liftings`.`store_or_showroom_id`)) order by `tbl_lifting_products`.`product_id` ;
+-- Error reading structure for table sales_invent_electronics.view_lifting_record: #1267 - Illegal mix of collations (utf8mb4_general_ci,IMPLICIT) and (utf8mb4_unicode_ci,IMPLICIT) for operation '='
 
 -- --------------------------------------------------------
 
@@ -2644,8 +2644,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- Structure for view `view_lifting_return_record`
 --
 DROP TABLE IF EXISTS `view_lifting_return_record`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_lifting_return_record`  AS  select `tbl_lifting_returns`.`date` AS `liftingReturnDate`,`tbl_lifting_returns`.`serial_no` AS `liftingReturnNo`,`tbl_lifting_returns`.`vendor_id` AS `vendorId`,`tbl_vendors`.`name` AS `vendorName`,`tbl_lifting_returns`.`store_or_showroom_type` AS `storeOrShowroomType`,`tbl_lifting_returns`.`store_or_showroom_id` AS `storeOrShowroomId`,`view_store_and_showroom`.`name` AS `storeOrShowroomName`,`tbl_products`.`category_id` AS `categoryId`,`tbl_categories`.`parent` AS `parentId`,`tbl_categories`.`name` AS `categoryName`,`tbl_lifting_return_products`.`product_id` AS `productId`,`tbl_products`.`code` AS `productCode`,`tbl_lifting_return_products`.`product_name` AS `productName`,`tbl_lifting_return_products`.`model_no` AS `productModelNo`,`tbl_lifting_return_products`.`color` AS `productColor`,`tbl_lifting_return_products`.`serial_no` AS `productSerialNo`,`tbl_lifting_return_products`.`qty` AS `productQty`,`tbl_lifting_return_products`.`price` AS `price` from (((((`tbl_lifting_returns` left join `tbl_vendors` on(`tbl_vendors`.`id` = `tbl_lifting_returns`.`vendor_id`)) left join `tbl_lifting_return_products` on(`tbl_lifting_return_products`.`lifting_return_id` = `tbl_lifting_returns`.`id`)) left join `tbl_products` on(`tbl_products`.`id` = `tbl_lifting_return_products`.`product_id`)) left join `tbl_categories` on(`tbl_categories`.`id` = `tbl_products`.`category_id`)) left join `view_store_and_showroom` on(`view_store_and_showroom`.`type` = `tbl_lifting_returns`.`store_or_showroom_type` and `view_store_and_showroom`.`id` = `tbl_lifting_returns`.`store_or_showroom_id`)) order by `tbl_lifting_return_products`.`product_id` ;
+-- Error reading structure for table sales_invent_electronics.view_lifting_return_record: #1267 - Illegal mix of collations (utf8mb4_general_ci,IMPLICIT) and (utf8mb4_unicode_ci,IMPLICIT) for operation '='
 
 -- --------------------------------------------------------
 
@@ -2654,7 +2653,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `view_product_statement`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_product_statement`  AS  select `tbl_liftings`.`vouchar_date` AS `date`,`tbl_lifting_products`.`product_id` AS `productId`,`tbl_lifting_products`.`product_name` AS `productName`,`tbl_lifting_products`.`qty` AS `liftingQty`,`tbl_lifting_products`.`price` AS `liftingPrice`,0 AS `liftingReturnPrice`,0 AS `productIssuePrice`,0 AS `productReturnPrice`,0 AS `salesPrice`,0 AS `slaesReturnPrice` from (`tbl_liftings` join `tbl_lifting_products` on(`tbl_lifting_products`.`lifting_id` = `tbl_liftings`.`id`)) union all select `tbl_lifting_returns`.`date` AS `date`,`tbl_lifting_return_products`.`product_id` AS `productId`,`tbl_lifting_return_products`.`product_name` AS `productName`,`tbl_lifting_return_products`.`qty` AS `productQty`,0 AS `liftingPrice`,`tbl_lifting_return_products`.`price` AS `liftingReturnPrice`,0 AS `productIssuePrice`,0 AS `productReturnPrice`,0 AS `salesPrice`,0 AS `slaesReturnPrice` from (`tbl_lifting_returns` join `tbl_lifting_return_products` on(`tbl_lifting_return_products`.`lifting_return_id` = `tbl_lifting_returns`.`id`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_product_statement`  AS  select `tbl_liftings`.`vouchar_date` AS `date`,`tbl_lifting_products`.`product_id` AS `productId`,`tbl_lifting_products`.`product_name` AS `productName`,`tbl_lifting_products`.`qty` AS `liftingQty`,`tbl_lifting_products`.`price` AS `liftingPrice`,0 AS `liftingReturnPrice`,0 AS `productIssuePrice`,0 AS `productReturnPrice`,0 AS `salesPrice`,0 AS `slaesReturnPrice` from (`tbl_liftings` join `tbl_lifting_products` on((`tbl_lifting_products`.`lifting_id` = `tbl_liftings`.`id`))) union all select `tbl_lifting_returns`.`date` AS `date`,`tbl_lifting_return_products`.`product_id` AS `productId`,`tbl_lifting_return_products`.`product_name` AS `productName`,`tbl_lifting_return_products`.`qty` AS `productQty`,0 AS `liftingPrice`,`tbl_lifting_return_products`.`price` AS `liftingReturnPrice`,0 AS `productIssuePrice`,0 AS `productReturnPrice`,0 AS `salesPrice`,0 AS `slaesReturnPrice` from (`tbl_lifting_returns` join `tbl_lifting_return_products` on((`tbl_lifting_return_products`.`lifting_return_id` = `tbl_lifting_returns`.`id`))) ;
 
 -- --------------------------------------------------------
 
@@ -2663,7 +2662,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `view_stock_valuation`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_stock_valuation`  AS  select `tbl_liftings`.`vouchar_date` AS `date`,`tbl_liftings`.`vendor_id` AS `vendorId`,`tbl_vendors`.`name` AS `vendorName`,`tbl_products`.`category_id` AS `categoryId`,`tbl_categories`.`parent` AS `categoryParent`,`tbl_categories`.`name` AS `categoryName`,`tbl_lifting_products`.`product_id` AS `productId`,`tbl_products`.`name` AS `productName`,`tbl_lifting_products`.`serial_no` AS `serialNo`,`tbl_products`.`model_no` AS `modelNo`,`tbl_products`.`color` AS `color`,`tbl_products`.`reorder_level_qty` AS `reorderQty`,`tbl_lifting_products`.`qty` AS `liftingQty`,`tbl_lifting_products`.`price` AS `liftingAmount`,0 AS `liftingReturnQty`,0 AS `liftingReturnAmount`,0 AS `salesQty`,0 AS `salesAmount`,0 AS `salesReturnQty`,0 AS `salesReturnAmount` from ((((`tbl_liftings` join `tbl_vendors` on(`tbl_vendors`.`id` = `tbl_liftings`.`vendor_id`)) join `tbl_lifting_products` on(`tbl_lifting_products`.`lifting_id` = `tbl_liftings`.`id`)) join `tbl_products` on(`tbl_products`.`id` = `tbl_lifting_products`.`product_id`)) join `tbl_categories` on(`tbl_categories`.`id` = `tbl_products`.`category_id`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_stock_valuation`  AS  select `tbl_liftings`.`vouchar_date` AS `date`,`tbl_liftings`.`vendor_id` AS `vendorId`,`tbl_vendors`.`name` AS `vendorName`,`tbl_products`.`category_id` AS `categoryId`,`tbl_categories`.`parent` AS `categoryParent`,`tbl_categories`.`name` AS `categoryName`,`tbl_lifting_products`.`product_id` AS `productId`,`tbl_products`.`name` AS `productName`,`tbl_lifting_products`.`serial_no` AS `serialNo`,`tbl_products`.`model_no` AS `modelNo`,`tbl_products`.`color` AS `color`,`tbl_products`.`reorder_level_qty` AS `reorderQty`,`tbl_lifting_products`.`qty` AS `liftingQty`,`tbl_lifting_products`.`price` AS `liftingAmount`,0 AS `liftingReturnQty`,0 AS `liftingReturnAmount`,0 AS `salesQty`,0 AS `salesAmount`,0 AS `salesReturnQty`,0 AS `salesReturnAmount` from ((((`tbl_liftings` join `tbl_vendors` on((`tbl_vendors`.`id` = `tbl_liftings`.`vendor_id`))) join `tbl_lifting_products` on((`tbl_lifting_products`.`lifting_id` = `tbl_liftings`.`id`))) join `tbl_products` on((`tbl_products`.`id` = `tbl_lifting_products`.`product_id`))) join `tbl_categories` on((`tbl_categories`.`id` = `tbl_products`.`category_id`))) ;
 
 -- --------------------------------------------------------
 
@@ -2672,7 +2671,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `view_store_and_showroom`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_store_and_showroom`  AS  select `tbl_stores`.`id` AS `id`,'store' AS `type`,`tbl_stores`.`type` AS `storeType`,`tbl_stores`.`name` AS `name` from `tbl_stores` where `tbl_stores`.`status` = '1' union select `tbl_showroom`.`id` AS `id`,'showroom' AS `type`,'' AS `storeType`,`tbl_showroom`.`name` AS `name` from `tbl_showroom` where `tbl_showroom`.`status` = '1' ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_store_and_showroom`  AS  select `tbl_stores`.`id` AS `id`,'store' AS `type`,`tbl_stores`.`type` AS `storeType`,`tbl_stores`.`name` AS `name` from `tbl_stores` where (`tbl_stores`.`status` = '1') union select `tbl_showroom`.`id` AS `id`,'showroom' AS `type`,'' AS `storeType`,`tbl_showroom`.`name` AS `name` from `tbl_showroom` where (`tbl_showroom`.`status` = '1') ;
 
 -- --------------------------------------------------------
 
@@ -2681,7 +2680,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `view_transport_record`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_transport_record`  AS  select `tbl_transfers`.`date` AS `date`,`tbl_transfers`.`host_type` AS `hostType`,`tbl_transfers`.`host_id` AS `hostId`,`tbl_transfers`.`destination_type` AS `destinationType`,`tbl_transfers`.`destination_id` AS `destinationId`,`tbl_transfer_products`.`product_id` AS `productId`,`tbl_transfer_products`.`name` AS `productName`,`tbl_transfer_products`.`model_no` AS `productModelNo`,`tbl_transfer_products`.`serial_no` AS `productSerialNo`,`tbl_transfer_products`.`color` AS `productColor`,`tbl_transfer_products`.`qty` AS `productQty` from (`tbl_transfer_products` left join `tbl_transfers` on(`tbl_transfer_products`.`transfer_id` = `tbl_transfers`.`id`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_transport_record`  AS  select `tbl_transfers`.`date` AS `date`,`tbl_transfers`.`host_type` AS `hostType`,`tbl_transfers`.`host_id` AS `hostId`,`tbl_transfers`.`destination_type` AS `destinationType`,`tbl_transfers`.`destination_id` AS `destinationId`,`tbl_transfer_products`.`product_id` AS `productId`,`tbl_transfer_products`.`name` AS `productName`,`tbl_transfer_products`.`model_no` AS `productModelNo`,`tbl_transfer_products`.`serial_no` AS `productSerialNo`,`tbl_transfer_products`.`color` AS `productColor`,`tbl_transfer_products`.`qty` AS `productQty` from (`tbl_transfer_products` left join `tbl_transfers` on((`tbl_transfer_products`.`transfer_id` = `tbl_transfers`.`id`))) ;
 
 -- --------------------------------------------------------
 
@@ -2761,6 +2760,12 @@ ALTER TABLE `tbl_cash_collection`
 -- Indexes for table `tbl_categories`
 --
 ALTER TABLE `tbl_categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_commission_configuration`
+--
+ALTER TABLE `tbl_commission_configuration`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -3011,7 +3016,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -3048,6 +3053,12 @@ ALTER TABLE `tbl_cash_collection`
 --
 ALTER TABLE `tbl_categories`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `tbl_commission_configuration`
+--
+ALTER TABLE `tbl_commission_configuration`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tbl_company`
@@ -3257,13 +3268,13 @@ ALTER TABLE `tbl_vendors`
 -- AUTO_INCREMENT for table `user_menus`
 --
 ALTER TABLE `user_menus`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `user_menu_actions`
 --
 ALTER TABLE `user_menu_actions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=143;
 
 --
 -- AUTO_INCREMENT for table `user_roles`

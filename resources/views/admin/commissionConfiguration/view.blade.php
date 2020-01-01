@@ -1,0 +1,105 @@
+@extends('admin.layouts.master')
+
+@section('content')
+    @php
+    use App\DealerSetup;
+    use App\StaffSetup;
+    use App\Product;
+    use App\CommissionConfiguration;
+       $commissionType = array('Dealer Commission' => 'Dealer Commission', 'Staff Commission' => 'Staff Commission', 'Group Commission' => 'Group Commission');
+
+        $dealer = DealerSetup::where('id',@$commission->dealer_id)->first();
+        $staff = StaffSetup::where('id',@$commission->staff_id)->first();
+        if(@$dealer){
+            $name = $dealer->name;
+        }elseif(@$staff){
+            $name = $staff->name;
+        }else{
+
+        }
+    @endphp
+    <style type="text/css">
+        .gridTable{
+           padding-left: 5px !important;
+        }
+    </style>
+    <div style="padding-bottom: 10px;"></div>
+
+    <form class="form-horizontal" method="POST" enctype="multipart/form-data">
+        {{ csrf_field() }}
+
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-6"><h4 class="card-title">{{ $title }}</h4></div>
+                    <div class="col-md-6 text-right">
+                        <a class="btn btn-outline-info btn-lg" href="{{ route($goBackLink) }}">
+                            <i class="fa fa-arrow-circle-left"></i> Go Back
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="customer-product-name">Commission Type</label>
+                        <div class="form-group" id="prodct-select-menu">
+                            <input type="text" name="commissionType" value="{{$commission->commission_type}}" class="form-control" readonly="">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 defaultBox">
+                        <label for="customer-product-name">Name</label>
+                        <div class="form-group" id="prodct-select-menu">
+                            <input type="hidden" name="dealerId" value="{{@$commission->dealer_id}}">
+                            <input type="hidden" name="staffId" value="{{@$commission->staff_id}}">
+                            <input type="text" value="{{$name}}" class="form-control" readonly="">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-striped">
+                            <thead style="background-color: #00c292;">
+                                <tr>
+                                    <th width="20px">SL</th>
+                                    <th>Product Category Name</th>
+                                    <th width="150px">Commission Rate (%)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="">
+                                @php
+                                    $sl = 1;
+                                @endphp
+                                @foreach ($categoryList as $category)
+                                @php
+                                    $commissionCategory = CommissionConfiguration::where('category_id',$category->id)->where('commission_type',$commission->commission_type)->first();
+                                    $product = Product::where('category_id',$category->id)->get();
+                                    if(@$product){
+                                @endphp
+                                    <tr>
+                                        <td>{{ $sl++ }}</td>
+                                        <td>
+                                            {{ $category->name }}
+                                            <input type="hidden" name="categoryId[]" value="{{ $category->id }}">
+                                            <input type="hidden" name="categoryName[]" value="{{ $category->name }}">
+                                        </td>
+                                        <td style="text-align: center;">
+                                            {{@$commissionCategory->commission_rate}}
+                                        </td>
+                                    </tr>
+                                    @php
+                                        }
+                                    @endphp
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+@endsection
+

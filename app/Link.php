@@ -46,7 +46,7 @@ class Link
                         }
 
                         if($action->menuType == 5){
-                        $data_link .= '<a href="'.route($action->actionLink,$id).'" data-toggle="tooltip" data-original-title="'.$action->actionName.'" onclick="confirm('."'".'Are you sure you want to Permission ?'."'".')"> <i class="fa fa-lock text-inverse m-r-10"></i> </a>';
+                        $data_link .= '<a href="'.route($action->actionLink,$id).'" data-toggle="tooltip" data-original-title="'.$action->actionName.'" onclick="if (confirm(&quot;Are you sure you want to Permission ?&quot;)) { return true; } return false;"> <i class="fa fa-lock text-inverse m-r-10"></i> </a>';
                         }
 
                         if($action->menuType == 6){

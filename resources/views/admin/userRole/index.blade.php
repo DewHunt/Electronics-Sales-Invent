@@ -6,7 +6,7 @@
             <table id="dataTable" class="table table-bordered table-striped"  name="usersTable">
                 <thead>
                     <tr>
-                        <th>Sl</th>
+                        <th width="20px">Sl</th>
                         <th>User Name</th>
                         <th>status</th>
                         <th>Action</th>

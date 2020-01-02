@@ -19,7 +19,12 @@ class ProductIssueController extends Controller
 	{
 		$title = "Product Issue";
 
-    	return view('admin.productIssue.index')->with(compact('title'));
+		$issuedProducts = ProductIssue::select('tbl_product_issue.*','tbl_dealers.name as dealerName')
+			->leftJoin('tbl_dealers','tbl_dealers.id','=','tbl_product_issue.dealer_id')
+			->orderBy('tbl_product_issue.id','dsc')
+			->get();
+
+    	return view('admin.productIssue.index')->with(compact('title','issuedProducts'));
 	}
 
 	public function add()
@@ -45,6 +50,61 @@ class ProductIssueController extends Controller
         $productIssue = ProductIssue::create( [
         	'requisition_id' => $request->dealerRequisitionId,
         	'dealer_id' => $request->dealerId,
+            'issue_no' => $request->issueType,
+            'issue_no' => $request->productIssueNo,
+            'date' => $issueDate,
+            'total_qty' => $request->totalQty,         
+            'total_amount' => $request->totalAmount,         
+        ]);
+
+        $countProduct = count($request->productId);
+        if($request->productId){
+        	$postData = [];
+        	for ($i=0; $i <$countProduct ; $i++) { 
+        		$postData[] = [
+        			'issue_id'=> $productIssue->id,
+                    'product_id' => $request->productId[$i],
+        			'model_no' => $request->productModel[$i],
+                    'serial_no' => $request->productSerial[$i],
+                    'commission_rate' => $request->commission[$i],
+                    'price' => $request->productPrice[$i],
+                    'qty' => $request->productQty[$i],
+        			'amount' => $request->amount[$i],
+        		];
+        	}                
+        	ProductIssueList::insert($postData);
+        }
+
+        return redirect(route('productIssue.index'))->with('msg','Product Issue Added Successfully');
+    }
+
+	public function edit($issueId)
+	{
+    	$title = "Edit Product Issue";
+    	$formLink = "productIssue.update";
+    	$buttonName = "Update";
+
+    	$dealers = DealerSetup::where('status','1')->orderBy('name','asc')->get();
+    	$dealerRequisitions = DealerRequisition::where('status','0')->get();
+    	$products = product::where('status','1')->orderBy('name','asc')->get();
+
+    	$issuedProduct = ProductIssue::where('id',$issueId)->first();
+    	$issuedProductLists = ProductIssueList::where('issue_id',$issueId)->get();
+
+    	return view('admin.productIssue.edit')->with(compact('title','formLink','buttonName','dealers','dealerRequisitions','products','issuedProduct','issuedProductLists'));
+	}
+
+    public function update(Request $request)
+    {
+        // $this->validation($request);
+        dd($request->all());
+
+        $issueDate = date('Y-m-d', strtotime($request->issueDate));
+
+        $productIssue = ProductIssue::create( [
+        	'requisition_id' => $request->dealerRequisitionId,
+        	'dealer_id' => $request->dealerId,
+            'issue_no' => $request->issueType,
             'issue_no' => $request->productIssueNo,
             'date' => $issueDate,
             'total_qty' => $request->totalQty,         

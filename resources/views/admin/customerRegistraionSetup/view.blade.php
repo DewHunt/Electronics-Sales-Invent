@@ -38,11 +38,11 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-6"><h4 class="card-title">{{ $title }}</h4></div>
-                    <div class="col-md-6 text-right">
-                        <a target="_blank" href="{{ route('customerRegistraionSetup.print',$customer->id) }}" class="btn btn-outline-success btn-lg"><i class="fa fa-print"></i> PRINT</a>  
+                    <div class="col-md-6 text-right">  
                         <a class="btn btn-outline-info btn-lg" href="{{ route('customerRegistraionSetup.index') }}">
                             <i class="fa fa-arrow-circle-left"></i> Go Back
                         </a>
+                        <a target="_blank" href="{{ route('customerRegistraionSetup.print',$customer->id) }}" class="btn btn-outline-success btn-lg"><i class="fa fa-print"></i> PRINT</a>
                     </div>
                 </div>
             </div>

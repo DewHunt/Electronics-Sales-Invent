@@ -34,9 +34,7 @@ class CommmissionConfigurationController extends Controller
         $buttonName = "Save";
         $delaerList = DealerSetup::where('status',1)->get();
         $staffList = StaffSetup::orderBy('name','asc')->where('status',1)->get();
-        // $categoryList = CategorySetup::orderBy('name','asc')->where('status',1)->where(\DB::raw('tbl_categories.parent'), '!=', "")->get();
-        $categoryList = CategorySetup::whereNotNUll('tbl_categories.parent')
-            ->where('status',1)
+        $categoryList = CategorySetup::where('status',1)
             ->orderBy('name','asc')
             ->get();
 
@@ -46,57 +44,29 @@ class CommmissionConfigurationController extends Controller
     public function save(Request $request)
     {
         $buttonValue = $request->buttonAddEdit;
-
-        if ($buttonValue == "Save")
+        $countCategory = count($request->categoryId);
+        
+        if($request->commissionType == "Dealer Commission")
         {
-            $countCategory = count($request->categoryId);
-
-            if($request->commissionType == "Dealer Commission")
-            {
-                $request->staffId = NULL;
-            }
-            elseif($request->commissionType == "Staff Commission")
-            {
-                $request->dealerId = NULL;
-            }
-
-            for ($i=0; $i <$countCategory ; $i++)
-            {   
-                $commission = CommissionConfiguration::create( [
-                    'commission_type'=> $request->commissionType,
-                    'dealer_id'=> $request->dealerId,
-                    'staff_id'=> $request->staffId,
-                    'category_id' => $request->categoryId[$i], 
-                    'category_name' => $request->categoryName[$i], 
-                    'commission_rate' => $request->commissionRate[$i]      
-                ]);
-            }
+            $request->staffId = NULL;
+            CommissionConfiguration::where('dealer_id',$request->dealerId)->delete();
+        }
+        elseif($request->commissionType == "Staff Commission")
+        {
+            $request->dealerId = NULL;
+            CommissionConfiguration::where('staff_id',$request->staffId)->delete();
         }
 
-        if ($buttonValue == "Update")
-        {
-            $countCategory = count($request->categoryId);
-            DB::table('tbl_commission_configuration')->where('commission_type',$request->commissionType)->delete();
-            if($request->commissionType == "Dealer Commission")
-            {
-                $request->staffId = NULL;
-            }
-            elseif($request->commissionType == "Staff Commission")
-            {
-                $request->dealerId = NULL;
-            }
-
-            for ($i=0; $i <$countCategory ; $i++)
-            {   
-                $commission = CommissionConfiguration::create( [
-                    'commission_type'=> $request->commissionType,
-                    'dealer_id'=> $request->dealerId,
-                    'staff_id'=> $request->staffId,
-                    'category_id' => $request->categoryId[$i], 
-                    'category_name' => $request->categoryName[$i], 
-                    'commission_rate' => $request->commissionRate[$i]      
-                ]);
-            }
+        for ($i=0; $i <$countCategory ; $i++)
+        {   
+            $commission = CommissionConfiguration::create( [
+                'commission_type'=> $request->commissionType,
+                'dealer_id'=> $request->dealerId,
+                'staff_id'=> $request->staffId,
+                'category_id' => $request->categoryId[$i], 
+                'category_name' => $request->categoryName[$i], 
+                'commission_rate' => $request->commissionRate[$i]      
+            ]);
         }
 
         return redirect(route('commissionConfiguration.index'))->with('msg','New Commission Prepared Successfully');
@@ -105,15 +75,19 @@ class CommmissionConfigurationController extends Controller
     public function view($id)
     {
         $title = "View Commission";
-        $categoryList = CategorySetup::orderBy('name','asc')->where('status',1)->where(\DB::raw('tbl_categories.parent'), '!=', "")->get();
+        $categoryList = CategorySetup::where('status',1)
+            ->orderBy('name','asc')
+            ->get();
         $commission = CommissionConfiguration::where('id',$id)->first();
-        return view('admin.commissionConfiguration.view')->with(compact('title','formLink','buttonName','categoryList','commission'));
+        return view('admin.commissionConfiguration.view')->with(compact('title','categoryList','commission'));
     }
 
     public function print($id)
     {
         $title = "Commission Details";
-        $categoryList = CategorySetup::orderBy('name','asc')->where('status',1)->where(\DB::raw('tbl_categories.parent'), '!=', "")->get();
+        $categoryList = CategorySetup::where('status',1)
+            ->orderBy('name','asc')
+            ->get();
         $commission = CommissionConfiguration::where('id',$id)->first();
         $pdf = PDF::loadView('admin.commissionConfiguration.print',['title'=>$title,'categoryList'=>$categoryList,'commission'=>$commission]);
 

@@ -15,17 +15,261 @@
             height: 35px !important;
         }
     </style>
+    @php
+        $requisitionNo = "";   
+        use App\ProductIssue;
 
-   
+        $maxProductIssueId = ProductIssue::max('id');
+
+        if (@$maxProductIssueId)
+        {
+            $productIssueNo = 100000000 + $maxProductIssueId + 1;
+        }
+        else
+        {
+            $productIssueNo = 100000000 + 1;
+        }
+    @endphp
 
     <div class="card-body">
         @if ($issuedProduct->issue_type == 'With Approval')
-            @include('admin/productIssue/edit/editWithApproval')
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input issueType" name="issueType" value="With Approval">With Approval
+                        </label>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input issueType" name="issueType" value="Without Approval">Without Approval
+                        </label>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="issue-no">Issue No</label>
+                    <div class="form-group {{ $errors->has('productIssueNo') ? ' has-danger' : '' }}">
+                        <input type="text" class="form-control" name="productIssueNo" value="{{ $productIssueNo }}" required readonly/>
+                        @if ($errors->has('productIssueNo'))
+                            @foreach($errors->get('productIssueNo') as $error)
+                                <div class="form-control-feedback">{{ $error }}</div>
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="issue-date">Issue Date</label>
+                    <div class="form-group {{ $errors->has('issueDate') ? ' has-danger' : '' }}">
+                        <input type="text" class="form-control add_datepicker" name="issueDate" value="{{ old('issueDate') }}" readonly>
+                        @if ($errors->has('issueDate'))
+                            @foreach($errors->get('issueDate') as $error)
+                                <div class="form-control-feedback">{{ $error }}</div>
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
+            </div>
         @endif
 
         @if ($issuedProduct->issue_type == 'Without Approval')
-            @include('admin/productIssue/edit/editWithoutApproval')
+            {{-- expr --}}
         @endif
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input issueType" name="issueType" value="With Approval">With Approval
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input issueType" name="issueType" value="Without Approval">Without Approval
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <label for="issue-no">Issue No</label>
+                <div class="form-group {{ $errors->has('productIssueNo') ? ' has-danger' : '' }}">
+                    <input type="text" class="form-control" name="productIssueNo" value="{{ $productIssueNo }}" required readonly/>
+                    @if ($errors->has('productIssueNo'))
+                        @foreach($errors->get('productIssueNo') as $error)
+                            <div class="form-control-feedback">{{ $error }}</div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <label for="issue-date">Issue Date</label>
+                <div class="form-group {{ $errors->has('issueDate') ? ' has-danger' : '' }}">
+                    <input type="text" class="form-control add_datepicker" name="issueDate" value="{{ old('issueDate') }}" readonly>
+                    @if ($errors->has('issueDate'))
+                        @foreach($errors->get('issueDate') as $error)
+                            <div class="form-control-feedback">{{ $error }}</div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <input type="text" class="form-control" id="dealerId" name="dealerId" value="" readonly>
+            </div>
+        </div>
+
+        <div id="withAprrovalSection">
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="dealer">Requisitions No</label>
+                    <div class="form-group">
+                        <select class="form-control chosen-select" id="dealerRequisitionId" name="dealerRequisitionId" required="">
+                            <option value=" ">Select Reuisition Number</option>
+                            @foreach ($dealerRequisitions as $dealerRequisition)
+                                <option value="{{ $dealerRequisition->id }}">{{ $dealerRequisition->requisition_no }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="dealer-code">Dealer Code</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="dealerCode" name="dealerCode" value="" readonly>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="dealer-name">Dealer Name</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="dealerName" name="dealerName" value="" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="dealer-address">Dealer Address</label>
+                    <div class="form-group">
+                        <textarea class="form-control" id="dealerAddress" name="dealerAddress" rows="5"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-bordered table-sm approveProducts">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th width="200px">Model</th>
+                                <th width="80px">Qty</th>
+                                <th width="80px">Issue Qty</th>
+                                <th width="200px">Serial No</th>
+                                <th width="10px"><i class="fa fa-plus" style="color: white;"></i></th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tbody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>            
+        </div>
+
+        <div id="withoutAprrovalSection">
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="dealer">Dealer</label>
+                    <div class="form-group">
+                        <select class="form-control chosen-select dealer" id="dealer" name="dealer">
+                            <option value="">Select Dealer</option>
+                            @foreach ($dealers as $dealer)
+                                <option value="{{$dealer->id}}">{{ $dealer->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="product">Products</label>
+                    <div class="form-group">
+                        <select class="form-control chosen-select product" id="product" name="product">
+                            <option value="">Select Product</option>
+                            @foreach ($products as $product)
+                                <option value="{{$product->id}}">{{ $product->name }} ( {{ $product->code }} - {{ $product->color }} - {{ $product->model_no }}  )</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="serial-no">Serial No</label>
+                    <div class="form-group" id="serial-no-select-menu">
+                        <select class="form-control chosen-select serialNo" id="serialNo" name="serialNo">
+                            <option value="">Select Serial No</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <span class="btn btn-outline-success addItem" style="width: 100%;">
+                        <i class="fa fa-arrow-down"></i> Add Product
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <label></label>
+                <div class="form-group">
+                    <table class="table table-bordered table-striped table-sm gridTable issueProductList" >
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th width="200px">Model</th>
+                                <th width="150px">Serial</th>
+                                <th width="110px">Commision (%)</th>
+                                <th width="80px">Rate</th>
+                                <th width="40px">Qty</th>
+                                <th width="80px">Amount</th>
+                                <th width="10px"><i class="fa fa-trash" style="color: white;"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <label for="total-qty">Total Quantity</label>
+                <div class="form-group">
+                    <input style="text-align: right;" class="form-control totalQty" type="number" name="totalQty" value="0" readonly>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="taotal-amount">Total Amount</label>
+                <div class="form-group">
+                    <input style="text-align: right;" class="form-control totalAmount" type="number" name="totalAmount" value="0" readonly>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 

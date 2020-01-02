@@ -28,10 +28,17 @@
             <td width="10%">:</td>
             <td>{{ $customer->age }}</td>
         </tr>
+
         <tr>
             <th width="40%">Phone No</th>
             <td width="10%">:</td>
             <td>{{ $customer->phone_no }}</td>
+        </tr>
+        
+        <tr>
+            <th width="40%">National ID</th>
+            <td width="10%">:</td>
+            <td>{{ $customer->nid }}</td>
         </tr>
 
         <tr>

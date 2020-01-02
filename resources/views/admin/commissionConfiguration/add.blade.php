@@ -59,14 +59,13 @@
                                 <option value="">Select Saff Name</option>
                                 @foreach ($staffList as $staff)
                                 @php
-                                    $getGroups = GroupSetup::whereRaw('FIND_IN_SET(?,team_member)',[$staff->id])->orWhere('team_leader',$staff->id)->first();
-
-                                    if (!$getGroups) {
+                                    $getGroups = GroupSetup::whereRaw('FIND_IN_SET(?,team_member)',[$staff->id])
+                                        ->orWhere('team_leader',$staff->id)->first();
                                 @endphp
+
+                                @if (!$getGroups)
                                     <option value="{{$staff->id}}">{{$staff->name}}</option>
-                                    @php
-                                        }
-                                    @endphp
+                                @endif
                                 @endforeach
                             </select>
                         </div>
@@ -88,24 +87,22 @@
                                     $sl = 1;
                                 @endphp
                                 @foreach ($categoryList as $category)
-                                @php
-                                    $product = Product::where('category_id',$category->id)->get();
-                                    if(@$product){
-                                @endphp
-                                    <tr class="row_{{ $category->id }}">
-                                        <td>{{ $sl++ }}</td>
-                                        <td>
-                                            {{ $category->name }}
-                                            <input type="hidden" name="categoryId[]" value="{{ $category->id }}">
-                                            <input type="hidden" name="categoryName[]" value="{{ $category->name }}">
-                                        </td>
-                                        <td>
-                                            <input type="text" value="0.00" name="commissionRate[]" class="categoryRow categoryRow_{{$category->id}}" style="text-align: center;">
-                                        </td>
-                                    </tr>
                                     @php
-                                        }
+                                        $product = Product::where('category_id',$category->id)->get();
                                     @endphp
+                                    @if (count($product) > 0)
+                                        <tr class="row_{{ $category->id }}">
+                                            <td>{{ $sl++ }}</td>
+                                            <td>
+                                                {{ $category->name }}
+                                                <input type="hidden" name="categoryId[]" value="{{ $category->id }}">
+                                                <input type="hidden" name="categoryName[]" value="{{ $category->name }}">
+                                            </td>
+                                            <td>
+                                                <input type="text" value="0.00" name="commissionRate[]" class="categoryRow categoryRow_{{$category->id}}" style="text-align: center;">
+                                            </td>
+                                        </tr>
+                                    @endif
                                 @endforeach
                             </tbody>
                         </table>

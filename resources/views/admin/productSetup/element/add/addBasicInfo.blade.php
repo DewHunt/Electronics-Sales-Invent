@@ -23,7 +23,14 @@
 	                    <select class="form-control chosen-select" id="category" name="category" required>
 	                    	<option value="">Select Category</option>
 	                        @foreach($categories as $categoryInfo)
-	                            <option value="{{ $categoryInfo->id }}">{{ $categoryInfo->name }}</option>
+	                        	@php
+	                        		$parentId = DB::table('tbl_categories')
+	                        			->where('parent','=',$categoryInfo->id)
+	                        			->first();
+	                        	@endphp
+	                        	@if ($parentId == "")
+	                        		<option value="{{ $categoryInfo->id }}">{{ $categoryInfo->name }}</option>
+	                        	@endif
 	                        @endforeach
 	                    </select>
 	                    @if ($errors->has('category'))

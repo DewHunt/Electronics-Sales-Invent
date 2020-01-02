@@ -15,67 +15,82 @@
         </div>
         
         <div class="row">
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="form-group {{ $errors->has('name') ? ' has-danger' : '' }}">
-                            <label for="name">Applicant's Name</label>
-                            <input type="hidden" id="applicants_id" value="{{$apllicantsId}}">
-                            <input type="text" class="form-control" name="name" value="{{ old('name') }}" required>
-                            @if ($errors->has('name'))
-                                @foreach($errors->get('name') as $error)
-                                    <div class="form-control-feedback">{{ $error }}</div>
-                                @endforeach
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group {{ $errors->has('code') ? ' has-danger' : '' }}">
-                            <label for="code">Applicant's Code</label>
-                            <input type="text" class="form-control" id="apllicantsCode" name="code" required readonly>
-                            @if ($errors->has('code'))
-                                @foreach($errors->get('code') as $error)
-                                    <div class="form-control-feedback">{{ $error }}</div>
-                                @endforeach
-                            @endif
-                        </div>
-                    </div>
+            <div class="col-md-3">
+                <div class="form-group {{ $errors->has('name') ? ' has-danger' : '' }}">
+                    <label for="name">Applicant's Name</label>
+                    <input type="hidden" id="applicants_id" value="{{$apllicantsId}}">
+                    <input type="text" class="form-control" name="name" value="{{ old('name') }}" required>
+                    @if ($errors->has('name'))
+                        @foreach($errors->get('name') as $error)
+                            <div class="form-control-feedback">{{ $error }}</div>
+                        @endforeach
+                    @endif
                 </div>
             </div>
 
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="form-group {{ $errors->has('nickName') ? ' has-danger' : '' }}">
-                            <label for="nick-name">Nick Name</label>
-                            <input type="text" class="form-control" name="nickName" value="{{ old('nickName') }}">
-                            @if ($errors->has('nickName'))
-                                @foreach($errors->get('nickName') as $error)
-                                    <div class="form-control-feedback">{{ $error }}</div>
-                                @endforeach
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group {{ $errors->has('age') ? ' has-danger' : '' }}">
-                            <label for="age">Age</label>
-                            <input type="number" class="form-control" name="age" value="{{ old('age') }}" required>
-                            @if ($errors->has('age'))
-                                @foreach($errors->get('age') as $error)
-                                    <div class="form-control-feedback">{{ $error }}</div>
-                                @endforeach
-                            @endif
-                        </div>
-                    </div>
+            <div class="col-md-3">
+                <div class="form-group {{ $errors->has('nickName') ? ' has-danger' : '' }}">
+                    <label for="nick-name">Nick Name</label>
+                    <input type="text" class="form-control" name="nickName" value="{{ old('nickName') }}">
+                    @if ($errors->has('nickName'))
+                        @foreach($errors->get('nickName') as $error)
+                            <div class="form-control-feedback">{{ $error }}</div>
+                        @endforeach
+                    @endif
                 </div>
             </div>
-            
+
+            <div class="col-md-3">
+                <div class="form-group {{ $errors->has('fathersName') ? ' has-danger' : '' }}">
+                    <label for="fathers-name">Father's Name</label>
+                    <input type="text" class="form-control" name="fathersName" value="{{ old('fathersName') }}" required>
+                    @if ($errors->has('fathersName'))
+                        @foreach($errors->get('fathersName') as $error)
+                            <div class="form-control-feedback">{{ $error }}</div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group {{ $errors->has('mothersName') ? ' has-danger' : '' }}">
+                    <label for="mothers-name">Mother's Name</label>
+                    <input type="text" class="form-control" name="mothersName" value="{{ old('mothersName') }}" required>
+                    @if ($errors->has('mothersName'))
+                        @foreach($errors->get('mothersName') as $error)
+                            <div class="form-control-feedback">{{ $error }}</div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
         </div>
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-2">
+                <div class="form-group {{ $errors->has('code') ? ' has-danger' : '' }}">
+                    <label for="code">Applicant's Code</label>
+                    <input type="text" class="form-control" id="apllicantsCode" name="code" required readonly>
+                    @if ($errors->has('code'))
+                        @foreach($errors->get('code') as $error)
+                            <div class="form-control-feedback">{{ $error }}</div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+
+            <div class="col-md-1">
+                <div class="form-group {{ $errors->has('age') ? ' has-danger' : '' }}">
+                    <label for="age">Age</label>
+                    <input type="number" class="form-control" name="age" value="{{ old('age') }}" required>
+                    @if ($errors->has('age'))
+                        @foreach($errors->get('age') as $error)
+                            <div class="form-control-feedback">{{ $error }}</div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+
+            <div class="col-md-3">
                 <div class="form-group {{ $errors->has('phoneNo') ? ' has-danger' : '' }}">
                     <label for="phone-no">Phone No</label>
                     <input type="text" class="form-control" id="applicants_phone_no" name="phoneNo" value="{{ old('phoneNo') }}" oninput="ApplicantCode()" required>
@@ -117,33 +132,19 @@
         </div>
 
         <div class="row">
-            <div class="col-md-6">
-                <div class="form-group {{ $errors->has('fathersName') ? ' has-danger' : '' }}">
-                    <label for="fathers-name">Father's Name</label>
-                    <input type="text" class="form-control" name="fathersName" value="{{ old('fathersName') }}" required>
-                    @if ($errors->has('fathersName'))
-                        @foreach($errors->get('fathersName') as $error)
-                            <div class="form-control-feedback">{{ $error }}</div>
-                        @endforeach
-                    @endif
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="form-group {{ $errors->has('mothersName') ? ' has-danger' : '' }}">
-                    <label for="mothers-name">Mother's Name</label>
-                    <input type="text" class="form-control" name="mothersName" value="{{ old('mothersName') }}" required>
-                    @if ($errors->has('mothersName'))
-                        @foreach($errors->get('mothersName') as $error)
-                            <div class="form-control-feedback">{{ $error }}</div>
-                        @endforeach
-                    @endif
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
             <div class="col-md-3">
+                <div class="form-group {{ $errors->has('nid') ? ' has-danger' : '' }}">
+                    <label for="total-family-member">National ID No</label>
+                    <input type="number" class="form-control" name="nid" value="{{ old('nid') }}" required>
+                    @if ($errors->has('nid'))
+                        @foreach($errors->get('nid') as $error)
+                            <div class="form-control-feedback">{{ $error }}</div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+
+            <div class="col-md-2">
                 <label for="gender">Gender</label>
                 <div class="form-group {{ $errors->has('gender') ? ' has-danger' : '' }}" style="height: 40px; line-height: 40px;">
                     <div class="form-check-inline">
@@ -159,6 +160,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-md-3">
                 <label for="current-residence">Current Residence</label>
                 <div class="form-group {{ $errors->has('currentResidence') ? ' has-danger' : '' }}" style="height: 40px; line-height: 40px;">
@@ -176,10 +178,10 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="form-group {{ $errors->has('residenceDuration') ? ' has-danger' : '' }}">
                     <label for="residence-duration">Residence Duration</label>
-                    <input type="number" class="form-control" name="residenceDuration" value="{{ old('residenceDuration') }}" placeholder="write no of year" required>
+                    <input type="number" class="form-control" name="residenceDuration" value="{{ old('residenceDuration') }}" placeholder="Write No Of Year" required>
                     @if ($errors->has('residenceDuration'))
                         @foreach($errors->get('residenceDuration') as $error)
                             <div class="form-control-feedback">{{ $error }}</div>
@@ -188,9 +190,9 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="form-group {{ $errors->has('totalFamilyMember') ? ' has-danger' : '' }}">
-                    <label for="total-family-member">Total Family Members</label>
+                    <label for="total-family-member">Family Members</label>
                     <input type="number" class="form-control" name="totalFamilyMember" value="{{ old('totalFamilyMember') }}" required>
                     @if ($errors->has('totalFamilyMember'))
                         @foreach($errors->get('totalFamilyMember') as $error)

@@ -5,15 +5,17 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use DB;
-use PDF;
-use MPDF;
 use App\CustomerRegistrationSetup;
 use App\CustomerProduct;
 use App\CustomerGuarantor;
 use App\ShowroomSetup;
 use App\Product;
 use App\InvoiceSetup;
+use App\StaffSetup;
+
+use DB;
+use PDF;
+use MPDF;
 
 class CustomerRegistrationSetupController extends Controller
 {
@@ -32,7 +34,8 @@ class CustomerRegistrationSetupController extends Controller
         $buttonName = "Save";
         $showrooms = ShowroomSetup::orderBy('name','asc')->where('status',1)->get();
         $products = Product::where('status',1)->orderBy('name','ASC')->get();
-    	return view('admin.customerRegistraionSetup.add')->with(compact('title','formLink','buttonName','products','showrooms'));
+        $staffs = StaffSetup::where('status',1)->orderBy('name','ASC')->get();
+    	return view('admin.customerRegistraionSetup.add')->with(compact('title','formLink','buttonName','products','showrooms','staffs'));
     }
 
     public function save(Request $request)
@@ -41,6 +44,7 @@ class CustomerRegistrationSetupController extends Controller
             'name' => $request->name,            
             'code' => $request->code,            
             'nick_name' => $request->nickName,            
+            'nid' => $request->nid,            
             'age' => $request->age,            
             'phone_no' => $request->phoneNo,            
             'marital_status' => $request->maritalStatus,            
@@ -95,6 +99,8 @@ class CustomerRegistrationSetupController extends Controller
             $product = CustomerProduct::create( [
                 'customer_id' => $customerRegistraion->id,       
                 'product_id' => $request->productId,       
+                'reference_id' => $request->referenceId,       
+                'remarks' => $request->remarks,       
                 'product_model' => $request->productModel,       
                 'cash_price' => $request->cashPrice,
                 'mrp_price' => $request->shortInstallmentPrice,
@@ -156,9 +162,10 @@ class CustomerRegistrationSetupController extends Controller
         $customer = CustomerRegistrationSetup::orWhere('id',$id)->first();
         $showrooms = ShowroomSetup::orderBy('name','asc')->where('status',1)->get();
         $products = Product::where('status',1)->orderBy('name','ASC')->get();
+        $staffs = StaffSetup::where('status',1)->orderBy('name','ASC')->get();
         $customerProducts = CustomerProduct::where('customer_id',$customer->id)->get();
         $customerGuarantor = CustomerGuarantor::where('customer_id',$customer->id)->get();
-        return view('admin.customerRegistraionSetup.view')->with(compact('title','formLink','buttonName','customer','products','showrooms','customerProducts','customerGuarantor'));
+        return view('admin.customerRegistraionSetup.view')->with(compact('title','formLink','buttonName','customer','products','showrooms','customerProducts','customerGuarantor','staffs'));
     }
 
     public function newProductSave(Request $request)
@@ -200,6 +207,8 @@ class CustomerRegistrationSetupController extends Controller
             $product = CustomerProduct::create( [
                 'customer_id' => $customerId,       
                 'product_id' => $request->productId,       
+                'reference_id' => $request->referenceId,       
+                'remarks' => $request->remarks,       
                 'product_model' => $request->productModel,       
                 'cash_price' => $request->cashPrice,
                 'mrp_price' => $request->shortInstallmentPrice,
@@ -269,6 +278,7 @@ class CustomerRegistrationSetupController extends Controller
             'name' => $request->name,            
             'code' => $request->code,            
             'nick_name' => $request->nickName,            
+            'nid' => $request->nid,            
             'age' => $request->age,            
             'phone_no' => $request->phoneNo,            
             'marital_status' => $request->maritalStatus,            
@@ -342,6 +352,8 @@ class CustomerRegistrationSetupController extends Controller
                 $updateCustomerProduct = $customerExistProduct->update([
                     'customer_id' => $customerId,       
                     'product_id' => $request->productId,       
+                    'reference_id' => $request->referenceId,       
+                    'remarks' => $request->remarks,       
                     'product_model' => $request->productModel,       
                     'cash_price' => $request->cashPrice,
                     'mrp_price' => $request->shortInstallmentPrice,
@@ -373,9 +385,10 @@ class CustomerRegistrationSetupController extends Controller
             $buttonName = "Update";
             $showrooms = ShowroomSetup::orderBy('name','asc')->where('status',1)->get();
             $products = Product::where('status',1)->orderBy('name','ASC')->get();
+            $staffs = StaffSetup::where('status',1)->orderBy('name','ASC')->get();
             $customerProduct = CustomerProduct::where('customer_id',$customerId)->where('id',$customerProductId)->first();
             // dd($customerProduct);
-            return view('admin.customerRegistraionSetup.edit.editCustomerProduct')->with(compact('title','formLink','buttonName','customerProduct','showrooms','products'));
+            return view('admin.customerRegistraionSetup.edit.editCustomerProduct')->with(compact('title','formLink','buttonName','customerProduct','showrooms','products','staffs'));
         }
     }
 

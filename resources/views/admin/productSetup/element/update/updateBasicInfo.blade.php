@@ -22,18 +22,26 @@
 	                <div class="form-group {{ $errors->has('category') ? ' has-danger' : '' }}">
 	                    <label for="category">Category</label>
 	                    <select class="form-control chosen-select" id="category" name="category">
+	                    	<option value="">Select Category</option>
 	                        @foreach($categories as $categoryInfo)
-                                @php
-                                    if ($categoryInfo->id == $product->category_id)
-                                    {
-                                        $select = "selected";
-                                    }
-                                    else
-                                    {
-                                        $select = "";
-                                    }
-                                @endphp
-	                            <option value="{{$categoryInfo->id}}" {{ $select }}>{{$categoryInfo->name}}</option>
+	                        	@php
+	                        		$parentId = DB::table('tbl_categories')
+	                        			->where('parent',$categoryInfo->id)
+	                        			->first();
+	                        	@endphp
+	                        	@if ($parentId == "")
+	                                @php
+	                                    if ($categoryInfo->id == $product->category_id)
+	                                    {
+	                                        $select = "selected";
+	                                    }
+	                                    else
+	                                    {
+	                                        $select = "";
+	                                    }
+	                                @endphp
+		                            <option value="{{$categoryInfo->id}}" {{ $select }}>{{$categoryInfo->name}}</option>
+	                        	@endif
 	                        @endforeach
 	                    </select>
 	                    @if ($errors->has('category'))

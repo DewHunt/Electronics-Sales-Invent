@@ -33,8 +33,10 @@ class CategorySetupController extends Controller
     	$title = "Add Category";
     	$formLink = "categorySetup.save";
     	$buttonName = "Save";
-    	$categories = CategorySetup::where('status',1)
-    		->orderBy('name','asc')->get();
+    	$categories = CategorySetup::whereNull('parent')
+            ->where('status',1)
+    		->orderBy('name','asc')
+            ->get();
 
     	return view('admin.categorySetup.add')->with(compact('title','formLink','buttonName','categories'));
     }
@@ -89,7 +91,10 @@ class CategorySetupController extends Controller
     	$title = "Edit Category";
     	$formLink = "categorySetup.update";
     	$buttonName = "Update";
-    	$categories = CategorySetup::orderBy('name','asc')->get();
+    	$categories = CategorySetup::whereNull('parent')
+            ->where('status',1)
+            ->orderBy('name','asc')
+            ->get();
 
     	$category = CategorySetup::where('id',$id)->first();
 

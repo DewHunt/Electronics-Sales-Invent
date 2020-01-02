@@ -49,7 +49,8 @@
                             <th width="20px">SL</th>
                             <th width="120px">Customer Code</th>
                             <th>Customer Name</th>
-                            <th width="100px">Phone No</th>
+                            <th width="120px">National ID</th>
+                            <th width="120px">Phone No</th>
                             <th>Address</th>
                             <th width="80px">Action</th>
                         </tr>
@@ -66,6 +67,7 @@
                                 <td>{{$i}}</td>
                                 <td>{{$customer->code}}</td>
                                 <td>{{$customer->name}}</td>
+                                <td>{{$customer->nid}}</td>
                                 <td>{{$customer->phone_no}}</td>
                                 <td>{{$customer->present_address}}</td>
                                 <td>

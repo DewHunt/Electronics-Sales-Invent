@@ -16,15 +16,16 @@
                 $sl = 0;
             @endphp
 
-            <table id="dataTable" class="table table-bordered table-striped" name="dealerRequisitionTable">
+            <table id="dataTable" class="table table-bordered table-striped" name="productIssueTable">
                 <thead>
                     <tr>
                         <th width="20px">SL</th>
-                        <th>Date</th>
-                        <th>Requisition No.</th>
+                        <th width="100px">Date</th>
+                        <th width="110px">Issue Type</th>
+                        <th width="100px">Issue No.</th>
                         <th>Dealer Name</th>
-                        <th>Total Qty</th>
-                        <th>Total Amount</th>
+                        <th width="100px">Total Qty</th>
+                        <th width="110px">Total Amount</th>
                         <th width="20px">Action</th>
                     </tr>
                 </thead>
@@ -32,60 +33,24 @@
                     @php
                         $sl = 1;
                     @endphp
+                    @foreach ($issuedProducts as $issuedProduct)
+                        <tr class="row_{{ $issuedProduct->id }}">
+                            <td>{{ $sl++ }}</td>
+                            <td>{{ $issuedProduct->date }}</td>
+                            <td>{{ $issuedProduct->issue_type }}</td>
+                            <td>{{ $issuedProduct->issue_no }}</td>
+                            <td>{{ $issuedProduct->dealerName }}</td>
+                            <td align="right">{{ $issuedProduct->total_qty }}</td>
+                            <td align="right">{{ $issuedProduct->total_amount }}</td>
+                            <td>
+                                @php
+                                    echo \App\Link::action($issuedProduct->id);
+                                @endphp                             
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
-        </div>
-    </div>
-
-    {{-- The Modal --}}
-    <div class="modal fade" id="detailRequisitionModal">
-        <div class="modal-dialog modal-dialog-centered modal-xl">
-            <div class="modal-content">
-
-                {{-- Modal Header --}}
-                <div class="modal-header">
-                    <h3 class="modal-title dealerName" id="dealerName"></h3>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-
-                {{-- Modal body --}}
-                <div class="modal-body">
-                    <table class="table table-bordered table-sm detailRequisitionProduct">
-                        <thead>
-                            <tr>
-                                <th>Product Name</th>
-                                <th width="200px">Model</th>
-                                <th width="100px">Rate</th>
-                                <th width="80px">Qty</th>
-                                <th width="100px">Amount</th>
-                                <th width="100px">Approve Qty</th>
-                                <th width="120px">Approve Amount</th>
-                            </tr>
-                        </thead>
-
-                        <tbody id="tbody">
-                        </tbody>
-
-                        <tfoot>
-                            <tr>
-                                <td colspan="3" align="right" style="vertical-align: middle;">
-                                    <h4>Total</h4>
-                                </td>
-                                <td id="totalQty" align="right"></td>
-                                <td id="totalAmount" align="right"></td>
-                                <td id="totalApproveQty" align="right"></td>
-                                <td id="totalApproveAmount" align="right"></td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-
-                {{-- Modal footer --}}
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-danger btn-lg waves-effect" data-dismiss="modal">Close</button>
-                </div>
-
-            </div>
         </div>
     </div>	
 @endsection
@@ -103,7 +68,7 @@
                   }
                 });
 
-                dealerRequisitionId = $(this).parent().data('id');
+                issueId = $(this).parent().data('id');
                 // console.log(liftingId);
                 var tableRow = this;
                 swal({   
@@ -121,18 +86,18 @@
                     if (isConfirm) {
                         $.ajax({
                             type: "POST",
-                            url : "{{ route('dealerRequisition.delete') }}",
-                            data : {dealerRequisitionId:dealerRequisitionId},
+                            url : "{{ route('productIssue.delete') }}",
+                            data : {issueId:issueId},
                            
                             success: function(response) {
                                 swal({
                                     title: "<small class='text-success'>Success!</small>", 
                                     type: "success",
-                                    text: "Dealer Requisition Deleted Successfully!",
+                                    text: "Issued product Deleted Successfully!",
                                     timer: 1000,
                                     html: true,
                                 });
-                                $('.row_'+dealerRequisitionId).remove();
+                                $('.row_'+issueId).remove();
                             },
                             error: function(response) {
                                 error = "Failed.";
@@ -151,7 +116,7 @@
                         swal({
                             title: "Cancelled", 
                             type: "error",
-                            text: "Dealer Requisition Is Safe :)",
+                            text: "Issued Product Is Safe :)",
                             timer: 1000,
                             html: true,
                         });    
@@ -159,48 +124,5 @@
                 });
             });
         });
-
-        function showDealerRequisitionDetails(dealerRequisitionId) {
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                type: "POST",
-                url: "{{ route('dealerRequisition.requisitionProductInfo') }}",
-                data:{dealerRequisitionId:dealerRequisitionId},
-                success: function(response) {
-                    $('.requisitionProductRow').remove();
-                    var dealerRequisition = response.dealerRequisition;
-                    var dealerRequisitionProducts = response.dealerRequisitionProducts;
-                    var approveQty;
-                    var approveAmount;
-
-                    $('#dealerName').html(dealerRequisition.dealerName);
-                    $('#totalQty').html(dealerRequisition.total_qty);
-                    $('#totalAmount').html(dealerRequisition.total_amount);
-                    $('#dealerRequisitionId').html(dealerRequisition.id);
-                    $('#totalApproveQty').html(dealerRequisition.total_approve_qty);
-                    $('#totalApproveAmount').html(dealerRequisition.total_approve_amount);
-
-                    for (var dealerRequisitionProduct of dealerRequisitionProducts)
-                    {
-                        $(".detailRequisitionProduct tbody").append(
-                            '<tr class="requisitionProductRow" id="requisitionProductRow_'+dealerRequisitionProduct.id+'">' +
-                                '<td>'+dealerRequisitionProduct.productName+'</td>'+
-                                '<td>'+dealerRequisitionProduct.model_no+'</td>'+
-                                '<td align="right">'+dealerRequisitionProduct.price+'</td>'+
-                                '<td align="right">'+dealerRequisitionProduct.qty+'</td>'+
-                                '<td align="right">'+dealerRequisitionProduct.amount+'</td>'+
-                                '<td align="right">'+dealerRequisitionProduct.approved_qty+'</td>'+
-                                '<td align="right">'+dealerRequisitionProduct.approved_amount+'</td>'+
-                            '</tr>'
-                        );
-                    }
-                },
-                error: function(response) {
-
-                }
-            });
-        }
     </script>
 @endsection

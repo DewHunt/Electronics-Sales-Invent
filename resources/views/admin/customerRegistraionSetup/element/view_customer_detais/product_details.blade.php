@@ -1,6 +1,7 @@
 @php
 use App\Product;
 use App\ShowroomSetup;
+use App\StaffSetup;
 @endphp
 <style type="text/css">
     .productTable th{
@@ -15,6 +16,7 @@ use App\ShowroomSetup;
             <th>Showroom</th>
             <th width="90px">Purchase Date</th>
             <th width="90px">Purchase Type</th>
+            <th width="90px">Reference</th>
             <th>Name</th>
             <th>Model</th>
             <th>Price</th>
@@ -36,12 +38,14 @@ use App\ShowroomSetup;
                 $purchaseDate =  date('d-m-Y',strtotime($customerProduct->purchase_date));
                 $productDetails= Product::where('id',$customerProduct->product_id)->first();
                 $showroomDetails= ShowroomSetup::where('id',$customerProduct->showroom_id)->first();
+                $staffDetails= StaffSetup::where('id',$customerProduct->reference_id)->first();
              @endphp
         <tr>
             <td>{{ $sl++ }}</td>
             <td>{{ @$showroomDetails->name }}</td>
             <td>{{ @$purchaseDate }}</td>
             <td>{{ @$customerProduct->purchase_type }}</td>
+            <td>{{ @$staffDetails->name }}</td>
             <td>{{ @$productDetails->name }}</td>
             <td>{{ @$customerProduct->product_model }}</td>
             <td>{{ @$customerProduct->cash_price }}</td>
@@ -162,40 +166,65 @@ use App\ShowroomSetup;
         </div>
 
         <div class="row">
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group {{ $errors->has('productModel') ? ' has-danger' : '' }}">
-                            <label for="nick-name">Product Model</label>
-                            <input type="text" class="form-control productModel" name="productModel" value="{{ old('productModel') }}" required readonly="">
-                            @if ($errors->has('productModel'))
-                                @foreach($errors->get('productModel') as $error)
-                                    <div class="form-control-feedback">{{ $error }}</div>
-                                @endforeach
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group {{ $errors->has('warranty') ? ' has-danger' : '' }}">
-                            <label for="warranty">Warranty</label>
-                            <input type="number" name="warranty" class="form-control warranty" readonly>
-                            @if ($errors->has('warranty'))
-                                @foreach($errors->get('warranty') as $error)
-                                    <div class="form-control-feedback">{{ $error }}</div>
-                                @endforeach
-                            @endif
-                        </div>
-                    </div>
+            <div class="col-md-3">
+                <div class="form-group {{ $errors->has('productModel') ? ' has-danger' : '' }}">
+                    <label for="nick-name">Product Model</label>
+                    <input type="text" class="form-control productModel" name="productModel" value="{{ old('productModel') }}" required readonly="">
+                    @if ($errors->has('productModel'))
+                        @foreach($errors->get('productModel') as $error)
+                            <div class="form-control-feedback">{{ $error }}</div>
+                        @endforeach
+                    @endif
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-1">
+                <div class="form-group {{ $errors->has('warranty') ? ' has-danger' : '' }}">
+                    <label for="warranty">Warranty</label>
+                    <input type="number" name="warranty" class="form-control warranty" readonly>
+                    @if ($errors->has('warranty'))
+                        @foreach($errors->get('warranty') as $error)
+                            <div class="form-control-feedback">{{ $error }}</div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+
+            <div class="col-md-2">
                 <div class="form-group {{ $errors->has('purchaseDate') ? ' has-danger' : '' }}">
                     <label for="purchase-date">Purchase Date</label>
                     <input type="text" name="purchaseDate" class="form-control add_datepicker" readonly="">
                     @if ($errors->has('purchaseDate'))
                         @foreach($errors->get('purchaseDate') as $error)
+                            <div class="form-control-feedback">{{ $error }}</div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+        
+            <div class="col-md-3">
+                <div class="form-group {{ $errors->has('remarks') ? ' has-danger' : '' }}">
+                    <label for="remarks">Remarks</label>
+                    <input type="text" name="remarks" class="form-control" value="{{ old('remarks') }}">
+                    @if ($errors->has('remarks'))
+                        @foreach($errors->get('remarks') as $error)
+                            <div class="form-control-feedback">{{ $error }}</div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group {{ $errors->has('referenceId') ? ' has-danger' : '' }}">
+                    <label for="showroom-id">Reference</label>
+                    <select class="form-control chosen-select" name="referenceId" required>
+                        <option value="">Select Reference Staff</option>
+                        @foreach ($staffs as $staff)
+                            <option value="{{$staff->id}}">{{$staff->name}}</option>
+                        @endforeach
+                    </select>
+                    @if ($errors->has('referenceId'))
+                        @foreach($errors->get('referenceId') as $error)
                             <div class="form-control-feedback">{{ $error }}</div>
                         @endforeach
                     @endif

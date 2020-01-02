@@ -17,11 +17,14 @@ class CreateTblCustomerProductsTable extends Migration
             $table->increments('id');
             $table->integer('customer_id');
             $table->integer('product_id');
+            $table->integer('reference_id')->nullable();
             $table->integer('showroom_id')->nullable();
             $table->integer('qty')->default('1');
             $table->integer('warranty')->nullable();
             $table->date('purchase_date')->nullable();
+            $table->string('remarks',50)->nullable();
             $table->string('purchase_type',50)->nullable();
+            $table->string('installment_type',255)->nullable();
             $table->string('product_model',255)->nullable();
             $table->string('cash_price',255)->nullable();
             $table->string('mrp_price',255)->nullable();

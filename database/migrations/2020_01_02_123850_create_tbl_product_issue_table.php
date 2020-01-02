@@ -17,6 +17,7 @@ class CreateTblProductIssueTable extends Migration
             $table->increments('id');
             $table->integer('requisition_id')->nullable();
             $table->integer('dealer_id')->nullable();
+            $table->string('issue_type')->nullable();
             $table->string('issue_no')->nullable();
             $table->string('date')->nullable();
             $table->string('total_qty')->nullable();

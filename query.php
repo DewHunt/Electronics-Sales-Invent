@@ -134,6 +134,11 @@
     INNER JOIN `tbl_lifting_return_products` ON `tbl_lifting_return_products`.`lifting_return_id` = `tbl_lifting_returns`.`id`
     "
 
+    SELECT `tbl_lifting_products`.`product_id`,`tbl_lifting_products`.`serial_no`
+FROM `tbl_lifting_products`
+LEFT JOIN `tbl_product_issue_lists` ON `tbl_product_issue_lists`.`serial_no` = `tbl_lifting_products`.`serial_no`
+WHERE `tbl_product_issue_lists`.`serial_no` IS NULL
+
     
 
     

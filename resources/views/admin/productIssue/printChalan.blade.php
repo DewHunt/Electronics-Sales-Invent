@@ -7,7 +7,6 @@
         }
 
         #report-table tbody td{
-            height: 630px;
             vertical-align: top;
         }
 
@@ -50,28 +49,6 @@
     </style>
 @endsection
 
-{{-- @section('custome-css')
-    <style>
-        #report-table td, #report-table th {
-            border: 1px solid #ddd;
-        }
-
-        #chalan-table{
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        #chalan-table td{
-            width: 50%;
-            border: 0px solid black;
-        }
-    </style>
-@endsection --}}
-
-@php
-    $chalanNo = str_replace('inv', 'chalan', $invoice->invoice_no);
-@endphp
-
 @section('content')
     <table id="chalan-header">
         <tr>
@@ -82,15 +59,43 @@
     <div id="pad-bottom"></div>
 
     <table id="chalan-table">
-        <tr>
-            <td>
-                <span><b>Chanaln No</b></span> #{{@$chalanNo}}   
-            </td>
+    </table>
 
-            <td align="right">               
-                <span><b>Print Date : </b></span> {{date('d-m-Y')}}
-            </td>
-        </tr>
+    <table width="100%">
+        <tbody>
+            <tr>
+                <td width="105px"><b>Issue No</b></td>
+                <td width="10px"><b>:</b></td>
+                <td>#{{ @$productIssue->issue_no }}</td>
+
+                <td align="right">{{date('d-m-Y')}}</td>
+                <td align="right" width="10px"><b>:</b></td>
+                <td align="right" width="105px"><b>Print Date</b></td>
+            </tr>
+            <tr>
+                <td width="105px"><b>Dealer Name</b></td>
+                <td width="10px"><b>:</b></td>
+                <td>{{ $productIssue->dealerName }}</td>
+
+                <td align="right">{{ $productIssue->dealerCode }}</td>
+                <td align="right" width="10px"><b>:</b></td>
+                <td align="right" width="105px"><b>Dealer Code</b></td>
+            </tr>
+            <tr>
+                <td width="105px"><b>Upazila</b></td>
+                <td width="10px"><b>:</b></td>
+                <td>{{ $productIssue->upazilaEnglishName }}</td>
+
+                <td align="right">{{ $productIssue->dealerMobile }}</td>
+                <td align="right" width="10px"><b>:</b></td>
+                <td align="right" width="105px"><b>Phone</b></td>
+            </tr>
+            <tr>
+                <td width="105px"><b>Address</b></td>
+                <td width="10px"><b>:</b></td>
+                <td colspan="4">{{ $productIssue->dealerAddress }}</td>
+            </tr>
+        </tbody>
     </table>
 
     <div id="pad-bottom"></div>
@@ -100,20 +105,26 @@
             <tr>
                 <th width="20px">SL#</th>
                 <th>Name</th>
-                <th width="80px">Model</th>
+                <th width="135px">Model</th>
                 <th width="80px">Serial No</th>
                 <th width="40px">Qty</th>
             </tr>
         </thead>
 
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>{{ $invoice->productName }}</td>
-                <td>{{ $invoice->customer_product_model }}</td>
-                <td>{{ $invoice->product_serial_no }}</td>
-                <td align="right">{{ $invoice->qty }}</td>
-            </tr>
+            @php
+                $sl = 1;
+            @endphp
+
+            @foreach ($productIssueLists as $productIssueList)
+                <tr>
+                    <td>{{ $sl++ }}</td>
+                    <td>{{ $productIssueList->productName }}</td>
+                    <td>{{ $productIssueList->model_no }}</td>
+                    <td>{{ $productIssueList->serial_no }}</td>
+                    <td align="right">{{ $productIssueList->qty }}</td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 

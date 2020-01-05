@@ -1,5 +1,12 @@
 @extends('admin.layouts.masterAddEdit')
 
+@php
+    use App\DealerSetup;
+    use App\LiftingProduct;
+
+    $dealerInfo = DealerSetup::where('id',$issuedProduct->dealer_id)->first();
+@endphp
+
 @section('custom_css')
     <style type="text/css">
         .table th{
@@ -16,298 +23,178 @@
         }
     </style>
 
-   
-
     <div class="card-body">
-        @if ($issuedProduct->issue_type == 'With Approval')
-            @include('admin/productIssue/edit/editWithApproval')
-        @endif
+        <div class="row">
+            <div class="col-md-4">
+                <label for="issue-type">Issue Type</label>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="issueType" value="{{ $issuedProduct->issue_type }}" readonly>
+                </div>
+            </div>
 
-        @if ($issuedProduct->issue_type == 'Without Approval')
-            @include('admin/productIssue/edit/editWithoutApproval')
-        @endif
+            <div class="col-md-4">
+                <label for="issue-no">Issue No</label>
+                <div class="form-group {{ $errors->has('productIssueNo') ? ' has-danger' : '' }}">
+                    <input type="text" class="form-control" name="productIssueNo" value="{{ $issuedProduct->issue_no }}" required readonly>
+                    @if ($errors->has('productIssueNo'))
+                        @foreach($errors->get('productIssueNo') as $error)
+                            <div class="form-control-feedback">{{ $error }}</div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <label for="issue-date">Issue Date</label>
+                <div class="form-group {{ $errors->has('issueDate') ? ' has-danger' : '' }}">
+                    <input type="text" class="form-control datepicker" name="issueDate" value="{{ date('Y-m-d', strtotime($issuedProduct->date)) }}" readonly>
+                    @if ($errors->has('issueDate'))
+                        @foreach($errors->get('issueDate') as $error)
+                            <div class="form-control-feedback">{{ $error }}</div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <input type="text" class="form-control" id="dealerId" name="dealerId" value="{{ $issuedProduct->dealer_id }}" readonly>
+            </div>
+            <div class="col-md-4">
+                <input type="text" class="form-control" id="issueId" name="issueId" value="{{ $issuedProduct->id }}" readonly>
+            </div>
+            <div class="col-md-4">
+                <input type="text" class="form-control" id="dealerRequisitionId" name="dealerRequisitionId" value="{{ $issuedProduct->requisition_id }}" readonly>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <label for="dealer">Requisitions No</label>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="issueType" value="{{ $issuedProduct->requisitionNo }}" readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <label for="dealer-code">Dealer Code</label>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="dealerCode" name="dealerCode" value="{{ $dealerInfo->code }}" readonly>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <label for="dealer-name">Dealer Name</label>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="dealerName" name="dealerName" value="{{ $dealerInfo->name }}" readonly>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <label for="dealer-address">Dealer Address</label>
+                <div class="form-group">
+                    <textarea class="form-control" id="dealerAddress" name="dealerAddress" rows="5">{{ $dealerInfo->address }}</textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <label></label>
+                <div class="form-group">
+                    <table class="table table-bordered table-striped table-sm gridTable issueProductList" >
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th width="200px">Model</th>
+                                <th width="150px">Serial</th>
+                                <th width="110px">Commision (%)</th>
+                                <th width="80px">Rate</th>
+                                <th width="40px">Qty</th>
+                                <th width="80px">Amount</th>
+                                <th width="10px"><i class="fa fa-trash" style="color: white;"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody">
+                        @foreach ($issuedProductLists as $issuedProductList)
+                            @php
+                                $productSerials = LiftingProduct::where('product_id',$issuedProductList->product_id)->where('status','1')->get();
+                            @endphp
+                            <tr class="issueProductRow_{{ $issuedProductList->product_id }} '">                
+                                <td>
+                                    <input class="productId_{{ $issuedProductList->product_id }}" type="hidden" name="productId[]" value="{{ $issuedProductList->product_id }}">
+                                    <input class="productName_{{ $issuedProductList->product_id }}" type="text" name="productName[]" value="{{ $issuedProductList->productName }}" readonly>
+                                </td>
+                                <td>
+                                    <input class="productModel_{{ $issuedProductList->product_id }}" type="text" name="productModel[]" value="{{ $issuedProductList->model_no }}" readonly>
+                                </td>
+                                <td>
+                                    <select class="form-control chosen-select productSerialNo_{{ $issuedProductList->product_id }}" id="productSerialNo_{{ $issuedProductList->product_id }}" name="productSerial[]">
+                                        <option value="">Select Serial No</option>
+                                        @foreach ($productSerials as $productSerial)
+                                            @php
+                                                if ($productSerial->serial_no == $issuedProductList->serial_no)
+                                                {
+                                                    $select = "selected";
+                                                }
+                                                else
+                                                {
+                                                    $select = "";
+                                                }                                            
+                                            @endphp
+                                            <option value="{{ $productSerial->serial_no }}" {{ $select }}>{{ $productSerial->serial_no }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                    <td>
+                                        <input style="text-align: right;" class="productCommision_{{ $issuedProductList->product_id }}" type="number" name="commission[]" value="{{ $issuedProductList->commission_rate }}" readonly>
+                                    </td>
+                                <td>
+                                    <input style="text-align: right;" class="productPrice productPrice_{{ $issuedProductList->product_id }}" type="number" name="productPrice[]" value="{{ $issuedProductList->price }}" required readonly>
+                                </td>
+                                <td>
+                                    <input style="text-align: right;" class="productQty productQty_{{ $issuedProductList->product_id }}" type="number" name="productQty[]" value="{{ $issuedProductList->qty }}" readonly>
+                                </td>
+
+                                <td>
+                                    <input style="text-align: right;" class="amount amount_{{ $issuedProductList->product_id }}" type="number" name="amount[]" value="{{ $issuedProductList->amount }}" readonly>
+                                </td>
+                                <td align="center">
+                                    <span class="btn btn-outline-danger btn-sm item_remove" onclick="itemRemove({{ $issuedProductList->product_id }})" style="width: 100%;">
+                                        <i class="fa fa-trash"></i>
+                                    </span>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <label for="total-qty">Total Quantity</label>
+                <div class="form-group">
+                    <input style="text-align: right;" class="form-control totalQty" type="number" name="totalQty" value="{{ $issuedProduct->total_qty }}" readonly>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="taotal-amount">Total Amount</label>
+                <div class="form-group">
+                    <input style="text-align: right;" class="form-control totalAmount" type="number" name="totalAmount" value="{{ $issuedProduct->total_amount }}" readonly>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
 @section('custom-js')
     <script type="text/javascript">
-        $('#withAprrovalSection').hide();
-        $('#withoutAprrovalSection').hide();
-
-        $('.issueType').click(function(event) {
-            var issueType = $("input[name='issueType']:checked").val();
-
-            if (issueType == "With Approval")
-            {
-                $('#withAprrovalSection').show();
-                $('#withoutAprrovalSection').hide();
-            }
-
-            if (issueType == "Without Approval")
-            {
-                $('#withAprrovalSection').hide();
-                $('#withoutAprrovalSection').show();
-            }
-        })
-
-        $(document).on('change', '#product', function(){
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            var productId = $('#product').val();
-
-            $.ajax({
-                type:'post',
-                url:'{{ route('productIssue.productSerialInfo') }}',
-                data:{productId:productId},
-                success:function(data){
-                    $('#serial-no-select-menu').html(data);
-                    $(".chosen-select").chosen();
-                }
-            });
-        });
-
-        $(document).on('change','#dealerRequisitionId',function(){
-            var dealerRequisitionId = $('#dealerRequisitionId').val();
-
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                type: "POST",
-                url: "{{ route('productIssue.dealerRequisitionInfo') }}",
-                data:{dealerRequisitionId:dealerRequisitionId},
-                success: function(response) {
-                    $('.approveProductRow').remove();
-                    var product = response.dealerRequisition;
-                    var dealer = response.dealer;
-                    var dealerRequisitionProducts = response.dealerRequisitionProducts;
-                    var productSerials = response.productSerials;
-                    var productIssueLists = response.productIssueLists;
-
-                    $('#dealerId').val(dealer.id);
-                    $('#dealerCode').val(dealer.code);
-                    $('#dealerName').val(dealer.name);
-                    $('#dealerAddress').val(dealer.address);
-                        
-
-                    for (var dealerRequisitionProduct of dealerRequisitionProducts)
-                    {
-                        var productSerialOption = '';
-                        for (var productSerial of productSerials)
-                        {
-                            if (productSerial.product_id == dealerRequisitionProduct.product_id)
-                            {
-                                productSerialOption += '<option value="'+productSerial.serial_no+'">'+productSerial.serial_no+'</option>';
-                            }
-                        }
-
-                        var totalIssueQty = 0;
-                        for (var productIssueList of productIssueLists)
-                        {
-                            if (productIssueList.product_id == dealerRequisitionProduct.product_id)
-                            {
-                                totalIssueQty = totalIssueQty + parseInt(productIssueList.qty);
-                            }
-                        }
-
-                        $(".approveProducts tbody").append(
-                            '<tr class="approveProductRow" id="approveProductRow_'+dealerRequisitionProduct.id+'">' +
-                                '<td>'+
-                                    '<input class="form-control productName_'+dealerRequisitionProduct.id+'" type="text" value="'+dealerRequisitionProduct.productName+'" readonly>'+
-                                    '<input class="form-control productId_'+dealerRequisitionProduct.id+'" type="text" value="'+dealerRequisitionProduct.product_id+'" readonly>'+
-                                '</td>'+
-                                '<td>'+
-                                    '<input class="form-control productModelNo_'+dealerRequisitionProduct.id+'" type="text" value="'+dealerRequisitionProduct.model_no+'" readonly>'+
-                                '</td>'+
-                                '<td>'+
-                                    '<input style="text-align: right;" class="form-control approveQty approveQty_'+dealerRequisitionProduct.id+'" type="number" value="'+dealerRequisitionProduct.approved_qty+'" readonly>'+
-                                    '<input style="text-align: right;" class="form-control price_'+dealerRequisitionProduct.id+'" type="number" value="'+dealerRequisitionProduct.price+'" readonly>'+
-                                '</td>'+
-                                '<td>'+
-                                    '<input style="text-align: right;" class="form-control issueQty issueQty_'+dealerRequisitionProduct.id+'" type="number" name="issueQty[]" value="'+totalIssueQty+'" readonly>'+
-                                '</td>'+
-                                '<td>'+
-                                    '<select class="form-control chosen-select productSerialNo_'+dealerRequisitionProduct.id+'" id="productSerialNo'+dealerRequisitionProduct.id+'" name="serialNo[]">'+
-                                        '<option value="">Select Serial No</option>'+productSerialOption+
-                                    '</select>'+
-                                '</td>'+
-                                '<td align="center">'+
-                                    '<span class="btn btn-info btn-sm item_remove" onclick="issuProductAdd('+dealerRequisitionProduct.id+')" style="width: 100%;">'+
-                                        '<i class="fa fa-plus"></i>'+
-                                    '</span>'+
-                                '</td>'+
-                            '</tr>'
-                        );
-                    }
-                },
-                error: function(response) {
-
-                }
-            });
-        });
-
-        function issuProductAdd(dealerRequisitionProductId)
-        {
-            var approveQty = parseInt($('.approveQty_'+dealerRequisitionProductId).val());
-            var issueQty = parseInt($('.issueQty_'+dealerRequisitionProductId).val());
-
-            if (approveQty == issueQty)
-            {
-                swal("You Can't Issue More Than Approve Quantity","","warning");
-            }
-            else
-            {
-                issueQty = issueQty + 1;
-                $('.issueQty_'+dealerRequisitionProductId).val(issueQty);
-
-                var productId = $('.productId_'+dealerRequisitionProductId).val();
-                var productName = $('.productName_'+dealerRequisitionProductId).val();
-                var productModelNo = $('.productModelNo_'+dealerRequisitionProductId).val();
-                var productSerialNo = $('.productSerialNo_'+dealerRequisitionProductId).val();
-                var productPrice = $('.price_'+dealerRequisitionProductId).val();
-
-                var totalQty = parseInt($('.totalQty').val());
-                totalQty = totalQty + 1;
-                $('.totalQty').val(totalQty);
-
-                var totalAmount = parseInt($('.totalAmount').val());
-                totalAmount = totalAmount + parseFloat(productPrice);
-                $('.totalAmount').val(totalAmount);
-
-                $(".issueProductList tbody").append(
-                    '<tr id="issueProductRow_' + dealerRequisitionProductId + '">' +                
-                        '<td>'+
-                            '<input class="productId_'+dealerRequisitionProductId+'" type="text" name="productId[]" value="'+productId+'">'+
-                            '<input class="productName_'+dealerRequisitionProductId+'" type="text" name="productName[]" value="'+productName+'" readonly>'+
-                        '</td>'+
-                        '<td>'+
-                            '<input class="productModel_'+dealerRequisitionProductId+'" type="text" name="productModel[]" value="'+productModelNo+'" readonly>'+
-                        '</td>'+
-                        '<td>'+
-                            '<input class="productSerial_'+dealerRequisitionProductId+'" type="text" name="productSerial[]" value="'+productSerialNo+'" readonly>'+
-                        '</td>'+
-                            '<td>'+
-                                '<input style="text-align: right;" class="productCommision_'+productId+'" type="number" name="commission[]" value="0" readonly>'+
-                            '</td>'+
-                        '<td>'+
-                            '<input style="text-align: right;" class="productPrice productPrice_'+dealerRequisitionProductId+'" type="text" name="productPrice[]" value="'+productPrice+'" required readonly>'+
-                        '</td>'+
-                        '<td>'+
-                            '<input style="text-align: right;" class="productQty productQty_'+dealerRequisitionProductId+'" type="number" name="productQty[]" value="1" readonly>'+
-                        '</td>'+
-
-                        '<td>'+
-                            '<input style="text-align: right;" class="amount amount_'+dealerRequisitionProductId+'" type="number" name="amount[]" value="'+productPrice+'" readonly>'+
-                        '</td>'+
-                        '<td align="center">'+
-                            '<span class="btn btn-outline-danger btn-sm item_remove" onclick="itemRemove('+dealerRequisitionProductId+')" style="width: 100%;">'+
-                                '<i class="fa fa-trash"></i>'+
-                            '</span>'+
-                        '</td>'+
-                    '</tr>'
-                );
-            }
-        }
-
-        $(document).on('change', '#dealer', function(){
-            var dealerId = $("#dealer option:selected").val();
-            $("#dealerId").val(dealerId);
-        });
-
-        $(".addItem").click(function () {
-            if ($("#dealer option:selected").val() == "")
-            {
-                swal("Please! Select A Dealer", "", "warning");
-            }
-            else
-            {
-                if ($("#product option:selected").val() == "")
-                {
-                    swal("Please! Select A Product", "", "warning");
-                }
-                else
-                {
-                    if ($("#serialNo option:selected").val() == "")
-                    {
-                        swal("Please! Select A Serial", "", "warning");
-                    }
-                    else
-                    {
-                        var productId = $("#product option:selected").val();
-                        var serialNo = $("#serialNo option:selected").val();
-
-                        $(".issueProductList tbody").append(
-                            '<tr id="issueProductRow_' + productId + '">' +                
-                                '<td>'+
-                                    '<input class="productId_'+productId+'" type="text" name="productId[]" value="">'+
-                                    '<input class="productName_'+productId+'" type="text" name="productName[]" value="" readonly>'+
-                                '</td>'+
-                                '<td>'+
-                                    '<input class="productModel_'+productId+'" type="text" name="productModel[]" value="" readonly>'+
-                                '</td>'+
-                                '<td>'+
-                                    '<input class="productSerial_'+productId+'" type="text" name="productSerial[]" value="" readonly>'+
-                                '</td>'+
-                                '<td>'+
-                                    '<input style="text-align: right;" class="productCommision_'+productId+'" type="number" name="commission[]" value="0" readonly>'+
-                                '</td>'+
-                                '<td>'+
-                                    '<input style="text-align: right;" class="productPrice productPrice_'+productId+'" type="number" name="productPrice[]" value="" required readonly>'+
-                                '</td>'+
-                                '<td>'+
-                                    '<input style="text-align: right;" class="productQty productQty_'+productId+'" type="number" name="productQty[]" value="1" readonly>'+
-                                '</td>'+
-
-                                '<td>'+
-                                    '<input style="text-align: right;" class="amount amount_'+productId+'" type="number" name="amount[]" value="" readonly>'+
-                                '</td>'+
-                                '<td align="center">'+
-                                    '<span class="btn btn-outline-danger btn-sm item_remove" onclick="itemRemove('+productId+')" style="width: 100%;">'+
-                                        '<i class="fa fa-trash"></i>'+
-                                    '</span>'+
-                                '</td>'+
-                            '</tr>'
-                        );
-
-                        $.ajax({
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            type: "POST",
-                            url: "{{ route('productIssue.productInfo') }}",
-                            data:{productId:productId},
-                            success: function(response) {
-                                var product = response.product;
-
-                                $('.productId_'+productId).val(product.id);
-                                $('.productName_'+productId).val(product.name);
-                                $('.productModel_'+productId).val(product.model_no);
-                                $('.productSerial_'+productId).val(serialNo);
-                                $('.price_'+productId).val(product.price);
-                                $('.productPrice_'+productId).val(product.price);
-                                $('.amount_'+productId).val(product.price);
-
-                                var totalQty = parseInt($('.totalQty').val());
-                                totalQty = totalQty + 1;
-                                $('.totalQty').val(totalQty);
-
-                                var totalAmount = parseInt($('.totalAmount').val());
-                                totalAmount = totalAmount + parseFloat(product.price);
-                                $('.totalAmount').val(totalAmount);
-                            },
-                            error: function(response) {
-
-                            }
-                        });
-                    }
-                }
-            }            
-        });
-
         function itemRemove(i)
         {            
             var issueQty = parseInt($('.issueQty_'+i).val());
@@ -324,7 +211,7 @@
             totalAmount = totalAmount - productPrice;
             $('.totalAmount').val(totalAmount);
 
-            $('#issueProductRow_'+i).remove();
+            $('.issueProductRow_'+i).remove();
         }
 
         function findTotalAmount(i)

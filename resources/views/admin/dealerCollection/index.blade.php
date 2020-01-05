@@ -1,58 +1,49 @@
 @extends('admin.layouts.masterIndex')
 
-@section('custom_css')
-    <style type="text/css">
-        .table th{
-            background: #00c292;
-            text-align: center;
-        }
-    </style>
-@endsection
-
 @section('card_body')
     <div class="card-body">
         <div class="table-responsive">
-            @php
-                $sl = 0;
-            @endphp
-
-            <table id="dataTable" class="table table-bordered table-striped" name="productIssueTable">
+            <table id="dataTable" class="table table-bordered table-striped"  name="dealerTable">
                 <thead>
                     <tr>
                         <th width="20px">SL</th>
-                        <th width="100px">Date</th>
-                        <th width="110px">Issue Type</th>
-                        <th width="100px">Issue No.</th>
                         <th>Dealer Name</th>
-                        <th width="100px">Total Qty</th>
-                        <th width="110px">Total Amount</th>
-                        <th width="20px">Action</th>
+                        <th width="70px">Contact</th>
+                        <th width="100px">Payment No</th>
+                        <th width="100px">Date</th>
+                        <th width="110px">Money Reciept</th>
+                        <th width="90px">Type</th>
+                        <th width="90px">Payment</th>
+                        <th width="170px">Remarks</th>
+                        <th width="30px">Action</th>
                     </tr>
                 </thead>
-                <tbody id="">
+                <tbody>
                     @php
                         $sl = 1;
                     @endphp
-                    @foreach ($issuedProducts as $issuedProduct)
-                        <tr class="row_{{ $issuedProduct->id }}">
+                    @foreach ($dealerCollections as $dealerCollection)
+                        <tr>
                             <td>{{ $sl++ }}</td>
-                            <td>{{ $issuedProduct->date }}</td>
-                            <td>{{ $issuedProduct->issue_type }}</td>
-                            <td>{{ $issuedProduct->issue_no }}</td>
-                            <td>{{ $issuedProduct->dealerName }}</td>
-                            <td align="right">{{ $issuedProduct->total_qty }}</td>
-                            <td align="right">{{ $issuedProduct->total_amount }}</td>
+                            <td>{{ $dealerCollection->dealerName }}</td>
+                            <td>{{ $dealerCollection->dealerMobile }}</td>
+                            <td>{{ $dealerCollection->payment_no }}</td>
+                            <td>{{ date('Y-m-d', strtotime($dealerCollection->payment_date)) }}</td>
+                            <td>{{ $dealerCollection->money_receipt_no }}</td>
+                            <td>{{ $dealerCollection->money_receipt_type }}</td>
+                            <td align="right">{{ $dealerCollection->payment_amount }}</td>
+                            <td>{{ $dealerCollection->remarks }}</td>
                             <td>
                                 @php
-                                    echo \App\Link::action($issuedProduct->id);
-                                @endphp                             
+                                    echo \App\Link::action($dealerCollection->id);
+                                @endphp
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-    </div>	
+    </div>  
 @endsection
 
 @section('custom-js')
@@ -68,8 +59,7 @@
                   }
                 });
 
-                productIssueId = $(this).parent().data('id');
-                // console.log(liftingId);
+                dealerCollectionId = $(this).parent().data('id');
                 var tableRow = this;
                 swal({   
                     title: "Are you sure?",   
@@ -86,18 +76,18 @@
                     if (isConfirm) {
                         $.ajax({
                             type: "POST",
-                            url : "{{ route('productIssue.delete') }}",
-                            data : {productIssueId:productIssueId},
+                            url : "{{ route('dealerCollection.delete') }}",
+                            data : {dealerCollectionId:dealerCollectionId},
                            
                             success: function(response) {
                                 swal({
                                     title: "<small class='text-success'>Success!</small>", 
                                     type: "success",
-                                    text: "Issued product Deleted Successfully!",
+                                    text: "Dealer Collection Deleted Successfully!",
                                     timer: 1000,
                                     html: true,
                                 });
-                                $('.row_'+productIssueId).remove();
+                                $('.row_'+dealerCollectionId).remove();
                             },
                             error: function(response) {
                                 error = "Failed.";
@@ -116,7 +106,7 @@
                         swal({
                             title: "Cancelled", 
                             type: "error",
-                            text: "Issued Product Is Safe :)",
+                            text: "Dealer Collection Is Safe :)",
                             timer: 1000,
                             html: true,
                         });    

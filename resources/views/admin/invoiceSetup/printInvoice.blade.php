@@ -126,8 +126,8 @@
             <tr>
                 <td>1</td>
                 <td>{{ $invoice->productName }}</td>
-                <td>{{ $invoice->product_serial_no }}</td>
                 <td>{{ $invoice->customer_product_model }}</td>
+                <td>{{ $invoice->product_serial_no }}</td>
                 <td align="right">{{ $invoice->qty }}</td>
                 <td align="right">{{ $invoice->customer_product_price }}</td>
                 <td align="right">{{ $invoice->qty * $invoice->customer_product_price }}</td>

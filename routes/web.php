@@ -487,6 +487,16 @@ Route::prefix('admin')->group(function()
 			Route::post('/product-issue/product-info','Admin\ProductIssueController@productInfo')->name('productIssue.productInfo');
 			Route::post('/product-issue/product-serial-info','Admin\ProductIssueController@productSerialInfo')->name('productIssue.productSerialInfo');
 			Route::post('/product-issue/dealer-requisition-info','Admin\ProductIssueController@dealerRequisitionInfo')->name('productIssue.dealerRequisitionInfo');
+			Route::get('/product-issue-print-chalan/{productIssueId}','Admin\ProductIssueController@printChalan')->name('productIssue.printChalan');
+
+			//Credit Collection setup
+			Route::get('/dealer-collection', 'Admin\DealerCollectionController@index')->name('dealerCollection.index');
+			Route::get('/dealer-collection-add', 'Admin\DealerCollectionController@add')->name('dealerCollection.add');
+			Route::post('/dealer-collection-save', 'Admin\DealerCollectionController@save')->name('dealerCollection.save');
+			Route::get('/dealer-collection-edit/{id}', 'Admin\DealerCollectionController@edit')->name('dealerCollection.edit');
+			Route::post('/dealer-collection-update', 'Admin\DealerCollectionController@update')->name('dealerCollection.update');
+			Route::post('/dealer-collection-delete', 'Admin\DealerCollectionController@delete')->name('dealerCollection.delete');
+			Route::post('/dealer-collection/dealer-info', 'Admin\DealerCollectionController@getDealerInfo')->name('dealerCollection.getDealerInfo');
 		// End Dealer Management
 		});
 	});

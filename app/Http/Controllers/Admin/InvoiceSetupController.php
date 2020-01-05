@@ -84,21 +84,6 @@ class InvoiceSetupController extends Controller
                     'customer_product_color' => $productInfo->color,       
                     'customer_product_waranty' => $productInfo->warranty,           
                 ]);
-
-                $customerProduct = CustomerProduct::find($customerProductId);
-
-                $customerProduct->update([
-                    'status' => '0'
-                ]);
-
-                if ($request->productSerial != "No Serial Number")
-                {
-                    $liftingProduct = LiftingProduct::where('serial_no',$request->productSerial)->first();
-
-                    $liftingProduct->update([
-                        'status' => '0'
-                    ]);
-                }
             }
         }
         else
@@ -141,6 +126,8 @@ class InvoiceSetupController extends Controller
         $customerProducts = CustomerProduct::select('tbl_customer_products.*','tbl_customers.name as customerName','tbl_products.name as productName','tbl_products.code as productCode','tbl_products.color as productColor','tbl_products.model_no as productModelNo')
             ->join('tbl_products','tbl_products.id','=','tbl_customer_products.product_id')
             ->join('tbl_customers','tbl_customers.id','=','tbl_customer_products.customer_id')
+            ->leftJoin('tbl_invoice','tbl_invoice.customer_product_id','=','tbl_customer_products.id')
+            ->whereNull('tbl_invoice.customer_product_id')
             ->where('tbl_customer_products.purchase_type',$purchaseType)
             ->where('tbl_customer_products.status','1')
             ->get();
@@ -173,7 +160,12 @@ class InvoiceSetupController extends Controller
 
         $customerProduct = CustomerProduct::where('id',$request->customerProductId)->where('status','1')->first();
 
-        $productSerials = LiftingProduct::where('product_id',$customerProduct->product_id)->where('status','1')->get();
+        $productSerials = LiftingProduct::select('tbl_lifting_products.*')
+            ->leftJoin('tbl_invoice','tbl_invoice.product_serial_no','=','tbl_lifting_products.serial_no')
+            ->whereNull('tbl_invoice.product_serial_no')
+            ->where('tbl_lifting_products.product_id',$customerProduct->product_id)
+            ->where('tbl_lifting_products.status','1')
+            ->get();
 
         if ($productSerials)
         {
@@ -233,35 +225,22 @@ class InvoiceSetupController extends Controller
         return $pdf->stream($chalanNo.'.pdf');
     }
 
-   public function view($id){
-    $title = "View Customer Invoice";
-    $invoice = InvoiceSetup::orWhere('id',$id)->first();
-    $customer = CustomerRegistrationSetup::where('id',$invoice->customer_id)->first();
-    $getCustomerProduct = CustomerProduct::where('id',$invoice->customer_product_id)->first();
-    $productInfo = Product::where('id',$getCustomerProduct->product_id)->first();
-    $showRoom = ShowroomSetup::where('id',$getCustomerProduct->showroom_id)->first();
-    return view('admin.invoiceSetup.view')->with(compact('title','customer','invoice','getCustomerProduct','productInfo','showRoom'));
-   }
+    public function view($id){
+        $title = "View Customer Invoice";
+        $invoice = InvoiceSetup::orWhere('id',$id)->first();
+        $customer = CustomerRegistrationSetup::where('id',$invoice->customer_id)->first();
+        $getCustomerProduct = CustomerProduct::where('id',$invoice->customer_product_id)->first();
+        $productInfo = Product::where('id',$getCustomerProduct->product_id)->first();
+        $showRoom = ShowroomSetup::where('id',$getCustomerProduct->showroom_id)->first();
+        return view('admin.invoiceSetup.view')->with(compact('title','customer','invoice','getCustomerProduct','productInfo','showRoom'));
+    }
 
-   public function delete(Request $request)
+    public function delete(Request $request)
     {
 
         $invoiceInfo = InvoiceSetup::find($request->invoiceId);
 
         // dd($invoiceInfo);
-
-        $customerProduct = CustomerProduct::find($invoiceInfo->customer_product_id);
-        $customerProduct->update([
-            'status' => '1'
-        ]);
-
-        if ($invoiceInfo->product_serial_no != "No Serial Number")
-        {
-            $liftingProduct = LiftingProduct::where('serial_no',$invoiceInfo->product_serial_no)->first();
-            $liftingProduct->update([
-                'status' => '1'
-            ]);
-        }
 
         $invoice = InvoiceSetup::where('id',$request->invoiceId)->delete();
     }

@@ -61,7 +61,7 @@
                             <th width="90px">Product Serial No</th>
                             <th width="80px">Collection Type</th>
                             <th width="50px">Price</th>
-                            <th width="60px">Action</th>
+                            <th width="70px">Action</th>
                         </tr>
                     </thead>
                     <tbody>

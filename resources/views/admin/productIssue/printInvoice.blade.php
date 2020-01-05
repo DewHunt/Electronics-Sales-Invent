@@ -10,17 +10,17 @@
             vertical-align: top;
         }
 
-        #chalan-table{
+        #invoice-table{
             width: 100%;
             border-collapse: collapse;
         }
 
-        #chalan-table td{
+        #invoice-table td{
             width: 50%;
             border: 0px solid black;
         }
 
-        #chalan-header{
+        #invoice-header{
             background-color: lightgray;
             width: 100%;
             padding: 5px;
@@ -29,12 +29,12 @@
             font-size: 20px;
         }
 
-        #chalan-footer{
+        #invoice-footer{
             background-color: lightgray;
             width: 100%;
         }
 
-        #chalan-footer th{
+        #invoice-footer th{
             border: 0px solid white;
             padding: 5px;
             text-align: right;
@@ -42,7 +42,7 @@
             width: 180px;
         }
 
-        #chalan-footer td{
+        #invoice-footer td{
             border: 1px solid black;
             padding: 5px;
         }
@@ -50,9 +50,9 @@
 @endsection
 
 @section('content')
-    <table id="chalan-header">
+    <table id="invoice-header">
         <tr>
-            <td>Chalan</td>
+            <td>Invoice</td>
         </tr>
     </table>
 
@@ -105,6 +105,7 @@
                 <th width="135px">Model</th>
                 <th width="90px">Serial No</th>
                 <th width="40px">Qty</th>
+                <th width="60px">Amount</th>
             </tr>
         </thead>
 
@@ -120,15 +121,37 @@
                     <td>{{ $productIssueList->model_no }}</td>
                     <td>{{ $productIssueList->serial_no }}</td>
                     <td align="right">{{ $productIssueList->qty }}</td>
+                    <td align="right">{{ $productIssueList->price }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 
+    <div id="pad-bottom"></div>
+
+    <table id="invoice-footer">
+        <tbody>
+            <tr>
+                <th>Total Price Amount : </th>
+                <td align="right">{{ $productIssue->total_amount }}</td>
+            </tr>
+            <tr>
+                <th>Total Payable Amount : </th>
+                <td align="right">{{ $productIssue->total_amount }}</td>
+            </tr>
+            <tr>
+                <th>In Words : </th>
+                @php
+                    $inWords = \App\HelperClass::numberToWords($productIssue->total_amount);
+                @endphp
+                <td>{{ $inWords }} Taka Only.</td>
+            </tr>
+        </tbody>
+    </table>
 
     <div style="padding-bottom: 60px;"></div>
 
-    <table id="chalan-table">
+    <table id="invoice-table">
         <tr>
             <td>
                 <span><h3 class="overline">Receive By</h3></span>
@@ -139,7 +162,5 @@
                 </span>
             </td>
         </tr>
-    </table> 
-
-    
+    </table>
 @endsection

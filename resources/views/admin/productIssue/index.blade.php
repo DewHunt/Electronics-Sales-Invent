@@ -26,7 +26,7 @@
                         <th>Dealer Name</th>
                         <th width="100px">Total Qty</th>
                         <th width="110px">Total Amount</th>
-                        <th width="20px">Action</th>
+                        <th width="100px">Action</th>
                     </tr>
                 </thead>
                 <tbody id="">

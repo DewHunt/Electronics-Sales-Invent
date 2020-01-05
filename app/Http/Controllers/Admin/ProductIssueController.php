@@ -249,7 +249,8 @@ class ProductIssueController extends Controller
         }
     }
 
-    public function printChalan($productIssueId){
+    public function printChalan($productIssueId)
+    {
 
     	$title = "Print Chalan";
 
@@ -269,6 +270,29 @@ class ProductIssueController extends Controller
     	$pdf = PDF::loadView('admin.productIssue.printChalan',['title'=>$title,'productIssue'=>$productIssue,'productIssueLists'=>$productIssueLists]);
 
     	return $pdf->stream('product_issue_'.$productIssue->issue_no.'.pdf');
+    }
+
+    public function printInvoice($productIssueId)
+    {
+
+        $title = "Print Chalan";
+
+        $productIssue = ProductIssue::select('tbl_product_issue.*','tbl_dealers.name as dealerName','tbl_dealers.code as dealerCode','tbl_dealers.address as dealerAddress','tbl_dealers.mobile as dealerMobile','tbl_districts.name as districtsEnglishName','tbl_districts.bangla_name as districtsBanglaName','tbl_upazilas.name as upazilaEnglishName','tbl_upazilas.bangla_name as upazilaBanglaName')
+            ->leftJoin('tbl_dealers','tbl_dealers.id','=','tbl_product_issue.dealer_id')
+            ->leftJoin('tbl_districts','tbl_districts.id','=','tbl_dealers.district_id')
+            ->leftJoin('tbl_upazilas','tbl_upazilas.id','=','tbl_dealers.upazila_id')
+            ->first();
+
+        $productIssueLists = ProductIssueList::select('tbl_product_issue_lists.*','tbl_products.name as productName')
+            ->leftJoin('tbl_products','tbl_products.id','=','tbl_product_issue_lists.product_id')
+            ->where('tbl_product_issue_lists.issue_id',$productIssueId)
+            ->get();
+
+            // dd($productIssueLists);
+
+        $pdf = PDF::loadView('admin.productIssue.printInvoice',['title'=>$title,'productIssue'=>$productIssue,'productIssueLists'=>$productIssueLists]);
+
+        return $pdf->stream('product_issue_'.$productIssue->issue_no.'.pdf');
     }
 
     public function delete(Request $request)

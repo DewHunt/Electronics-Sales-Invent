@@ -488,8 +488,9 @@ Route::prefix('admin')->group(function()
 			Route::post('/product-issue/product-serial-info','Admin\ProductIssueController@productSerialInfo')->name('productIssue.productSerialInfo');
 			Route::post('/product-issue/dealer-requisition-info','Admin\ProductIssueController@dealerRequisitionInfo')->name('productIssue.dealerRequisitionInfo');
 			Route::get('/product-issue-print-chalan/{productIssueId}','Admin\ProductIssueController@printChalan')->name('productIssue.printChalan');
+			Route::get('/product-issue-print-invoice/{productIssueId}','Admin\ProductIssueController@printInvoice')->name('productIssue.printInvoice');
 
-			//Credit Collection setup
+			//Dealer Collection setup
 			Route::get('/dealer-collection', 'Admin\DealerCollectionController@index')->name('dealerCollection.index');
 			Route::get('/dealer-collection-add', 'Admin\DealerCollectionController@add')->name('dealerCollection.add');
 			Route::post('/dealer-collection-save', 'Admin\DealerCollectionController@save')->name('dealerCollection.save');

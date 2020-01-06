@@ -156,6 +156,16 @@
     ORDER BY `tbl_product_issue`.`dealer_id`,`tbl_product_issue_lists`.`product_id`
     "
 
+    $ProductRequisitionApprovalStatement = 
+    "
+    CREATE OR REPLACE VIEW view_product_requisition_approval_statement AS
+    SELECT `tbl_dealer_requisitions`.`date` AS `date`,`tbl_dealer_requisitions`.`dealer_id` AS `dealerId`,`tbl_dealers`.`name` AS `dealerName`,`tbl_dealer_requisition_products`.`product_id` AS `productId`,`tbl_products`.`name` AS `productName`,`tbl_products`.`model_no` AS `productModelNo`,`tbl_dealer_requisition_products`.`qty` AS `requisitionQty`,`tbl_dealer_requisition_products`.`approved_qty` AS `approvedQty`
+    FROM `tbl_dealer_requisitions`
+    LEFT JOIN `tbl_dealers` ON `tbl_dealers`.`id` = `tbl_dealer_requisitions`.`dealer_id`
+    LEFT JOIN `tbl_dealer_requisition_products` ON `tbl_dealer_requisition_products`.`requisition_id` = `tbl_dealer_requisitions`.`id`
+    LEFT JOIN `tbl_products` ON `tbl_products`.`id` = `tbl_dealer_requisition_products`.`product_id`
+    "
+
     "SELECT `tbl_lifting_products`.`product_id`,`tbl_lifting_products`.`serial_no`
 FROM `tbl_lifting_products`
 LEFT JOIN `tbl_product_issue_lists` ON `tbl_product_issue_lists`.`serial_no` = `tbl_lifting_products`.`serial_no`

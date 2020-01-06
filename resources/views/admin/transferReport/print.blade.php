@@ -62,20 +62,7 @@
                             ->count('destinationId');
                         $destinationRow = 1;
                     }
-
-                    // if ($currentDate == $collectionHistory->date)
-                    // {
-                    //     $clientIdRow++;
-                    // }
-                    // else
-                    // {
-                    //     $currentClientId = $collectionHistory->clientId;
-                    //     $clientIdRowSpan = DB::table('credit_collections')
-                    //         ->where('payment_date',$collectionHistory->date)
-                    //         ->where('client_id',$collectionHistory->clientId)
-                    //         ->count('client_id');
-                    //     $clientIdRow = 1;
-                    // }
+                    
                     $hostName = DB::table('view_store_and_showroom')
                         ->where('type',$transferReport->hostType)
                         ->where('id',$transferReport->hostId)
@@ -110,36 +97,6 @@
                             <td>{{ $transferReport->productQty }}</td>
                         @endif
                     @endif
-
-                    {{-- @if ($currentHostId != $transferReport->hostId)
-                        @php
-                            $totalHostId = DB::table('view_transport_record')
-                                ->where('hostType',$transferReport->hostType)
-                                ->where('hostId',$transferReport->hostId)
-                                ->get();
-                            $hostName = DB::table('view_store_and_showroom')
-                                ->where('type',$transferReport->hostType)
-                                ->where('id',$transferReport->hostId)
-                                ->first();
-                            $destinationName = DB::table('view_store_and_showroom')
-                                ->where('type',$transferReport->destinationType)
-                                ->where('id',$transferReport->destinationId)
-                                ->first();
-                            $currentHostId = $transferReport->hostId;
-                        @endphp
-                        <td rowspan="{{ count($totalHostId) }}">{{ @$hostName->name }}</td>
-                        <td>{{ @$destinationName ->name}}</td>
-                        <td>{{ $transferReport->date }}</td>
-                        <td>{{ $transferReport->productName }}</td>
-                        <td>{{ $transferReport->productModelNo }}</td>
-                        <td>{{ $transferReport->productQty }}</td>
-                    @else
-                        <td>{{ @$destinationName ->name}}</td>
-                        <td>{{ $transferReport->date }}</td>
-                        <td>{{ $transferReport->productName }}</td>
-                        <td>{{ $transferReport->productModelNo }}</td>
-                        <td>{{ $transferReport->productQty }}</td>
-                    @endif --}}
                 </tr>
             @endforeach
         </tbody>

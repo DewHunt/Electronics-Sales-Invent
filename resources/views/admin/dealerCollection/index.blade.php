@@ -15,7 +15,7 @@
                         <th width="90px">Type</th>
                         <th width="90px">Payment</th>
                         <th width="170px">Remarks</th>
-                        <th width="30px">Action</th>
+                        <th width="70px">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -23,7 +23,7 @@
                         $sl = 1;
                     @endphp
                     @foreach ($dealerCollections as $dealerCollection)
-                        <tr>
+                        <tr class="row_{{ $dealerCollection->id }}">
                             <td>{{ $sl++ }}</td>
                             <td>{{ $dealerCollection->dealerName }}</td>
                             <td>{{ $dealerCollection->dealerMobile }}</td>

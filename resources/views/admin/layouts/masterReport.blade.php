@@ -51,7 +51,7 @@
 
 				    <div style="padding-bottom: 10px;"></div>
 
-    			    <form class="form-horizontal" id="search" action="{{ route($searchFormLink) }}" method="POST" enctype="multipart/form-data">
+    			    <form class="form-horizontal" id="searchForm" action="{{ route($searchFormLink) }}" method="POST" enctype="multipart/form-data">
     			    	{{ csrf_field() }}
 
     				    <div class="card">
@@ -73,7 +73,7 @@
     				        <div class="card-footer">
     				            <div class="row">
     				                <div class="col-md-12 text-right">
-    				                	<button type="submit" id="search" class="btn btn-outline-info btn-lg waves-effect"><i class="fa fa-search"></i> Search</button>
+    				                	<button type="submit" id="search" class="btn btn-outline-info btn-lg waves-effect search"><i class="fa fa-search"></i> Search</button>
     				                </div>
     				            </div>	        	
     				        </div>

@@ -497,7 +497,14 @@ Route::prefix('admin')->group(function()
 			Route::get('/dealer-collection-edit/{id}', 'Admin\DealerCollectionController@edit')->name('dealerCollection.edit');
 			Route::post('/dealer-collection-update', 'Admin\DealerCollectionController@update')->name('dealerCollection.update');
 			Route::post('/dealer-collection-delete', 'Admin\DealerCollectionController@delete')->name('dealerCollection.delete');
+			Route::post('/dealer-collection/product-issue-info', 'Admin\DealerCollectionController@getProductIssueInfo')->name('dealerCollection.getProductIssueInfo');
 			Route::post('/dealer-collection/dealer-info', 'Admin\DealerCollectionController@getDealerInfo')->name('dealerCollection.getDealerInfo');
+			Route::get('/dealer-collection-print-money-receipt/{dealerCollectioId}','Admin\DealerCollectionController@printMoneyReceipt')->name('dealerCollection.printMoneyReceipt');
+
+			//Dealer Collection Statement
+			Route::get('/dealer-commission-statement','Admin\DealerCommissionStatementController@index')->name('dealerCommissionStatement.index');
+			Route::post('/dealer-commission-statement','Admin\DealerCommissionStatementController@index')->name('dealerCommissionStatement.index');
+			Route::post('/dealer-commission-statement-print','Admin\DealerCommissionStatementController@print')->name('dealerCommissionStatement.print');
 		// End Dealer Management
 		});
 	});

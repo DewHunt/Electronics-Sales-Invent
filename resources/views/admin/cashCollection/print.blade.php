@@ -101,7 +101,7 @@
                         <tr>
                             <td width="90px"><span><b>Invoice No</b></span></td>
                             <td width="10px">:</td>
-                            <td>{{$invoice->invoice_no}}</td>
+                            <td>{{@$invoice->invoice_no}}</td>
                         </tr>
                     </table>
                 </td>
@@ -128,7 +128,7 @@
     <table border="0">
         <tr>
             <td width="160px"><strong>Cash Received From</strong> </td>
-            <td class="bottom" width="365px">{{$customer->name}}</td>
+            <td class="bottom" width="365px">{{@$customer->name}}</td>
             <td width="40px"><strong>BDT</strong> </td>
             <td class="bottom" width="190px">{{$cashCollection->collection_amount}}</td>
         </tr>
@@ -139,7 +139,7 @@
     <table>
         <tr>
             <td width="40px"><strong>For</strong> </td>
-            <td class="bottom" width="780px">{{$product->name}}({{$product->code}})</td>
+            <td class="bottom" width="780px">{{@$product->name}}({{@$product->code}})</td>
         </tr>
     </table>
 

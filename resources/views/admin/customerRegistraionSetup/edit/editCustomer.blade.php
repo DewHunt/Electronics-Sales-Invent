@@ -65,7 +65,7 @@
                     <div class="col-md-3">
                         <div class="form-group {{ $errors->has('code') ? ' has-danger' : '' }}">
                             <label for="code">Applicant's Code</label>
-                            <input type="text" class="form-control" id="apllicantsCode" value="{{ $customer->code }}" name="code" required readonly>
+                            <input type="text" class="form-control" id="apllicantsCode" value="{{ $customer->code }}" name="code" required>
                             @if ($errors->has('code'))
                                 @foreach($errors->get('code') as $error)
                                     <div class="form-control-feedback">{{ $error }}</div>
@@ -247,7 +247,7 @@
                     <div class="col-md-6">
                         <div class="form-group {{ $errors->has('presentAddress') ? ' has-danger' : '' }}">
                             <label for="present-address">Present Address</label>
-                            <textarea class="form-control" name="presentAddress" rows="9" required="">{{ $customer->present_address }}</textarea>
+                            <textarea class="form-control" name="presentAddress" rows="2" required="">{{ $customer->present_address }}</textarea>
                             @if ($errors->has('presentAddress'))
                                 @foreach($errors->get('presentAddress') as $error)
                                     <div class="form-control-feedback">{{ $error }}</div>
@@ -259,7 +259,7 @@
                     <div class="col-md-6">
                         <div class="form-group {{ $errors->has('permanentAddress') ? ' has-danger' : '' }}">
                             <label for="permanent-address">Permanent Address</label>
-                            <textarea class="form-control" name="permanentAddress"rows="9">{{ $customer->permanent_address }}</textarea>
+                            <textarea class="form-control" name="permanentAddress"rows="2">{{ $customer->permanent_address }}</textarea>
                             @if ($errors->has('permanentAddress'))
                                 @foreach($errors->get('permanentAddress') as $error)
                                     <div class="form-control-feedback">{{ $error }}</div>

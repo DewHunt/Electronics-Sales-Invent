@@ -77,7 +77,7 @@
 
         <div class="row">
             <div class="col-md-3">
-                <div class="form-group {{ $errors->has('dealer') ? ' has-danger' : '' }}">
+                <div class="form-group">
                     <label for="dealer">Dealer</label>
                     <div class="form-group">
                         <select class="form-control chosen-select" id="dealer" name="dealer">
@@ -87,16 +87,23 @@
                             @endforeach
                         </select>
                     </div>
-
-                    @if ($errors->has('dealer'))
-                        @foreach($errors->get('dealer') as $error)
-                            <div class="form-control-feedback">{{ $error }}</div>
-                        @endforeach
-                    @endif
                 </div>
             </div>
 
             <div class="col-md-3">
+                <div class="form-group">
+                    <label for="product-issue-no">Product Issue No</label>
+                    <div id="product-issue-no-select-menu">                        
+                        <div class="form-group">
+                            <select class="form-control chosen-select" id="productIssue" name="productIssue">
+                                <option value="">Select Product Issue No.</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2">
                 <label for="due-amount">Due Amount</label>
                 <div class="form-group {{ $errors->has('dueAmount') ? ' has-danger' : '' }}">
                     <input type="number" class="form-control" id="dueAmount" name="dueAmount" value="0" required readonly />
@@ -108,7 +115,7 @@
                 </div>                              
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <label for="new-paid">New paid</label>
                 <div class="form-group {{ $errors->has('newPaid') ? ' has-danger' : '' }}">
                     <input type="number" class="form-control" id="newPaid" name="newPaid" value="0" oninput="findBalance()" required/>
@@ -120,7 +127,7 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <label for="balance">Balance</label>
                 <div class="form-group {{ $errors->has('balance') ? ' has-danger' : '' }}">
                     <input type="number" class="form-control" id="balance" name="balance" value="0" required readonly />
@@ -160,12 +167,32 @@
             });
             
             var dealerId = $('#dealer option:selected').val();
-            if(dealerId != '')
+
+            $.ajax({
+                type:'post',
+                url:'{{ route('dealerCollection.getProductIssueInfo') }}',
+                data:{dealerId:dealerId},
+                success:function(data){
+                    $('#product-issue-no-select-menu').html(data);
+                    $(".chosen-select").chosen();
+                }
+            });
+        });
+
+        $(document).on('change', '#productIssue', function(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            
+            var productIssueId = $('#productIssue option:selected').val();
+            if(productIssueId != '')
             {
                 $.ajax({
                     type:'post',
                     url:'{{ route('dealerCollection.getDealerInfo') }}',
-                    data:{dealerId:dealerId},
+                    data:{productIssueId:productIssueId},
                     success:function(data){
                         var productIssueList = data.productIssueList;
                         var dealerCollection = data.dealerCollection;

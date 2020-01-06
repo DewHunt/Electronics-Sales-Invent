@@ -1,184 +1,168 @@
 @extends('admin.layouts.masterAddEdit')
 
 @section('card_body')
-@php
-use App\CashCollection;
-$collectionDate = date('d-m-Y',strtotime($cashCollection->collection_date));
-@endphp
     <div class="card-body">
-        <input type="hidden" name="collectionId" value="{{$cashCollection->id}}">
         <div class="row">
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group {{ $errors->has('invoiceId') ? ' has-danger' : '' }}">
-                            <label for="invoice-id">Invoice No</label>
-                            <input type="text" name="invoice_no" class="form-control" value="{{$invoice->invoice_no}}" readonly="">
-                            @if ($errors->has('invoiceId'))
-                                @foreach($errors->get('invoiceId') as $error)
-                                    <div class="form-control-feedback">{{ $error }}</div>
-                                @endforeach
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group {{ $errors->has('collectionNo') ? ' has-danger' : '' }}">
-                            <label for="collection-no">Collection No</label>
-                            <input type="text" name="collectionNo" class="form-control" value="{{@$cashCollection->collection_no}}" readonly>
-                            @if ($errors->has('collectionNo'))
-                                @foreach($errors->get('collectionNo') as $error)
-                                    <div class="form-control-feedback">{{ $error }}</div>
-                                @endforeach
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group {{ $errors->has('productCode') ? ' has-danger' : '' }}">
-                            <label for="product_code">Product Code</label>
-                            <input type="text" class="form-control productCode" id="productCode" name="productCode" value="{{ $product->code }}" required readonly="">
-                            @if ($errors->has('productCode'))
-                                @foreach($errors->get('productCode') as $error)
-                                    <div class="form-control-feedback">{{ $error }}</div>
-                                @endforeach
-                            @endif
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group {{ $errors->has('productModel') ? ' has-danger' : '' }}">
-                            <label for="product-model">Product Model</label>
-                            <input type="text" class="form-control productModel" id="productModel" name="productModel" value="{{ $product->model_no }}" required readonly="">
-                            @if ($errors->has('productModel'))
-                                @foreach($errors->get('productModel') as $error)
-                                    <div class="form-control-feedback">{{ $error }}</div>
-                                @endforeach
-                            @endif
-                        </div>
-                    </div>
-                </div>
+            <div class="col-md-12">
+                <input class="form-control" type="hidden" name="dealerCollectionId" value="{{ $dealerCollection->id }}">
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-6">
-                <div class="form-group {{ $errors->has('productName') ? ' has-danger' : '' }}">
-                    <label for="product-name">Product Name</label>
-                    <input type="text" class="form-control productName" id="productName" name="productName" value="{{ $product->name }}" required readonly="">
-                    @if ($errors->has('productName'))
-                        @foreach($errors->get('productName') as $error)
+            <div class="col-md-3">
+                <label for="phone">Payment No</label>
+                <div class="form-group {{ $errors->has('paymentNo') ? ' has-danger' : '' }}">
+                    <input type="text" class="form-control" id="paymentNo" name="paymentNo" value="{{ $dealerCollection->payment_no }}" required readonly/>
+                    @if ($errors->has('paymentNo'))
+                        @foreach($errors->get('paymentNo') as $error)
+                            <div class="form-control-feedback">{{ $error }}</div>
+                        @endforeach
+                    @endif
+                </div>                              
+            </div>
+
+            <div class="col-md-3">
+                <label for="payment-date">Payment Date</label>
+                <div class="form-group {{ $errors->has('paymentDate') ? ' has-danger' : '' }}">
+                    <input  type="text" class="form-control datepicker" id="paymentDate" name="paymentDate" value="{{ date('Y-m-d', strtotime($dealerCollection->payment_date)) }}" readonly>
+                    @if ($errors->has('paymentDate'))
+                        @foreach($errors->get('paymentDate') as $error)
+                            <div class="form-control-feedback">{{ $error }}</div>
+                        @endforeach
+                    @endif
+                </div>                              
+            </div>
+
+            <div class="col-md-3">
+                <label for="money-receipt-no">Money Receipt No</label>
+                <div class="form-group {{ $errors->has('moneyReceiptNo') ? ' has-danger' : '' }}">
+                    <input type="text" class="form-control" id="moneyReceiptNo" name="moneyReceiptNo" value="{{ $dealerCollection->money_receipt_no }}" required/>
+                    @if ($errors->has('moneyReceiptNo'))
+                        @foreach($errors->get('moneyReceiptNo') as $error)
+                            <div class="form-control-feedback">{{ $error }}</div>
+                        @endforeach
+                    @endif
+                </div>                              
+            </div>
+
+            <div class="col-md-3">
+                @php
+                    $types = array('Cash'=>'Cash','Bkash'=>'Bkash','Others'=>'Others');
+                @endphp
+                <label for="money-receipt-type">Money Receipt Type</label>
+                <div class="form-group {{ $errors->has('moneyReceiptType') ? ' has-danger' : '' }}">
+                    <div class="form-group">
+                        <select class="form-control" id="moneyReceiptType" name="moneyReceiptType">
+                            <option value="">Select Money Receipt Type</option>
+                            @foreach ($types as $key=>$value)
+                                @php
+                                    if ($key == $dealerCollection->money_receipt_type)
+                                    {
+                                        $select = "selected";
+                                    }
+                                    else
+                                    {
+                                        $select = "";
+                                    }
+                                    
+                                @endphp
+                                <option value="{{ $key }}" {{ $select }}>{{ $value }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    @if ($errors->has('moneyReceiptType'))
+                        @foreach($errors->get('moneyReceiptType') as $error)
                             <div class="form-control-feedback">{{ $error }}</div>
                         @endforeach
                     @endif
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group {{ $errors->has('productColor') ? ' has-danger' : '' }}">
-                            <label for="product-color">Product Color</label>
-                            <input type="text" class="form-control productColor" id="productColor" name="productColor" value="{{ $product->color }}" required readonly="">
-                            @if ($errors->has('productColor'))
-                                @foreach($errors->get('productColor') as $error)
-                                    <div class="form-control-feedback">{{ $error }}</div>
-                                @endforeach
-                            @endif
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group {{ $errors->has('productWaranty') ? ' has-danger' : '' }}">
-                            <label for="product-warranty">Product Warranty</label>
-                            <input type="text" class="form-control productWaranty" id="productWaranty" name="productWaranty" value="{{ $product->warranty }}" required readonly="">
-                            @if ($errors->has('productWaranty'))
-                                @foreach($errors->get('productWaranty') as $error)
-                                    <div class="form-control-feedback">{{ $error }}</div>
-                                @endforeach
-                            @endif
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group {{ $errors->has('collectionDate') ? ' has-danger' : '' }}">
-                            <label for="collection-date">Collection Date</label>
-                            <input type="text" name="collectionDate" value="{{@$collectionDate}}" class="form-control datepicker" readonly="">
-                            @if ($errors->has('collectionDate'))
-                                @foreach($errors->get('collectionDate') as $error)
-                                    <div class="form-control-feedback">{{ $error }}</div>
-                                @endforeach
-                            @endif
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
         </div>
 
         <div class="row">
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group {{ $errors->has('invoiceAmount') ? ' has-danger' : '' }}">
-                            <label for="invoice-amount">Invoice Amount</label>
-                            <input type="text" class="form-control invoiceAmount" id="invoiceAmount" name="invoiceAmount" value="{{@$cashCollection->invoice_amount}}" required readonly="">
-                            @if ($errors->has('invoiceAmount'))invoiceAmount
-                                @foreach($errors->get('invoiceAmount') as $error)
-                                    <div class="form-control-feedback">{{ $error }}</div>
-                                @endforeach
-                            @endif
-                        </div>
+            <div class="col-md-3">
+                <div class="form-group {{ $errors->has('dealer') ? ' has-danger' : '' }}">
+                    <label for="dealer">Dealer</label>
+                    <div class="form-group">
+                        <input class="form-control" type="hidden" name="dealer" value="{{ $dealerCollection->dealer_id }}" readonly>
+                        <input class="form-control" type="text" name="dealerName" value="{{ $dealerCollection->dealerName }}" readonly>
                     </div>
 
-                    <div class="col-md-6">
-                        <div class="form-group {{ $errors->has('previousCollection') ? ' has-danger' : '' }}">
-                            <label for="previous-collection">Previous Collection</label>
-                            <input type="number" name="previousCollection" class="form-control previousCollection" id="previousCollection" value="{{@$cashCollection->previous_collection}}" readonly="">
-                            @if ($errors->has('previousCollection'))
-                                @foreach($errors->get('previousCollection') as $error)
-                                    <div class="form-control-feedback">{{ $error }}</div>
-                                @endforeach
-                            @endif
-                        </div>
-                    </div>
+                    @if ($errors->has('dealer'))
+                        @foreach($errors->get('dealer') as $error)
+                            <div class="form-control-feedback">{{ $error }}</div>
+                        @endforeach
+                    @endif
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group {{ $errors->has('collectionAmount') ? ' has-danger' : '' }}">
-                            <label for="collection-amount">Collection Amount</label>
-                            <input type="number" name="collectionAmount" class="form-control collectionAmount" id="collectionAmount" value="{{$cashCollection->collection_amount}}" required="" oninput="CalculateDue()">
-                            @if ($errors->has('collectionAmount'))
-                                @foreach($errors->get('collectionAmount') as $error)
-                                    <div class="form-control-feedback">{{ $error }}</div>
-                                @endforeach
-                            @endif
-                        </div>
+
+            <div class="col-md-3">
+                <div class="form-group {{ $errors->has('dealer') ? ' has-danger' : '' }}">
+                    <label for="dealer">Dealer</label>
+                    <div class="form-group">
+                        <input class="form-control" type="hidden" name="productIssue" value="{{ $dealerCollection->product_issue_id }}" readonly>
+                        <input class="form-control" type="text" name="productIssueNo" value="{{ $dealerCollection->productIssueNo }}" readonly>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group {{ $errors->has('currentDue') ? ' has-danger' : '' }}">
-                            <label for="curent-due">Current Due</label>
-                            <input type="number" name="currentDue" class="form-control currentDue" value="{{$cashCollection->current_due}}" readonly="">
-                            @if ($errors->has('currentDue'))
-                                @foreach($errors->get('currentDue') as $error)
-                                    <div class="form-control-feedback">{{ $error }}</div>
-                                @endforeach
-                            @endif
-                        </div>
-                    </div>
+
+                    @if ($errors->has('dealer'))
+                        @foreach($errors->get('dealer') as $error)
+                            <div class="form-control-feedback">{{ $error }}</div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <label for="due-amount">Due Amount</label>
+                <div class="form-group {{ $errors->has('dueAmount') ? ' has-danger' : '' }}">
+                    @php
+                        $dueAmount = ($productIssueList->total_amount + $dealerCollection->payment_amount) - $previousDealerCollection->previousCollection;
+                    @endphp
+                    <input type="number" class="form-control" id="dueAmount" name="dueAmount" value="{{ $dueAmount }}" required readonly />
+                    @if ($errors->has('dueAmount'))
+                        @foreach($errors->get('dueAmount') as $error)
+                            <div class="form-control-feedback">{{ $error }}</div>
+                        @endforeach
+                    @endif
+                </div>                              
+            </div>
+
+            <div class="col-md-2">
+                <label for="new-paid">New paid</label>
+                <div class="form-group {{ $errors->has('newPaid') ? ' has-danger' : '' }}">
+                    <input type="number" class="form-control" id="newPaid" name="newPaid" value="{{ $dealerCollection->payment_amount }}" oninput="findBalance()" required/>
+                    @if ($errors->has('newPaid'))
+                        @foreach($errors->get('newPaid') as $error)
+                            <div class="form-control-feedback">{{ $error }}</div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <label for="balance">Balance</label>
+                @php
+                    $balance = $dueAmount - $dealerCollection->payment_amount; 
+                @endphp
+                <div class="form-group {{ $errors->has('balance') ? ' has-danger' : '' }}">
+                    <input type="number" class="form-control" id="balance" name="balance" value="{{ $balance }}" required readonly />
+                    @if ($errors->has('balance'))
+                        @foreach($errors->get('balance') as $error)
+                            <div class="form-control-feedback">{{ $error }}</div>
+                        @endforeach
+                    @endif
                 </div>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-12">
+                <label for="remarks">Remarks</label>
                 <div class="form-group {{ $errors->has('remarks') ? ' has-danger' : '' }}">
-                    <label for="remarks">Remarks</label>
-                    <textarea name="remarks" rows="5" class="form-control">{{$cashCollection->remarks}}</textarea>
+                    <textarea class="form-control" id="remarks" name="remarks" rows="3">{{ $dealerCollection->remarks }}</textarea>
                     @if ($errors->has('remarks'))
-                        @foreach($errors->get('remarks') as $error)
+                        @foreach ($errors->get('remarks') as $error)
                             <div class="form-control-feedback">{{ $error }}</div>
                         @endforeach
                     @endif
@@ -191,62 +175,69 @@ $collectionDate = date('d-m-Y',strtotime($cashCollection->collection_date));
 
 @section('custom-js')
     <script type="text/javascript">
-        /*javascript code for invoice information*/
-
-            $(document).on('change', '.invoiceNo', function(){
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                
-                var invoiceId = $('.invoiceNo option:selected').val();
-                if(invoiceId != ''){
-                    $.ajax({
-                        type:'post',
-                        url:'{{ route('cashCollection.getInvoiceInformation') }}',
-                        data:{invoiceId:invoiceId},
-                        success:function(data){
-                            var invoice = data.invoice;
-                            var collection_amount = invoice.customer_product_price-data.previous_collection;
-                            //var collection_amount = data.invoiceAmount-data.collections;
-                            $('.invoiceAmount').val(parseFloat(invoice.customer_product_price).toFixed(2));
-                            $('.previousCollection').val(parseFloat(data.previous_collection).toFixed(2));
-                            $('.collectionAmount').val(parseFloat(collection_amount).toFixed(2));
-                            $('.currentDue').val(0.00);
-                        }
-                    });
-                }else{
-                   $('.productModel').val('');
-                   $('.cashPrice').val(''); 
+        $(document).on('change', '#dealer', function(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+            
+            var dealerId = $('#dealer option:selected').val();
+            if(dealerId != '')
+            {
+                $.ajax({
+                    type:'post',
+                    url:'{{ route('dealerCollection.getDealerInfo') }}',
+                    data:{dealerId:dealerId},
+                    success:function(data){
+                        var productIssueList = data.productIssueList;
+                        var dealerCollection = data.dealerCollection;
 
-            function CalculateDue(){
-                var collectionAmount = document.getElementById('collectionAmount').value;
-                if (document.getElementById('previousCollection').value) {
-                    var previousCollection = document.getElementById('previousCollection').value;
-                }else{
-                    var previousCollection = 0;
-                }
-                 var invoiceAmount = document.getElementById('invoiceAmount').value;
-                 var newAmount = parseInt(collectionAmount) + parseInt(previousCollection);
-                 var currentDue = parseInt(invoiceAmount) - parseInt(newAmount);
-                $('.currentDue').val(currentDue.toFixed(2));
+                        var dueAmount = productIssueList.total_amount - dealerCollection.previousCollection;
 
-                if (currentDue < 0) {
-                    alert('Collection amount sholuld not be cross invoice amount!');
-                }
+                        $('#dueAmount').val(dueAmount); 
+                        $('#newPaid').val(0); 
+                        $('#balance').val(0); 
+                    }
+                });
             }
+            else
+            {
+                $('#dueAmount').val(0); 
+                $('#newPaid').val(0); 
+                $('#balance').val(0); 
+            }
+        });
+
+        function findBalance()
+        {
+            var newPaid = $("#newPaid").val();
+            var dueAmount = $("#dueAmount").val();
+
+            var balance = dueAmount - newPaid;
+
+            if (balance < 0)
+            {
+                swal("You Can't Paid More Than Due Amount","","warning");
+
+                $("#newPaid").val(dueAmount);
+                $("#balance").val(0);
+            }
+            else
+            {
+                $("#balance").val(balance);
+            }
+
+        }
 
         /*end code for product info*/
 
         $("form").submit(function(e){
             if ($('.currentDue').val() < 0) {
-                    alert('Collection amount sholuld not be cross invoice amount!');
-                     e.preventDefault();
-                }
-          });
+                alert('Collection amount sholuld not be cross invoice amount!');
+                e.preventDefault();
+            }
+        });
 
-        </script>
+    </script>
 @endsection

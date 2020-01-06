@@ -73,12 +73,6 @@
     </style>
 @endsection
 
-@php
-    use App\Product;
-    use App\ShowroomSetup;
-    $collectionDate = Date('d-m-Y',strtotime($cashCollection->collection_date));
-@endphp
-
 @section('content')
     <table id="invoice-header">
         <tr>
@@ -91,34 +85,13 @@
     <table width="100%" border="0">
         <tbody>
             <tr>
-                <td>
-                    <table width="100%">
-                        <tr>
-                            <td width="90px"><span><b>Receipt No</b></span></td>
-                            <td width="10px">:</td>
-                            <td>{{ $cashCollection->collection_no }}</td>
-                        </tr>
-                        <tr>
-                            <td width="90px"><span><b>Invoice No</b></span></td>
-                            <td width="10px">:</td>
-                            <td>{{$invoice->invoice_no}}</td>
-                        </tr>
-                    </table>
-                </td>
-                <td align="right">
-                    <table width="100%">
-                        <tr>
-                            <td><span><b>Collection Date</b></span></td>
-                            <td width="10px">:</td>
-                            <td width="90px">{{ $collectionDate }}</td>
-                        </tr>
-                        <tr>
-                            <td><span><b>Print Date</b></span></td>
-                            <td width="10px">:</td>
-                            <td width="90px">{{ date('d-m-Y') }}</td>
-                        </tr>
-                    </table>
-                </td>
+                <td width="90px"><span><b>Receipt No</b></span></td>
+                <td width="10px">:</td>
+                <td>{{ $dealerCollection->money_receipt_no }}</td>
+
+                <td align="right">{{ date('Y-m-d', strtotime($dealerCollection->payment_date)) }}</td>
+                <td align="right" width="10px">:</td>
+                <td align="right" width="120px"><span><b>Collection Date</b></span></td>
             </tr>
         </tbody>
     </table>
@@ -128,9 +101,9 @@
     <table border="0">
         <tr>
             <td width="160px"><strong>Cash Received From</strong> </td>
-            <td class="bottom" width="365px">{{$customer->name}}</td>
+            <td class="bottom" width="365px">{{ $dealerCollection->dealerName }}</td>
             <td width="40px"><strong>BDT</strong> </td>
-            <td class="bottom" width="190px">{{$cashCollection->collection_amount}}</td>
+            <td class="bottom" width="190px">{{ $dealerCollection->payment_amount }}/-</td>
         </tr>
     </table>
 
@@ -139,29 +112,46 @@
     <table>
         <tr>
             <td width="40px"><strong>For</strong> </td>
-            <td class="bottom" width="780px">{{$product->name}}({{$product->code}})</td>
+            <td class="bottom" width="780px"></td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <td width="80px"><strong>In Words</strong> </td>
+            <td class="bottom" width="750px">
+                @php
+                    echo $inWords = \App\HelperClass::numberToWords($dealerCollection->payment_amount);
+                @endphp
+                Taka Only
+            </td>
         </tr>
     </table>
 
     <div id="pad-bottom"></div>
     <div id="pad-bottom"></div>
 
+    @php
+        $dueAmount = ($productIssueList->total_amount + $dealerCollection->payment_amount) - $previousDealerCollection->previousCollection;
+        $balance = $dueAmount - $dealerCollection->payment_amount;
+    @endphp
+
     <table width="100%">
         <tr>
             <td width="60%">
                 <table class="moneyReceiptAmountTable">
                     <tr>
-                        <td width="200px" align="right">Total Invoice Amount</td>
-                        <td width="150px" align="right">{{$cashCollection->invoice_amount}}</td>
+                        <td width="200px" align="right">Total Amount</td>
+                        <td width="150px" align="right">{{ $dueAmount }}</td>
                     </tr>
                     <tr>
                         <td align="right">Received Amount</td>
-                        <td align="right">{{$cashCollection->collection_amount}}</td>
+                        <td align="right">{{$dealerCollection->payment_amount}}</td>
                     </tr>
 
                     <tr>
                         <td align="right">Due Amount</td>
-                        <td align="right">{{$cashCollection->current_due}}</td>
+                        <td align="right">{{ $balance }}</td>
                     </tr>
                 </table>
             </td>

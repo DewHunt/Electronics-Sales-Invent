@@ -15,13 +15,15 @@ class CreateTblDealerCollectionsTable extends Migration
     {
         Schema::create('tbl_dealer_collections', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('dealer_id');
-            $table->string('payment_no',255);
-            $table->datetime('payment_date');
-            $table->string('money_receipt_no',255);
-            $table->string('money_receipt_type',255);
-            $table->integer('payment_amount');
-            $table->text('remarks');
+            $table->integer('product_issue_id')->nullable();
+            $table->integer('dealer_id')->nullable();
+            $table->string('payment_no',255)->nullable();
+            $table->datetime('payment_date')->nullable();
+            $table->string('money_receipt_no',255)->nullable();
+            $table->string('money_receipt_type',255)->nullable();
+            $table->integer('payment_amount')->nullable();
+            $table->text('remarks')->nullable();
+            $table->tinyInteger('status')->default('1');
             $table->timestamps();
         });
     }

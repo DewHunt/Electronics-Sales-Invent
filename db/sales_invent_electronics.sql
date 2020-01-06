@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 05, 2020 at 02:18 PM
+-- Generation Time: Jan 06, 2020 at 02:19 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -226,7 +226,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (110, '2020_01_02_112905_create_tbl_customer_products_table', 76),
 (111, '2020_01_02_113420_create_tbl_customer_products_table', 77),
 (112, '2020_01_02_123850_create_tbl_product_issue_table', 78),
-(113, '2020_01_05_094330_create_tbl_dealer_collections_table', 79);
+(113, '2020_01_05_094330_create_tbl_dealer_collections_table', 79),
+(114, '2020_01_06_045526_create_tbl_dealer_collections_table', 80),
+(115, '2020_01_06_093114_create_tbl_dealer_collections_table', 81);
 
 -- --------------------------------------------------------
 
@@ -686,13 +688,15 @@ INSERT INTO `tbl_dealers` (`id`, `district_id`, `upazila_id`, `territory_id`, `t
 
 CREATE TABLE `tbl_dealer_collections` (
   `id` int(10) UNSIGNED NOT NULL,
-  `dealer_id` int(11) NOT NULL,
-  `payment_no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payment_date` datetime NOT NULL,
-  `money_receipt_no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `money_receipt_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payment_amount` int(11) NOT NULL,
-  `remarks` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_issue_id` int(11) DEFAULT NULL,
+  `dealer_id` int(11) DEFAULT NULL,
+  `payment_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `payment_date` datetime DEFAULT NULL,
+  `money_receipt_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `money_receipt_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `payment_amount` int(11) DEFAULT NULL,
+  `remarks` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -701,9 +705,10 @@ CREATE TABLE `tbl_dealer_collections` (
 -- Dumping data for table `tbl_dealer_collections`
 --
 
-INSERT INTO `tbl_dealer_collections` (`id`, `dealer_id`, `payment_no`, `payment_date`, `money_receipt_no`, `money_receipt_type`, `payment_amount`, `remarks`, `created_at`, `updated_at`) VALUES
-(1, 1, '100000001', '2020-01-05 00:00:00', '10001', 'Cash', 10000, 'Ten Thousand Taka Only Cash.', '2020-01-05 07:04:24', '2020-01-05 07:04:24'),
-(2, 1, '100000002', '2020-01-05 00:00:00', '10002', 'Cash', 10000, 'Ten Thousand Taka Only Cash.', '2020-01-05 07:15:05', '2020-01-05 07:15:05');
+INSERT INTO `tbl_dealer_collections` (`id`, `product_issue_id`, `dealer_id`, `payment_no`, `payment_date`, `money_receipt_no`, `money_receipt_type`, `payment_amount`, `remarks`, `status`, `created_at`, `updated_at`) VALUES
+(2, 9, 1, '100000001', '2020-01-06 00:00:00', '1234556', 'Cash', 8000, 'Eight Thousand Taka Only Cash.', 1, '2020-01-06 03:44:43', '2020-01-06 03:56:41'),
+(3, 9, 1, '100000003', '2020-01-06 00:00:00', '96546867', 'Cash', 10000, 'Ten Thousand Taka Only Cash.', 1, '2020-01-06 03:46:14', '2020-01-06 03:46:14'),
+(4, 10, 3, '100000004', '2020-01-06 00:00:00', '54674568', 'Bkash', 5000, 'Five Thousand Taka Only.', 1, '2020-01-06 03:46:41', '2020-01-06 03:55:32');
 
 -- --------------------------------------------------------
 
@@ -878,6 +883,13 @@ CREATE TABLE `tbl_groups` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `tbl_groups`
+--
+
+INSERT INTO `tbl_groups` (`id`, `name`, `team_leader`, `team_member`, `status`, `created_at`, `updated_at`) VALUES
+(16, 'Group - 1', '1', '2,4', 1, '2020-01-06 00:39:22', '2020-01-06 00:40:11');
+
 -- --------------------------------------------------------
 
 --
@@ -899,8 +911,7 @@ CREATE TABLE `tbl_groups_sales_target` (
 --
 
 INSERT INTO `tbl_groups_sales_target` (`id`, `group_id`, `year`, `month`, `total_target`, `created_at`, `updated_at`) VALUES
-(1, 9, '2019', '12', '35', '2019-12-10 05:32:44', '2019-12-10 07:05:06'),
-(2, 10, '2019', '12', '55', '2019-12-10 05:49:52', '2019-12-10 05:49:52');
+(5, 16, '2020', '1', '115000', '2020-01-06 00:42:43', '2020-01-06 00:42:43');
 
 -- --------------------------------------------------------
 
@@ -922,10 +933,10 @@ CREATE TABLE `tbl_groups_sales_target_category` (
 --
 
 INSERT INTO `tbl_groups_sales_target_category` (`id`, `group_sales_target_id`, `category_id`, `target`, `created_at`, `updated_at`) VALUES
-(3, 2, '4', '25', NULL, NULL),
-(4, 2, '2', '30', NULL, NULL),
-(5, 1, '4', '15', NULL, NULL),
-(6, 1, '2', '20', NULL, NULL);
+(13, 5, '10', '50000', NULL, NULL),
+(14, 5, '11', '20000', NULL, NULL),
+(15, 5, '9', '25000', NULL, NULL),
+(16, 5, '8', '20000', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1465,7 +1476,7 @@ INSERT INTO `tbl_product_issue_lists` (`id`, `issue_id`, `product_id`, `model_no
 (54, 9, 8, 'MFO-JET-RXXX-XX', '4567gibjjkuygf', '12', '10990', '1', '10990', 1, NULL, NULL),
 (55, 10, 14, 'MSN-21K-0101-RXXXB', 'asfasdf', '0', '52900', '1', '52900', 1, NULL, NULL),
 (56, 10, 12, 'MSN-12K-ECXXA', 'asfasdf', '0', '35500', '1', '35500', 1, NULL, NULL),
-(57, 10, 10, 'MSD55FD-1.397 m (55\'\')', '35657iore', NULL, '59900', '1', '59900', 1, NULL, NULL),
+(57, 10, 10, 'MSD55FD-1.397 m (55\'\')', '35657iore', '0', '59900', '1', '59900', 1, NULL, NULL),
 (58, 11, 12, 'MSN-12K-ECXXA', 'nmg7zsnbn vd', '15', '35500', '1', '35500', 1, NULL, NULL),
 (59, 11, 10, 'MSD55FD-1.397 m (55\'\')', '095f53drjfyjh', '10', '59900', '1', '59900', 1, NULL, NULL);
 
@@ -2295,7 +2306,8 @@ INSERT INTO `user_menus` (`id`, `parentMenu`, `menuName`, `menuLink`, `menuIcon`
 (54, '49', 'Product Issue', 'productIssue.index', 'fa fa-caret', 45, '1', '2019-12-31 01:06:19', '2019-12-31 01:06:19'),
 (55, '29', 'Collection History', 'collectionHistory.index', 'fa fa-caret', 46, '1', '2020-01-01 12:16:28', '2020-01-01 12:16:28'),
 (56, '33', 'Commission Setup', 'commissionConfiguration.index', 'fa fa-caret', 47, '1', '2020-01-01 12:23:10', '2020-01-01 12:23:10'),
-(58, '49', 'Dealer Collection', 'dealerCollection.index', 'fa fa-caret', 48, '1', '2020-01-05 05:04:31', '2020-01-05 05:04:31');
+(58, '49', 'Dealer Collection', 'dealerCollection.index', 'fa fa-caret', 48, '1', '2020-01-05 05:04:31', '2020-01-05 05:04:31'),
+(59, '49', 'Dealer Commission Statement', 'dealerCommissionStatement.index', 'fa fa-caret', 49, '1', '2020-01-06 04:18:40', '2020-01-06 04:18:40');
 
 -- --------------------------------------------------------
 
@@ -2450,16 +2462,19 @@ INSERT INTO `user_menu_actions` (`id`, `parentmenuId`, `menuType`, `actionName`,
 (134, 52, 11, 'Print Prospective Collection', 'prospectiveCollection.print', 131, 1, '2019-12-29 01:40:09', '2019-12-29 01:40:09'),
 (135, 54, 1, 'Add', 'productIssue.add', 132, 1, '2019-12-31 01:08:34', '2019-12-31 01:08:34'),
 (136, 54, 2, 'Edit', 'productIssue.edit', 133, 1, '2019-12-31 01:08:47', '2019-12-31 01:08:47'),
-(137, 54, 4, 'Delete', 'productIssue.delete', 135, 1, '2019-12-31 01:09:01', '2020-01-05 00:36:32'),
-(138, 54, 3, 'Status', 'productIssue.status', 136, 1, '2019-12-31 01:09:17', '2020-01-05 00:36:40'),
+(137, 54, 4, 'Delete', 'productIssue.delete', 136, 1, '2019-12-31 01:09:01', '2020-01-05 22:34:21'),
+(138, 54, 3, 'Status', 'productIssue.status', 137, 1, '2019-12-31 01:09:17', '2020-01-05 22:34:13'),
 (139, 55, 11, 'Print Collection History', 'collectionHistory.print', 136, 1, '2020-01-01 12:17:16', '2020-01-01 12:17:16'),
 (140, 56, 1, 'Add', 'commissionConfiguration.add', 137, 1, '2020-01-01 12:23:54', '2020-01-01 12:23:54'),
 (141, 56, 8, 'View Commission', 'commissionConfiguration.view', 138, 1, '2020-01-01 12:24:55', '2020-01-02 02:21:11'),
 (142, 56, 11, 'Print Commission', 'commissionConfiguration.print', 139, 1, '2020-01-01 12:25:33', '2020-01-01 12:25:33'),
-(143, 54, 11, 'Print Product Issue', 'productIssue.printChalan', 134, 1, '2020-01-05 00:34:58', '2020-01-05 00:34:58'),
+(143, 54, 11, 'Print Product Issue Chalan', 'productIssue.printChalan', 135, 1, '2020-01-05 00:34:58', '2020-01-05 22:33:54'),
 (148, 58, 1, 'Add', 'dealerCollection.add', 141, 1, '2020-01-05 05:04:55', '2020-01-05 05:04:55'),
 (149, 58, 2, 'Edit', 'dealerCollection.edit', 142, 1, '2020-01-05 05:05:05', '2020-01-05 05:05:05'),
-(150, 58, 4, 'Delete', 'dealerCollection.delete', 143, 1, '2020-01-05 05:05:14', '2020-01-05 05:05:14');
+(150, 58, 4, 'Delete', 'dealerCollection.delete', 144, 1, '2020-01-05 05:05:14', '2020-01-06 02:00:32'),
+(151, 54, 11, 'Print Product Issue Invoice', 'productIssue.printInvoice', 134, 1, '2020-01-05 22:33:14', '2020-01-05 22:33:14'),
+(152, 58, 11, 'Print Money Receipt', 'dealerCollection.printMoneyReceipt', 143, 1, '2020-01-06 02:00:51', '2020-01-06 02:01:37'),
+(153, 59, 11, 'Print Dealer Commission Statement', 'dealerCommissionStatement.print', 145, 1, '2020-01-06 04:19:16', '2020-01-06 04:19:16');
 
 -- --------------------------------------------------------
 
@@ -2482,7 +2497,7 @@ CREATE TABLE `user_roles` (
 --
 
 INSERT INTO `user_roles` (`id`, `name`, `status`, `permission`, `actionPermission`, `created_at`, `updated_at`) VALUES
-(1, 'Super Admin', 1, '2,1,3,4,5,22,6,7,8,10,11,12,13,14,15,17,18,21,26,19,20,23,24,25,27,28,45,46,29,30,31,32,44,47,48,55,33,34,35,36,37,38,39,56,40,41,42,51,52,49,43,50,53,54,58', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,20,18,19,17,70,71,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,57,58,59,60,61,62,63,64,69,77,78,79,80,65,66,81,67,72,73,74,75,76,82,83,121,122,124,123,125,84,85,86,117,118,120,119,126,127,139,88,89,90,91,94,95,93,96,97,98,105,99,100,101,102,104,103,106,140,141,142,107,108,132,109,110,111,112,133,134,113,114,115,116,128,129,130,131,135,136,137,138,148,149,150', '2019-11-20 22:48:03', '2020-01-05 05:05:29'),
+(1, 'Super Admin', 1, '2,1,3,4,5,22,6,7,8,10,11,12,13,14,15,17,18,21,26,19,20,23,24,25,27,28,45,46,29,30,31,32,44,47,48,55,33,34,35,36,37,38,39,56,40,41,42,51,52,49,43,50,53,54,58,59', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,20,18,19,17,70,71,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,57,58,59,60,61,62,63,64,69,77,78,79,80,65,66,81,67,72,73,74,75,76,82,83,121,122,124,123,125,84,85,86,117,118,120,119,126,127,139,88,89,90,91,94,95,93,96,97,98,105,99,100,101,102,104,103,106,140,141,142,107,108,132,109,110,111,112,133,134,113,114,115,116,128,129,130,131,135,136,151,143,137,138,148,149,152,150,153', '2019-11-20 22:48:03', '2020-01-06 04:19:29'),
 (5, 'Admin', 0, '1,2,5,22', '16,20,18,19,17', '2019-11-29 03:26:52', '2019-12-15 06:09:43');
 
 -- --------------------------------------------------------
@@ -2518,6 +2533,37 @@ CREATE TABLE `view_customer_statement` (
 ,`productName` varchar(191)
 ,`salesAmount` varchar(255)
 ,`collection` varchar(255)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_dealer_commission_statement`
+-- (See below for the actual view)
+--
+CREATE TABLE `view_dealer_commission_statement` (
+`date` varchar(191)
+,`dealerId` int(11)
+,`dealerName` varchar(191)
+,`productId` int(11)
+,`productName` varchar(191)
+,`categoryId` int(10) unsigned
+,`categoryName` varchar(191)
+,`commissionRate` varchar(191)
+,`saleAmount` double
+,`commissionAmount` double
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_group_and_staff`
+-- (See below for the actual view)
+--
+CREATE TABLE `view_group_and_staff` (
+`groupId` int(10) unsigned
+,`staffId` int(10) unsigned
+,`groupSalesTargetId` int(10) unsigned
 );
 
 -- --------------------------------------------------------
@@ -2699,6 +2745,24 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 DROP TABLE IF EXISTS `view_customer_statement`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_customer_statement`  AS  select `tbl_customer_products`.`purchase_date` AS `date`,`tbl_customer_products`.`customer_id` AS `customerId`,`tbl_customers`.`name` AS `customerName`,`tbl_customer_products`.`product_id` AS `productId`,`tbl_invoice`.`invoice_no` AS `invoiceNo`,`tbl_products`.`name` AS `productName`,`tbl_invoice`.`customer_product_price` AS `salesAmount`,0 AS `collection` from (((`tbl_customer_products` left join `tbl_invoice` on(`tbl_invoice`.`customer_product_id` = `tbl_customer_products`.`id`)) left join `tbl_products` on(`tbl_products`.`id` = `tbl_customer_products`.`product_id`)) left join `tbl_customers` on(`tbl_customers`.`id` = `tbl_customer_products`.`customer_id`)) where `tbl_customer_products`.`purchase_type` = 'Cash' union all select `tbl_cash_collection`.`collection_date` AS `date`,`tbl_customer_products`.`customer_id` AS `customerId`,`tbl_customers`.`name` AS `customerName`,`tbl_customer_products`.`product_id` AS `productId`,`tbl_invoice`.`invoice_no` AS `invoiceNo`,`tbl_products`.`name` AS `productName`,0 AS `salesAmount`,`tbl_cash_collection`.`collection_amount` AS `collection` from ((((`tbl_cash_collection` left join `tbl_invoice` on(`tbl_invoice`.`id` = `tbl_cash_collection`.`invoice_id`)) left join `tbl_customer_products` on(`tbl_customer_products`.`id` = `tbl_invoice`.`customer_product_id`)) left join `tbl_customers` on(`tbl_customers`.`id` = `tbl_invoice`.`customer_id`)) left join `tbl_products` on(`tbl_products`.`id` = `tbl_invoice`.`product_id`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_dealer_commission_statement`
+--
+DROP TABLE IF EXISTS `view_dealer_commission_statement`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_dealer_commission_statement`  AS  select `tbl_product_issue`.`date` AS `date`,`tbl_product_issue`.`dealer_id` AS `dealerId`,`tbl_dealers`.`name` AS `dealerName`,`tbl_product_issue_lists`.`product_id` AS `productId`,`tbl_products`.`name` AS `productName`,`tbl_categories`.`id` AS `categoryId`,`tbl_categories`.`name` AS `categoryName`,`tbl_product_issue_lists`.`commission_rate` AS `commissionRate`,sum(`tbl_product_issue_lists`.`amount`) AS `saleAmount`,sum(`tbl_product_issue_lists`.`amount`) * `tbl_product_issue_lists`.`commission_rate` / 100 AS `commissionAmount` from ((((`tbl_product_issue` left join `tbl_dealers` on(`tbl_dealers`.`id` = `tbl_product_issue`.`dealer_id`)) left join `tbl_product_issue_lists` on(`tbl_product_issue_lists`.`issue_id` = `tbl_product_issue`.`id`)) left join `tbl_products` on(`tbl_products`.`id` = `tbl_product_issue_lists`.`product_id`)) left join `tbl_categories` on(`tbl_categories`.`id` = `tbl_products`.`category_id`)) group by `tbl_product_issue`.`dealer_id`,`tbl_product_issue_lists`.`product_id`,`tbl_product_issue_lists`.`commission_rate` order by `tbl_product_issue`.`dealer_id`,`tbl_product_issue_lists`.`product_id` ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_group_and_staff`
+--
+DROP TABLE IF EXISTS `view_group_and_staff`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_group_and_staff`  AS  select `tbl_groups`.`id` AS `groupId`,`tbl_staffs`.`id` AS `staffId`,`tbl_groups_sales_target`.`id` AS `groupSalesTargetId` from ((`tbl_staffs` join `tbl_groups` on(`tbl_groups`.`team_leader` = `tbl_staffs`.`id` or find_in_set(`tbl_staffs`.`id`,`tbl_groups`.`team_member`))) join `tbl_groups_sales_target` on(`tbl_groups_sales_target`.`group_id` = `tbl_groups`.`id`)) ;
 
 -- --------------------------------------------------------
 
@@ -3115,7 +3179,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -3199,7 +3263,7 @@ ALTER TABLE `tbl_dealers`
 -- AUTO_INCREMENT for table `tbl_dealer_collections`
 --
 ALTER TABLE `tbl_dealer_collections`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tbl_dealer_requisitions`
@@ -3223,19 +3287,19 @@ ALTER TABLE `tbl_districts`
 -- AUTO_INCREMENT for table `tbl_groups`
 --
 ALTER TABLE `tbl_groups`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `tbl_groups_sales_target`
 --
 ALTER TABLE `tbl_groups_sales_target`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbl_groups_sales_target_category`
 --
 ALTER TABLE `tbl_groups_sales_target_category`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `tbl_installment`
@@ -3385,13 +3449,13 @@ ALTER TABLE `tbl_vendors`
 -- AUTO_INCREMENT for table `user_menus`
 --
 ALTER TABLE `user_menus`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `user_menu_actions`
 --
 ALTER TABLE `user_menu_actions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=151;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=154;
 
 --
 -- AUTO_INCREMENT for table `user_roles`

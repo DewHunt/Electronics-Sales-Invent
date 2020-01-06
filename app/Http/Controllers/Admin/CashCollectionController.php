@@ -99,8 +99,8 @@ class CashCollectionController extends Controller
         $title = "Money Receipt";
         $cashCollection = CashCollection::Where('id',$collectionId)->first();
         $invoice = InvoiceSetup::Where('id',$cashCollection->invoice_id)->first();
-        $customer = CustomerRegistrationSetup::Where('id',$invoice->customer_id)->first();
-        $product = Product::Where('id',$invoice->product_id)->first();
+        $customer = CustomerRegistrationSetup::Where('id',@$invoice->customer_id)->first();
+        $product = Product::Where('id',@$invoice->product_id)->first();
         $pdf = PDF::loadView('admin.cashCollection.print',['title'=>$title,'cashCollection'=>$cashCollection,'invoice'=>$invoice,'customer'=>$customer,'product'=>$product]);
 
         return $pdf->stream('money_receipt.pdf');

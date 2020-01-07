@@ -34,7 +34,7 @@
                                     <th width="50px">Requisition No.</th>
                                     <th width="350px">Dealer Name</th>
                                     <th width="50px">Total Qty</th>
-                                    <th width="50px">Total Amount</th>
+                                    <th width="70px">Total Amount</th>
                                     <th width="20px">Action</th>
                                 </tr>
                             </thead>

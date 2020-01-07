@@ -505,6 +505,11 @@ Route::prefix('admin')->group(function()
 			Route::get('/dealer-commission-statement','Admin\DealerCommissionStatementController@index')->name('dealerCommissionStatement.index');
 			Route::post('/dealer-commission-statement','Admin\DealerCommissionStatementController@index')->name('dealerCommissionStatement.index');
 			Route::post('/dealer-commission-statement-print','Admin\DealerCommissionStatementController@print')->name('dealerCommissionStatement.print');
+
+			//Product Requisition And Approval Statement
+			Route::get('/product-requisition-approval-statement','Admin\ProductRequisitionApprovalStatementController@index')->name('productRequisitionApprovalStatement.index');
+			Route::post('/product-requisition-approval-statement','Admin\ProductRequisitionApprovalStatementController@index')->name('productRequisitionApprovalStatement.index');
+			Route::post('/product-requisition-approval-statement-print','Admin\ProductRequisitionApprovalStatementController@print')->name('productRequisitionApprovalStatement.print');
 		// End Dealer Management
 		});
 	});

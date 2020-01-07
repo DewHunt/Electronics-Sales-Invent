@@ -154,7 +154,7 @@ class ProductIssueController extends Controller
 
     	if ($commission)
     	{
-    		$commissionRate = $commission->commssion_rate;
+    		$commissionRate = $commission->commission_rate;
     	}
     	else
     	{

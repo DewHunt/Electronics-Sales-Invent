@@ -37,8 +37,8 @@
         <div class="card">
             <div class="card-header">
                 <div class="row">
-                    <div class="col-md-6"><h4 class="card-title">{{$title}} ({{$userMenus->menuName}})</h4> </div>
-                    <div class="col-md-6 text-right">
+                    <div class="col-md-9"><h4 class="card-title">{{$title}} ({{$userMenus->menuName}})</h4> </div>
+                    <div class="col-md-3 text-right">
                         <a style="margin-left: 0px; font-size: 16px;" class="btn btn-outline-info btn-lg"  href="{{ route('usermenuLink.index',$menuId) }}">
                             <i class="fa fa-arrow-circle-left"></i> Go Back
                         </a>

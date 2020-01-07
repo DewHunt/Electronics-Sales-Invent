@@ -16,7 +16,7 @@ class DealerCommissionStatementController extends Controller
     public function index(Request $request)
     {
     	// dd($request->all());
-    	$title = "Dealer's Commission Statement";
+    	$title = "Dealer Commission Statement";
     	$searchFormLink = "dealerCommissionStatement.index";
     	$printFormLink = "dealerCommissionStatement.print";
 

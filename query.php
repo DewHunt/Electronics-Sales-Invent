@@ -145,14 +145,14 @@
 
     $dealerCommissionStatement = 
     "
-    CREATE OR REPLACE VIEW view_dealer_commission_statement AS
+    CREATE OR REPLACE VIEW view_dealer_commission_statement AS    
     SELECT `tbl_product_issue`.`date` AS `date`,`tbl_product_issue`.`dealer_id` AS `dealerId`,`tbl_dealers`.`name` AS `dealerName`,`tbl_product_issue_lists`.`product_id` AS `productId`,`tbl_products`.`name` AS `productName`,`tbl_categories`.`id` AS `categoryId`,`tbl_categories`.`name` AS `categoryName`,`tbl_product_issue_lists`.`commission_rate` AS `commissionRate`,SUM(`tbl_product_issue_lists`.`amount`) AS `saleAmount`,(SUM(`tbl_product_issue_lists`.`amount`)*`tbl_product_issue_lists`.`commission_rate`)/100 AS `commissionAmount`
     FROM `tbl_product_issue`
     LEFT JOIN `tbl_dealers` ON `tbl_dealers`.`id` = `tbl_product_issue`.`dealer_id`
     LEFT JOIN `tbl_product_issue_lists` ON `tbl_product_issue_lists`.`issue_id` = `tbl_product_issue`.`id`
     LEFT JOIN `tbl_products` ON `tbl_products`.`id` = `tbl_product_issue_lists`.`product_id`
     LEFT JOIN `tbl_categories` ON `tbl_categories`.`id` = `tbl_products`.`category_id`
-    GROUP BY `tbl_product_issue`.`dealer_id`,`tbl_product_issue_lists`.`product_id`
+    GROUP BY `tbl_product_issue`.`dealer_id`,`tbl_product_issue_lists`.`product_id`,`tbl_product_issue_lists`.`commission_rate`
     ORDER BY `tbl_product_issue`.`dealer_id`,`tbl_product_issue_lists`.`product_id`
     "
 

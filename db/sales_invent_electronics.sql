@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 06, 2020 at 02:19 PM
+-- Generation Time: Jan 07, 2020 at 02:07 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -1005,6 +1005,7 @@ CREATE TABLE `tbl_installment_collection_list` (
   `installment_collection_id` int(11) NOT NULL,
   `invoice_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `installment_schedule_date` date DEFAULT NULL,
+  `installment_collection_date` date DEFAULT NULL,
   `installment_schedule_amount` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1015,18 +1016,18 @@ CREATE TABLE `tbl_installment_collection_list` (
 -- Dumping data for table `tbl_installment_collection_list`
 --
 
-INSERT INTO `tbl_installment_collection_list` (`id`, `installment_id`, `installment_schedule_id`, `installment_collection_id`, `invoice_no`, `installment_schedule_date`, `installment_schedule_amount`, `status`, `created_at`, `updated_at`) VALUES
-(103, 11, 132, 11, 'inv-32-19-10032', '2019-12-17', '1869', 1, '2019-12-17 07:04:34', '2019-12-17 07:04:34'),
-(104, 11, 133, 11, 'inv-32-19-10032', '2020-01-17', '1000', 1, '2019-12-17 07:04:34', '2019-12-17 07:04:34'),
-(105, 11, 134, 11, 'inv-32-19-10032', '2020-02-17', '1000', 1, '2019-12-17 07:04:34', '2019-12-17 07:04:34'),
-(106, 11, 135, 11, 'inv-32-19-10032', '2020-03-17', '1000', 1, '2019-12-17 07:04:34', '2019-12-17 07:04:34'),
-(107, 11, 136, 11, 'inv-32-19-10032', '2020-04-17', '1000', 1, '2019-12-17 07:04:35', '2019-12-17 07:04:35'),
-(108, 11, 137, 11, 'inv-32-19-10032', '2020-05-17', '1000', 1, '2019-12-17 07:04:35', '2019-12-17 07:04:35'),
-(109, 11, 138, 11, 'inv-32-19-10032', '2020-06-17', '1000', 1, '2019-12-17 07:04:35', '2019-12-17 07:04:35'),
-(110, 11, 139, 11, 'inv-32-19-10032', '2020-07-17', '1000', 1, '2019-12-17 07:04:35', '2019-12-17 07:04:35'),
-(111, 11, 140, 11, 'inv-32-19-10032', '2020-08-17', '1000', 1, '2019-12-17 07:04:35', '2019-12-17 07:04:35'),
-(112, 11, 141, 11, 'inv-32-19-10032', '2020-09-17', '1000', 1, '2019-12-17 07:04:35', '2019-12-17 07:04:35'),
-(113, 11, 142, 11, 'inv-32-19-10032', '2020-10-17', '1000', 1, '2019-12-17 07:04:35', '2019-12-17 07:04:35');
+INSERT INTO `tbl_installment_collection_list` (`id`, `installment_id`, `installment_schedule_id`, `installment_collection_id`, `invoice_no`, `installment_schedule_date`, `installment_collection_date`, `installment_schedule_amount`, `status`, `created_at`, `updated_at`) VALUES
+(103, 11, 132, 11, 'inv-32-19-10032', '2019-12-17', NULL, '1869', 1, '2019-12-17 07:04:34', '2019-12-17 07:04:34'),
+(104, 11, 133, 11, 'inv-32-19-10032', '2020-01-17', NULL, '1000', 1, '2019-12-17 07:04:34', '2019-12-17 07:04:34'),
+(105, 11, 134, 11, 'inv-32-19-10032', '2020-02-17', NULL, '1000', 1, '2019-12-17 07:04:34', '2019-12-17 07:04:34'),
+(106, 11, 135, 11, 'inv-32-19-10032', '2020-03-17', NULL, '1000', 1, '2019-12-17 07:04:34', '2019-12-17 07:04:34'),
+(107, 11, 136, 11, 'inv-32-19-10032', '2020-04-17', NULL, '1000', 1, '2019-12-17 07:04:35', '2019-12-17 07:04:35'),
+(108, 11, 137, 11, 'inv-32-19-10032', '2020-05-17', NULL, '1000', 1, '2019-12-17 07:04:35', '2019-12-17 07:04:35'),
+(109, 11, 138, 11, 'inv-32-19-10032', '2020-06-17', NULL, '1000', 1, '2019-12-17 07:04:35', '2019-12-17 07:04:35'),
+(110, 11, 139, 11, 'inv-32-19-10032', '2020-07-17', NULL, '1000', 1, '2019-12-17 07:04:35', '2019-12-17 07:04:35'),
+(111, 11, 140, 11, 'inv-32-19-10032', '2020-08-17', NULL, '1000', 1, '2019-12-17 07:04:35', '2019-12-17 07:04:35'),
+(112, 11, 141, 11, 'inv-32-19-10032', '2020-09-17', NULL, '1000', 1, '2019-12-17 07:04:35', '2019-12-17 07:04:35'),
+(113, 11, 142, 11, 'inv-32-19-10032', '2020-10-17', NULL, '1000', 1, '2019-12-17 07:04:35', '2019-12-17 07:04:35');
 
 -- --------------------------------------------------------
 
@@ -1441,8 +1442,8 @@ CREATE TABLE `tbl_product_issue` (
 
 INSERT INTO `tbl_product_issue` (`id`, `requisition_id`, `dealer_id`, `issue_type`, `issue_no`, `date`, `total_qty`, `total_amount`, `status`, `created_at`, `updated_at`) VALUES
 (9, 1, 1, 'With Approval', '100000001', '2020-01-05', '4', '109090', 1, '2020-01-05 01:54:52', '2020-01-05 01:54:52'),
-(10, NULL, 3, 'Without Approval', '100000010', '2020-01-05', '3', '148300', 1, '2020-01-05 02:42:21', '2020-01-05 02:42:21'),
-(11, 1, 1, 'With Approval', '100000011', '2020-01-05', '2', '95400', 1, '2020-01-05 05:37:18', '2020-01-05 05:37:18');
+(11, 1, 1, 'With Approval', '100000011', '2020-01-05', '2', '95400', 1, '2020-01-05 05:37:18', '2020-01-05 05:37:18'),
+(12, NULL, 3, 'Without Approval', '100000012', '2020-01-07', '2', '70890', 1, '2020-01-06 22:43:46', '2020-01-06 22:43:46');
 
 -- --------------------------------------------------------
 
@@ -1474,11 +1475,10 @@ INSERT INTO `tbl_product_issue_lists` (`id`, `issue_id`, `product_id`, `model_no
 (52, 9, 10, 'MSD55FD-1.397 m (55\'\')', '09huiy546ets4', '10', '59900', '1', '59900', 1, NULL, NULL),
 (53, 9, 13, 'MCF5601 WR', '10000000000231', '8', '2700', '1', '2700', 1, NULL, NULL),
 (54, 9, 8, 'MFO-JET-RXXX-XX', '4567gibjjkuygf', '12', '10990', '1', '10990', 1, NULL, NULL),
-(55, 10, 14, 'MSN-21K-0101-RXXXB', 'asfasdf', '0', '52900', '1', '52900', 1, NULL, NULL),
-(56, 10, 12, 'MSN-12K-ECXXA', 'asfasdf', '0', '35500', '1', '35500', 1, NULL, NULL),
-(57, 10, 10, 'MSD55FD-1.397 m (55\'\')', '35657iore', '0', '59900', '1', '59900', 1, NULL, NULL),
 (58, 11, 12, 'MSN-12K-ECXXA', 'nmg7zsnbn vd', '15', '35500', '1', '35500', 1, NULL, NULL),
-(59, 11, 10, 'MSD55FD-1.397 m (55\'\')', '095f53drjfyjh', '10', '59900', '1', '59900', 1, NULL, NULL);
+(59, 11, 10, 'MSD55FD-1.397 m (55\'\')', '095f53drjfyjh', '10', '59900', '1', '59900', 1, NULL, NULL),
+(60, 12, 10, 'MSD55FD-1.397 m (55\'\')', '907hutt65546f', '8', '59900', '1', '59900', 1, NULL, NULL),
+(61, 12, 8, 'MFO-JET-RXXX-XX', '907hutt65546f', '9', '10990', '1', '10990', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2307,7 +2307,9 @@ INSERT INTO `user_menus` (`id`, `parentMenu`, `menuName`, `menuLink`, `menuIcon`
 (55, '29', 'Collection History', 'collectionHistory.index', 'fa fa-caret', 46, '1', '2020-01-01 12:16:28', '2020-01-01 12:16:28'),
 (56, '33', 'Commission Setup', 'commissionConfiguration.index', 'fa fa-caret', 47, '1', '2020-01-01 12:23:10', '2020-01-01 12:23:10'),
 (58, '49', 'Dealer Collection', 'dealerCollection.index', 'fa fa-caret', 48, '1', '2020-01-05 05:04:31', '2020-01-05 05:04:31'),
-(59, '49', 'Dealer Commission Statement', 'dealerCommissionStatement.index', 'fa fa-caret', 49, '1', '2020-01-06 04:18:40', '2020-01-06 04:18:40');
+(59, '49', 'Dealer Commission Statement', 'dealerCommissionStatement.index', 'fa fa-caret', 49, '1', '2020-01-06 04:18:40', '2020-01-06 04:18:40'),
+(60, '49', 'Req And App Statement', 'productRequisitionApprovalStatement.index', 'fa fa-caret', 50, '1', '2020-01-06 22:34:18', '2020-01-06 22:34:18'),
+(61, '49', 'Dealer Collection History', 'dealerCollectionHistory.index', 'fa fa-caret', 51, '1', '2020-01-07 03:53:05', '2020-01-07 03:53:05');
 
 -- --------------------------------------------------------
 
@@ -2474,7 +2476,9 @@ INSERT INTO `user_menu_actions` (`id`, `parentmenuId`, `menuType`, `actionName`,
 (150, 58, 4, 'Delete', 'dealerCollection.delete', 144, 1, '2020-01-05 05:05:14', '2020-01-06 02:00:32'),
 (151, 54, 11, 'Print Product Issue Invoice', 'productIssue.printInvoice', 134, 1, '2020-01-05 22:33:14', '2020-01-05 22:33:14'),
 (152, 58, 11, 'Print Money Receipt', 'dealerCollection.printMoneyReceipt', 143, 1, '2020-01-06 02:00:51', '2020-01-06 02:01:37'),
-(153, 59, 11, 'Print Dealer Commission Statement', 'dealerCommissionStatement.print', 145, 1, '2020-01-06 04:19:16', '2020-01-06 04:19:16');
+(153, 59, 11, 'Print Dealer Commission Statement', 'dealerCommissionStatement.print', 145, 1, '2020-01-06 04:19:16', '2020-01-06 04:19:16'),
+(154, 60, 11, 'Print Requisition And Approval Statement', 'productRequisitionApprovalStatement.print', 146, 1, '2020-01-06 22:35:08', '2020-01-06 22:35:08'),
+(155, 61, 11, 'Print Dealer Collection History', 'dealerCollectionHistory.print', 147, 1, '2020-01-07 04:10:38', '2020-01-07 04:10:38');
 
 -- --------------------------------------------------------
 
@@ -2497,7 +2501,7 @@ CREATE TABLE `user_roles` (
 --
 
 INSERT INTO `user_roles` (`id`, `name`, `status`, `permission`, `actionPermission`, `created_at`, `updated_at`) VALUES
-(1, 'Super Admin', 1, '2,1,3,4,5,22,6,7,8,10,11,12,13,14,15,17,18,21,26,19,20,23,24,25,27,28,45,46,29,30,31,32,44,47,48,55,33,34,35,36,37,38,39,56,40,41,42,51,52,49,43,50,53,54,58,59', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,20,18,19,17,70,71,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,57,58,59,60,61,62,63,64,69,77,78,79,80,65,66,81,67,72,73,74,75,76,82,83,121,122,124,123,125,84,85,86,117,118,120,119,126,127,139,88,89,90,91,94,95,93,96,97,98,105,99,100,101,102,104,103,106,140,141,142,107,108,132,109,110,111,112,133,134,113,114,115,116,128,129,130,131,135,136,151,143,137,138,148,149,152,150,153', '2019-11-20 22:48:03', '2020-01-06 04:19:29'),
+(1, 'Super Admin', 1, '2,1,3,4,5,22,6,7,8,10,11,12,13,14,15,17,18,21,26,19,20,23,24,25,27,28,45,46,29,30,31,32,44,47,48,55,33,34,35,36,37,38,39,56,40,41,42,51,52,49,43,50,53,54,58,59,60,61', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,20,18,19,17,70,71,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,57,58,59,60,61,62,63,64,69,77,78,79,80,65,66,81,67,72,73,74,75,76,82,83,121,122,124,123,125,84,85,86,117,118,120,119,126,127,139,88,89,90,91,94,95,93,96,97,98,105,99,100,101,102,104,103,106,140,141,142,107,108,132,109,110,111,112,133,134,113,114,115,116,128,129,130,131,135,136,151,143,137,138,148,149,152,150,153,154,155', '2019-11-20 22:48:03', '2020-01-07 04:16:44'),
 (5, 'Admin', 0, '1,2,5,22', '16,20,18,19,17', '2019-11-29 03:26:52', '2019-12-15 06:09:43');
 
 -- --------------------------------------------------------
@@ -2631,6 +2635,45 @@ CREATE TABLE `view_lifting_return_record` (
 ,`productSerialNo` varchar(191)
 ,`productQty` varchar(191)
 ,`price` varchar(191)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_product_issue_history`
+-- (See below for the actual view)
+--
+CREATE TABLE `view_product_issue_history` (
+`date` varchar(191)
+,`dealerId` int(11)
+,`dealerName` varchar(191)
+,`issueType` varchar(191)
+,`issueNo` varchar(191)
+,`categoryId` int(10) unsigned
+,`categoryName` varchar(191)
+,`productId` int(11)
+,`productName` varchar(191)
+,`modelNo` varchar(191)
+,`productSerialNO` varchar(191)
+,`issueQty` varchar(191)
+,`issueAmount` varchar(191)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_product_requisition_approval_statement`
+-- (See below for the actual view)
+--
+CREATE TABLE `view_product_requisition_approval_statement` (
+`date` text
+,`dealerId` int(11)
+,`dealerName` varchar(191)
+,`productId` int(11)
+,`productName` varchar(191)
+,`productModelNo` varchar(191)
+,`requisitionQty` text
+,`approvedQty` text
 );
 
 -- --------------------------------------------------------
@@ -2790,6 +2833,24 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 DROP TABLE IF EXISTS `view_lifting_return_record`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_lifting_return_record`  AS  select `tbl_lifting_returns`.`date` AS `liftingReturnDate`,`tbl_lifting_returns`.`serial_no` AS `liftingReturnNo`,`tbl_lifting_returns`.`vendor_id` AS `vendorId`,`tbl_vendors`.`name` AS `vendorName`,`tbl_lifting_returns`.`store_or_showroom_type` AS `storeOrShowroomType`,`tbl_lifting_returns`.`store_or_showroom_id` AS `storeOrShowroomId`,`view_store_and_showroom`.`name` AS `storeOrShowroomName`,`tbl_products`.`category_id` AS `categoryId`,`tbl_categories`.`parent` AS `parentId`,`tbl_categories`.`name` AS `categoryName`,`tbl_lifting_return_products`.`product_id` AS `productId`,`tbl_products`.`code` AS `productCode`,`tbl_lifting_return_products`.`product_name` AS `productName`,`tbl_lifting_return_products`.`model_no` AS `productModelNo`,`tbl_lifting_return_products`.`color` AS `productColor`,`tbl_lifting_return_products`.`serial_no` AS `productSerialNo`,`tbl_lifting_return_products`.`qty` AS `productQty`,`tbl_lifting_return_products`.`price` AS `price` from (((((`tbl_lifting_returns` left join `tbl_vendors` on(`tbl_vendors`.`id` = `tbl_lifting_returns`.`vendor_id`)) left join `tbl_lifting_return_products` on(`tbl_lifting_return_products`.`lifting_return_id` = `tbl_lifting_returns`.`id`)) left join `tbl_products` on(`tbl_products`.`id` = `tbl_lifting_return_products`.`product_id`)) left join `tbl_categories` on(`tbl_categories`.`id` = `tbl_products`.`category_id`)) left join `view_store_and_showroom` on(`view_store_and_showroom`.`type` = `tbl_lifting_returns`.`store_or_showroom_type` and `view_store_and_showroom`.`id` = `tbl_lifting_returns`.`store_or_showroom_id`)) order by `tbl_lifting_return_products`.`product_id` ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_product_issue_history`
+--
+DROP TABLE IF EXISTS `view_product_issue_history`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_product_issue_history`  AS  select `tbl_product_issue`.`date` AS `date`,`tbl_product_issue`.`dealer_id` AS `dealerId`,`tbl_dealers`.`name` AS `dealerName`,`tbl_product_issue`.`issue_type` AS `issueType`,`tbl_product_issue`.`issue_no` AS `issueNo`,`tbl_categories`.`id` AS `categoryId`,`tbl_categories`.`name` AS `categoryName`,`tbl_product_issue_lists`.`product_id` AS `productId`,`tbl_products`.`name` AS `productName`,`tbl_products`.`model_no` AS `modelNo`,`tbl_product_issue_lists`.`serial_no` AS `productSerialNO`,`tbl_product_issue_lists`.`qty` AS `issueQty`,`tbl_product_issue_lists`.`amount` AS `issueAmount` from ((((`tbl_product_issue` left join `tbl_dealers` on(`tbl_dealers`.`id` = `tbl_product_issue`.`dealer_id`)) left join `tbl_product_issue_lists` on(`tbl_product_issue_lists`.`issue_id` = `tbl_product_issue`.`id`)) left join `tbl_products` on(`tbl_products`.`id` = `tbl_product_issue_lists`.`product_id`)) left join `tbl_categories` on(`tbl_categories`.`id` = `tbl_products`.`category_id`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_product_requisition_approval_statement`
+--
+DROP TABLE IF EXISTS `view_product_requisition_approval_statement`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_product_requisition_approval_statement`  AS  select `tbl_dealer_requisitions`.`date` AS `date`,`tbl_dealer_requisitions`.`dealer_id` AS `dealerId`,`tbl_dealers`.`name` AS `dealerName`,`tbl_dealer_requisition_products`.`product_id` AS `productId`,`tbl_products`.`name` AS `productName`,`tbl_products`.`model_no` AS `productModelNo`,`tbl_dealer_requisition_products`.`qty` AS `requisitionQty`,`tbl_dealer_requisition_products`.`approved_qty` AS `approvedQty` from (((`tbl_dealer_requisitions` left join `tbl_dealers` on(`tbl_dealers`.`id` = `tbl_dealer_requisitions`.`dealer_id`)) left join `tbl_dealer_requisition_products` on(`tbl_dealer_requisition_products`.`requisition_id` = `tbl_dealer_requisitions`.`id`)) left join `tbl_products` on(`tbl_products`.`id` = `tbl_dealer_requisition_products`.`product_id`)) ;
 
 -- --------------------------------------------------------
 
@@ -3383,13 +3444,13 @@ ALTER TABLE `tbl_product_images`
 -- AUTO_INCREMENT for table `tbl_product_issue`
 --
 ALTER TABLE `tbl_product_issue`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `tbl_product_issue_lists`
 --
 ALTER TABLE `tbl_product_issue_lists`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `tbl_showroom`
@@ -3449,13 +3510,13 @@ ALTER TABLE `tbl_vendors`
 -- AUTO_INCREMENT for table `user_menus`
 --
 ALTER TABLE `user_menus`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `user_menu_actions`
 --
 ALTER TABLE `user_menu_actions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=154;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
 
 --
 -- AUTO_INCREMENT for table `user_roles`

@@ -2,18 +2,16 @@
 
 @section('content')
     <table id="report-header">
-        {{-- <tr> --}}
-            @if ($btnPrintSummary == "Print Summary")
-                <tr><td>Lifting Summary On {{ $fromDate }} To {{ $toDate }}</td></tr>
-                @if (@$vendorName->name)
-                    <tr><td>Suppler Name: {{ @$vendorName->name }}</td></tr>
-                @endif                                
-            @endif
+        @if ($btnPrintSummary == "Print Summary")
+            <tr><td>Lifting Summary On {{ $fromDate }} To {{ $toDate }}</td></tr>
+            @if (@$vendorName->name)
+                <tr><td>Suppler Name: {{ @$vendorName->name }}</td></tr>
+            @endif                                
+        @endif
 
-            @if ($btnPrintRecord == "Print Record")
-                <tr><td>Lifting History On {{ $fromDate }} To {{ $toDate }}</td></tr>                
-            @endif
-        {{-- </tr> --}}
+        @if ($btnPrintRecord == "Print Record")
+            <tr><td>Lifting History On {{ $fromDate }} To {{ $toDate }}</td></tr>                
+        @endif
     </table>
 
     <div id="pad-bottom"></div>

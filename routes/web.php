@@ -510,6 +510,11 @@ Route::prefix('admin')->group(function()
 			Route::get('/product-requisition-approval-statement','Admin\ProductRequisitionApprovalStatementController@index')->name('productRequisitionApprovalStatement.index');
 			Route::post('/product-requisition-approval-statement','Admin\ProductRequisitionApprovalStatementController@index')->name('productRequisitionApprovalStatement.index');
 			Route::post('/product-requisition-approval-statement-print','Admin\ProductRequisitionApprovalStatementController@print')->name('productRequisitionApprovalStatement.print');
+
+			//Dealer Collection History
+			Route::get('/dealer-collection-history','Admin\DealerCollectionHistoryController@index')->name('dealerCollectionHistory.index');
+			Route::post('/dealer-collection-history','Admin\DealerCollectionHistoryController@index')->name('dealerCollectionHistory.index');
+			Route::post('/dealer-collection-history-print','Admin\DealerCollectionHistoryController@print')->name('dealerCollectionHistory.print');
 		// End Dealer Management
 		});
 	});

@@ -217,7 +217,7 @@
                             @if ($btnRecord == "Record")
                                 <button type="submit" class="btn btn-outline-info btn-lg waves-effect" name="btnPrintRecord" value="Print Record"><i class="fa fa-print"></i> Print Lifting History</button>
                             @endif
-                        </forR>
+                        </form>
                     </div>
                 </div>
             </div>

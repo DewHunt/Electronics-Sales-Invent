@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\DealerSetup;
-use App\DealerRequisition;
 
 use DB;
 use MPDF;

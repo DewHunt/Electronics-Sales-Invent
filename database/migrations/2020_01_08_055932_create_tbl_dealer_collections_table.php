@@ -18,7 +18,7 @@ class CreateTblDealerCollectionsTable extends Migration
             $table->integer('product_issue_id')->nullable();
             $table->integer('dealer_id')->nullable();
             $table->string('payment_no',255)->nullable();
-            $table->datetime('payment_date')->nullable();
+            $table->string('payment_date')->nullable();
             $table->string('money_receipt_no',255)->nullable();
             $table->string('money_receipt_type',255)->nullable();
             $table->integer('payment_amount')->nullable();

@@ -177,6 +177,20 @@
     LEFT JOIN `tbl_categories` ON `tbl_categories`.`id` = `tbl_products`.`category_id`
     "
 
+    $dealerStatement = 
+    "
+    CREATE OR REPLACE VIEW view_dealer_statement AS
+    SELECT `tbl_product_issue`.`date` AS `date`,`tbl_product_issue`.`dealer_id` AS `dealerId`,`tbl_dealers`.`name` AS `dealerName`,`tbl_product_issue`.`total_amount` AS `issueAmount`,0 AS `issueReturnAmount`,0 AS `collectionAmount`
+    FROM `tbl_product_issue`
+    LEFT JOIN `tbl_dealers` ON `tbl_dealers`.`id` = `tbl_product_issue`.`dealer_id`
+
+    UNION ALL
+
+    SELECT `tbl_dealer_collections`.`payment_date` AS `date`,`tbl_dealer_collections`.`dealer_id` AS `dealerId`,`tbl_dealers`.`name` AS `dealerName`,0 AS `issueAmount`,0 AS `issueReturnAmount`,`tbl_dealer_collections`.`payment_amount` AS `collectionAmount`
+    FROM `tbl_dealer_collections`
+    LEFT JOIN `tbl_dealers` ON `tbl_dealers`.`id` = `tbl_dealer_collections`.`dealer_id`
+    "
+
     "SELECT `tbl_lifting_products`.`product_id`,`tbl_lifting_products`.`serial_no`
 FROM `tbl_lifting_products`
 LEFT JOIN `tbl_product_issue_lists` ON `tbl_product_issue_lists`.`serial_no` = `tbl_lifting_products`.`serial_no`

@@ -10,6 +10,8 @@ use App\Product;
 use App\ProductAdvance;
 use App\ProductImage;
 
+use DB;
+
 class ProductSetupController extends Controller
 {
     public function index()
@@ -45,7 +47,10 @@ class ProductSetupController extends Controller
     	$buttonName = "Save";
     	$productId = "";
 
-        $categories = CategorySetup::where('status',1)
+        $categories = DB::table('tbl_categories as tab1')
+            ->select('tab1.*')
+            ->leftJoin('tbl_categories as tab2','tab2.parent','=','tab1.id')
+            ->whereNull('tab2.parent')
             ->orderBy('name','asc')
             ->get();
 
@@ -74,9 +79,12 @@ class ProductSetupController extends Controller
 
     	$buttonName = "Update";
 
-    	$categories = CategorySetup::where('status',1)
-    		->orderBy('name','asc')
-    		->get();
+        $categories = DB::table('tbl_categories as tab1')
+            ->select('tab1.*')
+            ->leftJoin('tbl_categories as tab2','tab2.parent','=','tab1.id')
+            ->whereNull('tab2.parent')
+            ->orderBy('name','asc')
+            ->get();
 
     	$relatedProducts = Product::where('status',1)
     		->orderBy('name','asc')

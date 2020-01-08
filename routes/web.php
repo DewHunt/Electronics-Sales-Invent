@@ -515,6 +515,21 @@ Route::prefix('admin')->group(function()
 			Route::get('/dealer-collection-history','Admin\DealerCollectionHistoryController@index')->name('dealerCollectionHistory.index');
 			Route::post('/dealer-collection-history','Admin\DealerCollectionHistoryController@index')->name('dealerCollectionHistory.index');
 			Route::post('/dealer-collection-history-print','Admin\DealerCollectionHistoryController@print')->name('dealerCollectionHistory.print');
+
+			//Product Issue History
+			Route::get('/product-issue-history','Admin\ProductIssueHistoryController@index')->name('productIssueHistory.index');
+			Route::post('/product-issue-history','Admin\ProductIssueHistoryController@index')->name('productIssueHistory.index');
+			Route::post('/product-issue-history-print','Admin\ProductIssueHistoryController@print')->name('productIssueHistory.print');
+
+			//Dealer Statement
+			Route::get('/dealer-statement','Admin\DealerStatementController@index')->name('dealerStatement.index');
+			Route::post('/dealer-statement','Admin\DealerStatementController@index')->name('dealerStatement.index');
+			Route::post('/dealer-statement-print','Admin\DealerStatementController@print')->name('dealerStatement.print');
+
+			//Dealer Realization
+			Route::get('/dealer-realization','Admin\DealerRealizationController@index')->name('dealerRealization.index');
+			Route::post('/dealer-realization','Admin\DealerRealizationController@index')->name('dealerRealization.index');
+			Route::post('/dealer-realization-print','Admin\DealerRealizationController@print')->name('dealerRealization.print');
 		// End Dealer Management
 		});
 	});
